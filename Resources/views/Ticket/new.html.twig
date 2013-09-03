@@ -1,0 +1,23 @@
+{% extends 'HackzillaTicketBundle::layout.html.twig' %}
+
+{% block hackzilla_ticket_content -%}
+<h1>Ticket creation</h1>
+
+<form action="{{ path('hackzilla_ticket_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" role="form">
+    <div class="form-group">
+        {{ form_label(form.subject, '', { 'label_attr': {'class': 'col-lg-2 control-label'} }) }}
+        <div class="col-lg-10">
+            {{ form_widget(form.subject, { 'attr': {'class': 'form-control', 'placeholder': 'Enter subject'} }) }}
+        </div>
+    </div>
+
+    {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form.messages.vars.prototype} %}
+
+    {{ form_rest(form) }}
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

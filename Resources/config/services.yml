@@ -1,0 +1,7 @@
+parameters:
+#    hackzilla_ticket.example.class: Hackzilla\Bundle\TicketBundle\Example
+
+services:
+#    hackzilla_ticket.example:
+#        class: %hackzilla_ticket.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

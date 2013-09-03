@@ -1,0 +1,38 @@
+{% extends 'HackzillaTicketBundle::layout.html.twig' %}
+
+{% block hackzilla_ticket_content -%}
+<a href="{{ path('hackzilla_ticket_new') }}" class="btn btn-primary pull-right">New ticket</a>
+<h1>Ticket list</h1>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>{{ knp_pagination_sortable(pagination, 'Ticket', 't.id') }}</th>
+            <th{% if pagination.isSorted('t.Subject') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Subject', 't.subject') }}</th>
+            <th{% if pagination.isSorted('t.status') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Status', 't.status') }}</th>
+            <th{% if pagination.isSorted('t.priority') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Priority', 't.priority') }}</th>
+            <th{% if pagination.isSorted('t.modified') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Modified', 't.lastMesage') }}</th>
+            <th{% if pagination.isSorted('t.created') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Created', 't.createdAt') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in pagination %}
+        <tr>
+            <td><a href="{{ path('hackzilla_ticket_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td><a href="{{ path('hackzilla_ticket_show', { 'id': entity.id }) }}">{{ entity.subject }}</a></td>
+            <td>{{ entity.statusString }}</td>
+            <td>{{ entity.priorityString }}</td>
+            <td>{% if entity.lastMessage %}{{ entity.lastMessage|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">No tickets found.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{% endblock %}
