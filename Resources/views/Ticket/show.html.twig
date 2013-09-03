@@ -4,40 +4,40 @@
 <h1>Ticket #{{ ticket.id }}</h1>
 
 <div class="row well">
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6">Created:</div>
-            <div class="col-lg-6">{{ ticket.createdAt|date('Y-m-d H:i:s') }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">Created:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.createdAt|date('Y-m-d H:i:s') }}</div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6">Created By:</div>
-            <div class="col-lg-6">{# if message.userCreated.isGranted('ROLE_TICKET_ADMIN') #}<span class="label label-default">Admin</span> {# endif #}{{ ticket.userCreated }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">Created By:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{# if message.userCreated.isGranted('ROLE_TICKET_ADMIN') #}<span class="label label-default">Admin</span> {# endif #}{{ ticket.userCreated }}</div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6">Last Message By:</div>
-            <div class="col-lg-6">{# if ticket.lastUser.isGranted('ROLE_TICKET_ADMIN') #}<span class="label label-default">Admin</span> {# endif #}{{ ticket.lastUser }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">Last Message By:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{# if ticket.lastUser.isGranted('ROLE_TICKET_ADMIN') #}<span class="label label-default">Admin</span> {# endif #}{{ ticket.lastUser }}</div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6">Status:</div>
-            <div class="col-lg-6">{{ ticket.statusString }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">Status:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.statusString }}</div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6">Last Modified:</div>
-            <div class="col-lg-6">{{ ticket.lastMessage|date('Y-m-d H:i:s') }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">Last Modified:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.lastMessage|date('Y-m-d H:i:s') }}</div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6">Priority:</div>
-            <div class="col-lg-6">{{ ticket.priorityString }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">Priority:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.priorityString }}</div>
         </div>
     </div>
 </div>
@@ -49,28 +49,28 @@
 <div class="ticket-messages">
 {% for message in ticket.messages %}
 <div class="ticket-message row well">
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6">Author:</div>
-            <div class="col-lg-6">{# if message.user.isGranted('ROLE_TICKET_ADMIN') #}<span class="label label-default">Admin</span> {# endif #}{{ message.user }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">Author:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{# if message.user.isGranted('ROLE_TICKET_ADMIN') #}<span class="label label-default">Admin</span> {# endif #}{{ message.user }}</div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6">Date:</div>
-            <div class="col-lg-6">{{ message.createdAt|date('Y-m-d H:i:s') }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">Date:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ message.createdAt|date('Y-m-d H:i:s') }}</div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6">Priority:</div>
-            <div class="col-lg-6">{{ message.priorityString }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">Priority:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ message.priorityString }}</div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6">Status:</div>
-            <div class="col-lg-6">{{ message.statusString }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">Status:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ message.statusString }}</div>
         </div>
     </div>
     <div class="col-lg-12">
