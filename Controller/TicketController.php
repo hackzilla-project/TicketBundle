@@ -22,9 +22,14 @@ class TicketController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $securityContext = $this->get('security.context');
         $em = $this->getDoctrine()->getManager();
 
-        $dql   = "SELECT t FROM HackzillaTicketBundle:Ticket t";
+        if ($securityContext->isGranted('ROLE_TICKET_ADMIN')) {
+            $dql   = "SELECT t FROM HackzillaTicketBundle:Ticket t";
+        } else {
+            $dql   = "SELECT t FROM HackzillaTicketBundle:Ticket t WHERE t.userCreated = " . $securityContext->getToken()->getUser()->getId();
+        }
         $query = $em->createQuery($dql);
 
         $paginator  = $this->get('knp_paginator');
@@ -101,14 +106,19 @@ class TicketController extends Controller
      */
     public function showAction(Ticket $ticket)
     {
-        $message = new TicketMessage();
-        $message->setPriority($ticket->getPriority());
-
         $securityContext = $this->get('security.context');
+
+        if (!$securityContext->isGranted('ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $securityContext->getToken()->getUser()->getId()) {
+             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $data = array();
         $data['ticket'] = $ticket;
+
+        $message = new TicketMessage();
+        $message->setPriority($ticket->getPriority());
 
         if (TicketMessage::STATUS_CLOSED != $ticket->getStatus()) {
             $data['form'] = $this->createForm(new TicketMessageType($securityContext), $message)->createView();
@@ -126,6 +136,10 @@ class TicketController extends Controller
     public function replyAction(Request $request, Ticket $ticket)
     {
         $securityContext = $this->get('security.context');
+
+        if (!$securityContext->isGranted('ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $securityContext->getToken()->getUser()->getId()) {
+             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
+        }
 
         $message = new TicketMessage();
         $message->setPriority($ticket->getPriority());
@@ -176,6 +190,12 @@ class TicketController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        $securityContext = $this->get('security.context');
+
+        if (!$securityContext->isGranted('ROLE_TICKET_ADMIN')) {
+             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
+        }
+
         $form = $this->createDeleteForm($id);
         $form->submit($request);
 
