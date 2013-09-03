@@ -111,7 +111,7 @@ class TicketController extends Controller
         $data['ticket'] = $ticket;
 
         if (TicketMessage::STATUS_CLOSED != $ticket->getStatus()) {
-            $data['form'] = $this->createForm(new TicketMessageType($securityContext), $message);
+            $data['form'] = $this->createForm(new TicketMessageType($securityContext), $message)->createView();
         }
 
         $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
