@@ -8,16 +8,14 @@ use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 class StatusTransformer implements DataTransformerInterface
 {
     /**
-     * Transforms an object (issue) to a string (number).
+     * Transforms checkbox value into Ticket Message Status Closed
      *
-     * @param  $number
-     * @return string
+     * @param  integer $number
+     * @return integer|null
      */
     public function transform($number)
     {
-        echo 'transfrm:';
-        var_dump($number);
-        if ($number == TicketMessage::STATUS_CLOSED) {
+       if ($number == TicketMessage::STATUS_CLOSED) {
             return 1;
         }
 
@@ -25,17 +23,15 @@ class StatusTransformer implements DataTransformerInterface
     }
 
     /**
-     * Return number.
+     * Transforms Ticket Message Status Closed into checkbox value checked
      *
-     * @param  string $number
+     * @param  integer $number
      *
-     * @return $number
+     * @return integer|null
      *
      */
     public function reverseTransform($number)
     {
-        echo 'reverseTransform:';
-        var_dump($number);
         if ($number == 1) {
             return TicketMessage::STATUS_CLOSED;
         }
