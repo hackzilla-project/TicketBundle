@@ -137,10 +137,16 @@ class TicketController extends Controller
             $em = $this->getDoctrine()->getManager();
             $user = $securityContext->getToken()->getUser();
 
+            // if ticket not closed, then it'll be set to null
+            if (\is_null($message->getStatus())) {
+                $message->setStatus($ticket->getStatus());
+            } else {
+                $ticket->setStatus($message->getStatus());
+            }
+
             $ticket->setUserCreated($user->getId());
             $ticket->setLastUser($user->getId());
             $ticket->setLastMessage(new \DateTime());
-            $ticket->setStatus($message->getStatus());
             $ticket->setPriority($message->getPriority());
             
             $message->setTicket($ticket);
