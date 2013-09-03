@@ -203,7 +203,7 @@ class TicketMessage
      */
     public function setUser($user)
     {
-        $this->user = $user;
+        $this->user = $user->getId();
     
         return $this;
     }

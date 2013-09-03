@@ -56,14 +56,14 @@ class TicketController extends Controller
             $user = $this->container->get('security.context')->getToken()->getUser();
             $message = $entity->getMessages()->current();
 
-            $entity->setUserCreated($user->getId());
-            $entity->setLastUser($user->getId());
+            $entity->setUserCreated($user);
+            $entity->setLastUser($user);
             $entity->setLastMessage(new \DateTime());
             $entity->setStatus($message->getStatus());
             $entity->setPriority($message->getPriority());
 
             $message->setTicket($entity);
-            $message->setUser($user->getId());
+            $message->setUser($user);
 
             $em->persist($entity);
             $em->persist($message);
@@ -144,13 +144,13 @@ class TicketController extends Controller
                 $ticket->setStatus($message->getStatus());
             }
 
-            $ticket->setUserCreated($user->getId());
-            $ticket->setLastUser($user->getId());
+            $ticket->setUserCreated($user);
+            $ticket->setLastUser($user);
             $ticket->setLastMessage(new \DateTime());
             $ticket->setPriority($message->getPriority());
             
             $message->setTicket($ticket);
-            $message->setUser($user->getId());
+            $message->setUser($user);
 
             $em->persist($ticket);
             $em->persist($message);

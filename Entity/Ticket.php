@@ -187,7 +187,7 @@ class Ticket
      */
     public function setUserCreated($userCreated)
     {
-        $this->userCreated = $userCreated;
+        $this->userCreated = $userCreated->getId();
     
         return $this;
     }
@@ -210,7 +210,7 @@ class Ticket
      */
     public function setLastUser($lastUser)
     {
-        $this->lastUser = $lastUser;
+        $this->lastUser = $lastUser->getId();
     
         return $this;
     }
