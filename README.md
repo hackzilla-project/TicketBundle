@@ -59,6 +59,12 @@ hackzilla_ticket:
     prefix:   /
 ```
 
+### Step 4: Roles
+
+All users can create tickets.
+You can assign ROLE_TICKET_ADMIN to any user you want to be able to administer the ticketing system.
+
+
 Pull Requests
 -------------
 
