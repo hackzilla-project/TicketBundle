@@ -1,7 +1,7 @@
 {
     "name": "hackzilla/ticket-bundle",
     "description": "Ticketing Bundle",
-    "license": "GPL-2.0+",
+    "license": "MIT",
     "authors": [
         {
             "name": "Daniel Platt",
