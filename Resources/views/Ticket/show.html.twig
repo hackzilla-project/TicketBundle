@@ -13,13 +13,13 @@
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">Created By:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{# if message.userCreated.isGranted('ROLE_TICKET_ADMIN') #}<span class="label label-default">Admin</span> {# endif #}{{ ticket.userCreated }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{% if ticket.userCreatedObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-default">Admin</span> {% endif %}{{ ticket.userCreatedObject }}</div>
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">Last Message By:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{# if ticket.lastUser.isGranted('ROLE_TICKET_ADMIN') #}<span class="label label-default">Admin</span> {# endif #}{{ ticket.lastUser }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{% if ticket.lastUserObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-default">Admin</span> {% endif %}{{ ticket.lastUserObject }}</div>
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">
@@ -52,7 +52,7 @@
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">Author:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{# if message.user.isGranted('ROLE_TICKET_ADMIN') #}<span class="label label-default">Admin</span> {# endif #}{{ message.user }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{% if message.userObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-default">Admin</span> {% endif %}{{ message.userObject }}</div>
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">

@@ -30,12 +30,16 @@ class Ticket
      */
     private $userCreated;
 
+    private $userCreatedObject;
+
     /**
      * @var integer
      * 
      * @ORM\Column(name="last_user_id", type="integer")
      */
     private $lastUser;
+
+    private $lastUserObject;
 
     /**
      * @var datetime
@@ -182,12 +186,18 @@ class Ticket
     /**
      * Set userCreated
      *
-     * @param integer $userCreated
+     * @param integer|object $userCreated
      * @return Ticket
      */
     public function setUserCreated($userCreated)
     {
-        $this->userCreated = $userCreated->getId();
+        if (\is_object($userCreated)) {
+            $this->userCreatedObject = $userCreated;
+            $this->userCreated = $userCreated->getId();
+        } else {
+            $this->userCreatedObject = null;
+            $this->userCreated = $userCreated;
+        }
     
         return $this;
     }
@@ -203,14 +213,30 @@ class Ticket
     }
 
     /**
+     * Get userCreated object
+     *
+     * @return object
+     */
+    public function getUserCreatedObject()
+    {
+        return $this->userCreatedObject;
+    }
+
+    /**
      * Set lastUser
      *
-     * @param integer $lastUser
+     * @param integer|object $lastUser
      * @return Ticket
      */
     public function setLastUser($lastUser)
     {
-        $this->lastUser = $lastUser->getId();
+        if (\is_object($lastUser)) {
+            $this->lastUserObject = $lastUser;
+            $this->lastUser = $lastUser->getId();
+        } else {
+            $this->lastUserObject = null;
+            $this->lastUser = $lastUser;
+        }
     
         return $this;
     }
@@ -223,6 +249,16 @@ class Ticket
     public function getLastUser()
     {
         return $this->lastUser;
+    }
+
+    /**
+     * Get lastUser object
+     *
+     * @return object
+     */
+    public function getLastUserObject()
+    {
+        return $this->lastUserObject;
     }
 
     /**

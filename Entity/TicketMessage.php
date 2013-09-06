@@ -34,6 +34,8 @@ class TicketMessage
      */
     private $user;
 
+    private $userObject;
+
     /**
      * @var string
      * 
@@ -198,12 +200,18 @@ class TicketMessage
     /**
      * Set user
      *
-     * @param integer $user
+     * @param integer|object $user
      * @return Message
      */
     public function setUser($user)
     {
-        $this->user = $user->getId();
+        if (\is_object($user)) {
+            $this->userObject = $user;
+            $this->user = $user->getId();
+        } else {
+            $this->userObject = null;
+            $this->user = $user;
+        }
     
         return $this;
     }
@@ -216,6 +224,16 @@ class TicketMessage
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Get user object
+     *
+     * @return object 
+     */
+    public function getUserObject()
+    {
+        return $this->userObject;
     }
 
     /**
