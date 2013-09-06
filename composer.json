@@ -10,12 +10,11 @@
         }
     ],
     "require": {
-        "php":  ">=5.3.2",
+        "php":  ">=5.3.3",
+        "symfony/symfony": "2.3.*",
         "friendsofsymfony/user-bundle":  "*",
         "knplabs/knp-paginator-bundle":  "*",
-    },
-    "suggest": {
-        "twig/twig": "to use outputHtml"
+        "symfony/symfony": "2.3.*",
     },
     "autoload": {
         "psr-0": {
