@@ -73,11 +73,23 @@
             <div class="col-lg-6 col-md-6 col-sm-6">{{ message.statusString }}</div>
         </div>
     </div>
-    <div class="col-lg-12">
-        Message:<br>
-        {{ message.message|nl2br }}
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        &nbsp;
     </div>
-    <div class="col-lg-12">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        Message:
+        {% if message.message %}
+            <br>{{ message.message|nl2br }}
+        {% else %}
+            -- Message was empty --
+        {% endif %}
+    </div>
+    {% if not previousStatus or previousStatus != message.status or previousPriority != message.priority %}
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        &nbsp;
+    </div>
+    {% endif %}
+    <div class="col-lg-12 col-md-12 col-sm-12">
         {% if not previousStatus %}
             Ticket opened with priority: {{ message.priorityString }}
         {% else %}
