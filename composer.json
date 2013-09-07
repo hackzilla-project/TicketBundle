@@ -19,8 +19,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Hackzilla\\TicketBundle": ""
+            "Hackzilla\\Bundle\\TicketBundle": ""
         }
     },
-    "target-dir": "Hackzilla/TicketBundle"
+    "target-dir": "Hackzilla/Bundle/TicketBundle"
 }
