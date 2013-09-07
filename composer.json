@@ -1,6 +1,8 @@
 {
     "name": "hackzilla/ticket-bundle",
-    "description": "Ticketing Bundle",
+    "description": "This Bundle provides ticketing functionality for Symfony2 applications",
+    "keywords": ["ticket", "help desk", "support"],
+    "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
         {
