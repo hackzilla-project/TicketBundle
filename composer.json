@@ -13,8 +13,7 @@
         "php":  ">=5.3.3",
         "symfony/symfony": "2.3.*",
         "friendsofsymfony/user-bundle":  "*",
-        "knplabs/knp-paginator-bundle":  "*",
-        "symfony/symfony": "2.3.*",
+        "knplabs/knp-paginator-bundle":  "*"
     },
     "autoload": {
         "psr-0": {
