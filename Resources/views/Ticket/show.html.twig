@@ -120,18 +120,14 @@
 </form>
 {% endif %}
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('hackzilla_ticket') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('hackzilla_ticket_delete', { 'id': ticket.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+<form action="{{ path('hackzilla_ticket_delete', { 'id': ticket.id }) }}" method="post">
+    <input type="hidden" name="_method" value="DELETE" />
+    {{ form_widget(delete_form) }}
+
+    <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">
+        Back to the list
+    </a>
+
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
 {% endblock %}
