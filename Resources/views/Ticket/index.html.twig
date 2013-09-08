@@ -3,6 +3,13 @@
 {% block hackzilla_ticket_content -%}
 <a href="{{ path('hackzilla_ticket_new') }}" class="btn btn-primary pull-right">New ticket</a>
 <h1>Ticket list</h1>
+<p>Show
+{%- if ticketState == 'closed' %}
+    <a href="?state=open">open</a>
+{% else %}
+    <a href="?state=closed">closed</a>
+{% endif -%}
+tickets.</p>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>

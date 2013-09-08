@@ -25,22 +25,45 @@ class TicketController extends Controller
         $securityContext = $this->get('security.context');
         $em = $this->getDoctrine()->getManager();
 
-        if ($securityContext->isGranted('ROLE_TICKET_ADMIN')) {
-            $dql   = "SELECT t FROM HackzillaTicketBundle:Ticket t";
-        } else {
-            $dql   = "SELECT t FROM HackzillaTicketBundle:Ticket t WHERE t.userCreated = " . $securityContext->getToken()->getUser()->getId();
+        $ticketState = $request->get('state', 'open');
+
+        $repository = $this->getDoctrine()
+            ->getRepository('HackzillaTicketBundle:Ticket');
+
+        $query = $repository->createQueryBuilder('p')
+            ->orderBy('p.lastMessage', 'DESC');
+
+        switch($ticketState)
+        {
+            case 'closed':
+                $query
+                    ->andWhere('p.status = :status')
+                    ->setParameter('status', TicketMessage::STATUS_CLOSED);
+                break;
+
+            case 'open':
+            default:
+                $query
+                    ->andWhere('p.status != :status')
+                    ->setParameter('status', TicketMessage::STATUS_CLOSED);
         }
-        $query = $em->createQuery($dql);
+        
+        if (!$securityContext->isGranted('ROLE_TICKET_ADMIN')) {
+            $query
+                ->andWhere('p.userCreated = :userId')
+                ->setParameter('userId', $securityContext->getToken()->getUser()->getId());
+        }
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $query,
+            $query->getQuery(),
             $request->query->get('page', 1)/*page number*/,
             10/*limit per page*/
         );
 
         return $this->render('HackzillaTicketBundle:Ticket:index.html.twig', array(
             'pagination' => $pagination,
+            'ticketState' => $ticketState,
         ));
     }
 
