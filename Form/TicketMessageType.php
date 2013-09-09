@@ -46,11 +46,6 @@ class TicketMessageType extends AbstractType
                         ))
                         ->addModelTransformer($statusTransformer)
                     );
-//                $builder->add('status', 'checkbox', array(
-//                    'label' => 'Mark solved',
-//                    'required' => false,
-//                    'value' => 'closed',
-//                ));
             }
         }
     }
