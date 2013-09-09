@@ -17,6 +17,9 @@
         "friendsofsymfony/user-bundle":  "*",
         "knplabs/knp-paginator-bundle":  "*"
     },
+    "suggest": {
+        "twitter/bootstrap": "used to define the layout (v3)"
+    },
     "autoload": {
         "psr-0": {
             "Hackzilla\\Bundle\\TicketBundle": ""
