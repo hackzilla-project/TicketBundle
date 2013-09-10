@@ -68,4 +68,4 @@ You can assign ROLE_TICKET_ADMIN to any user you want to be able to administer t
 Pull Requests
 -------------
 
-I'm open to pull requests for additional features and/or improvements.
+I'm open to pull requests for additional languages, features and/or improvements.
