@@ -1,7 +1,7 @@
 {% extends 'HackzillaTicketBundle::layout.html.twig' %}
 
 {% block hackzilla_ticket_content -%}
-<h1>Ticket creation</h1>
+<h1>{{ 'HEADING_NEW_TICKET'|trans }}</h1>
 
 <form action="{{ path('hackzilla_ticket_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" role="form">
 
@@ -17,10 +17,10 @@
     {{ form_rest(form) }}
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10 col-md-offset-2 col-md-10 col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">{{ 'BUTTON_CREATE'|trans }}</button>
 
             <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">
-                Back to the list
+                {{ 'BUTTON_BACK_TO_LIST'|trans }}
             </a>
         </div>
     </div>

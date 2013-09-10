@@ -1,43 +1,43 @@
 {% extends 'HackzillaTicketBundle::layout.html.twig' %}
 
 {% block hackzilla_ticket_content -%}
-<h1>Ticket #{{ ticket.id }}</h1>
+<h1>{{ 'HEADING_TICKET_ID'|trans({'%id%': ticket.id}) }}</h1>
 
 <div class="row well">
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">Created:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_CREATED'|trans }}:</div>
             <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.createdAt|date('Y-m-d H:i:s') }}</div>
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">Created By:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{% if ticket.userCreatedObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-default">Admin</span> {% endif %}{{ ticket.userCreatedObject }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_CREATED_BY'|trans }}:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{% if ticket.userCreatedObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-default">{{ 'LABEL_ADMIN'|trans }}</span> {% endif %}{{ ticket.userCreatedObject }}</div>
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">Last Message By:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{% if ticket.lastUserObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-default">Admin</span> {% endif %}{{ ticket.lastUserObject }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'HEADING_LAST_MESSAGE_BY'|trans }}:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{% if ticket.lastUserObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-default">{{ 'LABEL_ADMIN'|trans }}</span> {% endif %}{{ ticket.lastUserObject }}</div>
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">Status:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.statusString }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_STATUS'|trans }}:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.statusString|trans }}</div>
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">Last Modified:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'HEADING_LAST_MODIFIED'|trans }}:</div>
             <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.lastMessage|date('Y-m-d H:i:s') }}</div>
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">Priority:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.priorityString }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_PRIORITY'|trans }}:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.priorityString|trans }}</div>
         </div>
     </div>
 </div>
@@ -45,43 +45,43 @@
 {% set previousStatus = null %}
 {% set previousPriority = null %}
 
-<h3>Ticket Thread</h3>
+<h3>{{ 'HEADING_TICKET_THREAD'|trans }}</h3>
 <div class="ticket-messages">
 {% for message in ticket.messages %}
 <div class="ticket-message row well">
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">Author:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{% if message.userObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-default">Admin</span> {% endif %}{{ message.userObject }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_AUTHOR'|trans }}:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{% if message.userObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-default">{{ 'LABEL_ADMIN'|trans }}</span> {% endif %}{{ message.userObject }}</div>
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">Date:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_DATE'|trans }}:</div>
             <div class="col-lg-6 col-md-6 col-sm-6">{{ message.createdAt|date('Y-m-d H:i:s') }}</div>
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">Priority:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ message.priorityString }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_PRIORITY'|trans }}:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ message.priorityString|trans }}</div>
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">Status:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ message.statusString }}</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_STATUS'|trans }}:</div>
+            <div class="col-lg-6 col-md-6 col-sm-6">{{ message.statusString|trans }}</div>
         </div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12">
         &nbsp;
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12">
-        Message:
+        {{ 'LABEL_MESSAGE'|trans }}:
         {% if message.message %}
             <br>{{ message.message|nl2br }}
         {% else %}
-            -- Message was empty --
+            {{ 'MESSAGE_EMPTY'|trans }}
         {% endif %}
     </div>
     {% if not previousStatus or previousStatus != message.status or previousPriority != message.priority %}
@@ -91,13 +91,13 @@
     {% endif %}
     <div class="col-lg-12 col-md-12 col-sm-12">
         {% if not previousStatus %}
-            Ticket opened with priority: {{ message.priorityString }}
+            {{ 'MESSAGE_TICKET_OPENED'|trans({'%priority%': message.priorityString|trans}) }}
         {% else %}
             {% if(previousStatus != message.status) %}
-                Status was changed to {{ message.statusString }}.
+                {{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': message.statusString|trans}) }}
             {% endif %}
             {% if(previousPriority != message.priority) %}
-                Priority was changed to {{ message.priorityString }}.
+                {{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': message.priorityString|trans}) }}
             {% endif %}
         {% endif %}
     </div>
@@ -115,7 +115,7 @@
     {{ form_rest(form) }}
     
     <p class="form_actions">
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">{{ 'BUTTON_UPDATE'|trans }}</button>
     </p>
 </form>
 {% endif %}
@@ -125,9 +125,9 @@
     {{ form_widget(delete_form) }}
 
     <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">
-        Back to the list
+        {{ 'BUTTON_BACK_TO_LIST'|trans }}
     </a>
 
-    <button type="submit" class="btn btn-danger">Delete</button>
+    <button type="submit" class="btn btn-danger">{{ 'BUTTON_DELETE'|trans }}</button>
 </form>
 {% endblock %}

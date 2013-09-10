@@ -1,24 +1,26 @@
 {% extends 'HackzillaTicketBundle::layout.html.twig' %}
 
 {% block hackzilla_ticket_content -%}
-<a href="{{ path('hackzilla_ticket_new') }}" class="btn btn-primary pull-right">New ticket</a>
-<h1>Ticket list</h1>
-<p>Show
+<a href="{{ path('hackzilla_ticket_new') }}" class="btn btn-primary pull-right">{{ 'BUTTON_NEW'|trans }}</a>
+<h1>{{ 'HEADING_TICKET_LIST'|trans }}</h1>
+
 {%- if ticketState == 'closed' %}
-    <a href="?state=open">open</a>
+        {% set state %}<a href="?state={{ 'STATUS_OPEN'|trans }}">{{ 'STATUS_OPEN'|trans }}</a>{% endset %}
 {% else %}
-    <a href="?state=closed">closed</a>
+        {% set state %}<a href="?state={{ 'STATUS_CLOSED'|trans }}">{{ 'STATUS_CLOSED'|trans }}</a>{% endset %}
 {% endif -%}
-tickets.</p>
+
+<p>{{ 'BUTTON_TOGGLE_STATE'|trans({'%state%': state })|raw }}</p>
+
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>{{ knp_pagination_sortable(pagination, 'Ticket', 't.id') }}</th>
-            <th{% if pagination.isSorted('t.Subject') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Subject', 't.subject') }}</th>
-            <th{% if pagination.isSorted('t.status') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Status', 't.status') }}</th>
-            <th{% if pagination.isSorted('t.priority') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Priority', 't.priority') }}</th>
-            <th{% if pagination.isSorted('t.modified') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Modified', 't.lastMesage') }}</th>
-            <th{% if pagination.isSorted('t.created') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Created', 't.createdAt') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'HEADING_TICKET'|trans, 't.id') }}</th>
+            <th{% if pagination.isSorted('t.Subject') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_SUBJECT'|trans, 't.subject') }}</th>
+            <th{% if pagination.isSorted('t.status') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_STATUS'|trans, 't.status') }}</th>
+            <th{% if pagination.isSorted('t.priority') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_PRIORITY'|trans, 't.priority') }}</th>
+            <th{% if pagination.isSorted('t.modified') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_MODIFIED'|trans, 't.lastMesage') }}</th>
+            <th{% if pagination.isSorted('t.created') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_CREATED'|trans, 't.createdAt') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -26,14 +28,14 @@ tickets.</p>
         <tr>
             <td><a href="{{ path('hackzilla_ticket_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td><a href="{{ path('hackzilla_ticket_show', { 'id': entity.id }) }}">{{ entity.subject }}</a></td>
-            <td>{{ entity.statusString }}</td>
-            <td>{{ entity.priorityString }}</td>
+            <td>{{ entity.statusString|trans }}</td>
+            <td>{{ entity.priorityString|trans }}</td>
             <td>{% if entity.lastMessage %}{{ entity.lastMessage|date('Y-m-d H:i:s') }}{% endif %}</td>
             <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
         </tr>
     {% else %}
         <tr>
-            <td colspan="6">No tickets found.</td>
+            <td colspan="6">{{ 'MESSAGE_NO_TICKETS'|trans }}.</td>
         </tr>
     {% endfor %}
     </tbody>

@@ -26,23 +26,28 @@ class TicketMessageType extends AbstractType
     {
         $builder
                 ->add('message', 'textarea', array(
+                    'label' => 'LABEL_MESSAGE',
                     'required' => false,
                 ))
-                ->add('priority', new Type\PriorityType());
+                ->add('priority', new Type\PriorityType(), array(
+                    'label' => 'LABEL_PRIORITY',
+                ));
 
         // if existing ticket add status
         if (!$this->_newTicket) {
             if ($this->_securityContent->isGranted('ROLE_TICKET_ADMIN')) {
-                $builder->add('status', new Type\StatusType());
+                $builder->add('status', new Type\StatusType(), array(
+                    'label' => 'LABEL_STATUS',
+                ));
             } else {
                 $statusTransformer = new DataTransformer\StatusTransformer();
 
                 $builder
                     ->add(
                         $builder->create('status', 'checkbox', array(
-                            'label' => 'Mark solved',
+                            'label' => 'LABEL_MARK_SOLVED',
                             'required' => false,
-                            'value' => 'closed',
+                            'value' => 'STATUS_CLOSED',
                         ))
                         ->addModelTransformer($statusTransformer)
                     );

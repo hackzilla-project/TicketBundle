@@ -23,9 +23,11 @@ class TicketController extends Controller
     public function indexAction(Request $request)
     {
         $securityContext = $this->get('security.context');
+        $translator = $this->get('translator');
+
         $em = $this->getDoctrine()->getManager();
 
-        $ticketState = $request->get('state', 'open');
+        $ticketState = $request->get('state', $translator->trans('STATUS_OPEN'));
 
         $repository = $this->getDoctrine()
             ->getRepository('HackzillaTicketBundle:Ticket');
@@ -35,13 +37,13 @@ class TicketController extends Controller
 
         switch($ticketState)
         {
-            case 'closed':
+            case $translator->trans('STATUS_CLOSED'):
                 $query
                     ->andWhere('p.status = :status')
                     ->setParameter('status', TicketMessage::STATUS_CLOSED);
                 break;
 
-            case 'open':
+            case $translator->trans('STATUS_OPEN'):
             default:
                 $query
                     ->andWhere('p.status != :status')
@@ -227,7 +229,7 @@ class TicketController extends Controller
             $entity = $em->getRepository('HackzillaTicketBundle:Ticket')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Ticket entity.');
+                throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
             }
 
             $em->remove($entity);
