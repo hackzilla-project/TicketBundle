@@ -8,9 +8,9 @@ Simple ticketing bundle to add to any project.
 Requirements
 ------------
 
-FOSUserBundle
-Knp Paginator
-
+* FOSUserBundle
+* Knp Paginator
+* Bootstrap v3 (optional)
 
 
 Installation
