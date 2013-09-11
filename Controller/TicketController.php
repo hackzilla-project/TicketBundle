@@ -32,27 +32,27 @@ class TicketController extends Controller
         $repository = $this->getDoctrine()
             ->getRepository('HackzillaTicketBundle:Ticket');
 
-        $query = $repository->createQueryBuilder('p')
-            ->orderBy('p.lastMessage', 'DESC');
+        $query = $repository->createQueryBuilder('t')
+            ->orderBy('t.lastMessage', 'DESC');
 
         switch($ticketState)
         {
             case $translator->trans('STATUS_CLOSED'):
                 $query
-                    ->andWhere('p.status = :status')
+                    ->andWhere('t.status = :status')
                     ->setParameter('status', TicketMessage::STATUS_CLOSED);
                 break;
 
             case $translator->trans('STATUS_OPEN'):
             default:
                 $query
-                    ->andWhere('p.status != :status')
+                    ->andWhere('t.status != :status')
                     ->setParameter('status', TicketMessage::STATUS_CLOSED);
         }
         
         if (!$securityContext->isGranted('ROLE_TICKET_ADMIN')) {
             $query
-                ->andWhere('p.userCreated = :userId')
+                ->andWhere('t.userCreated = :userId')
                 ->setParameter('userId', $securityContext->getToken()->getUser()->getId());
         }
 
