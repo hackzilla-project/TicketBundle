@@ -4,6 +4,8 @@ namespace Hackzilla\Bundle\TicketBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
+
 /**
  * TicketRepository
  *
@@ -12,4 +14,32 @@ use Doctrine\ORM\EntityRepository;
  */
 class TicketRepository extends EntityRepository
 {
+    public function getTicketList($securityContext, $ticketStatus)
+    {
+        $query = $this->createQueryBuilder('t')
+            ->orderBy('t.lastMessage', 'DESC');
+
+        switch($ticketStatus)
+        {
+            case TicketMessage::STATUS_CLOSED:
+                $query
+                    ->andWhere('t.status = :status')
+                    ->setParameter('status', TicketMessage::STATUS_CLOSED);
+                break;
+
+            case TicketMessage::STATUS_OPEN:
+            default:
+                $query
+                    ->andWhere('t.status != :status')
+                    ->setParameter('status', TicketMessage::STATUS_CLOSED);
+        }
+             
+        if (!$securityContext->isGranted('ROLE_TICKET_ADMIN')) {
+            $query
+                ->andWhere('t.userCreated = :userId')
+                ->setParameter('userId', $securityContext->getToken()->getUser()->getId());
+        }
+
+        return $query;
+    }
 }

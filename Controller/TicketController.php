@@ -29,32 +29,13 @@ class TicketController extends Controller
 
         $ticketState = $request->get('state', $translator->trans('STATUS_OPEN'));
 
-        $repository = $this->getDoctrine()
+        $repositoryTicket = $this->getDoctrine()
             ->getRepository('HackzillaTicketBundle:Ticket');
-
-        $query = $repository->createQueryBuilder('t')
-            ->orderBy('t.lastMessage', 'DESC');
-
-        switch($ticketState)
-        {
-            case $translator->trans('STATUS_CLOSED'):
-                $query
-                    ->andWhere('t.status = :status')
-                    ->setParameter('status', TicketMessage::STATUS_CLOSED);
-                break;
-
-            case $translator->trans('STATUS_OPEN'):
-            default:
-                $query
-                    ->andWhere('t.status != :status')
-                    ->setParameter('status', TicketMessage::STATUS_CLOSED);
-        }
         
-        if (!$securityContext->isGranted('ROLE_TICKET_ADMIN')) {
-            $query
-                ->andWhere('t.userCreated = :userId')
-                ->setParameter('userId', $securityContext->getToken()->getUser()->getId());
-        }
+        $repositoryTicketMessage = $this->getDoctrine()
+            ->getRepository('HackzillaTicketBundle:TicketMessage');
+        
+        $query = $repositoryTicket->getTicketList($securityContext, $repositoryTicketMessage->getTicketStatus($translator, $ticketState));
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
