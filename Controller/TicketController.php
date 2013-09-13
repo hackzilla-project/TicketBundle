@@ -66,6 +66,7 @@ class TicketController extends Controller
             $em = $this->getDoctrine()->getManager();
             $user = $this->container->get('security.context')->getToken()->getUser();
             $message = $entity->getMessages()->current();
+            $message->setStatus(TicketMessage::STATUS_OPEN);
 
             $entity->setUserCreated($user);
             $entity->setLastUser($user);
