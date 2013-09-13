@@ -10,7 +10,7 @@ Requirements
 
 * FOSUserBundle
 * Knp Paginator
-* Bootstrap v3 (optional)
+* Bootstrap v3 (optional) see: https://coderwall.com/p/kzyiaw
 
 
 Installation
