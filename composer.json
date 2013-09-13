@@ -1,14 +1,15 @@
 {
     "name": "hackzilla/ticket-bundle",
-    "description": "This Bundle provides ticketing functionality for Symfony2 applications",
-    "keywords": ["ticket", "help desk", "support"],
+    "description": "This Bundle provides ticketing functionality for Symfony2 applications. Multilingual capable",
+    "keywords": ["ticket", "ticketing", "help desk", "helpdesk", "support", "multilingual", "english"],
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
         {
             "name": "Daniel Platt",
             "email": "github@ofdan.co.uk",
-            "homepage": "http://www.hackzilla.org"
+            "homepage": "http://www.hackzilla.org",
+            "role": "Developer"
         }
     ],
     "require": {
