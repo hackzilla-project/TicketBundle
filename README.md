@@ -64,6 +64,10 @@ hackzilla_ticket:
 All users can create tickets.
 You can assign ROLE_TICKET_ADMIN to any user you want to be able to administer the ticketing system.
 
+### Step 5: Create tables
+
+```app/console doctrine:schema:update --dump-sql```
+
 
 Pull Requests
 -------------
