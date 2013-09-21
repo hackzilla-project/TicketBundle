@@ -12,7 +12,7 @@ class TicketType extends AbstractType
     private $_securityContent;
 
     public function __construct(SecurityContextInterface $securityContext)
-    {        
+    {
         $this->_securityContent = $securityContext;
     }
     
