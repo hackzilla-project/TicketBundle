@@ -46,7 +46,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new Hackzilla\TicketBundle\HackzillaTicketBundle(),
+        new Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle(),
     );
 }
 ```
