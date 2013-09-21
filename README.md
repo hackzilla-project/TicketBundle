@@ -21,7 +21,7 @@ Add HackzillaTicketBundle in your composer.json:
 ```js
 {
     "require": {
-        "hackzilla/ticket-bundle": "*"
+        "hackzilla/ticket-bundle": "dev-master"
     }
 }
 ```
