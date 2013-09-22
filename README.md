@@ -46,7 +46,9 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
+        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         new Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle(),
+        new Hackzilla\Bundle\FOSUserBridgeBundle\HackzillaFOSUserBridgeBundle(),
     );
 }
 ```
