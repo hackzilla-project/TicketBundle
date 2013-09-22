@@ -114,8 +114,9 @@ class TicketController extends Controller
     public function showAction(Ticket $ticket)
     {
         $userManager = $this->get('hackzilla_ticket.user');
+        $user = $userManager->getCurrentUser();
 
-        if (!$userManager->hasRole('ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $userManager->getCurrentUser()->getId()) {
+        if (!\is_object($user) && !$userManager->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId()) {
              throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
@@ -144,7 +145,9 @@ class TicketController extends Controller
     {
         $userManager = $this->get('hackzilla_ticket.user');
 
-        if (!$userManager->isGranted('ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $userManager->getCurrentUser()->getId()) {
+        $user = $userManager->getCurrentUser();
+
+        if (!\is_object($user) && !$userManager->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId()) {
              throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
@@ -198,8 +201,9 @@ class TicketController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $userManager = $this->get('hackzilla_ticket.user');
+        $user = $userManager->getCurrentUser();
 
-        if (!$userManager->hasRole('ROLE_TICKET_ADMIN')) {
+        if (!\is_object($user) && !$userManager->hasRole($user, 'ROLE_TICKET_ADMIN')) {
              throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
