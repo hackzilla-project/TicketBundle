@@ -10,9 +10,10 @@ class TicketMessageTypeTest extends WebTestCase
 
     public function setUp()
     {
-        $securityContext = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        $userManager = $this->getMock('Hackzilla\Interfaces\User\UserInterfaces');
+        $this->assertTrue($userManager instanceof \Hackzilla\Interfaces\User\UserInterfaces);
 
-        $this->_object = new \Hackzilla\Bundle\TicketBundle\Form\TicketMessageType($securityContext);
+        $this->_object = new \Hackzilla\Bundle\TicketBundle\Form\TicketMessageType($userManager);
     }
 
     public function tearDown()
