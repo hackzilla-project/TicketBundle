@@ -56,15 +56,15 @@ class TicketController extends Controller
      */
     public function createAction(Request $request)
     {
-        $securityContext = $this->get('security.context');
+        $userManager = $this->get('hackzilla_ticket.user');
 
         $entity  = new Ticket();
-        $form = $this->createForm(new TicketType($securityContext), $entity);
+        $form = $this->createForm(new TicketType($userManager), $entity);
         $form->submit($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $user = $this->container->get('security.context')->getToken()->getUser();
+            $user = $userManager->getCurrentUser();
             $message = $entity->getMessages()->current();
             $message->setStatus(TicketMessage::STATUS_OPEN);
 
@@ -113,9 +113,9 @@ class TicketController extends Controller
      */
     public function showAction(Ticket $ticket)
     {
-        $securityContext = $this->get('security.context');
+        $userManager = $this->get('hackzilla_ticket.user');
 
-        if (!$securityContext->isGranted('ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $securityContext->getToken()->getUser()->getId()) {
+        if (!$userManager->hasRole('ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $userManager->getCurrentUser()->getId()) {
              throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
@@ -128,7 +128,7 @@ class TicketController extends Controller
         $message->setPriority($ticket->getPriority());
 
         if (TicketMessage::STATUS_CLOSED != $ticket->getStatus()) {
-            $data['form'] = $this->createForm(new TicketMessageType($securityContext), $message)->createView();
+            $data['form'] = $this->createForm(new TicketMessageType($userManager), $message)->createView();
         }
 
         $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
@@ -142,21 +142,21 @@ class TicketController extends Controller
      */
     public function replyAction(Request $request, Ticket $ticket)
     {
-        $securityContext = $this->get('security.context');
+        $userManager = $this->get('hackzilla_ticket.user');
 
-        if (!$securityContext->isGranted('ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $securityContext->getToken()->getUser()->getId()) {
+        if (!$userManager->isGranted('ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $userManager->getCurrentUser()->getId()) {
              throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
         $message = new TicketMessage();
         $message->setPriority($ticket->getPriority());
         
-        $form = $this->createForm(new TicketMessageType($securityContext), $message);
+        $form = $this->createForm(new TicketMessageType($userManager), $message);
         $form->submit($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $user = $securityContext->getToken()->getUser();
+            $user = $userManager->getCurrentUser();
 
             // if ticket not closed, then it'll be set to null
             if (\is_null($message->getStatus())) {
@@ -197,9 +197,9 @@ class TicketController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $securityContext = $this->get('security.context');
+        $userManager = $this->get('hackzilla_ticket.user');
 
-        if (!$securityContext->isGranted('ROLE_TICKET_ADMIN')) {
+        if (!$userManager->hasRole('ROLE_TICKET_ADMIN')) {
              throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
