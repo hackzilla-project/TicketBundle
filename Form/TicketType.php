@@ -7,13 +7,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use Hackzilla\Interfaces\User\UserInterfaces;
+
 class TicketType extends AbstractType
 {
-    private $_securityContent;
+    private $_userManager;
 
-    public function __construct(SecurityContextInterface $securityContext)
+    public function __construct(UserInterfaces $userManager)
     {
-        $this->_securityContent = $securityContext;
+        $this->_userManager = $userManager;
     }
     
     /**
@@ -25,7 +27,7 @@ class TicketType extends AbstractType
         $builder
             ->add('subject')
             ->add('messages', 'collection', array(
-                'type' => new TicketMessageType($this->_securityContent, $newTicket = true),
+                'type' => new TicketMessageType($this->_userManager, $newTicket = true),
                 'label' => false,
                 'allow_add' => true,
 //                'by_reference' => false,

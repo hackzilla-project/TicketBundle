@@ -22,7 +22,7 @@ class TicketController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $securityContext = $this->get('security.context');
+        $userManager = $this->get('hackzilla_ticket.user');
         $translator = $this->get('translator');
 
         $em = $this->getDoctrine()->getManager();
@@ -35,7 +35,7 @@ class TicketController extends Controller
         $repositoryTicketMessage = $this->getDoctrine()
             ->getRepository('HackzillaTicketBundle:TicketMessage');
         
-        $query = $repositoryTicket->getTicketList($securityContext, $repositoryTicketMessage->getTicketStatus($translator, $ticketState));
+        $query = $repositoryTicket->getTicketList($userManager, $repositoryTicketMessage->getTicketStatus($translator, $ticketState));
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(

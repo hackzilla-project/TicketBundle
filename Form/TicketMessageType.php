@@ -7,14 +7,16 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use Hackzilla\Interfaces\User\UserInterfaces;
+
 class TicketMessageType extends AbstractType
 {
-    private $_securityContent;
+    private $_userManager;
     private $_newTicket;
 
-    public function __construct(SecurityContextInterface $securityContext, $newTicket = false)
+    public function __construct(UserInterfaces $userManager, $newTicket = false)
     {        
-        $this->_securityContent = $securityContext;
+        $this->_userManager = $userManager;
         $this->_newTicket = $newTicket;
     }
 
@@ -35,7 +37,7 @@ class TicketMessageType extends AbstractType
 
         // if existing ticket add status
         if (!$this->_newTicket) {
-            if ($this->_securityContent->isGranted('ROLE_TICKET_ADMIN')) {
+            if ($this->_userManager->hasRole('ROLE_TICKET_ADMIN')) {
                 $builder->add('status', new Type\StatusType(), array(
                     'label' => 'LABEL_STATUS',
                 ));

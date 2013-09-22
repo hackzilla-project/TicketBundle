@@ -26,33 +26,19 @@ class UserLoad
     {
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
+        $userManager = $this->container->get('hackzilla_ticket.user');
 
         if ($entity instanceof Ticket) {
             if (\is_null($entity->getUserCreatedObject())) {
-                $entity->setUserCreated($this->getUserById($entity->getUserCreated()));
+                $entity->setUserCreated($userManager->getUserById($entity->getUserCreated()));
             }
             if (\is_null($entity->getLastUserObject())) {
-                $entity->setLastUser($this->getUserById($entity->getLastUser()));
+                $entity->setLastUser($userManager->getUserById($entity->getLastUser()));
             }
         } else if ($entity instanceof TicketMessage) {
             if (\is_null($entity->getUserObject())) {
-                $entity->setUser($this->getUserById($entity->getUser()));
+                $entity->setUser($userManager->getUserById($entity->getUser()));
             }
         }
-    }
-
-    /**
-     * Get the user object by id
-     * 
-     * Would like to remove this somehow to remove the dependency on FOS User Bundle
-     */
-    public function getUserById($userId)
-    {
-        $user = $this->container->get('fos_user.user_manager')->findUserBy(array(
-            'id' => $userId,
-        ));
-        
-       // var_dump($user);
-        return $user;
     }
 }

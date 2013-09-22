@@ -7,7 +7,7 @@ class UserExtension extends \Twig_Extension
     private $userManager;
 
     public function __construct($container) {
-        $this->userManager = $container->get('fos_user.user_manager');
+        $this->userManager = $container->get('hackzilla_ticket.user');
     }
 
     public function getFilters() {
@@ -19,9 +19,7 @@ class UserExtension extends \Twig_Extension
     public function isTicketAdmin($user, $role)
     {
         if (!is_object($user)) {
-            $user = $this->userManager->findUserBy(array(
-                'id' => $user,
-            ));
+            $user = $this->userManager->getUserById($user);
         }
 
         return $user->hasRole($role);
