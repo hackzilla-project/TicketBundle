@@ -218,6 +218,10 @@ class TicketController extends Controller
                 throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
             }
 
+            foreach ($entity->getMessages() as $message) {
+                $em->remove($message);
+            }
+
             $em->remove($entity);
             $em->flush();
         }
