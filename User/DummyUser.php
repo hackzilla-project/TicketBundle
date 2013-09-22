@@ -25,6 +25,6 @@ class DummyUser implements \Hackzilla\Interfaces\User\UserInterface
  
     public function hasRole($user, $role)
     {
-        $this->securityContext->isGranted($role);
+        return $this->securityContext->isGranted($role);
     }
 }
