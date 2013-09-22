@@ -6,13 +6,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-use Hackzilla\Interfaces\User\UserInterfaces;
+use Hackzilla\Interfaces\User\UserInterface;
 
 class TicketType extends AbstractType
 {
     private $_userManager;
 
-    public function __construct(UserInterfaces $userManager)
+    public function __construct(UserInterface $userManager)
     {
         $this->_userManager = $userManager;
     }
