@@ -36,7 +36,9 @@ class TicketMessageType extends AbstractType
 
         // if existing ticket add status
         if (!$this->_newTicket) {
-            if ($this->_userManager->hasRole('ROLE_TICKET_ADMIN')) {
+            $user = $this->_userManager->getCurrentUser();
+
+            if ($this->_userManager->hasRole($user, 'ROLE_TICKET_ADMIN')) {
                 $builder->add('status', new Type\StatusType(), array(
                     'label' => 'LABEL_STATUS',
                 ));
