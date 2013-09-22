@@ -98,8 +98,8 @@ class TicketController extends Controller
     public function newAction()
     {
         $entity = new Ticket();
-        $securityContext = $this->get('security.context');
-        $form   = $this->createForm(new TicketType($securityContext), $entity);
+        $userManager = $this->get('hackzilla_ticket.user');
+        $form   = $this->createForm(new TicketType($userManager), $entity);
 
         return $this->render('HackzillaTicketBundle:Ticket:new.html.twig', array(
             'entity' => $entity,
