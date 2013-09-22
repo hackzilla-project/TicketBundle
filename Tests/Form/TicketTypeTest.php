@@ -10,8 +10,8 @@ class TicketTypeTest extends WebTestCase
 
     public function setUp()
     {
-        $userManager = $this->getMock('Hackzilla\Interfaces\User\UserInterfaces');
-        $this->assertTrue($userManager instanceof \Hackzilla\Interfaces\User\UserInterfaces);
+        $userManager = $this->getMock('Hackzilla\Interfaces\User\UserInterface');
+        $this->assertTrue($userManager instanceof \Hackzilla\Interfaces\User\UserInterface);
 
         $this->_object = new \Hackzilla\Bundle\TicketBundle\Form\TicketType($userManager);
     }
