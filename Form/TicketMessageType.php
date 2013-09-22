@@ -4,7 +4,6 @@ namespace Hackzilla\Bundle\TicketBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Hackzilla\Interfaces\User\UserInterfaces;
