@@ -49,6 +49,8 @@ public function registerBundles()
         new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         new Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle(),
         new Hackzilla\Bundle\FOSUserBridgeBundle\HackzillaFOSUserBridgeBundle(),
+        // ...
+        // Your application bundles
     );
 }
 ```
@@ -69,6 +71,23 @@ You can assign ROLE_TICKET_ADMIN to any user you want to be able to administer t
 ### Step 5: Create tables
 
 ```app/console doctrine:schema:update --dump-sql```
+
+### Step 6: You FOS Plugin for User lookup.
+
+In your services.xml
+
+```xml
+    <parameters>
+        <parameter key="hackzilla_ticket.user_bridge.class">Hackzilla\Bundle\FOSUserBridgeBundle\User\FOSUser</parameter>
+    </parameters>
+```
+
+Or in your services.yml
+
+```yml
+parameters:
+    hackzilla_ticket.user_bridge.class: Hackzilla\Bundle\FOSUserBridgeBundle\User\FOSBridge
+```
 
 
 Pull Requests
