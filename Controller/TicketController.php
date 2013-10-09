@@ -116,7 +116,7 @@ class TicketController extends Controller
         $userManager = $this->get('hackzilla_ticket.user');
         $user = $userManager->getCurrentUser();
 
-        if (\is_object($user) || (!$userManager->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
+        if (!\is_object($user) || (!$userManager->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
              throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
