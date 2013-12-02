@@ -28,5 +28,10 @@
             "Hackzilla\\Bundle\\TicketBundle": ""
         }
     },
-    "target-dir": "Hackzilla/Bundle/TicketBundle"
+    "target-dir": "Hackzilla/Bundle/TicketBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
 }
