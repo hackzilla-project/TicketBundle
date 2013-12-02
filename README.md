@@ -89,6 +89,8 @@ parameters:
     hackzilla_ticket.user_bridge.class: Hackzilla\Bundle\FOSUserBridgeBundle\User\FOSBridge
 ```
 
+If this fails to work, make sure your bundle is declared after the HackzillaFOSUserBridgeBundle() in AppKernel.php
+
 
 Pull Requests
 -------------
