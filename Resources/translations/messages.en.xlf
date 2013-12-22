@@ -40,6 +40,14 @@
                 <source>PRIORITY_HIGH</source>
                 <target>high</target>
             </trans-unit>
+            <trans-unit id="10">
+                <source>STATUS_INVALID</source>
+                <target>?</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>PRIORITY_INVALID</source>
+                <target>?</target>
+            </trans-unit>
 
             <!-- views / headings -->
             <trans-unit id="80">

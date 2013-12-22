@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TicketMessage
 {
+
     /**
      * @var integer
      *
@@ -33,7 +34,6 @@ class TicketMessage
      * @ORM\Column(name="user_id", type="integer")
      */
     private $user;
-
     private $userObject;
 
     /**
@@ -64,8 +64,7 @@ class TicketMessage
      */
     private $createdAt;
 
-
-
+    const STATUS_INVALID = 0;
     const STATUS_OPEN = 10;
     const STATUS_IN_PROGRESS = 11;
     const STATUS_INFOMATION_REQUESTED = 12;
@@ -74,6 +73,7 @@ class TicketMessage
     const STATUS_CLOSED = 15;
 
     static public $statuses = array(
+        self::STATUS_INVALID => 'STATUS_INVALID',
         self::STATUS_OPEN => 'STATUS_OPEN',
         self::STATUS_IN_PROGRESS => 'STATUS_IN_PROGRESS',
         self::STATUS_INFOMATION_REQUESTED => 'STATUS_INFOMATION_REQUESTED',
@@ -82,17 +82,17 @@ class TicketMessage
         self::STATUS_CLOSED => 'STATUS_CLOSED',
     );
 
-
+    const PRIORITY_INVALID = 0;
     const PRIORITY_LOW = 20;
     const PRIORITY_MEDIUM = 21;
     const PRIORITY_HIGH = 22;
 
     static public $priorities = array(
+        self::PRIORITY_INVALID => 'PRIORITY_INVALID',
         self::PRIORITY_LOW => 'PRIORITY_LOW',
         self::PRIORITY_MEDIUM => 'PRIORITY_MEDIUM',
         self::PRIORITY_HIGH => 'PRIORITY_HIGH',
     );
-
 
     public function __construct()
     {
@@ -150,7 +150,11 @@ class TicketMessage
      */
     public function getStatusString()
     {
-        return self::$statuses[$this->status];
+        if (isset(self::$statuses[$this->status])) {
+            return self::$statuses[$this->status];
+        }
+
+        return self::$statuses[0];
     }
 
     /**
@@ -194,7 +198,11 @@ class TicketMessage
      */
     public function getPriorityString()
     {
-        return self::$priorities[$this->priority];
+        if (isset(self::$priorities[$this->priority])) {
+            return self::$priorities[$this->priority];
+        }
+
+        return self::$priorities[0];
     }
 
     /**
@@ -212,7 +220,7 @@ class TicketMessage
             $this->userObject = null;
             $this->user = $user;
         }
-    
+
         return $this;
     }
 
@@ -245,7 +253,7 @@ class TicketMessage
     public function setMessage($message)
     {
         $this->message = $message;
-    
+
         return $this;
     }
 
@@ -268,7 +276,7 @@ class TicketMessage
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
@@ -291,7 +299,7 @@ class TicketMessage
     public function setTicket(\Hackzilla\Bundle\TicketBundle\Entity\Ticket $ticket = null)
     {
         $this->ticket = $ticket;
-    
+
         return $this;
     }
 
@@ -304,4 +312,5 @@ class TicketMessage
     {
         return $this->ticket;
     }
+
 }
