@@ -65,14 +65,6 @@ class TicketMessageType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Hackzilla\Bundle\TicketBundle\Entity\TicketMessage',
-//            'validation_groups' => function(FormInterface $form) {
-//                $data = $form->getData();
-//                if (Entity\Client::TYPE_PERSON == $data->getType()) {
-//                    return array('person');
-//                } else {
-//                    return array('company');
-//                }
-//            },
         ));
     }
 
