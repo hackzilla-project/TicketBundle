@@ -11,8 +11,11 @@ class StatusType extends AbstractType
 {
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $choices = TicketMessage::$statuses;
+        unset($choices[0]);
+
         $resolver->setDefaults(array(
-            'choices' => TicketMessage::$statuses,
+            'choices' => TicketMessage::$choices,
         ));
     }
 
