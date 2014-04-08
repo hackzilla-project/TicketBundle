@@ -21,8 +21,9 @@ Add HackzillaTicketBundle in your composer.json:
 ```json
 {
     "require": {
-        "hackzilla/ticket-bundle": "~1.0",
+        "hackzilla/ticket-bundle": "~0.2",
         "hackzilla/fosuser-bridge-bundle": "~0.1",
+        "friendsofsymfony/user-bundle": "~2.0@dev",
     }
 }
 ```
