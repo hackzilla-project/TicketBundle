@@ -18,10 +18,11 @@ Installation
 
 Add HackzillaTicketBundle in your composer.json:
 
-```js
+```json
 {
     "require": {
-        "hackzilla/ticket-bundle": "~1.0.0"
+        "hackzilla/ticket-bundle": "~1.0",
+        "hackzilla/fosuser-bridge-bundle": "~0.1",
     }
 }
 ```

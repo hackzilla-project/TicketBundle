@@ -13,12 +13,12 @@
         }
     ],
     "require": {
-        "php":  ">=5.3.3",
+        "php": ">=5.3.3",
         "symfony/symfony": "~2.3",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
-        "hackzilla/interfaces":  "~0.1",
-        "knplabs/knp-paginator-bundle":  "dev-master"
+        "hackzilla/interfaces": "~0.1",
+        "knplabs/knp-paginator-bundle": "~2.3"
     },
     "suggest": {
         "twitter/bootstrap": "used to define the layout (v3)"
