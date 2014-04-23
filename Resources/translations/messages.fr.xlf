@@ -122,7 +122,7 @@
             </trans-unit>
             <trans-unit id="105">
                 <source>BUTTON_TOGGLE_STATE</source>
-                <target>Montrer les tickets %state%</target>
+                <target>Montrer les tickets %state%s</target>
             </trans-unit>
 
             <!-- views / labels -->
