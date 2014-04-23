@@ -22,7 +22,7 @@ Add HackzillaTicketBundle in your composer.json:
 {
     "require": {
         "hackzilla/ticket-bundle": "~0.2",
-        "hackzilla/fosuser-bridge-bundle": "~0.1",
+        "hackzilla/fosuser-bridge-bundle": "~0.2",
         "friendsofsymfony/user-bundle": "~2.0@dev",
     }
 }
@@ -49,8 +49,8 @@ public function registerBundles()
     $bundles = array(
         // ...
         new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-        new Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle(),
         new Hackzilla\Bundle\FOSUserBridgeBundle\HackzillaFOSUserBridgeBundle(),
+        new Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle(),
         // ...
         // Your application bundles
     );
@@ -73,25 +73,6 @@ You can assign ROLE_TICKET_ADMIN to any user you want to be able to administer t
 ### Step 5: Create tables
 
 ```app/console doctrine:schema:update --dump-sql```
-
-### Step 6: You FOS Plugin for User lookup.
-
-In your services.xml
-
-```xml
-    <parameters>
-        <parameter key="hackzilla_ticket.user_bridge.class">Hackzilla\Bundle\FOSUserBridgeBundle\User\FOSUser</parameter>
-    </parameters>
-```
-
-Or in your services.yml
-
-```yml
-parameters:
-    hackzilla_ticket.user_bridge.class: Hackzilla\Bundle\FOSUserBridgeBundle\User\FOSBridge
-```
-
-If this fails to work, make sure your bundle is declared after the HackzillaFOSUserBridgeBundle() in AppKernel.php
 
 
 Pull Requests
