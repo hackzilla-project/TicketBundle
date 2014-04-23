@@ -4,7 +4,7 @@
 <a href="{{ path('hackzilla_ticket_new') }}" class="btn btn-primary pull-right">{{ 'BUTTON_NEW'|trans }}</a>
 <h1>{{ 'HEADING_TICKET_LIST'|trans }}</h1>
 
-{%- if ticketState == 'closed' %}
+{%- if ticketState == 'STATUS_CLOSED'|trans %}
         {% set state %}<a href="?state={{ 'STATUS_OPEN'|trans }}">{{ 'STATUS_OPEN'|trans }}</a>{% endset %}
 {% else %}
         {% set state %}<a href="?state={{ 'STATUS_CLOSED'|trans }}">{{ 'STATUS_CLOSED'|trans }}</a>{% endset %}
