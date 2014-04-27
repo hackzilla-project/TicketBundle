@@ -68,7 +68,6 @@ class TicketController extends Controller
             $message = $entity->getMessages()->current();
             $message->setStatus(TicketMessage::STATUS_OPEN);
 
-            $entity->setUserCreated($user);
             $entity->setLastUser($user);
             $entity->setLastMessage(new \DateTime());
             $entity->setStatus($message->getStatus());
