@@ -25,8 +25,6 @@ class TicketController extends Controller
         $userManager = $this->get('hackzilla_ticket.user');
         $translator = $this->get('translator');
 
-        $em = $this->getDoctrine()->getManager();
-
         $ticketState = $request->get('state', $translator->trans('STATUS_OPEN'));
 
         $repositoryTicket = $this->getDoctrine()
@@ -119,8 +117,6 @@ class TicketController extends Controller
         if (!\is_object($user) || (!$userManager->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
-
-        $em = $this->getDoctrine()->getManager();
 
         $data = array();
         $data['ticket'] = $ticket;

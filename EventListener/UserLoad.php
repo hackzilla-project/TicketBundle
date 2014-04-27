@@ -26,7 +26,6 @@ class UserLoad
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $entityManager = $args->getEntityManager();
         $userManager = $this->container->get('hackzilla_ticket.user');
 
         if ($entity instanceof Ticket) {
