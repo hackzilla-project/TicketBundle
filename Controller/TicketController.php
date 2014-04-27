@@ -4,7 +4,6 @@ namespace Hackzilla\Bundle\TicketBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\TicketType;
@@ -16,6 +15,7 @@ use Hackzilla\Bundle\TicketBundle\Form\TicketMessageType;
  */
 class TicketController extends Controller
 {
+
     /**
      * Lists all Ticket entities.
      *
@@ -30,14 +30,14 @@ class TicketController extends Controller
         $ticketState = $request->get('state', $translator->trans('STATUS_OPEN'));
 
         $repositoryTicket = $this->getDoctrine()
-            ->getRepository('HackzillaTicketBundle:Ticket');
-        
+                ->getRepository('HackzillaTicketBundle:Ticket');
+
         $repositoryTicketMessage = $this->getDoctrine()
-            ->getRepository('HackzillaTicketBundle:TicketMessage');
-        
+                ->getRepository('HackzillaTicketBundle:TicketMessage');
+
         $query = $repositoryTicket->getTicketList($userManager, $repositoryTicketMessage->getTicketStatus($translator, $ticketState));
 
-        $paginator  = $this->get('knp_paginator');
+        $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query->getQuery(),
             $request->query->get('page', 1)/*page number*/,
@@ -45,8 +45,8 @@ class TicketController extends Controller
         );
 
         return $this->render('HackzillaTicketBundle:Ticket:index.html.twig', array(
-            'pagination' => $pagination,
-            'ticketState' => $ticketState,
+                    'pagination' => $pagination,
+                    'ticketState' => $ticketState,
         ));
     }
 
@@ -58,7 +58,7 @@ class TicketController extends Controller
     {
         $userManager = $this->get('hackzilla_ticket.user');
 
-        $entity  = new Ticket();
+        $entity = new Ticket();
         $form = $this->createForm(new TicketType($userManager), $entity);
         $form->submit($request);
 
@@ -86,8 +86,8 @@ class TicketController extends Controller
         }
 
         return $this->render('HackzillaTicketBundle:Ticket:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -99,11 +99,11 @@ class TicketController extends Controller
     {
         $entity = new Ticket();
         $userManager = $this->get('hackzilla_ticket.user');
-        $form   = $this->createForm(new TicketType($userManager), $entity);
+        $form = $this->createForm(new TicketType($userManager), $entity);
 
         return $this->render('HackzillaTicketBundle:Ticket:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -117,7 +117,7 @@ class TicketController extends Controller
         $user = $userManager->getCurrentUser();
 
         if (!\is_object($user) || (!$userManager->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
-             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
+            throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -148,12 +148,12 @@ class TicketController extends Controller
         $user = $userManager->getCurrentUser();
 
         if (!\is_object($user) || (!$userManager->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
-             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
+            throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
         $message = new TicketMessage();
         $message->setPriority($ticket->getPriority());
-        
+
         $form = $this->createForm(new TicketMessageType($userManager), $message);
         $form->submit($request);
 
@@ -172,13 +172,13 @@ class TicketController extends Controller
             $ticket->setLastUser($user);
             $ticket->setLastMessage(new \DateTime());
             $ticket->setPriority($message->getPriority());
-            
+
             $message->setTicket($ticket);
             $message->setUser($user);
 
             $em->persist($ticket);
             $em->persist($message);
-                        
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', array('id' => $ticket->getId())));
@@ -187,10 +187,10 @@ class TicketController extends Controller
         $deleteForm = $this->createDeleteForm($ticket->getId());
 
         return $this->render('HackzillaTicketBundle:Ticket:show.html.twig', array(
-            'ticket' => $ticket,
-            'message' => $message,
-            'form'   => $form->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'ticket' => $ticket,
+                    'message' => $message,
+                    'form' => $form->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -204,7 +204,7 @@ class TicketController extends Controller
         $user = $userManager->getCurrentUser();
 
         if (!\is_object($user) || !$userManager->hasRole($user, 'ROLE_TICKET_ADMIN')) {
-             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
+            throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
         $form = $this->createDeleteForm($id);
@@ -239,8 +239,9 @@ class TicketController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }

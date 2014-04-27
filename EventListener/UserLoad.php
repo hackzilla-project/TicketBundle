@@ -8,13 +8,14 @@ use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 
 class UserLoad
 {
+
     protected $container;
 
     public function __construct($container) // this is @service_container
     {
         $this->container = $container;
     }
-    
+
     public function getSubscribedEvents()
     {
         return array(
@@ -41,4 +42,5 @@ class UserLoad
             }
         }
     }
+
 }
