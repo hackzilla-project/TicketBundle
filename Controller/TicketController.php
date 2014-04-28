@@ -56,35 +56,35 @@ class TicketController extends Controller
     {
         $userManager = $this->get('hackzilla_ticket.user');
 
-        $entity = new Ticket();
-        $form = $this->createForm(new TicketType($userManager), $entity);
+        $ticket = new Ticket();
+        $form = $this->createForm(new TicketType($userManager), $ticket);
         $form->submit($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $user = $userManager->getCurrentUser();
-            $message = $entity->getMessages()->current();
+            $message = $ticket->getMessages()->current();
             $message->setStatus(TicketMessage::STATUS_OPEN);
 
-            $entity->setUserCreated($user);
-            $entity->setLastUser($user);
-            $entity->setLastMessage(new \DateTime());
-            $entity->setStatus($message->getStatus());
-            $entity->setPriority($message->getPriority());
+            $ticket->setUserCreated($user);
+            $ticket->setLastUser($user);
+            $ticket->setLastMessage(new \DateTime());
+            $ticket->setStatus($message->getStatus());
+            $ticket->setPriority($message->getPriority());
 
-            $message->setTicket($entity);
+            $message->setTicket($ticket);
             $message->setUser($user);
 
-            $em->persist($entity);
+            $em->persist($ticket);
             $em->persist($message);
 
             $em->flush();
 
-            return $this->redirect($this->generateUrl('hackzilla_ticket_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('hackzilla_ticket_show', array('id' => $ticket->getId())));
         }
 
         return $this->render('HackzillaTicketBundle:Ticket:new.html.twig', array(
-                    'entity' => $entity,
+                    'entity' => $ticket,
                     'form' => $form->createView(),
         ));
     }
