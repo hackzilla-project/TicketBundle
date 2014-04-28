@@ -112,11 +112,7 @@ class TicketController extends Controller
     public function showAction(Ticket $ticket)
     {
         $userManager = $this->get('hackzilla_ticket.user');
-        $user = $userManager->getCurrentUser();
-
-        if (!\is_object($user) || (!$userManager->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
-            throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
-        }
+        $this->checkUserPermission($userManager->getCurrentUser(), $ticket);
 
         $data = array();
         $data['ticket'] = $ticket;
@@ -133,6 +129,13 @@ class TicketController extends Controller
         return $this->render('HackzillaTicketBundle:Ticket:show.html.twig', $data);
     }
 
+    public function checkUserPermission($user, $ticket)
+    {
+        if (!\is_object($user) || (!$userManager->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
+            throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
+        }
+    }
+
     /**
      * Finds and displays a Ticket entity.
      *
@@ -140,12 +143,7 @@ class TicketController extends Controller
     public function replyAction(Request $request, Ticket $ticket)
     {
         $userManager = $this->get('hackzilla_ticket.user');
-
-        $user = $userManager->getCurrentUser();
-
-        if (!\is_object($user) || (!$userManager->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
-            throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
-        }
+        $this->checkUserPermission($userManager->getCurrentUser(), $ticket);
 
         $message = new TicketMessage();
         $message->setPriority($ticket->getPriority());
