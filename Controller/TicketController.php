@@ -178,14 +178,7 @@ class TicketController extends Controller
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', array('id' => $ticket->getId())));
         }
 
-        $deleteForm = $this->createDeleteForm($ticket->getId());
-
-        return $this->render('HackzillaTicketBundle:Ticket:show.html.twig', array(
-                    'ticket' => $ticket,
-                    'message' => $message,
-                    'form' => $form->createView(),
-                    'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->showAction($ticket);
     }
 
     /**
