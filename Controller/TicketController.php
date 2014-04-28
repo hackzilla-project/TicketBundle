@@ -129,7 +129,7 @@ class TicketController extends Controller
         return $this->render('HackzillaTicketBundle:Ticket:show.html.twig', $data);
     }
 
-    public function checkUserPermission($user, $ticket)
+    private function checkUserPermission($user, $ticket)
     {
         if (!\is_object($user) || (!$userManager->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
