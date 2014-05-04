@@ -134,7 +134,8 @@ class TicketController extends Controller
      */
     public function replyAction(Request $request, Ticket $ticket)
     {
-        $user = $this->get('hackzilla_ticket.user')->getCurrentUser();
+        $userManager = $this->get('hackzilla_ticket.user');
+        $user = $userManager->getCurrentUser();
         $this->checkUserPermission($user, $ticket);
 
         $message = new TicketMessage();
