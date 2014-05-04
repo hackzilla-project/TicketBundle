@@ -107,8 +107,7 @@ class TicketController extends Controller
         $userManager = $this->get('hackzilla_ticket.user');
         $this->checkUserPermission($userManager->getCurrentUser(), $ticket);
 
-        $data = array();
-        $data['ticket'] = $ticket;
+        $data = array('ticket' => $ticket);
 
         $message = new TicketMessage();
         $message->setPriority($ticket->getPriority());
