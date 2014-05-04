@@ -123,7 +123,7 @@ class TicketController extends Controller
 
     private function checkUserPermission($user, $ticket)
     {
-        if (!\is_object($user) || (!$userManager->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
+        if (!\is_object($user) || (!$this->get('hackzilla_ticket.user')->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
     }
