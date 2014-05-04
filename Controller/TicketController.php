@@ -142,8 +142,8 @@ class TicketController extends Controller
      */
     public function replyAction(Request $request, Ticket $ticket)
     {
-        $userManager = $this->get('hackzilla_ticket.user');
-        $this->checkUserPermission($userManager->getCurrentUser(), $ticket);
+        $user = $this->get('hackzilla_ticket.user')->getCurrentUser();
+        $this->checkUserPermission($user, $ticket);
 
         $message = new TicketMessage();
         $message->setPriority($ticket->getPriority());
@@ -153,7 +153,6 @@ class TicketController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $user = $userManager->getCurrentUser();
 
             // if ticket not closed, then it'll be set to null
             if (\is_null($message->getStatus())) {
