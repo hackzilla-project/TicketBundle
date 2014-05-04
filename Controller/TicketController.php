@@ -162,7 +162,6 @@ class TicketController extends Controller
                 $ticket->setStatus($message->getStatus());
             }
 
-            $ticket->setUserCreated($user);
             $ticket->setLastUser($user);
             $ticket->setLastMessage(new \DateTime());
             $ticket->setPriority($message->getPriority());
