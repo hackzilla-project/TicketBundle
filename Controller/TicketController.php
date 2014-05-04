@@ -58,7 +58,7 @@ class TicketController extends Controller
 
         $ticket = new Ticket();
         $form = $this->createForm(new TicketType($userManager), $ticket);
-        $form->submit($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
