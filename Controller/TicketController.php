@@ -111,6 +111,7 @@ class TicketController extends Controller
 
         $message = new TicketMessage();
         $message->setPriority($ticket->getPriority());
+        $message->setStatus($ticket->getStatus());
 
         if (TicketMessage::STATUS_CLOSED != $ticket->getStatus()) {
             $data['form'] = $this->createForm(new TicketMessageType($userManager), $message)->createView();
