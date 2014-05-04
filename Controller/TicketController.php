@@ -62,18 +62,11 @@ class TicketController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $user = $userManager->getCurrentUser();
+
             $message = $ticket->getMessages()->current();
             $message->setStatus(TicketMessage::STATUS_OPEN);
-
-            $ticket->setUserCreated($user);
-            $ticket->setLastUser($user);
-            $ticket->setLastMessage(new \DateTime());
-            $ticket->setStatus($message->getStatus());
-            $ticket->setPriority($message->getPriority());
-
+            $message->setUser($userManager->getCurrentUser());
             $message->setTicket($ticket);
-            $message->setUser($user);
 
             $em->persist($ticket);
             $em->persist($message);
@@ -154,23 +147,10 @@ class TicketController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            // if ticket not closed, then it'll be set to null
-            if (\is_null($message->getStatus())) {
-                $message->setStatus($ticket->getStatus());
-            } else {
-                $ticket->setStatus($message->getStatus());
-            }
-
-            $ticket->setLastUser($user);
-            $ticket->setLastMessage(new \DateTime());
-            $ticket->setPriority($message->getPriority());
-
-            $message->setTicket($ticket);
             $message->setUser($user);
+            $message->setTicket($ticket);
 
-            $em->persist($ticket);
             $em->persist($message);
-
             $em->flush();
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', array('id' => $ticket->getId())));

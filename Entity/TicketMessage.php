@@ -300,6 +300,22 @@ class TicketMessage
     {
         $this->ticket = $ticket;
 
+        // if null, then new ticket
+        if (\is_null($ticket->getUserCreated())) {
+            $ticket->setUserCreated($this->getUser());
+        }
+
+        $ticket->setLastUser($this->getUser());
+        $ticket->setLastMessage($this->getCreatedAt());
+        $ticket->setPriority($this->getPriority());
+
+        // if ticket not closed, then it'll be set to null
+        if (\is_null($this->getStatus())) {
+            $this->setStatus($ticket->getStatus());
+        } else {
+            $ticket->setStatus($this->getStatus());
+        }
+
         return $this;
     }
 
