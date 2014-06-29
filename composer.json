@@ -21,7 +21,7 @@
         "knplabs/knp-paginator-bundle": "~2.3"
     },
     "suggest": {
-        "twitter/bootstrap": "used to define the layout (v3)"
+        "hackzilla/bootstrap-bundle": "used to define the layout (v3)"
     },
     "autoload": {
         "psr-0": {
