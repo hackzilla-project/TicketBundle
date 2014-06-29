@@ -1,3 +1,5 @@
+<?php
+
 namespace Hackzilla\Bundle\TicketBundle;
 
 final class TicketEvents

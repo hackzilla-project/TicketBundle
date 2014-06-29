@@ -1,3 +1,5 @@
+<?php
+
 namespace Hackzilla\Bundle\TicketBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
