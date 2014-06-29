@@ -4,6 +4,7 @@ namespace Hackzilla\Bundle\TicketBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\TicketType;
@@ -76,6 +77,7 @@ class TicketController extends Controller
             $em->flush();
 
             $event = new TicketEvent($ticket);
+            $dispatcher = new EventDispatcher();
             $dispatcher->dispatch(TicketEvents::TICKET_CREATE, $event);
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', array('id' => $ticket->getId())));
@@ -160,6 +162,7 @@ class TicketController extends Controller
             $em->flush();
             
             $event = new TicketEvent($ticket);
+            $dispatcher = new EventDispatcher();
             $dispatcher->dispatch(TicketEvents::TICKET_UPDATE, $event);
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', array('id' => $ticket->getId())));
@@ -197,6 +200,7 @@ class TicketController extends Controller
             }
             
             $event = new TicketEvent($entity);
+            $dispatcher = new EventDispatcher();
             $dispatcher->dispatch(TicketEvents::TICKET_DELETE, $event);
 
             $em->remove($entity);
