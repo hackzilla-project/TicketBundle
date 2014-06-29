@@ -8,6 +8,8 @@ use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\TicketType;
 use Hackzilla\Bundle\TicketBundle\Form\TicketMessageType;
+use Hackzilla\Bundle\TicketBundle\TicketEvents;
+use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 
 /**
  * Ticket controller.
@@ -72,6 +74,9 @@ class TicketController extends Controller
             $em->persist($message);
 
             $em->flush();
+
+            $event = new TicketEvent($ticket);
+            $dispatcher->dispatch(TicketEvents::TICKET_CREATE, $event);
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', array('id' => $ticket->getId())));
         }
@@ -153,6 +158,9 @@ class TicketController extends Controller
 
             $em->persist($message);
             $em->flush();
+            
+            $event = new TicketEvent($ticket);
+            $dispatcher->dispatch(TicketEvents::TICKET_UPDATE, $event);
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', array('id' => $ticket->getId())));
         }
@@ -187,6 +195,9 @@ class TicketController extends Controller
             foreach ($entity->getMessages() as $message) {
                 $em->remove($message);
             }
+            
+            $event = new TicketEvent($entity);
+            $dispatcher->dispatch(TicketEvents::TICKET_DELETE, $event);
 
             $em->remove($entity);
             $em->flush();
