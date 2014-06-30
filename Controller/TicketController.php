@@ -124,7 +124,9 @@ class TicketController extends Controller
             $data['form'] = $this->createForm(new TicketMessageType($userManager), $message)->createView();
         }
 
-        $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
+        if ($this->get('hackzilla_ticket.user')->hasRole($userManager->getCurrentUser(), 'ROLE_TICKET_ADMIN')) {
+            $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
+        }
 
         return $this->render('HackzillaTicketBundle:Ticket:show.html.twig', $data);
     }

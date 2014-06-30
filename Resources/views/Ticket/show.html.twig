@@ -120,6 +120,7 @@
 </form>
 {% endif %}
 
+{% if delete_form is defined %}
 <form action="{{ path('hackzilla_ticket_delete', { 'id': ticket.id }) }}" method="post">
     <input type="hidden" name="_method" value="DELETE" />
     {{ form_widget(delete_form) }}
@@ -130,4 +131,6 @@
 
     <button type="submit" class="btn btn-danger">{{ 'BUTTON_DELETE'|trans }}</button>
 </form>
+{% endif %}
+
 {% endblock %}
