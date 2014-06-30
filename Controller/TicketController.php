@@ -188,26 +188,36 @@ class TicketController extends Controller
         $form->submit($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('HackzillaTicketBundle:Ticket')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
-            }
-
-            foreach ($entity->getMessages() as $message) {
-                $em->remove($message);
-            }
-            
-            $event = new TicketEvent($entity);
-            $dispatcher = new EventDispatcher();
-            $dispatcher->dispatch(TicketEvents::TICKET_DELETE, $event);
-
-            $em->remove($entity);
-            $em->flush();
+            $this->performDelete($id);
         }
 
         return $this->redirect($this->generateUrl('hackzilla_ticket'));
+    }
+
+    /**
+     * Perform actual function of deleting ticket.
+     *
+     * @param mixed $id The entity id
+     */
+    private function performDelete($id)
+    {
+		$em = $this->getDoctrine()->getManager();
+		$entity = $em->getRepository('HackzillaTicketBundle:Ticket')->find($id);
+
+		if (!$entity) {
+			throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
+		}
+
+		foreach ($entity->getMessages() as $message) {
+			$em->remove($message);
+		}
+		
+		$event = new TicketEvent($entity);
+		$dispatcher = new EventDispatcher();
+		$dispatcher->dispatch(TicketEvents::TICKET_DELETE, $event);
+
+		$em->remove($entity);
+		$em->flush();
     }
 
     /**
