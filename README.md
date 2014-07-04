@@ -22,7 +22,7 @@ Add HackzillaTicketBundle in your composer.json:
 ```json
 {
     "require": {
-        "hackzilla/ticket-bundle": "~0.2",
+        "hackzilla/ticket-bundle": "~0.4",
         "hackzilla/fosuser-bridge-bundle": "~0.2",
         "friendsofsymfony/user-bundle": "~2.0@dev",
     }
@@ -75,6 +75,16 @@ You can assign ROLE_TICKET_ADMIN to any user you want to be able to administer t
 
 ```app/console doctrine:schema:update --dump-sql```
 
+Events
+------
+
+TicketBundle show fires events for creating, updating, and deleting of tickets.
+
+* hackzilla.ticket.create
+* hackzilla.ticket.update
+* hackzilla.ticket.delete
+
+See for example of how to create listener: http://symfony.com/doc/current/cookbook/service_container/event_listener.html
 
 Pull Requests
 -------------
