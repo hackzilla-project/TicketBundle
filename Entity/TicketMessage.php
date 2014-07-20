@@ -20,49 +20,49 @@ class TicketMessage
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="messages")
      * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id")
      */
-    private $ticket;
+    protected $ticket;
 
     /**
      * @var integer
      * 
      * @ORM\Column(name="user_id", type="integer")
      */
-    private $user;
-    private $userObject;
+    protected $user;
+    protected $userObject;
 
     /**
      * @var string
      * 
      * @ORM\Column(name="message", type="text", nullable=true)
      */
-    private $message;
+    protected $message;
 
     /**
      * @var smallint
      * 
      * @ORM\Column(name="status", type="smallint")
      */
-    private $status;
+    protected $status;
 
     /**
      * @var smallint
      * 
      * @ORM\Column(name="priority", type="smallint")
      */
-    private $priority;
+    protected $priority;
 
     /**
      * @var datetime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
-    private $createdAt;
+    protected $createdAt;
 
     const STATUS_INVALID = 0;
     const STATUS_OPEN = 10;
