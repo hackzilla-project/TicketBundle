@@ -22,61 +22,61 @@ class Ticket
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var integer
      * 
      * @ORM\Column(name="user_created_id", type="integer")
      */
-    private $userCreated;
-    private $userCreatedObject;
+    protected $userCreated;
+    protected $userCreatedObject;
 
     /**
      * @var integer
      * 
      * @ORM\Column(name="last_user_id", type="integer")
      */
-    private $lastUser;
-    private $lastUserObject;
+    protected $lastUser;
+    protected $lastUserObject;
 
     /**
      * @var datetime
      * 
      * @ORM\Column(name="last_message", type="datetime")
      */
-    private $lastMessage;
+    protected $lastMessage;
 
     /**
      * @ORM\Column(name="subject", type="string", length=255)
      */
-    private $subject;
+    protected $subject;
 
     /**
      * @var smallint
      * 
      * @ORM\Column(name="status", type="smallint")
      */
-    private $status;
+    protected $status;
 
     /**
      * @var smallint
      * 
      * @ORM\Column(name="priority", type="smallint")
      */
-    private $priority;
+    protected $priority;
 
     /**
      * @ORM\OneToMany(targetEntity="TicketMessage",  mappedBy="ticket")
      */
-    private $messages;
+    protected $messages;
 
     /**
      * @var datetime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
-    private $createdAt;
+    protected $createdAt;
 
     public function __construct()
     {
