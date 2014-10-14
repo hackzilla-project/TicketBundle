@@ -13,7 +13,7 @@
                 <target>en cours</target>
             </trans-unit>
             <trans-unit id="3">
-                <source>STATUS_INFOMATION_REQUESTED</source>
+                <source>STATUS_INFORMATION_REQUESTED</source>
                 <target>Informations demandées</target>
             </trans-unit>
             <trans-unit id="4">
