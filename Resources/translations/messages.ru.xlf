@@ -168,6 +168,14 @@
                 <source>LABEL_ENTER_DETAILS</source>
                 <target>Детали</target>
             </trans-unit>
+            <trans-unit id="130">
+                <source>LABEL_ENTER_SUBJECT</source>
+                <target>Тема обращения</target>
+            </trans-unit>
+            <trans-unit id="131">
+                <source>LABEL_SUBJECT</source>
+                <target>Тема</target>
+            </trans-unit>
 
 
             <!-- views / messages -->
