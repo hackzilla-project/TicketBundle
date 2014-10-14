@@ -42,21 +42,21 @@
             </trans-unit>
             <trans-unit id="10">
                 <source>STATUS_INVALID</source>
-                <target>?</target>
+                <target>nul</target>
             </trans-unit>
             <trans-unit id="11">
                 <source>PRIORITY_INVALID</source>
-                <target>?</target>
+                <target>nul</target>
             </trans-unit>
 
             <!-- views / headings -->
             <trans-unit id="80">
                 <source>HEADING_SUBJECT</source>
-                <target>Sujet</target>
+                <target>Objet</target>
             </trans-unit>
             <trans-unit id="81">
                 <source>HEADING_STATUS</source>
-                <target>Statut</target>
+                <target>Condition</target>
             </trans-unit>
             <trans-unit id="82">
                 <source>HEADING_PRIORITY</source>
@@ -140,7 +140,7 @@
             </trans-unit>
             <trans-unit id="123">
                 <source>LABEL_STATUS</source>
-                <target>Statut</target>
+                <target>Condition</target>
             </trans-unit>
             <trans-unit id="124">
                 <source>LABEL_MESSAGE</source>
@@ -168,7 +168,7 @@
             </trans-unit>
             <trans-unit id="130">
                 <source>LABEL_ENTER_SUBJECT</source>
-                <target>Entrez l'objet</target>
+                <target>Entrez objet</target>
             </trans-unit>
             <trans-unit id="131">
                 <source>LABEL_SUBJECT</source>
@@ -190,7 +190,7 @@
             </trans-unit>
             <trans-unit id="143">
                 <source>MESSAGE_STATUS_CHANGED</source>
-                <target>Statut modifiée pour %status%.</target>
+                <target>Condition modifiée pour %status%.</target>
             </trans-unit>
             <trans-unit id="144">
                 <source>MESSAGE_PRIORITY_CHANGED</source>
