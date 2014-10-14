@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+
+            <!-- Entity Ticket Message -->
+            <trans-unit id="1">
+                <source>STATUS_OPEN</source>
+                <target>Empezado</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>STATUS_IN_PROGRESS</source>
+                <target>En marcha</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>STATUS_INFORMATION_REQUESTED</source>
+                <target>Información solicitada</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>STATUS_ON_HOLD</source>
+                <target>En espera</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>STATUS_RESOLVED</source>
+                <target>Resuelto</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>STATUS_CLOSED</source>
+                <target>Terminado</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>PRIORITY_LOW</source>
+                <target>Baja</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>PRIORITY_MEDIUM</source>
+                <target>Media</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>PRIORITY_HIGH</source>
+                <target>Alta</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>STATUS_INVALID</source>
+                <target>Inválido</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>PRIORITY_INVALID</source>
+                <target>Inválido</target>
+            </trans-unit>
+
+            <!-- views / headings -->
+            <trans-unit id="80">
+                <source>HEADING_SUBJECT</source>
+                <target>Tema/target>
+            </trans-unit>
+            <trans-unit id="81">
+                <source>HEADING_STATUS</source>
+                <target>Estado</target>
+            </trans-unit>
+            <trans-unit id="82">
+                <source>HEADING_PRIORITY</source>
+                <target>Prioridad</target>
+            </trans-unit>
+            <trans-unit id="83">
+                <source>HEADING_MODIFIED</source>
+                <target>Modificado el</target>
+            </trans-unit>
+            <trans-unit id="84">
+                <source>HEADING_CREATED</source>
+                <target>Creado el/target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>HEADING_TICKET_LIST</source>
+                <target>Lista de las tareas</target>
+            </trans-unit>
+            <trans-unit id="86">
+                <source>HEADING_TICKET</source>
+                <target>Tarea</target>
+            </trans-unit>
+            <trans-unit id="87">
+                <source>HEADING_NEW_TICKET</source>
+                <target>Nueva tarea</target>
+            </trans-unit>
+            <trans-unit id="88">
+                <source>HEADING_TICKET_ID</source>
+                <target>Tarea nº%id%</target>
+            </trans-unit>
+            <trans-unit id="89">
+                <source>HEADING_TICKET_THREAD</source>
+                <target>Diálogo</target>
+            </trans-unit>
+            <trans-unit id="90">
+                <source>HEADING_LAST_MESSAGE_BY</source>
+                <target>Último mensaje de parte de</target>
+            </trans-unit>
+            <trans-unit id="91">
+                <source>HEADING_LAST_MODIFIED</source>
+                <target>Último modificación de parte de </target>
+            </trans-unit>
+
+            <!-- views / buttons -->
+            <trans-unit id="100">
+                <source>BUTTON_DELETE</source>
+                <target>Suprimir</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>BUTTON_BACK_TO_LIST</source>
+                <target>Volver a la lista</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>BUTTON_UPDATE</source>
+                <target>Actualizar</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>BUTTON_CREATE</source>
+                <target>Crear</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>BUTTON_NEW</source>
+                <target>Neuva tarea</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>BUTTON_TOGGLE_STATE</source>
+                <target>Mostrar las tareas %state%s</target>
+            </trans-unit>
+
+            <!-- views / labels -->
+            <trans-unit id="120">
+                <source>LABEL_AUTHOR</source>
+                <target>Autor</target>
+            </trans-unit>
+            <trans-unit id="121">
+                <source>LABEL_DATE</source>
+                <target>Fecha</target>
+            </trans-unit>
+            <trans-unit id="122">
+                <source>LABEL_PRIORITY</source>
+                <target>Prioridad</target>
+            </trans-unit>
+            <trans-unit id="123">
+                <source>LABEL_STATUS</source>
+                <target>Estado</target>
+            </trans-unit>
+            <trans-unit id="124">
+                <source>LABEL_MESSAGE</source>
+                <target>Mensaje</target>
+            </trans-unit>
+            <trans-unit id="125">
+                <source>LABEL_CREATED</source>
+                <target>Creado el</target>
+            </trans-unit>
+            <trans-unit id="126">
+                <source>LABEL_CREATED_BY</source>
+                <target>Creado por/target>
+            </trans-unit>
+            <trans-unit id="127">
+                <source>LABEL_ADMIN</source>
+                <target>Administrador</target>
+            </trans-unit>
+            <trans-unit id="128">
+                <source>LABEL_MARK_SOLVED</source>
+                <target>Identificar como resuelto</target>
+            </trans-unit>
+            <trans-unit id="129">
+                <source>LABEL_ENTER_DETAILS</source>
+                <target>Adjuntar algunos detalles</target>
+            </trans-unit>
+            <trans-unit id="130">
+                <source>LABEL_ENTER_SUBJECT</source>
+                <target>Adjuntar el tema</target>
+            </trans-unit>
+            <trans-unit id="131">
+                <source>LABEL_SUBJECT</source>
+                <target>Tema</target>
+            </trans-unit>
+
+            <!-- views / messages -->
+            <trans-unit id="140">
+                <source>MESSAGE_NO_TICKETS</source>
+                <target>No hay tareas</target>
+            </trans-unit>
+            <trans-unit id="141">
+                <source>MESSAGE_EMPTY</source>
+                <target>-- Mensaje vacío --</target>
+            </trans-unit>
+            <trans-unit id="142">
+                <source>MESSAGE_TICKET_OPENED</source>
+                <target>Tarea creada como %priority% prioridad .</target>
+            </trans-unit>
+            <trans-unit id="143">
+                <source>MESSAGE_STATUS_CHANGED</source>
+                <target>Estado modificado: %status%.</target>
+            </trans-unit>
+            <trans-unit id="144">
+                <source>MESSAGE_PRIORITY_CHANGED</source>
+                <target>Prioridad modificado: %priority%.</target>
+            </trans-unit>
+
+            <!-- errors -->
+            <trans-unit id="500">
+                <source>ERROR_FIND_TICKET_ENTITY</source>
+                <target> Ninguna tarea encontrado.</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>
