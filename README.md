@@ -2,7 +2,7 @@ Ticketing Bundle
 ================
 
 Simple multilingual ticketing bundle to add to any project.
-Languages: English, French.
+Languages: English, French, Russian.
 
 [![Build Status](https://travis-ci.org/hackzilla/TicketBundle.png?branch=master)](https://travis-ci.org/hackzilla/TicketBundle)
 
