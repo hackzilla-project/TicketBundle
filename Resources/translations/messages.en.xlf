@@ -168,6 +168,14 @@
                 <source>LABEL_ENTER_DETAILS</source>
                 <target>Enter details</target>
             </trans-unit>
+            <trans-unit id="130">
+                <source>LABEL_ENTER_SUBJECT</source>
+                <target>Enter subject</target>
+            </trans-unit>
+            <trans-unit id="131">
+                <source>LABEL_SUBJECT</source>
+                <target>Subject</target>
+            </trans-unit>
 
 
             <!-- views / messages -->
