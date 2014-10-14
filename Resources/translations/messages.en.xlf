@@ -42,11 +42,11 @@
             </trans-unit>
             <trans-unit id="10">
                 <source>STATUS_INVALID</source>
-                <target>?</target>
+                <target>invalid</target>
             </trans-unit>
             <trans-unit id="11">
                 <source>PRIORITY_INVALID</source>
-                <target>?</target>
+                <target>invalid</target>
             </trans-unit>
 
             <!-- views / headings -->
