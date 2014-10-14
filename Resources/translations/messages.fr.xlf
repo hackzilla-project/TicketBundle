@@ -166,6 +166,14 @@
                 <source>LABEL_ENTER_DETAILS</source>
                 <target>Ajouter des détails</target>
             </trans-unit>
+            <trans-unit id="130">
+                <source>LABEL_ENTER_SUBJECT</source>
+                <target>Entrez l'objet</target>
+            </trans-unit>
+            <trans-unit id="131">
+                <source>LABEL_SUBJECT</source>
+                <target>objet</target>
+            </trans-unit>
 
             <!-- views / messages -->
             <trans-unit id="140">
