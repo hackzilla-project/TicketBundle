@@ -1,6 +1,6 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Form;
+namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,19 +19,17 @@ class TicketType extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('subject', 'text', array(
-                'label' => 'LABEL_SUBJECT'
-            ))
-            ->add('messages', 'collection', array(
-                'type' => new TicketMessageType($this->_userManager, true),
-                'label' => false,
-                'allow_add' => true,
-            ));
+                ->add('subject')
+                ->add('messages', 'collection', array(
+                    'type' => new TicketMessageType($this->_userManager, true),
+                    'label' => false,
+                    'allow_add' => true,
+        ));
     }
 
     /**

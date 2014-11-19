@@ -86,6 +86,13 @@ TicketBundle show fires events for creating, updating, and deleting of tickets.
 
 See for example of how to create listener: http://symfony.com/doc/current/cookbook/service_container/event_listener.html
 
+
+Change Log
+----------
+
+0.7 - TicketType and TicketMessageType have been moved into Form/Type folder.
+
+
 Pull Requests
 -------------
 

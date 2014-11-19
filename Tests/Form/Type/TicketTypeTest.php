@@ -4,7 +4,7 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class TicketMessageTypeTest extends WebTestCase
+class TicketTypeTest extends WebTestCase
 {
     private $_object;
 
@@ -13,7 +13,7 @@ class TicketMessageTypeTest extends WebTestCase
         $userManager = $this->getMock('Hackzilla\Interfaces\User\UserInterface');
         $this->assertTrue($userManager instanceof \Hackzilla\Interfaces\User\UserInterface);
 
-        $this->_object = new \Hackzilla\Bundle\TicketBundle\Form\TicketMessageType($userManager);
+        $this->_object = new \Hackzilla\Bundle\TicketBundle\Form\Type\TicketType($userManager);
     }
 
     public function tearDown()
