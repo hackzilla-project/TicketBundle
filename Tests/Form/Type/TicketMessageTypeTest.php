@@ -3,26 +3,38 @@
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
 use Symfony\Component\Form\Test\TypeTestCase;
+use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 
 class TicketMessageTypeTest extends TypeTestCase
 {
-    private $_object;
-
-    public function setUp()
+    public function testSubmitValidData()
     {
+        $formData = array(
+            'priority' => TicketMessage::PRIORITY_HIGH,
+            'message'  => null,
+        );
+
         $userManager = $this->getMock('Hackzilla\Interfaces\User\UserInterface');
         $this->assertTrue($userManager instanceof \Hackzilla\Interfaces\User\UserInterface);
+      
+        $type = new \Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType($userManager, true);
 
-        $this->_object = new \Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType($userManager);
-    }
+        $data = new \Hackzilla\Bundle\TicketBundle\Entity\TicketMessage();
+        $data->setPriority(TicketMessage::PRIORITY_HIGH);
+        
+        $form = $this->factory->create($type);
 
-    public function tearDown()
-    {
-        unset($this->_object);
-    }
+        // submit the data to the form directly
+        $form->submit($formData);
 
-    public function testObjectCreated()
-    {
-        $this->assertTrue(\is_object($this->_object));
+        $this->assertTrue($form->isSynchronized());
+        $this->assertEquals($data, $form->getData());
+
+        $view = $form->createView();
+        $children = $view->children;
+
+        foreach (array_keys($formData) as $key) {
+            $this->assertArrayHasKey($key, $children);
+        }
     }
 }

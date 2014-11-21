@@ -6,10 +6,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Hackzilla\Interfaces\User\UserInterface;
+use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
 
 class TicketMessageType extends AbstractType
 {
-
     private $_userManager;
     private $_newTicket;
 
@@ -30,7 +30,7 @@ class TicketMessageType extends AbstractType
                     'label' => 'LABEL_MESSAGE',
                     'required' => false,
                 ))
-                ->add('priority', new Type\PriorityType(), array(
+                ->add('priority', new PriorityType(), array(
                     'label' => 'LABEL_PRIORITY',
         ));
 
@@ -39,11 +39,11 @@ class TicketMessageType extends AbstractType
             $user = $this->_userManager->getCurrentUser();
 
             if ($this->_userManager->hasRole($user, 'ROLE_TICKET_ADMIN')) {
-                $builder->add('status', new Type\StatusType(), array(
+                $builder->add('status', new StatusType(), array(
                     'label' => 'LABEL_STATUS',
                 ));
             } else {
-                $statusTransformer = new DataTransformer\StatusTransformer();
+                $statusTransformer = new StatusTransformer();
 
                 $builder
                         ->add(

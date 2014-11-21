@@ -20,6 +20,9 @@
         "hackzilla/interfaces": "~0.1",
         "knplabs/knp-paginator-bundle": "~2.3"
     },
+    "require-dev": {
+        "symfony/form": "~2.3"
+    },
     "suggest": {
         "hackzilla/bootstrap-bundle": "used to define the layout (v3)"
     },
