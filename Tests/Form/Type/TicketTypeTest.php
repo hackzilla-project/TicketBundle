@@ -2,9 +2,9 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Form\Test\TypeTestCase;
 
-class TicketTypeTest extends WebTestCase
+class TicketTypeTest extends TypeTestCase
 {
     private $_object;
 
