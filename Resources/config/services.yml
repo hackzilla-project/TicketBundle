@@ -1,6 +1,7 @@
 parameters:
     hackzilla_ticket.user_load.class: Hackzilla\Bundle\TicketBundle\EventListener\UserLoad
     hackzilla_ticket.twig_user.class: Hackzilla\Bundle\TicketBundle\Extension\UserExtension
+    hackzilla_ticket.ticket_manager.class: Hackzilla\Bundle\TicketBundle\Entity\TicketManager
 
 services:
     hackzilla_ticket.listener:
@@ -18,3 +19,7 @@ services:
     hackzilla_ticket.user:
         class: %hackzilla_ticket.user_bridge.class%
         arguments: ['@service_container']
+
+    hackzilla_ticket.ticket_manager:
+        class: %hackzilla_ticket.ticket_manager.class%
+        arguments: ["@doctrine.orm.entity_manager"]
