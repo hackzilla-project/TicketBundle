@@ -117,6 +117,7 @@ class TicketMessage
     public function setStatus($status)
     {
         $this->status = $status;
+        return $this;
     }
 
     /**
@@ -165,6 +166,7 @@ class TicketMessage
     public function setPriority($priority)
     {
         $this->priority = $priority;
+        return $this;
     }
 
     /**
