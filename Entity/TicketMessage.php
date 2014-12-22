@@ -132,6 +132,8 @@ class TicketMessage
         if ($status > 0) {
             $this->setStatus($status);
         }
+
+        return $this;
     }
 
     /**
@@ -181,6 +183,8 @@ class TicketMessage
         if ($priority > 0) {
             $this->setPriority($priority);
         }
+
+        return $this;
     }
 
     /**
