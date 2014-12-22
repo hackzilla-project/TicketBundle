@@ -28,12 +28,11 @@ class TicketController extends Controller
         $translator = $this->get('translator');
 
         $ticketState = $request->get('state', $translator->trans('STATUS_OPEN'));
+        
 
-        $repositoryTicket = $this->getDoctrine()
-                ->getRepository('HackzillaTicketBundle:Ticket');
+        $repositoryTicket = $this->getDoctrine()->getRepository('HackzillaTicketBundle:Ticket');
 
-        $repositoryTicketMessage = $this->getDoctrine()
-                ->getRepository('HackzillaTicketBundle:TicketMessage');
+        $repositoryTicketMessage = $this->getDoctrine()->getRepository('HackzillaTicketBundle:TicketMessage');
 
         $query = $repositoryTicket->getTicketList($userManager, $repositoryTicketMessage->getTicketStatus($translator, $ticketState));
 
@@ -57,23 +56,21 @@ class TicketController extends Controller
     public function createAction(Request $request)
     {
         $userManager = $this->get('hackzilla_ticket.user');
+        $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
-        $ticket = new Ticket();
+        $ticket = $ticketManager->createTicket();
         $form = $this->createForm(new TicketType($userManager), $ticket);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
 
             $message = $ticket->getMessages()->current();
-            $message->setStatus(TicketMessage::STATUS_OPEN);
-            $message->setUser($userManager->getCurrentUser());
-            $message->setTicket($ticket);
+            $message->setStatus(TicketMessage::STATUS_OPEN)
+                    ->setUser($userManager->getCurrentUser())
+                    ->setTicket($ticket)
+            ;
 
-            $em->persist($ticket);
-            $em->persist($message);
-
-            $em->flush();
+            $ticketManager->updateTicket($ticket, $message);
 
             $event = new TicketEvent($ticket);
             $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_CREATE, $event);
@@ -107,8 +104,12 @@ class TicketController extends Controller
      * Finds and displays a Ticket entity.
      *
      */
-    public function showAction(Ticket $ticket)
+    public function showAction(Ticket $ticket=null)
     {
+        if(!$ticket){
+            return $this->redirect($this->generateUrl('hackzilla_ticket'));
+
+        }
         $userManager = $this->get('hackzilla_ticket.user');
         $this->checkUserPermission($userManager->getCurrentUser(), $ticket);
 
@@ -143,23 +144,23 @@ class TicketController extends Controller
     public function replyAction(Request $request, Ticket $ticket)
     {
         $userManager = $this->get('hackzilla_ticket.user');
+        $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
+
         $user = $userManager->getCurrentUser();
         $this->checkUserPermission($user, $ticket);
 
-        $message = new TicketMessage();
+        $message = $ticketManager->createMessage();
         $message->setPriority($ticket->getPriority());
 
         $form = $this->createForm(new TicketMessageType($userManager), $message);
         $form->submit($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
 
             $message->setUser($user);
             $message->setTicket($ticket);
 
-            $em->persist($message);
-            $em->flush();
+            $ticketManager->updateTicket($ticket, $message);
             
             $event = new TicketEvent($ticket);
             $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_UPDATE, $event);
@@ -174,7 +175,7 @@ class TicketController extends Controller
      * Deletes a Ticket entity.
      *
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Ticket $ticket)
     {
         $userManager = $this->get('hackzilla_ticket.user');
         $user = $userManager->getCurrentUser();
@@ -183,39 +184,22 @@ class TicketController extends Controller
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($ticket->getId());
         $form->submit($request);
 
         if ($form->isValid()) {
-            $this->performDelete($id);
+            if (!$ticket) {
+                throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
+            }
+
+            $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
+            $ticketManager->deleteTicket($ticket);
+            $event = new TicketEvent($ticket);
+            $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_DELETE, $event);
+
         }
 
         return $this->redirect($this->generateUrl('hackzilla_ticket'));
-    }
-
-    /**
-     * Perform actual function of deleting ticket.
-     *
-     * @param mixed $id The entity id
-     */
-    private function performDelete($id)
-    {
-		$em = $this->getDoctrine()->getManager();
-		$entity = $em->getRepository('HackzillaTicketBundle:Ticket')->find($id);
-
-		if (!$entity) {
-			throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
-		}
-
-		foreach ($entity->getMessages() as $message) {
-			$em->remove($message);
-		}
-		
-		$event = new TicketEvent($entity);
-		$this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_DELETE, $event);
-
-		$em->remove($entity);
-		$em->flush();
     }
 
     /**
