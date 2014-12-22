@@ -2,11 +2,13 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Extension;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 class UserExtension extends \Twig_Extension
 {
     private $userManager;
 
-    public function __construct($container) {
+    public function __construct(ContainerInterface $container) {
         $this->userManager = $container->get('hackzilla_ticket.user');
     }
 

@@ -5,12 +5,13 @@ namespace Hackzilla\Bundle\TicketBundle\EventListener;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class UserLoad
 {
     protected $container;
 
-    public function __construct($container) // this is @service_container
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
