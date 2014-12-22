@@ -51,7 +51,6 @@ class TicketManagerCommand extends ContainerAwareCommand
         $ticket = $ticketmanager->createTicket();
         $ticket->setSubject($input->getArgument('subject'));
 
-        //$message = $ticket->getMessages()->current();
         $message = $ticketmanager->createMessage();
 
         $message->setMessage($input->getArgument('message'))
