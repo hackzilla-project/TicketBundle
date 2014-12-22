@@ -9,7 +9,6 @@ use Hackzilla\Interfaces\User\UserInterface;
 
 class TicketType extends AbstractType
 {
-
     private $_userManager;
 
     public function __construct(UserInterface $userManager)
@@ -49,5 +48,4 @@ class TicketType extends AbstractType
     {
         return 'hackzilla_bundle_ticketbundle_tickettype';
     }
-
 }

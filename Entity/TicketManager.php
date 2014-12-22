@@ -7,8 +7,8 @@ use Hackzilla\Bundle\TicketBundle\Entity\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 
-class TicketManager implements TicketManagerInterface {
-
+class TicketManager implements TicketManagerInterface
+{
 	public function __construct(ObjectManager $om){
 		$this->ObjectManager = $om;
 		$this->repository = $om->getRepository('HackzillaTicketBundle:Ticket');
@@ -69,5 +69,4 @@ class TicketManager implements TicketManagerInterface {
 	public function findTicketsBy(array $criteria){
 		return $this->repository->findBy($criteria);
 	}
-
 }

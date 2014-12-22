@@ -8,7 +8,6 @@ use \Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 
 class StatusType extends AbstractType
 {
-
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $choices = TicketMessage::$statuses;
@@ -28,5 +27,4 @@ class StatusType extends AbstractType
     {
         return 'status';
     }
-
 }

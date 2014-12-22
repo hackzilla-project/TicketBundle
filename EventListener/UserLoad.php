@@ -8,7 +8,6 @@ use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 
 class UserLoad
 {
-
     protected $container;
 
     public function __construct($container) // this is @service_container
@@ -41,5 +40,4 @@ class UserLoad
             }
         }
     }
-
 }

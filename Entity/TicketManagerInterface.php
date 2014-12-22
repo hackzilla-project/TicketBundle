@@ -2,8 +2,8 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Entity;
 
-interface TicketManagerInterface{
-
+interface TicketManagerInterface
+{
 	public function createTicket();
 
 	public function createMessage();
@@ -15,5 +15,4 @@ interface TicketManagerInterface{
 	public function findTickets();
 
 	public function findTicketsBy(array $criteria);
-
 }

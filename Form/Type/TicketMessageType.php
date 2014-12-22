@@ -75,5 +75,4 @@ class TicketMessageType extends AbstractType
     {
         return 'hackzilla_bundle_ticketbundle_tickettype';
     }
-
 }

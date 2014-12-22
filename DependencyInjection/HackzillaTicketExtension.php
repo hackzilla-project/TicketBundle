@@ -14,7 +14,6 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class HackzillaTicketExtension extends Extension
 {
-
     /**
      * {@inheritDoc}
      */
@@ -26,5 +25,4 @@ class HackzillaTicketExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
     }
-
 }

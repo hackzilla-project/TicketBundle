@@ -17,7 +17,6 @@ use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
  */
 class TicketController extends Controller
 {
-
     /**
      * Lists all Ticket entities.
      *
@@ -28,7 +27,6 @@ class TicketController extends Controller
         $translator = $this->get('translator');
 
         $ticketState = $request->get('state', $translator->trans('STATUS_OPEN'));
-        
 
         $repositoryTicket = $this->getDoctrine()->getRepository('HackzillaTicketBundle:Ticket');
 
@@ -63,7 +61,6 @@ class TicketController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-
             $message = $ticket->getMessages()->current();
             $message->setStatus(TicketMessage::STATUS_OPEN)
                     ->setUser($userManager->getCurrentUser())
@@ -216,5 +213,4 @@ class TicketController extends Controller
                         ->getForm()
         ;
     }
-
 }

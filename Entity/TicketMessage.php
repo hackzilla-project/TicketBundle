@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TicketMessage
 {
-
     /**
      * @var integer
      *
@@ -168,6 +167,7 @@ class TicketMessage
     public function setPriority($priority)
     {
         $this->priority = $priority;
+
         return $this;
     }
 
@@ -334,5 +334,4 @@ class TicketMessage
     {
         return $this->ticket;
     }
-
 }

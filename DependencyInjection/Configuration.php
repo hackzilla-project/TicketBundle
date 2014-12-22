@@ -12,7 +12,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-
     /**
      * {@inheritDoc}
      */
@@ -23,5 +22,4 @@ class Configuration implements ConfigurationInterface
 
         return $treeBuilder;
     }
-
 }
