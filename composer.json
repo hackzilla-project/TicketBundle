@@ -27,11 +27,10 @@
         "hackzilla/bootstrap-bundle": "used to define the layout (v3)"
     },
     "autoload": {
-        "psr-0": {
-            "Hackzilla\\Bundle\\TicketBundle": ""
+        "psr-4": {
+            "Hackzilla\\Bundle\\TicketBundle\\": ""
         }
     },
-    "target-dir": "Hackzilla/Bundle/TicketBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
