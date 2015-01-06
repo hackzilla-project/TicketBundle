@@ -20,6 +20,8 @@ class TicketController extends Controller
     /**
      * Lists all Ticket entities.
      *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {
@@ -50,6 +52,8 @@ class TicketController extends Controller
     /**
      * Creates a new Ticket entity.
      *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
     {
@@ -100,6 +104,8 @@ class TicketController extends Controller
     /**
      * Finds and displays a Ticket entity.
      *
+     * @param Ticket $ticket
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Ticket $ticket=null)
     {
@@ -127,6 +133,10 @@ class TicketController extends Controller
         return $this->render('HackzillaTicketBundle:Ticket:show.html.twig', $data);
     }
 
+    /**
+     * @param $user
+     * @param $ticket
+     */
     private function checkUserPermission($user, $ticket)
     {
         if (!\is_object($user) || (!$this->get('hackzilla_ticket.user')->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
@@ -137,6 +147,9 @@ class TicketController extends Controller
     /**
      * Finds and displays a Ticket entity.
      *
+     * @param Request $request
+     * @param Ticket $ticket
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function replyAction(Request $request, Ticket $ticket)
     {
@@ -171,6 +184,9 @@ class TicketController extends Controller
     /**
      * Deletes a Ticket entity.
      *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Ticket $ticket)
     {
