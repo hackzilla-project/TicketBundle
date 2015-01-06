@@ -126,7 +126,7 @@ class TicketController extends Controller
             $data['form'] = $this->createForm(new TicketMessageType($userManager), $message)->createView();
         }
 
-        if ($this->get('hackzilla_ticket.user')->hasRole($userManager->getCurrentUser(), 'ROLE_TICKET_ADMIN')) {
+        if ($this->get('hackzilla_ticket.user')->isGranted($userManager->getCurrentUser(), 'ROLE_TICKET_ADMIN')) {
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
@@ -139,7 +139,7 @@ class TicketController extends Controller
      */
     private function checkUserPermission(\FOS\UserBundle\Model\UserInterface $user, Ticket $ticket)
     {
-        if (!\is_object($user) || (!$this->get('hackzilla_ticket.user')->hasRole($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
+        if (!\is_object($user) || (!$this->get('hackzilla_ticket.user')->isGranted($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
     }
@@ -193,7 +193,7 @@ class TicketController extends Controller
         $userManager = $this->get('hackzilla_ticket.user');
         $user = $userManager->getCurrentUser();
 
-        if (!\is_object($user) || !$userManager->hasRole($user, 'ROLE_TICKET_ADMIN')) {
+        if (!\is_object($user) || !$userManager->isGranted($user, 'ROLE_TICKET_ADMIN')) {
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 

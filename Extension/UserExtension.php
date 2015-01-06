@@ -24,7 +24,7 @@ class UserExtension extends \Twig_Extension
             $user = $this->userManager->getUserById($user);
         }
 
-        return $user->hasRole($role);
+        return $user->isGranted($role);
     }
 
     public function getName()
