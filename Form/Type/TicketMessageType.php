@@ -38,7 +38,7 @@ class TicketMessageType extends AbstractType
         if (!$this->_newTicket) {
             $user = $this->_userManager->getCurrentUser();
 
-            if ($this->_userManager->hasRole($user, 'ROLE_TICKET_ADMIN')) {
+            if ($this->_userManager->isGranted($user, 'ROLE_TICKET_ADMIN')) {
                 $builder->add('status', new StatusType(), array(
                     'label' => 'LABEL_STATUS',
                 ));
