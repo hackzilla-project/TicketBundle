@@ -116,6 +116,10 @@
     
     <p class="form_actions">
         <button type="submit" class="btn btn-primary">{{ 'BUTTON_UPDATE'|trans }}</button>
+
+        <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">
+            {{ 'BUTTON_BACK_TO_LIST'|trans }}
+        </a>
     </p>
 </form>
 {% endif %}
