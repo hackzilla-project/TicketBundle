@@ -185,7 +185,7 @@ class TicketController extends Controller
      * Deletes a Ticket entity.
      *
      * @param Request $request
-     * @param $id
+     * @param Ticket $ticket
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Ticket $ticket)
