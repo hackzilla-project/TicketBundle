@@ -36,7 +36,7 @@ class TicketRepository extends EntityRepository
         
         $user = $userManager->getCurrentUser();
 
-        if (\is_object($user) && !$userManager->isGranted($user, 'ROLE_TICKET_ADMIN')) {
+        if (\is_object($user) && !$userManager->hasRole($user, 'ROLE_TICKET_ADMIN')) {
             $query
                 ->andWhere('t.userCreated = :userId')
                 ->setParameter('userId', $user->getId());
