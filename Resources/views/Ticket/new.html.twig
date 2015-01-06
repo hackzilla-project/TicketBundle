@@ -2,7 +2,6 @@
 
 {% block hackzilla_ticket_content -%}
 <h1>{{ 'HEADING_NEW_TICKET'|trans }}</h1>
-<p><a href="{{ path('hackzilla_ticket') }}">Back to List</a></p>
 
 <form action="{{ path('hackzilla_ticket_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" role="form">
 
