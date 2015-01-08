@@ -29,10 +29,17 @@ Add HackzillaTicketBundle in your composer.json:
 }
 ```
 
-Now tell composer to download the bundle by running the command:
+Install Composer
+
+```
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+```
+
+Now tell composer to download the library by running the command:
 
 ``` bash
-$ php composer.phar update hackzilla/ticket-bundle
+$ composer update hackzilla/ticket-bundle
 ```
 
 Composer will install the bundle into your project's `vendor/hackzilla` directory.
