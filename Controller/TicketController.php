@@ -134,10 +134,10 @@ class TicketController extends Controller
     }
 
     /**
-     * @param \FOS\UserBundle\Model\UserInterface $user
+     * @param \FOS\UserBundle\Model\UserInterface|string $user
      * @param Ticket $ticket
      */
-    private function checkUserPermission(\FOS\UserBundle\Model\UserInterface $user, Ticket $ticket)
+    private function checkUserPermission($user, Ticket $ticket)
     {
         if (!\is_object($user) || (!$this->get('hackzilla_ticket.user')->isGranted($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
