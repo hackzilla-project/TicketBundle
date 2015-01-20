@@ -14,7 +14,7 @@
             </trans-unit>
             <trans-unit id="3">
                 <source>STATUS_INFORMATION_REQUESTED</source>
-                <target>Información solicitada</target>
+                <target>InformaciÃ³n solicitada</target>
             </trans-unit>
             <trans-unit id="4">
                 <source>STATUS_ON_HOLD</source>
@@ -42,17 +42,17 @@
             </trans-unit>
             <trans-unit id="10">
                 <source>STATUS_INVALID</source>
-                <target>Inválido</target>
+                <target>InvÃ¡lido</target>
             </trans-unit>
             <trans-unit id="11">
                 <source>PRIORITY_INVALID</source>
-                <target>Inválido</target>
+                <target>InvÃ¡lido</target>
             </trans-unit>
 
             <!-- views / headings -->
             <trans-unit id="80">
                 <source>HEADING_SUBJECT</source>
-                <target>Tema/target>
+                <target>Tema</target>
             </trans-unit>
             <trans-unit id="81">
                 <source>HEADING_STATUS</source>
@@ -68,7 +68,7 @@
             </trans-unit>
             <trans-unit id="84">
                 <source>HEADING_CREATED</source>
-                <target>Creado el/target>
+                <target>Creado el</target>
             </trans-unit>
             <trans-unit id="85">
                 <source>HEADING_TICKET_LIST</source>
@@ -84,19 +84,19 @@
             </trans-unit>
             <trans-unit id="88">
                 <source>HEADING_TICKET_ID</source>
-                <target>Tarea nº%id%</target>
+                <target>Tarea nÂº%id%</target>
             </trans-unit>
             <trans-unit id="89">
                 <source>HEADING_TICKET_THREAD</source>
-                <target>Diálogo</target>
+                <target>DiÃ¡logo</target>
             </trans-unit>
             <trans-unit id="90">
                 <source>HEADING_LAST_MESSAGE_BY</source>
-                <target>Último mensaje de parte de</target>
+                <target>Ãšltimo mensaje de parte de</target>
             </trans-unit>
             <trans-unit id="91">
                 <source>HEADING_LAST_MODIFIED</source>
-                <target>Último modificación de parte de </target>
+                <target>Ãšltimo modificaciÃ³n de parte de </target>
             </trans-unit>
 
             <!-- views / buttons -->
@@ -118,7 +118,7 @@
             </trans-unit>
             <trans-unit id="104">
                 <source>BUTTON_NEW</source>
-                <target>Neuva tarea</target>
+                <target>Nueva tarea</target>
             </trans-unit>
             <trans-unit id="105">
                 <source>BUTTON_TOGGLE_STATE</source>
@@ -152,7 +152,7 @@
             </trans-unit>
             <trans-unit id="126">
                 <source>LABEL_CREATED_BY</source>
-                <target>Creado por/target>
+                <target>Creado por</target>
             </trans-unit>
             <trans-unit id="127">
                 <source>LABEL_ADMIN</source>
@@ -164,11 +164,11 @@
             </trans-unit>
             <trans-unit id="129">
                 <source>LABEL_ENTER_DETAILS</source>
-                <target>Adjuntar algunos detalles</target>
+                <target>Ingrese algunos detalles</target>
             </trans-unit>
             <trans-unit id="130">
                 <source>LABEL_ENTER_SUBJECT</source>
-                <target>Adjuntar el tema</target>
+                <target>Ingrese el tema</target>
             </trans-unit>
             <trans-unit id="131">
                 <source>LABEL_SUBJECT</source>
@@ -182,7 +182,7 @@
             </trans-unit>
             <trans-unit id="141">
                 <source>MESSAGE_EMPTY</source>
-                <target>-- Mensaje vacío --</target>
+                <target>-- Mensaje vacÃ­o --</target>
             </trans-unit>
             <trans-unit id="142">
                 <source>MESSAGE_TICKET_OPENED</source>
