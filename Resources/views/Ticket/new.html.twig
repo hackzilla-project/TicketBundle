@@ -3,26 +3,28 @@
 {% block hackzilla_ticket_content -%}
 <h1>{{ 'HEADING_NEW_TICKET'|trans }}</h1>
 
-<form action="{{ path('hackzilla_ticket_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" role="form">
-
-    <div class="form-group row">
-        {{ form_label(form.subject, '', { 'label_attr': {'class': 'col-lg-2 col-md-2 col-sm-2 control-label'} }) }}
-        <div class="col-lg-8 col-md-8 col-sm-8">
-            {{ form_widget(form.subject, { 'attr': {'class': 'form-control', 'placeholder': 'LABEL_ENTER_SUBJECT'|trans } }) }}
+<div class="well well-sm">
+    <form action="{{ path('hackzilla_ticket_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" role="form">
+        <div class="form-group row">
+            {{ form_label(form.subject, '', { 'label_attr': {'class': 'col-lg-2 col-md-2 col-sm-2 control-label'} }) }}
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                {{ form_widget(form.subject, { 'attr': {'class': 'form-control', 'placeholder': 'LABEL_ENTER_SUBJECT'|trans } }) }}
+            </div>
         </div>
-    </div>
 
-    {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form.messages.vars.prototype} %}
+        {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form.messages.vars.prototype} %}
 
-    {{ form_rest(form) }}
-    <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10 col-md-offset-2 col-md-10 col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">{{ 'BUTTON_CREATE'|trans }}</button>
+        {{ form_rest(form) }}
+    
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10 col-md-offset-2 col-md-10 col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">{{ 'BUTTON_CREATE'|trans }}</button>
 
-            <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">
-                {{ 'BUTTON_BACK_TO_LIST'|trans }}
-            </a>
+                <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">
+                    {{ 'BUTTON_BACK_TO_LIST'|trans }}
+                </a>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 {% endblock %}

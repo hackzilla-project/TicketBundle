@@ -174,6 +174,14 @@
                 <source>LABEL_SUBJECT</source>
                 <target>Tema</target>
             </trans-unit>
+            <trans-unit id="132">
+                <source>LABEL_DATE_FORMAT</source>
+                <target>Y/m/d</target>
+            </trans-unit>
+            <trans-unit id="133">
+                <source>LABEL_DATE_TIME_FORMAT</source>
+                <target>Y/m/d H:i:s</target>
+            </trans-unit>
 
             <!-- views / messages -->
             <trans-unit id="140">

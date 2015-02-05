@@ -1,21 +1,22 @@
 {% extends 'HackzillaTicketBundle::layout.html.twig' %}
+{% import 'HackzillaTicketBundle:Macros:macros.html.twig' as macros %}
 
 {% block hackzilla_ticket_content -%}
-<a href="{{ path('hackzilla_ticket_new') }}" class="btn btn-primary pull-right">{{ 'BUTTON_NEW'|trans }}</a>
 <h1>{{ 'HEADING_TICKET_LIST'|trans }}</h1>
 
-{%- if ticketState == 'STATUS_CLOSED'|trans %}
-        {% set state %}<a href="?state={{ 'STATUS_OPEN'|trans }}">{{ 'STATUS_OPEN'|trans }}</a>{% endset %}
-{% else %}
-        {% set state %}<a href="?state={{ 'STATUS_CLOSED'|trans }}">{{ 'STATUS_CLOSED'|trans }}</a>{% endset %}
-{% endif -%}
+<div class="btn-group pull-right">
+    <a href="{{ path('hackzilla_ticket_new') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {{ 'BUTTON_NEW'|trans }}</a>
+</div>
 
-<p>{{ 'BUTTON_TOGGLE_STATE'|trans({'%state%': state })|raw }}</p>
+<div class="btn-group">
+    <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_OPEN'|trans}) }}" class="btn btn-default {{ ticketState != 'STATUS_CLOSED'|trans ? 'active' : '' }}">{{ 'STATUS_OPEN'|trans|upper }}</a>
+    <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_CLOSED'|trans}) }}" class="btn btn-default {{ ticketState == 'STATUS_CLOSED'|trans ? 'active' : '' }}">{{ 'STATUS_CLOSED'|trans|upper }}</a>
+</div>
 
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>{{ knp_pagination_sortable(pagination, 'HEADING_TICKET'|trans, 't.id') }}</th>
+            <th class="col-xs-1">{{ knp_pagination_sortable(pagination, 'HEADING_TICKET'|trans, 't.id') }}</th>
             <th{% if pagination.isSorted('t.subject') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_SUBJECT'|trans, 't.subject') }}</th>
             <th{% if pagination.isSorted('t.status') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_STATUS'|trans, 't.status') }}</th>
             <th{% if pagination.isSorted('t.priority') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_PRIORITY'|trans, 't.priority') }}</th>
@@ -28,10 +29,10 @@
         <tr>
             <td><a href="{{ path('hackzilla_ticket_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td><a href="{{ path('hackzilla_ticket_show', { 'id': entity.id }) }}">{{ entity.subject }}</a></td>
-            <td>{{ entity.statusString|trans }}</td>
-            <td>{{ entity.priorityString|trans }}</td>
-            <td>{% if entity.lastMessage %}{{ entity.lastMessage|date('Y-m-d H:i:s') }}{% endif %}</td>
-            <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ macros.status_btn(entity.status, entity.statusString|trans, true) }}</td>
+            <td>{{ macros.priority_btn(entity.priority, entity.priorityString|trans, true) }}</td>
+            <td>{% if entity.lastMessage %}{{ entity.lastMessage|date('LABEL_DATE_TIME_FORMAT'|trans) }}{% endif %}</td>
+            <td>{% if entity.createdAt %}{{ entity.createdAt|date('LABEL_DATE_TIME_FORMAT'|trans) }}{% endif %}</td>
         </tr>
     {% else %}
         <tr>

@@ -1,137 +1,79 @@
 {% extends 'HackzillaTicketBundle::layout.html.twig' %}
+{% import 'HackzillaTicketBundle:Macros:macros.html.twig' as macros %}
 
 {% block hackzilla_ticket_content -%}
-<h1>{{ 'HEADING_TICKET_ID'|trans({'%id%': ticket.id}) }}</h1>
+<h1>
+    {{ macros.status_btn(ticket.status, ticket.statusString|trans) }}
+    {{ macros.priority_btn(ticket.priority, ticket.priorityString|trans) }}
+    <small>#{{ ticket.id }}</small>
+    - {{ ticket.subject }}
+</h1>
 
-<div class="row well">
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_CREATED'|trans }}:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.createdAt|date('Y-m-d H:i:s') }}</div>
-        </div>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_CREATED_BY'|trans }}:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{% if ticket.userCreatedObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-default">{{ 'LABEL_ADMIN'|trans }}</span> {% endif %}{{ ticket.userCreatedObject }}</div>
-        </div>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'HEADING_LAST_MESSAGE_BY'|trans }}:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{% if ticket.lastUserObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-default">{{ 'LABEL_ADMIN'|trans }}</span> {% endif %}{{ ticket.lastUserObject }}</div>
-        </div>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_STATUS'|trans }}:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.statusString|trans }}</div>
-        </div>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'HEADING_LAST_MODIFIED'|trans }}:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.lastMessage|date('Y-m-d H:i:s') }}</div>
-        </div>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_PRIORITY'|trans }}:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ ticket.priorityString|trans }}</div>
-        </div>
-    </div>
-</div>
+<p>
+    <i>{{ 'LABEL_CREATED_BY'|trans }} {{ ticket.userCreatedObject }}, {{ ticket.createdAt|date('LABEL_DATE_FORMAT'|trans) }}</i>
+    {# <br />{{ 'LABEL_PRIORITY'|trans }} <span class="label label-{{ ticket.priority == 0 ? 'default' : (ticket.priority == 20 ? 'primary' : (ticket.priority == 21 ? 'warning' : 'danger')) }}">{{ ticket.priorityString|trans }}</span> #}
+</p>
 
+
+{# <h3>{{ 'HEADING_TICKET_THREAD'|trans }}</h3> #}
 {% set previousStatus = null %}
 {% set previousPriority = null %}
 
-<h3>{{ 'HEADING_TICKET_THREAD'|trans }}</h3>
-<div class="ticket-messages">
 {% for message in ticket.messages %}
-<div class="ticket-message row well">
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_AUTHOR'|trans }}:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{% if message.userObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-default">{{ 'LABEL_ADMIN'|trans }}</span> {% endif %}{{ message.userObject }}</div>
+        
+    {% if previousStatus and previousStatus != message.status %}
+    {{ macros.status_alert(message.status, message.statusString|trans) }}
+    {% endif %}
+    
+    {% if previousPriority and previousPriority != message.priority %}
+    {{ macros.priority_alert(message.priority, message.priorityString|trans) }}
+    {% endif %}
+    
+    {% if message.message|length > 0 %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{ message.userObject }}
+            {# <br />{{ 'LABEL_PRIORITY'|trans }} <span class="label label-{{ message.priority == 0 ? 'default' : (message.priority == 20 ? 'primary' : (message.priority == 21 ? 'warning' : 'danger')) }}">{{ message.priorityString|trans }}</span> #}
+            {# <br />{{ 'LABEL_STATUS'|trans }} <span class="label label-{{ message.status ? 'success' : 'danger' }}">{{ message.statusString|trans }}</span> #}
+            
+            <span class="pull-right">
+                {% if message.userObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span class="label label-danger">{{ 'LABEL_ADMIN'|trans }}</span> {% endif %}
+                <small><i>{{ message.createdAt|date('LABEL_DATE_TIME_FORMAT'|trans) }}</i></small>
+            </span>
         </div>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_DATE'|trans }}:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ message.createdAt|date('Y-m-d H:i:s') }}</div>
+        <div class="panel-body">
+            {{ message.message|nl2br }}
         </div>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_PRIORITY'|trans }}:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ message.priorityString|trans }}</div>
-        </div>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ 'LABEL_STATUS'|trans }}:</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">{{ message.statusString|trans }}</div>
-        </div>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        &nbsp;
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        {{ 'LABEL_MESSAGE'|trans }}:
-        {% if message.message %}
-            <br>{{ message.message|nl2br }}
-        {% else %}
-            {{ 'MESSAGE_EMPTY'|trans }}
-        {% endif %}
-    </div>
-    {% if not previousStatus or previousStatus != message.status or previousPriority != message.priority %}
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        &nbsp;
     </div>
     {% endif %}
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        {% if not previousStatus %}
-            {{ 'MESSAGE_TICKET_OPENED'|trans({'%priority%': message.priorityString|trans}) }}
-        {% else %}
-            {% if(previousStatus != message.status) %}
-                {{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': message.statusString|trans}) }}
-            {% endif %}
-            {% if(previousPriority != message.priority) %}
-                {{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': message.priorityString|trans}) }}
-            {% endif %}
-        {% endif %}
-    </div>
-</div>
+    
     {% set previousStatus = message.status %}
     {% set previousPriority = message.priority %}
 {% endfor %}
-</div>
+
+<hr />
 
 {% if form is defined %}
-<form action="{{ path('hackzilla_ticket_reply', {id: ticket.id}) }}" method="post" {{ form_enctype(form) }}>
+<div class="well well-sm">
+    <form action="{{ path('hackzilla_ticket_reply', {id: ticket.id}) }}" method="post" {{ form_enctype(form) }}>
+        {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form} %}
 
-    {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form} %}
-
-    {{ form_rest(form) }}
-    
-    <p class="form_actions">
-        <button type="submit" class="btn btn-primary">{{ 'BUTTON_UPDATE'|trans }}</button>
-
-        <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">
-            {{ 'BUTTON_BACK_TO_LIST'|trans }}
-        </a>
-    </p>
-</form>
+        {{ form_rest(form) }}
+        
+        <p class="form_actions">
+            <button type="submit" class="btn btn-primary">{{ 'BUTTON_UPDATE'|trans }}</button>
+            <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">{{ 'BUTTON_BACK_TO_LIST'|trans }}</a>
+        </p>
+    </form>
+</div>
+{% else %}
+    <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">{{ 'BUTTON_BACK_TO_LIST'|trans }}</a>
 {% endif %}
 
 {% if delete_form is defined %}
 <form action="{{ path('hackzilla_ticket_delete', { 'id': ticket.id }) }}" method="post">
     <input type="hidden" name="_method" value="DELETE" />
     {{ form_widget(delete_form) }}
-
-    <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">
-        {{ 'BUTTON_BACK_TO_LIST'|trans }}
-    </a>
 
     <button type="submit" class="btn btn-danger">{{ 'BUTTON_DELETE'|trans }}</button>
 </form>
