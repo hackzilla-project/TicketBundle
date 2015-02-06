@@ -67,7 +67,9 @@
     </form>
 </div>
 {% else %}
-    <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">{{ 'BUTTON_BACK_TO_LIST'|trans }}</a>
+    <p>
+        <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">{{ 'BUTTON_BACK_TO_LIST'|trans }}</a>
+    </p>
 {% endif %}
 
 {% if delete_form is defined %}

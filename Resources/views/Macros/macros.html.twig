@@ -3,7 +3,7 @@
     {% if status == 10 %}
         <button class="btn btn-warning {{ small ? 'btn-xs' : '' }} disabled active"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ text|upper }}</button>
     {% elseif status == 11 %}
-        <button class="btn btn-primary {{ small ? 'btn-xs' : '' }} disabled active"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ text|upper }}</button>
+        <button class="btn btn-info {{ small ? 'btn-xs' : '' }} disabled active"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ text|upper }}</button>
     {% elseif status == 12 %}
         <button class="btn btn-info {{ small ? 'btn-xs' : '' }} disabled active"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ text|upper }}</button>
     {% elseif status == 13 %}
@@ -21,7 +21,7 @@
     {% if status == 10 %}
         <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
     {% elseif status == 11 %}
-        <div class="alert alert-primary" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
+        <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
     {% elseif status == 12 %}
         <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
     {% elseif status == 13 %}
@@ -49,11 +49,11 @@
 {% macro priority_alert(priority, text) %}
 {% spaceless %}
     {% if priority <= 20 %}
-        <div class="alert alert-info" role="alert">{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
+        <div class="alert alert-info" role="alert">{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }) }}</div>
     {% elseif priority == 21 %}
-        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-asterisk"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
+        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-asterisk"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }) }}</div>
     {% else %}
-        <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-star"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
+        <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-star"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }) }}</div>
     {% endif %}
 {% endspaceless %}
 {% endmacro %}
