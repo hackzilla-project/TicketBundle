@@ -23,7 +23,7 @@ class TicketMessage
 
     /**
      * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="messages")
-     * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $ticket;
 
