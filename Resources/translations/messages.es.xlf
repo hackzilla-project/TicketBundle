@@ -98,6 +98,10 @@
                 <source>HEADING_LAST_MODIFIED</source>
                 <target>Último modificación de parte de </target>
             </trans-unit>
+            <trans-unit id="92">
+                <source>HEADING_AUTHOR</source>
+                <target>Autor</target>
+            </trans-unit>
 
             <!-- views / buttons -->
             <trans-unit id="100">
