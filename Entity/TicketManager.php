@@ -46,12 +46,7 @@ class TicketManager implements TicketManagerInterface
 	/*
 	Delete a ticket from the database
 	*/
-	public function deleteTicket(Ticket $ticket){
-
-		foreach($ticket->getMessages() as $message){
-			$this->ObjectManager->remove($message);
-		}
-
+	public function deleteTicket(Ticket $ticket) {
 		$this->ObjectManager->remove($ticket);
 		$this->ObjectManager->flush();
 	}

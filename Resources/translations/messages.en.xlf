@@ -98,6 +98,10 @@
                 <source>HEADING_LAST_MODIFIED</source>
                 <target>Last Modified</target>
             </trans-unit>
+            <trans-unit id="92">
+                <source>HEADING_AUTHOR</source>
+                <target>Author</target>
+            </trans-unit>
 
 
             <!-- views / buttons -->
@@ -175,6 +179,14 @@
             <trans-unit id="131">
                 <source>LABEL_SUBJECT</source>
                 <target>Subject</target>
+            </trans-unit>
+            <trans-unit id="132">
+                <source>LABEL_DATE_FORMAT</source>
+                <target>m/d/Y</target>
+            </trans-unit>
+            <trans-unit id="133">
+                <source>LABEL_DATE_TIME_FORMAT</source>
+                <target>m/d/Y H:i:s</target>
             </trans-unit>
 
 

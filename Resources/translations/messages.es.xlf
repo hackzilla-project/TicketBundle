@@ -98,6 +98,10 @@
                 <source>HEADING_LAST_MODIFIED</source>
                 <target>Último modificación de parte de </target>
             </trans-unit>
+            <trans-unit id="92">
+                <source>HEADING_AUTHOR</source>
+                <target>Autor</target>
+            </trans-unit>
 
             <!-- views / buttons -->
             <trans-unit id="100">
@@ -173,6 +177,14 @@
             <trans-unit id="131">
                 <source>LABEL_SUBJECT</source>
                 <target>Tema</target>
+            </trans-unit>
+            <trans-unit id="132">
+                <source>LABEL_DATE_FORMAT</source>
+                <target>Y/m/d</target>
+            </trans-unit>
+            <trans-unit id="133">
+                <source>LABEL_DATE_TIME_FORMAT</source>
+                <target>Y/m/d H:i:s</target>
             </trans-unit>
 
             <!-- views / messages -->

@@ -1,0 +1,59 @@
+{% macro status_btn(status, text, small = false) %}
+{% spaceless %}
+    {% if status == 10 %}
+        <button class="btn btn-warning {{ small ? 'btn-xs' : '' }} disabled active"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ text|upper }}</button>
+    {% elseif status == 11 %}
+        <button class="btn btn-info {{ small ? 'btn-xs' : '' }} disabled active"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ text|upper }}</button>
+    {% elseif status == 12 %}
+        <button class="btn btn-info {{ small ? 'btn-xs' : '' }} disabled active"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ text|upper }}</button>
+    {% elseif status == 13 %}
+        <button class="btn btn-info {{ small ? 'btn-xs' : '' }} disabled active"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ text|upper }}</button>
+    {% elseif status == 14 %}
+        <button class="btn btn-success {{ small ? 'btn-xs' : '' }} disabled active"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ text|upper }}</button>
+    {% elseif status == 15 %}
+        <button class="btn btn-danger {{ small ? 'btn-xs' : '' }} disabled active"><span class="glyphicon glyphicon-folder-close"></span>&nbsp;&nbsp;{{ text|upper }}</button>
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+{% macro status_alert(status, text) %}
+{% spaceless %}
+    {% if status == 10 %}
+        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
+    {% elseif status == 11 %}
+        <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
+    {% elseif status == 12 %}
+        <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
+    {% elseif status == 13 %}
+        <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
+    {% elseif status == 14 %}
+        <div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
+    {% elseif status == 15 %}
+        <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-folder-close"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}</div>
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+{% macro priority_btn(priority, text, small = false) %}
+{% spaceless %}
+    {% if priority <= 20 %}
+        <button class="btn btn-info {{ small ? 'btn-xs' : '' }} disabled active">{{ text|upper }}</button>
+    {% elseif priority == 21 %}    
+        <button class="btn btn-warning {{ small ? 'btn-xs' : '' }} disabled active"><span class="glyphicon glyphicon-asterisk"></span>&nbsp;&nbsp;{{ text|upper }}</button>
+    {% else %}
+        <button class="btn btn-danger {{ small ? 'btn-xs' : '' }} disabled active"><span class="glyphicon glyphicon-asterisk"></span>&nbsp;&nbsp;{{ text|upper }}</button>
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+{% macro priority_alert(priority, text) %}
+{% spaceless %}
+    {% if priority <= 20 %}
+        <div class="alert alert-info" role="alert">{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }) }}</div>
+    {% elseif priority == 21 %}
+        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-asterisk"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }) }}</div>
+    {% else %}
+        <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-star"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }) }}</div>
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
