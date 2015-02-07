@@ -5,6 +5,7 @@ Simple multilingual ticketing bundle to add to any project.
 Languages: English, French, Russian, German and Spanish.
 
 [![Build Status](https://travis-ci.org/hackzilla/TicketBundle.png?branch=master)](https://travis-ci.org/hackzilla/TicketBundle)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/091d37a9-7862-4365-952c-814ce95c4d6c/mini.png)](https://insight.sensiolabs.com/projects/091d37a9-7862-4365-952c-814ce95c4d6c)
 
 Requirements
 ------------
