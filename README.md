@@ -99,6 +99,7 @@ Change Log
 ----------
 
 0.7 - TicketType and TicketMessageType have been moved into Form/Type folder.
+0.9 - New template, and schema changes
 
 
 Pull Requests
