@@ -18,14 +18,17 @@ class TicketTypeTest extends TypeTestCase
         $type = new \Hackzilla\Bundle\TicketBundle\Form\Type\TicketType($userManager, true);
 
         $data = new \Hackzilla\Bundle\TicketBundle\Entity\Ticket();
-        
+
         $form = $this->factory->create($type);
 
         // submit the data to the form directly
         $form->submit($formData);
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($data, $form->getData());
+
+        $formEntity = $form->getData();
+        $formEntity->setCreatedAt($data->getCreatedAt());
+        $this->assertEquals($data, $formEntity);
 
         $view = $form->createView();
         $children = $view->children;
