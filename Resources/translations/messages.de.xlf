@@ -52,7 +52,7 @@
             <!-- views / headings -->
             <trans-unit id="80">
                 <source>HEADING_SUBJECT</source>
-                <target>Thema/target>
+                <target>Thema</target>
             </trans-unit>
             <trans-unit id="81">
                 <source>HEADING_STATUS</source>
