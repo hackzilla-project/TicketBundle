@@ -2,6 +2,11 @@
 {% import 'HackzillaTicketBundle:Macros:macros.html.twig' as macros %}
 
 {% block hackzilla_ticket_content -%}
+
+<p>
+    <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">{{ 'BUTTON_BACK_TO_LIST'|trans }}</a>
+</p>
+    
 <h1>
     {{ macros.status_btn(ticket.status, ticket.statusString|trans) }}
     {{ macros.priority_btn(ticket.priority, ticket.priorityString|trans) }}
@@ -62,18 +67,13 @@
         
         <p class="form_actions">
             <button type="submit" class="btn btn-primary">{{ 'BUTTON_UPDATE'|trans }}</button>
-            <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">{{ 'BUTTON_BACK_TO_LIST'|trans }}</a>
         </p>
     </form>
 </div>
-{% else %}
-    <p>
-        <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">{{ 'BUTTON_BACK_TO_LIST'|trans }}</a>
-    </p>
 {% endif %}
 
 {% if delete_form is defined %}
-<form action="{{ path('hackzilla_ticket_delete', { 'id': ticket.id }) }}" method="post">
+<form action="{{ path('hackzilla_ticket_delete', { 'id': ticket.id }) }}" method="post" class="text-right">
     <input type="hidden" name="_method" value="DELETE" />
     {{ form_widget(delete_form) }}
 
