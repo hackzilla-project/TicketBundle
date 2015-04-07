@@ -44,4 +44,19 @@ class TicketRepository extends EntityRepository
 
         return $query;
     }
+
+    public function getResolvedTicketOlderThan($days)
+    {
+        $closeBeforeDate = new \DateTime();
+        $closeBeforeDate->sub(new \DateInterval('P' . $days . 'D'));
+
+        $query = $this->createQueryBuilder('t')
+            ->where('t.status = :status')
+            ->andWhere('t.lastMessage < :closeBeforeDate')
+            ->setParameter('status', TicketMessage::STATUS_RESOLVED)
+            ->setParameter('closeBeforeDate', $closeBeforeDate)
+        ;
+
+        return $query->getQuery()->getResult();
+    }
 }
