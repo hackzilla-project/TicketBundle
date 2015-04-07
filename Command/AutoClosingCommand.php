@@ -28,7 +28,7 @@ class AutoClosingCommand extends ContainerAwareCommand
                 'age',
                 'a',
                 InputOption::VALUE_OPTIONAL,
-                'How long since the ticket have been resolved?',
+                'How many days since the ticket was resolved?',
                 '10'
             )
         ;
