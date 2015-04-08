@@ -11,6 +11,7 @@ class StatusTransformer implements DataTransformerInterface
      * Transforms checkbox value into Ticket Message Status Closed
      *
      * @param  integer $number
+     *
      * @return integer|null
      */
     public function transform($number)
@@ -28,7 +29,6 @@ class StatusTransformer implements DataTransformerInterface
      * @param  integer $number
      *
      * @return integer|null
-     *
      */
     public function reverseTransform($number)
     {
