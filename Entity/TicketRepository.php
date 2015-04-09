@@ -40,6 +40,11 @@ class TicketRepository extends EntityRepository
             $query
                 ->andWhere('t.userCreated = :userId')
                 ->setParameter('userId', $user->getId());
+        } else {
+            # anonymous user
+            $query
+                ->andWhere('t.userCreated = :userId')
+                ->setParameter('userId', 0);
         }
 
         return $query;
