@@ -24,7 +24,6 @@ Add HackzillaTicketBundle in your composer.json:
 {
     "require": {
         "hackzilla/ticket-bundle": "~0.8",
-        "hackzilla/fosuser-bridge-bundle": "~1.0.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
     }
 }
@@ -58,7 +57,6 @@ public function registerBundles()
     $bundles = array(
         // ...
         new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-        new Hackzilla\Bundle\FOSUserBridgeBundle\HackzillaFOSUserBridgeBundle(),
         new Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle(),
         // ...
         // Your application bundles

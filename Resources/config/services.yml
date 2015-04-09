@@ -2,6 +2,7 @@ parameters:
     hackzilla_ticket.user_load.class: Hackzilla\Bundle\TicketBundle\EventListener\UserLoad
     hackzilla_ticket.twig_user.class: Hackzilla\Bundle\TicketBundle\Extension\UserExtension
     hackzilla_ticket.ticket_manager.class: Hackzilla\Bundle\TicketBundle\Manager\TicketManager
+    hackzilla_ticket.user_bridge.class: Hackzilla\Bundle\TicketBundle\User\FOSUser
 
 services:
     hackzilla_ticket.listener:
@@ -18,7 +19,7 @@ services:
 
     hackzilla_ticket.user:
         class: %hackzilla_ticket.user_bridge.class%
-        arguments: ['@service_container']
+        arguments: ['@security.context', '@fos_user.user_manager']
 
     hackzilla_ticket.ticket_manager:
         class: %hackzilla_ticket.ticket_manager.class%
