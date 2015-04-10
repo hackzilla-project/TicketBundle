@@ -74,6 +74,14 @@ hackzilla_ticket:
     prefix:   /
 ```
 
+or 
+
+``` yml
+hackzilla_ticket:
+    resource: "@HackzillaTicketBundle/Resources/config/routing/ticket.yml"
+    prefix:   /ticket
+```
+
 ### Step 4: Roles
 
 All users can create tickets, even anonymous users.
