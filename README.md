@@ -106,6 +106,15 @@ Change Log
 
 0.7 - TicketType and TicketMessageType have been moved into Form/Type folder.
 0.9 - New template, and schema changes
+1.0
+ - Moved UserInterface into bundle
+ - Moved Ticket Manager to its own namespace
+
+
+Migrating to 1.0
+----------------
+
+    - remove new Hackzilla\Bundle\FOSUserBridgeBundle\HackzillaFOSUserBridgeBundle() from AppKernel.php
 
 
 Pull Requests
