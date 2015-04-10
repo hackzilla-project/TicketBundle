@@ -2,6 +2,8 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
+use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
+
 interface TicketManagerInterface
 {
 	public function createTicket();

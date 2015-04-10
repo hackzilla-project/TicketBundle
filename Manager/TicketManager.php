@@ -4,7 +4,6 @@ namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 
 class TicketManager implements TicketManagerInterface
