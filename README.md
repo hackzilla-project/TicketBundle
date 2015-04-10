@@ -1,5 +1,7 @@
-Ticketing Bundle
-================
+Ticketing Bundle v1
+===================
+
+Work in progress. See 0.9 for [current version](https://github.com/hackzilla/TicketBundle/tree/0.9.x).
 
 Simple multilingual ticketing bundle to add to any project.
 Languages: English, French, Russian, German and Spanish.
