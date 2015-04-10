@@ -23,7 +23,7 @@ Add HackzillaTicketBundle in your composer.json:
 ```json
 {
     "require": {
-        "hackzilla/ticket-bundle": "~0.8",
+        "hackzilla/ticket-bundle": "~1.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
     }
 }
