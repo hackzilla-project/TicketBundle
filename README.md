@@ -12,7 +12,7 @@ Requirements
 
 * FOSUserBundle
 * Knp Paginator
-* Bootstrap v3 (optional) see: https://github.com/hackzilla/bootstrap-bundle
+* Bootstrap v3 (optional) see: https://github.com/hackzilla/bootstrap-bundle and http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme
 
 
 Installation
