@@ -120,8 +120,8 @@ Change Log
 Migrating to 1.0
 ----------------
 
-    - remove new Hackzilla\Bundle\FOSUserBridgeBundle\HackzillaFOSUserBridgeBundle() from AppKernel.php
-
+* remove new Hackzilla\Bundle\FOSUserBridgeBundle\HackzillaFOSUserBridgeBundle() from AppKernel.php
+* remove hackzilla/fosuser-bridge-bundle from composer.json
 
 Pull Requests
 -------------
