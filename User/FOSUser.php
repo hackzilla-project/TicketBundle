@@ -2,7 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\User;
 
-use Hackzilla\Bundle\TicketBundle\User\UserInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class FOSUser implements UserInterface
@@ -10,7 +10,7 @@ class FOSUser implements UserInterface
     private $securityContext;
     private $userManager;
 
-    function __construct(SecurityContextInterface $securityContext, UserInterface $userManager)
+    function __construct(SecurityContextInterface $securityContext, UserManagerInterface $userManager)
     {
         $this->securityContext = $securityContext;
         $this->userManager = $userManager;

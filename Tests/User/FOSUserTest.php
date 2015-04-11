@@ -32,7 +32,7 @@ class FOSUserTest extends WebTestCase
 
     private function getMockUserManager()
     {
-        $userManager = $this->getMock('Hackzilla\Bundle\TicketBundle\User\UserInterface');
+        $userManager = $this->getMock('FOS\UserBundle\Model\UserManagerInterface');
 
         return $userManager;
     }
