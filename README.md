@@ -106,11 +106,15 @@ See for example of how to create listener: http://symfony.com/doc/current/cookbo
 Change Log
 ----------
 
-0.7 - TicketType and TicketMessageType have been moved into Form/Type folder.
-0.9 - New template, and schema changes
+0.7
+* TicketType and TicketMessageType have been moved into Form/Type folder.
+
+0.9
+* New template, and schema changes
+
 1.0
- - Moved UserInterface into bundle
- - Moved Ticket Manager to its own namespace
+* Moved UserInterface into bundle
+* Moved Ticket Manager to its own namespace
 
 
 Migrating to 1.0
