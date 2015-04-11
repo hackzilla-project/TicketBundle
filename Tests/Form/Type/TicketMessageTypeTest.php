@@ -14,8 +14,8 @@ class TicketMessageTypeTest extends TypeTestCase
             'message'  => null,
         );
 
-        $userManager = $this->getMock('Hackzilla\Interfaces\User\UserInterface');
-        $this->assertTrue($userManager instanceof \Hackzilla\Interfaces\User\UserInterface);
+        $userManager = $this->getMock('Hackzilla\Bundle\TicketBundle\User\UserInterface');
+        $this->assertTrue($userManager instanceof \Hackzilla\Bundle\TicketBundle\User\UserInterface);
       
         $type = new \Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType($userManager, true);
 

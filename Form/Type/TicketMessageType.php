@@ -5,7 +5,7 @@ namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Hackzilla\Interfaces\User\UserInterface;
+use Hackzilla\Bundle\TicketBundle\User\UserInterface;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
 
 class TicketMessageType extends AbstractType
