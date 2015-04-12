@@ -306,12 +306,18 @@ class TicketMessage
     {
         $this->ticket = $ticket;
 
-        // if null, then new ticket
-        if (\is_null($ticket->getUserCreated())) {
-            $ticket->setUserCreated($this->getUser());
+        if (\is_null($this->getUserObject())) {
+            $user = $this->getUser();
+        } else {
+            $user = $this->getUserObject();
         }
 
-        $ticket->setLastUser($this->getUser());
+        // if null, then new ticket
+        if (\is_null($ticket->getUserCreated())) {
+            $ticket->setUserCreated($user);
+        }
+
+        $ticket->setLastUser($user);
         $ticket->setLastMessage($this->getCreatedAt());
         $ticket->setPriority($this->getPriority());
 
