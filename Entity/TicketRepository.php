@@ -14,7 +14,7 @@ use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
  */
 class TicketRepository extends EntityRepository
 {
-    public function getTicketList($userManager, $ticketStatus, $ticketPriority)
+    public function getTicketList($userManager, $ticketStatus, $ticketPriority = null)
     {
         $query = $this->createQueryBuilder('t')
             ->orderBy('t.lastMessage', 'DESC');
