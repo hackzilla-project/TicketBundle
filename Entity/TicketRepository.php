@@ -14,7 +14,7 @@ use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
  */
 class TicketRepository extends EntityRepository
 {
-    public function getTicketList($userManager, $ticketStatus)
+    public function getTicketList($userManager, $ticketStatus, $ticketPriority = null)
     {
         $query = $this->createQueryBuilder('t')
             ->orderBy('t.lastMessage', 'DESC');
@@ -32,6 +32,12 @@ class TicketRepository extends EntityRepository
                 $query
                     ->andWhere('t.status != :status')
                     ->setParameter('status', TicketMessage::STATUS_CLOSED);
+        }
+        
+        if ($ticketPriority) {
+            $query
+                ->andWhere('t.priority = :priority')
+                ->setParameter('priority', $ticketPriority);
         }
         
         $user = $userManager->getCurrentUser();

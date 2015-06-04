@@ -36,4 +36,27 @@ class TicketMessageRepository extends EntityRepository
         
         return \array_search($statusStr, $statuses);
     }
+    
+    /**
+     * Lookup priority code
+     * 
+     * @param object $translator
+     * @param string $priorityStr
+     * 
+     * @return integer
+     */
+    public function getTicketPriority($translator, $priorityStr)
+    {
+        static $priorities = false;
+        
+        if ($priorities === false) {
+            $priorities = array();
+            
+            foreach (TicketMessage::$priorities as $id => $value) {
+                $priorities[$id] = $translator->trans($value);
+            }
+        }
+        
+        return \array_search($priorityStr, $priorities);
+    }
 }
