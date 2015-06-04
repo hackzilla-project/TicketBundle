@@ -31,6 +31,9 @@ Add HackzillaTicketBundle in your composer.json:
 }
 ```
 
+Follow [FOSUserBundle guide](https://github.com/FriendsOfSymfony/FOSUserBundle)
+
+
 Install Composer
 
 ```
@@ -58,6 +61,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
+        new FOS\UserBundle\FOSUserBundle(),
         new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         new Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle(),
         // ...
