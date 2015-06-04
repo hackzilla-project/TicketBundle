@@ -27,14 +27,15 @@ class TicketController extends Controller
     {
         $userManager = $this->get('hackzilla_ticket.user');
         $translator = $this->get('translator');
-
+        
         $ticketState = $request->get('state', $translator->trans('STATUS_OPEN'));
+        $ticketPriority = $request->get('priority', null);
 
         $repositoryTicket = $this->getDoctrine()->getRepository('HackzillaTicketBundle:Ticket');
 
         $repositoryTicketMessage = $this->getDoctrine()->getRepository('HackzillaTicketBundle:TicketMessage');
 
-        $query = $repositoryTicket->getTicketList($userManager, $repositoryTicketMessage->getTicketStatus($translator, $ticketState));
+        $query = $repositoryTicket->getTicketList($userManager, $repositoryTicketMessage->getTicketStatus($translator, $ticketState), $repositoryTicketMessage->getTicketPriority($translator, $ticketPriority));
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -46,6 +47,7 @@ class TicketController extends Controller
         return $this->render('HackzillaTicketBundle:Ticket:index.html.twig', array(
                     'pagination' => $pagination,
                     'ticketState' => $ticketState,
+                    'ticketPriority' => $ticketPriority,
         ));
     }
 

@@ -4,13 +4,28 @@
 {% block hackzilla_ticket_content -%}
 <h1>{{ 'HEADING_TICKET_LIST'|trans }}</h1>
 
-<div class="btn-group pull-right">
-    <a href="{{ path('hackzilla_ticket_new') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {{ 'BUTTON_NEW'|trans }}</a>
-</div>
+<div class="row">
+    <div class="col-xs-4">
+        <div class="btn-group">
+            <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_OPEN'|trans}) }}" class="btn btn-default {{ ticketState != 'STATUS_CLOSED'|trans ? 'active' : '' }}">{{ 'STATUS_OPEN'|trans|upper }}</a>
+            <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_CLOSED'|trans}) }}" class="btn btn-default {{ ticketState == 'STATUS_CLOSED'|trans ? 'active' : '' }}">{{ 'STATUS_CLOSED'|trans|upper }}</a>
+        </div>
+    </div>
 
-<div class="btn-group">
-    <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_OPEN'|trans}) }}" class="btn btn-default {{ ticketState != 'STATUS_CLOSED'|trans ? 'active' : '' }}">{{ 'STATUS_OPEN'|trans|upper }}</a>
-    <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_CLOSED'|trans}) }}" class="btn btn-default {{ ticketState == 'STATUS_CLOSED'|trans ? 'active' : '' }}">{{ 'STATUS_CLOSED'|trans|upper }}</a>
+    <div class="col-xs-4 text-center">
+        <div class="btn-group">
+            <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default {{ ticketPriority is null ? 'active' : '' }}"><span class="glyphicon glyphicon-remove"></span></a>
+            <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_HIGH'|trans}) }}" class="btn btn-danger {{ ticketPriority == 'PRIORITY_HIGH'|trans ? 'active' : '' }}">{{ 'PRIORITY_HIGH'|trans|upper }}</a>
+            <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_MEDIUM'|trans}) }}" class="btn btn-warning {{ ticketPriority == 'PRIORITY_MEDIUM'|trans ? 'active' : '' }}">{{ 'PRIORITY_MEDIUM'|trans|upper }}</a>
+            <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_LOW'|trans}) }}" class="btn btn-info {{ ticketPriority == 'PRIORITY_LOW'|trans ? 'active' : '' }}">{{ 'PRIORITY_LOW'|trans|upper }}</a>
+        </div>
+    </div>
+
+    <div class="col-xs-4 text-right">
+        <div class="btn-group">
+            <a href="{{ path('hackzilla_ticket_new') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {{ 'BUTTON_NEW'|trans }}</a>
+        </div>
+    </div>
 </div>
 
 <table class="table table-bordered table-striped">
