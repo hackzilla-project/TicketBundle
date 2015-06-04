@@ -43,8 +43,8 @@
     {% endfor %}
     </tbody>
 </table>
-<div class="navigation">
-    {{ knp_pagination_render(pagination) }}
+<div class="navigation text-right">
+    {{ knp_pagination_render(pagination, 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig') }}
 </div>
 
 {% endblock %}
