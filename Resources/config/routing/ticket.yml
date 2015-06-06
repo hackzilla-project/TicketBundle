@@ -1,25 +1,25 @@
 hackzilla_ticket:
-    pattern:  /
+    path:  /
     defaults: { _controller: "HackzillaTicketBundle:Ticket:index" }
 
 hackzilla_ticket_show:
-    pattern:  /{id}/show
+    path:  /{id}/show
     defaults: { _controller: "HackzillaTicketBundle:Ticket:show" }
 
 hackzilla_ticket_new:
-    pattern:  /new
+    path:  /new
     defaults: { _controller: "HackzillaTicketBundle:Ticket:new" }
 
 hackzilla_ticket_create:
-    pattern:  /create
+    path:  /create
     defaults: { _controller: "HackzillaTicketBundle:Ticket:create" }
     requirements: { _method: post }
 
 hackzilla_ticket_delete:
-    pattern:  /{id}/delete
+    path:  /{id}/delete
     defaults: { _controller: "HackzillaTicketBundle:Ticket:delete" }
     requirements: { _method: post|delete }
 
 hackzilla_ticket_reply:
-    pattern:  /{id}/reply
+    path:  /{id}/reply
     defaults: { _controller: "HackzillaTicketBundle:Ticket:reply" }
