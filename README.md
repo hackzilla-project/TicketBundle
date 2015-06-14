@@ -67,6 +67,7 @@ public function registerBundles()
         // ...
         new FOS\UserBundle\FOSUserBundle(),
         new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+        new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
         new Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle(),
         // ...
         // Your application bundles
