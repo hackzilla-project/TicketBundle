@@ -16,6 +16,10 @@ Requirements
 * Knp Paginator
 * Bootstrap v3 (optional) see: https://github.com/hackzilla/bootstrap-bundle and http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme
 
+Demo
+----
+
+See [Ticket Bundle Demo App](https://github.com/hackzilla/TicketBundleDemoApp) for an example installation.  This can also be used for confirming bugs.
 
 Installation
 ------------
