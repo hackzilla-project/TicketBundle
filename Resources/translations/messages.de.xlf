@@ -6,7 +6,7 @@
             <!-- Entity Ticket Message -->
             <trans-unit id="1">
                 <source>STATUS_OPEN</source>
-                <target>geÃ¶ffnet</target>
+                <target>geöffnet</target>
             </trans-unit>
             <trans-unit id="2">
                 <source>STATUS_IN_PROGRESS</source>
@@ -22,7 +22,7 @@
             </trans-unit>
             <trans-unit id="5">
                 <source>STATUS_RESOLVED</source>
-                <target>gelÃ¶st</target>
+                <target>gelöst</target>
             </trans-unit>
             <trans-unit id="6">
                 <source>STATUS_CLOSED</source>
@@ -38,15 +38,15 @@
             </trans-unit>
             <trans-unit id="9">
                 <source>PRIORITY_HIGH</source>
-                <target>hÃ¶he</target>
+                <target>höhe</target>
             </trans-unit>
             <trans-unit id="10">
                 <source>STATUS_INVALID</source>
-                <target>nicht gÃ¼ltig</target>
+                <target>nicht gültig</target>
             </trans-unit>
             <trans-unit id="11">
                 <source>PRIORITY_INVALID</source>
-                <target>nicht gÃ¼ltig</target>
+                <target>nicht gültig</target>
             </trans-unit>
 
             <!-- views / headings -->
@@ -64,11 +64,11 @@
             </trans-unit>
             <trans-unit id="83">
                 <source>HEADING_MODIFIED</source>
-                <target>geÃ¤ndert am</target>
+                <target>geändert am</target>
             </trans-unit>
             <trans-unit id="84">
                 <source>HEADING_CREATED</source>
-                <target>erÃ¶ffnet am</target>
+                <target>eröffnet am</target>
             </trans-unit>
             <trans-unit id="85">
                 <source>HEADING_TICKET_LIST</source>
@@ -84,7 +84,7 @@
             </trans-unit>
             <trans-unit id="88">
                 <source>HEADING_TICKET_ID</source>
-                <target>Aufgabe nÂº%id%</target>
+                <target>Aufgabe nº%id%</target>
             </trans-unit>
             <trans-unit id="89">
                 <source>HEADING_TICKET_THREAD</source>
@@ -96,7 +96,7 @@
             </trans-unit>
             <trans-unit id="91">
                 <source>HEADING_LAST_MODIFIED</source>
-                <target>Vorig Ã„nderung</target>
+                <target>Vorig Änderung</target>
             </trans-unit>
             <trans-unit id="92">
                 <source>HEADING_AUTHOR</source>
@@ -107,11 +107,11 @@
             <!-- views / buttons -->
             <trans-unit id="100">
                 <source>BUTTON_DELETE</source>
-                <target>lÃ¶schen</target>
+                <target>löschen</target>
             </trans-unit>
             <trans-unit id="101">
                 <source>BUTTON_BACK_TO_LIST</source>
-                <target>ZurÃ¼ck zur Liste</target>
+                <target>Zurück zur Liste</target>
             </trans-unit>
             <trans-unit id="102">
                 <source>BUTTON_UPDATE</source>
@@ -166,15 +166,15 @@
             </trans-unit>
             <trans-unit id="128">
                 <source>LABEL_MARK_SOLVED</source>
-                <target>identifizieren als gelÃ¶st</target>
+                <target>identifizieren als gelöst</target>
             </trans-unit>
             <trans-unit id="129">
                 <source>LABEL_ENTER_DETAILS</source>
-                <target>Details hinzufÃ¼gen</target>
+                <target>Details hinzufügen</target>
             </trans-unit>
             <trans-unit id="130">
                 <source>LABEL_ENTER_SUBJECT</source>
-                <target>Thema hinzufÃ¼gen</target>
+                <target>Thema hinzufügen</target>
             </trans-unit>
             <trans-unit id="131">
                 <source>LABEL_SUBJECT</source>
@@ -205,17 +205,17 @@
             </trans-unit>
             <trans-unit id="143">
                 <source>MESSAGE_STATUS_CHANGED</source>
-                <target>Zustand geÃ¤ndert: %status%.</target>
+                <target>Zustand geändert: %status%.</target>
             </trans-unit>
             <trans-unit id="144">
                 <source>MESSAGE_PRIORITY_CHANGED</source>
-                <target>Dringlichkeit geÃ¤ndert: %priority%.</target>
+                <target>Dringlichkeit geändert: %priority%.</target>
             </trans-unit>
 
             <!-- errors -->
             <trans-unit id="500">
                 <source>ERROR_FIND_TICKET_ENTITY</source>
-                <target>Aufgabe unmÃ¶glich zu finden.</target>
+                <target>Aufgabe unmöglich zu finden.</target>
             </trans-unit>
 
         </body>
