@@ -29,7 +29,7 @@ class TicketMessage
 
     /**
      * @var integer
-     * 
+     *
      * @ORM\Column(name="user_id", type="integer")
      */
     protected $user;
@@ -37,27 +37,27 @@ class TicketMessage
 
     /**
      * @var string
-     * 
+     *
      * @ORM\Column(name="message", type="text", nullable=true)
      */
     protected $message;
 
     /**
-     * @var smallint
-     * 
+     * @var integer
+     *
      * @ORM\Column(name="status", type="smallint")
      */
     protected $status;
 
     /**
-     * @var smallint
-     * 
+     * @var integer
+     *
      * @ORM\Column(name="priority", type="smallint")
      */
     protected $priority;
 
     /**
-     * @var datetime
+     * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
@@ -101,7 +101,7 @@ class TicketMessage
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -111,7 +111,9 @@ class TicketMessage
     /**
      * Set status
      *
-     * @param smallint $status
+     * @param integer $status
+     *
+     * @return $this
      */
     public function setStatus($status)
     {
@@ -123,6 +125,8 @@ class TicketMessage
      * Set status string
      *
      * @param string $status
+     *
+     * @return $this
      */
     public function setStatusString($status)
     {
@@ -138,7 +142,7 @@ class TicketMessage
     /**
      * Get status
      *
-     * @return smallint
+     * @return integer
      */
     public function getStatus()
     {
@@ -162,7 +166,9 @@ class TicketMessage
     /**
      * Set priority
      *
-     * @param smallint $priority
+     * @param integer $priority
+     *
+     * @return $this
      */
     public function setPriority($priority)
     {
@@ -175,6 +181,8 @@ class TicketMessage
      * Set priority string
      *
      * @param string $priority
+     *
+     * @return $this
      */
     public function setPriorityString($priority)
     {
@@ -190,7 +198,7 @@ class TicketMessage
     /**
      * Get priority
      *
-     * @return smallint
+     * @return integer
      */
     public function getPriority()
     {
@@ -215,7 +223,8 @@ class TicketMessage
      * Set user
      *
      * @param integer|object $user
-     * @return Message
+     *
+     * @return $this
      */
     public function setUser($user)
     {
@@ -233,7 +242,7 @@ class TicketMessage
     /**
      * Get user
      *
-     * @return integer 
+     * @return integer
      */
     public function getUser()
     {
@@ -243,7 +252,7 @@ class TicketMessage
     /**
      * Get user object
      *
-     * @return object 
+     * @return object
      */
     public function getUserObject()
     {
@@ -254,7 +263,8 @@ class TicketMessage
      * Set message
      *
      * @param string $message
-     * @return Message
+     *
+     * @return $this
      */
     public function setMessage($message)
     {
@@ -266,7 +276,7 @@ class TicketMessage
     /**
      * Get message
      *
-     * @return string 
+     * @return string
      */
     public function getMessage()
     {
@@ -277,9 +287,10 @@ class TicketMessage
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return Message
+     *
+     * @return $this
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -289,7 +300,7 @@ class TicketMessage
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -300,9 +311,10 @@ class TicketMessage
      * Set ticket
      *
      * @param \Hackzilla\Bundle\TicketBundle\Entity\Ticket $ticket
-     * @return Message
+     *
+     * @return $this
      */
-    public function setTicket(\Hackzilla\Bundle\TicketBundle\Entity\Ticket $ticket = null)
+    public function setTicket(Ticket $ticket = null)
     {
         $this->ticket = $ticket;
 
@@ -334,7 +346,7 @@ class TicketMessage
     /**
      * Get ticket
      *
-     * @return \Hackzilla\Bundle\TicketBundle\Entity\Ticket 
+     * @return Ticket
      */
     public function getTicket()
     {
