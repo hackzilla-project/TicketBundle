@@ -1,154 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
     <body>
       <trans-unit id="55d693439125751c5e0762c4ff66d20f" resname="STATUS_OPEN">
         <source>STATUS_OPEN</source>
-        <target>ouvert</target>
+        <target>geöffnet</target>
       </trans-unit>
       <trans-unit id="ddc92f744da9975dd9267987fd651e1e" resname="STATUS_IN_PROGRESS">
         <source>STATUS_IN_PROGRESS</source>
-        <target>en cours</target>
+        <target>im Gange</target>
       </trans-unit>
       <trans-unit id="0422b025c6dea79e2776efecfc15351a" resname="STATUS_INFORMATION_REQUESTED">
         <source>STATUS_INFORMATION_REQUESTED</source>
-        <target>Informations demandées</target>
+        <target>Informationen angefordert</target>
       </trans-unit>
       <trans-unit id="0653f252fe1322e3368f963dd83eac05" resname="STATUS_ON_HOLD">
         <source>STATUS_ON_HOLD</source>
-        <target>en attente</target>
+        <target>in Wartestellung</target>
       </trans-unit>
       <trans-unit id="bae31d8b1537b695709790f7b97bb923" resname="STATUS_RESOLVED">
         <source>STATUS_RESOLVED</source>
-        <target>résolu</target>
+        <target>gelöst</target>
       </trans-unit>
       <trans-unit id="6dfa5b57e2c0f1301b992bb526299dce" resname="STATUS_CLOSED">
         <source>STATUS_CLOSED</source>
-        <target>fermé</target>
+        <target>geschlossen</target>
       </trans-unit>
       <trans-unit id="4a2343657e145cb3dab4f445d2c29b1f" resname="PRIORITY_LOW">
         <source>PRIORITY_LOW</source>
-        <target>basse</target>
+        <target>gerig</target>
       </trans-unit>
       <trans-unit id="7e5ab414d2d201947566a9c574a7b85f" resname="PRIORITY_MEDIUM">
         <source>PRIORITY_MEDIUM</source>
-        <target>moyenne</target>
+        <target>mittelere</target>
       </trans-unit>
       <trans-unit id="47a10a0fba7f10a751e6ea38f3d6a1e3" resname="PRIORITY_HIGH">
         <source>PRIORITY_HIGH</source>
-        <target>haute</target>
+        <target>höhe</target>
       </trans-unit>
       <trans-unit id="7b8ea8ba0daa781605be2aae047212bf" resname="STATUS_INVALID">
         <source>STATUS_INVALID</source>
-        <target>nul</target>
+        <target>nicht gültig</target>
       </trans-unit>
       <trans-unit id="54cce79f32190db62f730e499ff99aac" resname="PRIORITY_INVALID">
         <source>PRIORITY_INVALID</source>
-        <target>nul</target>
+        <target>nicht gültig</target>
       </trans-unit>
       <trans-unit id="14aa51c7e13f6b564d03fbf138d23563" resname="HEADING_SUBJECT">
         <source>HEADING_SUBJECT</source>
-        <target>Objet</target>
+        <target>Thema</target>
       </trans-unit>
       <trans-unit id="5f12d5713b9cd128fb2689d78aef8b6e" resname="HEADING_STATUS">
         <source>HEADING_STATUS</source>
-        <target>Condition</target>
+        <target>Zustand</target>
       </trans-unit>
       <trans-unit id="1700a718a761d29430e8f7a6434323ce" resname="HEADING_PRIORITY">
         <source>HEADING_PRIORITY</source>
-        <target>Priorité</target>
+        <target>Dringlichkeit</target>
       </trans-unit>
       <trans-unit id="1ba15150a9320014e140733709fdf6de" resname="HEADING_MODIFIED">
         <source>HEADING_MODIFIED</source>
-        <target>Modifié le</target>
+        <target>geändert am</target>
       </trans-unit>
       <trans-unit id="a2043c0c30b5c9d77c57f00051e59171" resname="HEADING_CREATED">
         <source>HEADING_CREATED</source>
-        <target>Créé le</target>
+        <target>eröffnet am</target>
       </trans-unit>
       <trans-unit id="a7c0e6f6e18e79046800cd265af911ed" resname="HEADING_TICKET_LIST">
         <source>HEADING_TICKET_LIST</source>
-        <target>Liste des tickets</target>
+        <target>Liste der Aufgaben</target>
       </trans-unit>
       <trans-unit id="f934eb496c1ab70487444199974cc088" resname="HEADING_TICKET">
         <source>HEADING_TICKET</source>
-        <target>Ticket</target>
+        <target>Aufgabe</target>
       </trans-unit>
       <trans-unit id="a01054829a6ee5e75790d88f8324cd4b" resname="HEADING_NEW_TICKET">
         <source>HEADING_NEW_TICKET</source>
-        <target>Nouveau Ticket</target>
+        <target>Neue Aufgabe</target>
       </trans-unit>
       <trans-unit id="d00dfa73eeadb07d69ebcd13d2047034" resname="HEADING_TICKET_ID">
         <source>HEADING_TICKET_ID</source>
-        <target>Ticket nº%id%</target>
+        <target>Aufgabe nº%id%</target>
       </trans-unit>
       <trans-unit id="3c84df876cb8126d6993c81dcce370b0" resname="HEADING_TICKET_THREAD">
         <source>HEADING_TICKET_THREAD</source>
-        <target>Fil de discussion</target>
+        <target>Unterhaltung</target>
       </trans-unit>
       <trans-unit id="71b3e22650603379258cbce8ff95b432" resname="HEADING_LAST_MESSAGE_BY">
         <source>HEADING_LAST_MESSAGE_BY</source>
-        <target>Dernier message par</target>
+        <target>Vorig Nachricht von</target>
       </trans-unit>
       <trans-unit id="eacb4eec2b2bd482a058630d62505cf1" resname="HEADING_LAST_MODIFIED">
         <source>HEADING_LAST_MODIFIED</source>
-        <target>Dernière modification</target>
+        <target>Vorig Änderung</target>
       </trans-unit>
       <trans-unit id="4ff402f1bafaefb064670c8482584274" resname="HEADING_AUTHOR">
         <source>HEADING_AUTHOR</source>
-        <target>Auteur</target>
+        <target>Autor</target>
       </trans-unit>
       <trans-unit id="a2e61b4c70aee3661cccae14e0fbd1ad" resname="BUTTON_DELETE">
         <source>BUTTON_DELETE</source>
-        <target>Supprimer</target>
+        <target>löschen</target>
       </trans-unit>
       <trans-unit id="d1a56130a3f3ba2c4867ffc1c3433a82" resname="BUTTON_BACK_TO_LIST">
         <source>BUTTON_BACK_TO_LIST</source>
-        <target>Retour à la liste</target>
+        <target>Zurück zur Liste</target>
       </trans-unit>
       <trans-unit id="bf534b027e677eb70bfd14ec738fcf62" resname="BUTTON_UPDATE">
         <source>BUTTON_UPDATE</source>
-        <target>Mettre à jour</target>
+        <target>aktualisieren</target>
       </trans-unit>
       <trans-unit id="ab8a2a298b2a4a1768fbd5a2d2b0af75" resname="BUTTON_CREATE">
         <source>BUTTON_CREATE</source>
-        <target>Créer</target>
+        <target>Beginnen</target>
       </trans-unit>
       <trans-unit id="87c7ddf65ce68390b659bd7c978ec589" resname="BUTTON_NEW">
         <source>BUTTON_NEW</source>
-        <target>Nouveau Ticket</target>
+        <target>Neue Aufgabe</target>
       </trans-unit>
       <trans-unit id="3ed2efce4546a1375d679b794ba258e8" resname="BUTTON_TOGGLE_STATE">
         <source>BUTTON_TOGGLE_STATE</source>
-        <target>Montrer les tickets %state%s</target>
+        <target>Zeige der Aufgaben %state%s</target>
       </trans-unit>
       <trans-unit id="eb96e68446f7f0fc2141ff39e5658a4e" resname="LABEL_AUTHOR">
         <source>LABEL_AUTHOR</source>
-        <target>Auteur</target>
+        <target>Autor</target>
       </trans-unit>
       <trans-unit id="cabe6a6da9275d1eff8036b8d06e4faf" resname="LABEL_DATE">
         <source>LABEL_DATE</source>
-        <target>Date</target>
+        <target>Datum</target>
       </trans-unit>
       <trans-unit id="6cb763454eaeba42fe8fec6a3c5310f9" resname="LABEL_PRIORITY">
         <source>LABEL_PRIORITY</source>
-        <target>Priorité</target>
+        <target>Dringlichkeit</target>
       </trans-unit>
       <trans-unit id="a31dbacad3f74c2842802c2a1b16f8ef" resname="LABEL_STATUS">
         <source>LABEL_STATUS</source>
-        <target>Condition</target>
+        <target>Zustand</target>
       </trans-unit>
       <trans-unit id="22f3b4a31e19cd0405942414e37c6d12" resname="LABEL_MESSAGE">
         <source>LABEL_MESSAGE</source>
-        <target>Message</target>
+        <target>Nachricht</target>
       </trans-unit>
       <trans-unit id="cce1d6e9a3f1ff451b6b012da1b2b7d6" resname="LABEL_CREATED">
         <source>LABEL_CREATED</source>
-        <target>Créé le</target>
+        <target>erstellt am</target>
       </trans-unit>
       <trans-unit id="af51208ced696e63788863f5eb6ba3b4" resname="LABEL_CREATED_BY">
         <source>LABEL_CREATED_BY</source>
-        <target>Créé par</target>
+        <target>erstellt von</target>
       </trans-unit>
       <trans-unit id="8a0a84f5fe71ec85a729831cef25c720" resname="LABEL_ADMIN">
         <source>LABEL_ADMIN</source>
@@ -156,51 +156,51 @@
       </trans-unit>
       <trans-unit id="e87f58eafd25b7770e8db37d717ca0e9" resname="LABEL_MARK_SOLVED">
         <source>LABEL_MARK_SOLVED</source>
-        <target>Marquer comme résolu</target>
+        <target>identifizieren als gelöst</target>
       </trans-unit>
       <trans-unit id="9e85864914543e3cf111c762df6216dd" resname="LABEL_ENTER_DETAILS">
         <source>LABEL_ENTER_DETAILS</source>
-        <target>Ajouter des détails</target>
+        <target>Details hinzufügen</target>
       </trans-unit>
       <trans-unit id="c59ba4f7eebf4b35e35eb89f1a78b9c1" resname="LABEL_ENTER_SUBJECT">
         <source>LABEL_ENTER_SUBJECT</source>
-        <target>Entrez objet</target>
+        <target>Thema hinzufügen</target>
       </trans-unit>
       <trans-unit id="30d5f8766cf2673795d7694158bd749d" resname="LABEL_SUBJECT">
         <source>LABEL_SUBJECT</source>
-        <target>objet</target>
+        <target>Thema</target>
       </trans-unit>
       <trans-unit id="5eb0466a9a70eb1ddb038707b585b2e3" resname="LABEL_DATE_FORMAT">
         <source>LABEL_DATE_FORMAT</source>
-        <target>d/m/Y</target>
+        <target>Y/m/d</target>
       </trans-unit>
       <trans-unit id="7b8bbf71a6c417647d537f436e801a87" resname="LABEL_DATE_TIME_FORMAT">
         <source>LABEL_DATE_TIME_FORMAT</source>
-        <target>d/m/Y H:i:s</target>
+        <target>Y/m/d H:i:s</target>
       </trans-unit>
       <trans-unit id="b434b3fd94b9bc3ecd06fd063f0fa84d" resname="MESSAGE_NO_TICKETS">
         <source>MESSAGE_NO_TICKETS</source>
-        <target>Aucun ticket trouvé</target>
+        <target>Keine Aufgaben gefunden</target>
       </trans-unit>
       <trans-unit id="a88dd959f1c132b44849c2267af293c6" resname="MESSAGE_EMPTY">
         <source>MESSAGE_EMPTY</source>
-        <target>-- Message vide --</target>
+        <target>-- Keine Nachricht --</target>
       </trans-unit>
       <trans-unit id="f1e1bf23a2f154b1693ae9fb397ac9d2" resname="MESSAGE_TICKET_OPENED">
         <source>MESSAGE_TICKET_OPENED</source>
-        <target>Ticket ouvert avec la priorité: %priority%.</target>
+        <target>Aufgabe mit %priority% Dringlichkeit begonnen.</target>
       </trans-unit>
       <trans-unit id="19b20742fdc39bdf3a39b6424a95cf31" resname="MESSAGE_STATUS_CHANGED">
         <source>MESSAGE_STATUS_CHANGED</source>
-        <target>Condition modifiée pour %status%.</target>
+        <target>Zustand geändert: %status%.</target>
       </trans-unit>
       <trans-unit id="9578eff95562cd6aacd798508c80a596" resname="MESSAGE_PRIORITY_CHANGED">
         <source>MESSAGE_PRIORITY_CHANGED</source>
-        <target>Priorité modifiée pour %priority%.</target>
+        <target>Dringlichkeit geändert: %priority%.</target>
       </trans-unit>
       <trans-unit id="122955b5ac8c53c37ad1a7a4d04035ba" resname="ERROR_FIND_TICKET_ENTITY">
         <source>ERROR_FIND_TICKET_ENTITY</source>
-        <target>Impossible de recupérer les tickets.</target>
+        <target>Aufgabe unmöglich zu finden.</target>
       </trans-unit>
     </body>
   </file>
