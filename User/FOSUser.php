@@ -17,11 +17,15 @@ class FOSUser implements UserInterface
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getCurrentUser()
     {
         $user = $this->securityContext->getToken()->getUser();
+
+        if ($user === 'anon.') {
+            $user = 0;
+        }
 
         return $user;
     }
