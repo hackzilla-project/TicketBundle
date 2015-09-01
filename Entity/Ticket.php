@@ -4,6 +4,7 @@ namespace Hackzilla\Bundle\TicketBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Ticket
@@ -48,6 +49,7 @@ class Ticket
 
     /**
      * @ORM\Column(name="subject", type="string", length=255)
+     * @Assert\NotBlank()
      */
     protected $subject;
 

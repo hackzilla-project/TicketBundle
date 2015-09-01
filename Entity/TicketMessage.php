@@ -3,6 +3,7 @@
 namespace Hackzilla\Bundle\TicketBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Message
@@ -39,6 +40,7 @@ class TicketMessage
      * @var string
      *
      * @ORM\Column(name="message", type="text", nullable=true)
+     * @Assert\NotBlank()
      */
     protected $message;
 
