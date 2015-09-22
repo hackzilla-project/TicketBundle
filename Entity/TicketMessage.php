@@ -31,7 +31,7 @@ class TicketMessage
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\Column(name="user_id", type="guid")
      */
     protected $user;
     protected $userObject;
