@@ -13,6 +13,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Table(name="ticket_message")
  * @ORM\Entity(repositoryClass="Hackzilla\Bundle\TicketBundle\Entity\TicketMessageRepository")
+ * @Vich\Uploadable
  */
 class TicketMessage
 {
@@ -76,6 +77,13 @@ class TicketMessage
      * @Vich\UploadableField(mapping="ticket_attachment", fileNameProperty="filename")
      */
     protected $file;
+
+    /**
+     * @var string $filename
+     *
+     * @ORM\Column(name="filename", type="string", length=255)
+     */
+    protected $filename;
 
     const STATUS_INVALID = 0;
     const STATUS_OPEN = 10;
@@ -381,5 +389,28 @@ class TicketMessage
     public function setFile(File $file = null)
     {
         $this->file = $file;
+    }
+
+    /**
+     * Get filename
+     *
+     * @return string
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * Set filename
+     *
+     * @param string $filename
+     * @return Ticket
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
     }
 }
