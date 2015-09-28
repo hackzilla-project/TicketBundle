@@ -18,16 +18,16 @@ class Ticket
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="guid")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_created_id", type="integer")
+     * @ORM\Column(name="user_created_id", type="guid")
      */
     protected $userCreated;
     protected $userCreatedObject;
@@ -35,7 +35,7 @@ class Ticket
     /**
      * @var integer
      *
-     * @ORM\Column(name="last_user_id", type="integer")
+     * @ORM\Column(name="last_user_id", type="guid")
      */
     protected $lastUser;
     protected $lastUserObject;

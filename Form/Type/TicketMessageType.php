@@ -32,7 +32,12 @@ class TicketMessageType extends AbstractType
                 ))
                 ->add('priority', new PriorityType(), array(
                     'label' => 'LABEL_PRIORITY',
-        ));
+                ))
+                ->add('file', 'file', array(
+                    'label' => 'LABEL_ATTACHMENT',
+                    'required' => false,
+                ))
+        ;
 
         // if existing ticket add status
         if (!$this->_newTicket) {

@@ -31,7 +31,7 @@ class TicketMessage
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\Column(name="user_id", type="guid")
      */
     protected $user;
     protected $userObject;
@@ -64,6 +64,15 @@ class TicketMessage
      * @ORM\Column(name="created_at", type="datetime")
      */
     protected $createdAt;
+
+    /**
+     * NOTE: This field is not persisted to database!
+     *
+     * @var File $file
+     *
+     * @Vich\UploadableField(mapping="ticket_attachment", fileNameProperty="filename")
+     */
+    protected $file;
 
     const STATUS_INVALID = 0;
     const STATUS_OPEN = 10;
@@ -353,5 +362,21 @@ class TicketMessage
     public function getTicket()
     {
         return $this->ticket;
+    }
+
+    /**
+     * @return File
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param File|UploadedFile $file
+     */
+    public function setFile(File $file = null)
+    {
+        $this->file = $file;
     }
 }
