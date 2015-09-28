@@ -81,7 +81,7 @@ class TicketMessage
     /**
      * @var string $filename
      *
-     * @ORM\Column(name="filename", type="string", length=255)
+     * @ORM\Column(name="filename", type="string", length=255, nullable=true)
      */
     protected $filename;
 
