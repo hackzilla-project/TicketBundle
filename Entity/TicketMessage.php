@@ -65,6 +65,15 @@ class TicketMessage
      */
     protected $createdAt;
 
+    /**
+     * NOTE: This field is not persisted to database!
+     *
+     * @var File $file
+     *
+     * @Vich\UploadableField(mapping="ticket_attachment", fileNameProperty="filename")
+     */
+    protected $file;
+
     const STATUS_INVALID = 0;
     const STATUS_OPEN = 10;
     const STATUS_IN_PROGRESS = 11;
@@ -353,5 +362,21 @@ class TicketMessage
     public function getTicket()
     {
         return $this->ticket;
+    }
+
+    /**
+     * @return File
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param File|UploadedFile $file
+     */
+    public function setFile(File $file = null)
+    {
+        $this->file = $file;
     }
 }
