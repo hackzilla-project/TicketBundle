@@ -14,14 +14,14 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "~2.3",
+        "symfony/symfony": "~2.3|~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "knplabs/knp-paginator-bundle": "~2.3"
     },
     "require-dev": {
-        "symfony/form": "~2.3"
+        "symfony/form": "~2.3|~3.0"
     },
     "suggest": {
         "hackzilla/bootstrap-bundle": "used to define the layout (v3)"
