@@ -33,6 +33,7 @@ matrix:
   allow_failures:
     - php: 5.3
     - php: nightly
+    - env: SYMFONY_VERSION=3.0.*
     - env: SYMFONY_VERSION="3.1.*@dev"
 
 sudo: false
