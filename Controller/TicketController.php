@@ -6,8 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
-use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
-use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\TicketEvents;
 use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 
@@ -63,7 +61,7 @@ class TicketController extends Controller
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
         $ticket = $ticketManager->createTicket();
-        $form = $this->createForm(new TicketType($userManager), $ticket);
+        $form = $this->createForm('\Hackzilla\Bundle\TicketBundle\Form\Type\TicketType', $ticket);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -94,8 +92,7 @@ class TicketController extends Controller
     public function newAction()
     {
         $entity = new Ticket();
-        $userManager = $this->get('hackzilla_ticket.user');
-        $form = $this->createForm(new TicketType($userManager), $entity);
+        $form = $this->createForm('\Hackzilla\Bundle\TicketBundle\Form\Type\TicketType', $entity);
 
         return $this->render('HackzillaTicketBundle:Ticket:new.html.twig', array(
                     'entity' => $entity,
@@ -125,7 +122,9 @@ class TicketController extends Controller
         $message->setStatus($ticket->getStatus());
 
         if (TicketMessage::STATUS_CLOSED != $ticket->getStatus()) {
-            $data['form'] = $this->createForm(new TicketMessageType($userManager), $message)->createView();
+            $data['form'] = $this->createForm('Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType', $message, [
+                'new_ticket' => false,
+            ])->createView();
         }
 
         if ($this->get('hackzilla_ticket.user')->isGranted($userManager->getCurrentUser(), 'ROLE_TICKET_ADMIN')) {
@@ -164,7 +163,9 @@ class TicketController extends Controller
         $message = $ticketManager->createMessage();
         $message->setPriority($ticket->getPriority());
 
-        $form = $this->createForm(new TicketMessageType($userManager), $message);
+        $form = $this->createForm('\Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType', $message, [
+            'new_ticket' => false,
+        ]);
         $form->submit($request);
 
         if ($form->isValid()) {
@@ -227,7 +228,7 @@ class TicketController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
-                        ->add('id', 'hidden')
+                        ->add('id', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
                         ->getForm()
         ;
     }

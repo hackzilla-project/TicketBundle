@@ -2,27 +2,45 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
-use Symfony\Component\Form\Test\TypeTestCase;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
+use Hackzilla\Bundle\TicketBundle\User\UserInterface;
+use Symfony\Component\Form\PreloadedExtension;
+use Symfony\Component\Form\Test\TypeTestCase;
 
 class TicketMessageTypeTest extends TypeTestCase
 {
+    private $user;
+
+    protected function setUp()
+    {
+        $this->user = $this->getMock(UserInterface::class);
+
+        parent::setUp();
+    }
+
+    protected function getExtensions()
+    {
+        $ticketMessageType = new TicketMessageType($this->user);
+
+        return [new PreloadedExtension([
+            $ticketMessageType->getBlockPrefix() => $ticketMessageType,
+        ], [])];
+    }
+
     public function testSubmitValidData()
     {
         $formData = array(
             'priority' => TicketMessage::PRIORITY_HIGH,
-            'message'  => null,
+            'message' => null,
         );
 
-        $userManager = $this->getMock('Hackzilla\Bundle\TicketBundle\User\UserInterface');
-        $this->assertTrue($userManager instanceof \Hackzilla\Bundle\TicketBundle\User\UserInterface);
-      
-        $type = new \Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType($userManager, true);
-
-        $data = new \Hackzilla\Bundle\TicketBundle\Entity\TicketMessage();
+        $data = new TicketMessage();
         $data->setPriority(TicketMessage::PRIORITY_HIGH);
 
-        $form = $this->factory->create($type);
+        $form = $this->factory->create('Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType', null, [
+            'new_ticket' => true,
+        ]);
 
         // submit the data to the form directly
         $form->submit($formData);

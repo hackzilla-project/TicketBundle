@@ -2,21 +2,19 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
+use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
+use Hackzilla\Bundle\TicketBundle\User\UserInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Hackzilla\Bundle\TicketBundle\User\UserInterface;
-use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TicketMessageType extends AbstractType
 {
     private $_userManager;
-    private $_newTicket;
 
-    public function __construct(UserInterface $userManager, $newTicket = false)
+    public function __construct(UserInterface $userManager)
     {
         $this->_userManager = $userManager;
-        $this->_newTicket = $newTicket;
     }
 
     /**
@@ -26,53 +24,42 @@ class TicketMessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                ->add('message', 'textarea', array(
-                    'label' => 'LABEL_MESSAGE',
-                    'required' => false,
-                ))
-                ->add('priority', new PriorityType(), array(
-                    'label' => 'LABEL_PRIORITY',
-        ));
+            ->add('message', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', array(
+                'label' => 'LABEL_MESSAGE',
+                'required' => false,
+            ))
+            ->add('priority', 'Hackzilla\Bundle\TicketBundle\Form\Type\PriorityType', array(
+                'label' => 'LABEL_PRIORITY',
+            ));
 
         // if existing ticket add status
-        if (!$this->_newTicket) {
+        if (isset($options['new_ticket']) && !$options['new_ticket']) {
             $user = $this->_userManager->getCurrentUser();
 
             if ($this->_userManager->isGranted($user, 'ROLE_TICKET_ADMIN')) {
-                $builder->add('status', new StatusType(), array(
+                $builder->add('status', 'Hackzilla\Bundle\TicketBundle\Form\Type\StatusType', array(
                     'label' => 'LABEL_STATUS',
                 ));
             } else {
                 $statusTransformer = new StatusTransformer();
 
                 $builder
-                        ->add(
-                                $builder->create('status', 'checkbox', array(
-                                    'label' => 'LABEL_MARK_SOLVED',
-                                    'required' => false,
-                                    'value' => 'STATUS_CLOSED',
-                                ))
-                                ->addModelTransformer($statusTransformer)
-                );
+                    ->add(
+                        $builder->create('status', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', array(
+                            'label' => 'LABEL_MARK_SOLVED',
+                            'required' => false,
+                            'value' => 'STATUS_CLOSED',
+                        ))->addModelTransformer($statusTransformer)
+                    );
             }
         }
     }
 
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Hackzilla\Bundle\TicketBundle\Entity\TicketMessage',
+            'new_ticket' => false,
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'hackzilla_bundle_ticketbundle_tickettype';
     }
 }

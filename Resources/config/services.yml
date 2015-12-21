@@ -24,3 +24,17 @@ services:
     hackzilla_ticket.ticket_manager:
         class: %hackzilla_ticket.ticket_manager.class%
         arguments: ["@doctrine.orm.entity_manager"]
+
+    hackzilla_ticket.form.type.ticket:
+        class: Hackzilla\Bundle\TicketBundle\Form\Type\TicketType
+        arguments:
+            - '@hackzilla_ticket.user'
+        tags:
+            - { name: form.type, alias: hackzilla_ticket }
+
+    hackzilla_ticket.form.type.ticket_message:
+        class: Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType
+        arguments:
+            - '@hackzilla_ticket.user'
+        tags:
+            - { name: form.type, alias: hackzilla_ticket_message }
