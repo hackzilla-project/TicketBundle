@@ -16,7 +16,8 @@ class PriorityType extends AbstractType
 
         $resolver->setDefaults(
             [
-                'choices' => $choices,
+                'choices_as_values' => true,
+                'choices' => array_flip($choices),
             ]
         );
     }
