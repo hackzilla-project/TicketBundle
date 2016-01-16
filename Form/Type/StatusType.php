@@ -22,4 +22,14 @@ class StatusType extends AbstractType
     {
         return 'choice';
     }
+
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'status';
+    }
 }

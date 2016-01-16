@@ -22,4 +22,14 @@ class PriorityType extends AbstractType
     {
         return 'choice';
     }
+
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'priority';
+    }
 }

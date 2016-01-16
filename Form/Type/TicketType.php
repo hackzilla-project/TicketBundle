@@ -42,4 +42,14 @@ class TicketType extends AbstractType
             'data_class' => 'Hackzilla\Bundle\TicketBundle\Entity\Ticket',
         ]);
     }
+
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'ticket';
+    }
 }

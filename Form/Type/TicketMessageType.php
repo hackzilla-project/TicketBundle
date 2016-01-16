@@ -62,4 +62,14 @@ class TicketMessageType extends AbstractType
             'new_ticket' => false,
         ]);
     }
+
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'message';
+    }
 }
