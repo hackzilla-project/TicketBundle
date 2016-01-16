@@ -51,7 +51,7 @@ class TicketTypeTest extends TypeTestCase
 
         $formEntity = $form->getData();
         $formEntity->setCreatedAt($data->getCreatedAt());
-        $this->assertSame($data, $formEntity);
+        $this->assertEquals($data, $formEntity);
 
         $view = $form->createView();
         $children = $view->children;
