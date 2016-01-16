@@ -6,6 +6,7 @@ use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\User\UserInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,7 +28,7 @@ class TicketType extends AbstractType
         $builder
             ->add(
                 'subject',
-                'text',
+                method_exists(AbstractType::class, 'getBlockPrefix') ? TextType::class : 'text',
                 [
                     'label' => 'LABEL_SUBJECT',
                 ]
