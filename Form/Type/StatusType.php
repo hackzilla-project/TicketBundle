@@ -2,9 +2,9 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
+use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 
 class StatusType extends AbstractType
 {
@@ -13,9 +13,9 @@ class StatusType extends AbstractType
         $choices = TicketMessage::$statuses;
         unset($choices[0]);
 
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'choices' => $choices,
-        ));
+        ]);
     }
 
     public function getParent()

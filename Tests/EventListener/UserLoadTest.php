@@ -4,7 +4,7 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class UserLoad extends WebTestCase
+class UserLoadTest extends WebTestCase
 {
     private $_object;
 

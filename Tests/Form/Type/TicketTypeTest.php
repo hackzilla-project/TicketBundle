@@ -25,14 +25,14 @@ class TicketTypeTest extends TypeTestCase
         $ticketMessageType = new TicketMessageType($this->user);
 
         return [new PreloadedExtension([
-            $ticketType->getBlockPrefix() => $ticketType,
+            $ticketType->getBlockPrefix()        => $ticketType,
             $ticketMessageType->getBlockPrefix() => $ticketMessageType,
         ], [])];
     }
 
     public function testSubmitValidData()
     {
-        $formData = array();
+        $formData = [];
 
         $data = new \Hackzilla\Bundle\TicketBundle\Entity\Ticket();
 
@@ -45,7 +45,7 @@ class TicketTypeTest extends TypeTestCase
 
         $formEntity = $form->getData();
         $formEntity->setCreatedAt($data->getCreatedAt());
-        $this->assertEquals($data, $formEntity);
+        $this->assertSame($data, $formEntity);
 
         $view = $form->createView();
         $children = $view->children;
