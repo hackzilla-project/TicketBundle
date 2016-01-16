@@ -21,7 +21,9 @@
         "knplabs/knp-paginator-bundle": "~2.3"
     },
     "require-dev": {
-        "symfony/form": "~2.7"
+        "symfony/form": "~2.7",
+        "symfony/phpunit-bridge": "^2.7 || ^3.0",
+        "sllh/php-cs-fixer-styleci-bridge": "^1.5"
     },
     "autoload": {
         "psr-4": {

@@ -1,19 +1,9 @@
 <?php
 
-$finder = Symfony\CS\Finder\DefaultFinder::create()
-    ->in([__DIR__])
-;
+require_once __DIR__.'/vendor/sllh/php-cs-fixer-styleci-bridge/autoload.php';
 
-return Symfony\CS\Config\Config::create()
-    ->level(Symfony\CS\FixerInterface::SYMFONY_LEVEL)
-    ->fixers([
-        '-psr0',
-        'newline_after_open_tag',
-        'ordered_use',
-        'long_array_syntax',
-        'php_unit_construct',
-        'php_unit_strict'
-    ])
-    ->setUsingCache(true)
-    ->finder($finder)
+use SLLH\StyleCIBridge\ConfigBridge;
+
+return ConfigBridge::create()
+    ->setUsingCache(true)       // Enable the cache
 ;
