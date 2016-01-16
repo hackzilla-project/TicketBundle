@@ -54,14 +54,15 @@ class TicketManagerCommand extends ContainerAwareCommand
         $message = $ticketmanager->createMessage();
 
         $message->setMessage($input->getArgument('message'))
-                ->setStatus(TicketMessage::STATUS_OPEN)
-                ->setPriority($input->getOption('priority'))
-                ->setUser($userManager->findUserByUsername('system'))
-                ->setTicket($ticket)
-        ;
+            ->setStatus(TicketMessage::STATUS_OPEN)
+            ->setPriority($input->getOption('priority'))
+            ->setUser($userManager->findUserByUsername('system'))
+            ->setTicket($ticket);
 
         $ticketmanager->updateTicket($ticket, $message);
 
-        $output->writeln("Ticket with subject '".$ticket->getSubject()."' has been created with ticketnumber #".$ticket->getId().'');
+        $output->writeln(
+            "Ticket with subject '".$ticket->getSubject()."' has been created with ticketnumber #".$ticket->getId().''
+        );
     }
 }

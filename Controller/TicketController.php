@@ -33,7 +33,11 @@ class TicketController extends Controller
 
         $repositoryTicketMessage = $this->getDoctrine()->getRepository('HackzillaTicketBundle:TicketMessage');
 
-        $query = $repositoryTicket->getTicketList($userManager, $repositoryTicketMessage->getTicketStatus($translator, $ticketState), $repositoryTicketMessage->getTicketPriority($translator, $ticketPriority));
+        $query = $repositoryTicket->getTicketList(
+            $userManager,
+            $repositoryTicketMessage->getTicketStatus($translator, $ticketState),
+            $repositoryTicketMessage->getTicketPriority($translator, $ticketPriority)
+        );
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -42,11 +46,14 @@ class TicketController extends Controller
             10/*limit per page*/
         );
 
-        return $this->render('HackzillaTicketBundle:Ticket:index.html.twig', [
-                    'pagination'     => $pagination,
-                    'ticketState'    => $ticketState,
-                    'ticketPriority' => $ticketPriority,
-        ]);
+        return $this->render(
+            'HackzillaTicketBundle:Ticket:index.html.twig',
+            [
+                'pagination'     => $pagination,
+                'ticketState'    => $ticketState,
+                'ticketPriority' => $ticketPriority,
+            ]
+        );
     }
 
     /**
@@ -68,9 +75,8 @@ class TicketController extends Controller
         if ($form->isValid()) {
             $message = $ticket->getMessages()->current();
             $message->setStatus(TicketMessage::STATUS_OPEN)
-                    ->setUser($userManager->getCurrentUser())
-                    ->setTicket($ticket)
-            ;
+                ->setUser($userManager->getCurrentUser())
+                ->setTicket($ticket);
 
             $ticketManager->updateTicket($ticket, $message);
 
@@ -80,10 +86,13 @@ class TicketController extends Controller
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['id' => $ticket->getId()]));
         }
 
-        return $this->render('HackzillaTicketBundle:Ticket:new.html.twig', [
-                    'entity' => $ticket,
-                    'form'   => $form->createView(),
-        ]);
+        return $this->render(
+            'HackzillaTicketBundle:Ticket:new.html.twig',
+            [
+                'entity' => $ticket,
+                'form'   => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -94,10 +103,13 @@ class TicketController extends Controller
         $entity = new Ticket();
         $form = $this->createForm('\Hackzilla\Bundle\TicketBundle\Form\Type\TicketType', $entity);
 
-        return $this->render('HackzillaTicketBundle:Ticket:new.html.twig', [
-                    'entity' => $entity,
-                    'form'   => $form->createView(),
-        ]);
+        return $this->render(
+            'HackzillaTicketBundle:Ticket:new.html.twig',
+            [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -122,9 +134,13 @@ class TicketController extends Controller
         $message->setStatus($ticket->getStatus());
 
         if (TicketMessage::STATUS_CLOSED != $ticket->getStatus()) {
-            $data['form'] = $this->createForm('Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType', $message, [
-                'new_ticket' => false,
-            ])->createView();
+            $data['form'] = $this->createForm(
+                'Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType',
+                $message,
+                [
+                    'new_ticket' => false,
+                ]
+            )->createView();
         }
 
         if ($this->get('hackzilla_ticket.user')->isGranted($userManager->getCurrentUser(), 'ROLE_TICKET_ADMIN')) {
@@ -140,7 +156,11 @@ class TicketController extends Controller
      */
     private function checkUserPermission($user, Ticket $ticket)
     {
-        if (!\is_object($user) || (!$this->get('hackzilla_ticket.user')->isGranted($user, 'ROLE_TICKET_ADMIN') && $ticket->getUserCreated() != $user->getId())) {
+        if (!\is_object($user) || (!$this->get('hackzilla_ticket.user')->isGranted(
+                    $user,
+                    'ROLE_TICKET_ADMIN'
+                ) && $ticket->getUserCreated() != $user->getId())
+        ) {
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
     }
@@ -164,9 +184,13 @@ class TicketController extends Controller
         $message = $ticketManager->createMessage();
         $message->setPriority($ticket->getPriority());
 
-        $form = $this->createForm('\Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType', $message, [
-            'new_ticket' => false,
-        ]);
+        $form = $this->createForm(
+            '\Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType',
+            $message,
+            [
+                'new_ticket' => false,
+            ]
+        );
         $form->submit($request);
 
         if ($form->isValid()) {
@@ -228,8 +252,8 @@ class TicketController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
-                        ->add('id', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
-                        ->getForm()
+            ->add('id', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
+            ->getForm()
         ;
     }
 }

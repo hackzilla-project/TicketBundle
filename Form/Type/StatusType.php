@@ -14,9 +14,11 @@ class StatusType extends AbstractType
         $choices = TicketMessage::$statuses;
         unset($choices[0]);
 
-        $resolver->setDefaults([
-            'choices' => $choices,
-        ]);
+        $resolver->setDefaults(
+            [
+                'choices' => $choices,
+            ]
+        );
     }
 
     public function getParent()

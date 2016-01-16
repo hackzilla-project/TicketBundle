@@ -13,9 +13,11 @@ class PriorityType extends AbstractType
         $choices = TicketMessage::$priorities;
         unset($choices[0]);
 
-        $resolver->setDefaults([
-            'choices' => $choices,
-        ]);
+        $resolver->setDefaults(
+            [
+                'choices' => $choices,
+            ]
+        );
     }
 
     public function getParent()

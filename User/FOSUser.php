@@ -37,15 +37,17 @@ class FOSUser implements UserInterface
      */
     public function getUserById($userId)
     {
-        $user = $this->userManager->findUserBy([
-            'id' => $userId,
-        ]);
+        $user = $this->userManager->findUserBy(
+            [
+                'id' => $userId,
+            ]
+        );
 
         return $user;
     }
 
     /**
-     * @param $user
+     * @param        $user
      * @param string $role
      *
      * @return bool
@@ -58,7 +60,7 @@ class FOSUser implements UserInterface
     /**
      * Current user granted permission.
      *
-     * @param $user
+     * @param        $user
      * @param string $role
      *
      * @return bool

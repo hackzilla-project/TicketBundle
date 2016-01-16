@@ -14,10 +14,10 @@ class TicketMessageRepository extends EntityRepository
 {
     /**
      * Lookup status code.
-     * 
+     *
      * @param object $translator
      * @param string $statusStr
-     * 
+     *
      * @return int
      */
     public function getTicketStatus($translator, $statusStr)
@@ -37,10 +37,10 @@ class TicketMessageRepository extends EntityRepository
 
     /**
      * Lookup priority code.
-     * 
+     *
      * @param object $translator
      * @param string $priorityStr
-     * 
+     *
      * @return int
      */
     public function getTicketPriority($translator, $priorityStr)
