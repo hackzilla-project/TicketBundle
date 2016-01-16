@@ -27,7 +27,7 @@ class TicketMessageTypeTest extends TypeTestCase
         return [
             new PreloadedExtension(
                 [
-                    $ticketMessageType->getBlockPrefix() => method_exists(AbstractType::class, 'getBlockPrefix') ? TicketMessageType::class : $ticketMessageType,
+                    $ticketMessageType->getBlockPrefix() => $ticketMessageType,
                 ], []
             ),
         ];
