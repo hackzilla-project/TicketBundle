@@ -1,7 +1,7 @@
-Ticketing Bundle v1
+Ticketing Bundle v2 [WIP]
 ===================
 
-Latest version. See 0.9 for [previous version](https://github.com/hackzilla/TicketBundle/tree/0.9.x).
+Currently V2 is a work in progress, please use v1.
 
 Simple multilingual ticketing bundle to add to any project.
 Languages: English, French, Russian, German and Spanish.
@@ -12,9 +12,22 @@ Languages: English, French, Russian, German and Spanish.
 Requirements
 ------------
 
+* PHP >= 5.5
+* Symfony ~2.7|~3.0
 * FOSUserBundle
 * Knp Paginator
 * Bootstrap v3 (optional) see: http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme
+
+
+Version Matrix
+--------------
+
+| Ticket Bundle                                                          | Symfony    | PHP   |
+| ---------------------------------------------------------------------- | ---------- | ----- |
+| [2.x](https://github.com/hackzilla/TicketBundle/tree/master) (master)  | ^2.7\|^3.0 | >=5.5 |
+| [1.x](https://github.com/hackzilla/TicketBundle/tree/1.x)              | ^2.3       | >=5.3 |
+| [0.x](https://github.com/hackzilla/TicketBundle/tree/0.9.x)            | ^2.3       | >=5.3 |
+
 
 Demo
 ----
@@ -112,25 +125,10 @@ TicketBundle show fires events for creating, updating, and deleting of tickets.
 See for example of how to create listener: http://symfony.com/doc/current/cookbook/service_container/event_listener.html
 
 
-Change Log
-----------
-
-0.7
-* TicketType and TicketMessageType have been moved into Form/Type folder.
-
-0.9
-* New template, and schema changes
-
-1.0
-* Moved UserInterface into bundle
-* Moved Ticket Manager to its own namespace
-
-
-Migrating to 1.0
+Migrating to 2.0
 ----------------
 
-* remove new Hackzilla\Bundle\FOSUserBridgeBundle\HackzillaFOSUserBridgeBundle() from AppKernel.php
-* remove hackzilla/fosuser-bridge-bundle from composer.json
+
 
 Pull Requests
 -------------
