@@ -73,7 +73,7 @@ class TicketController extends Controller
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
         $ticket = $ticketManager->createTicket();
-        $form = $this->createForm($this->formType(TicketType::class, new TicketType($userManager), $ticket);
+        $form = $this->createForm($this->formType(TicketType::class, new TicketType($userManager)), $ticket);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
