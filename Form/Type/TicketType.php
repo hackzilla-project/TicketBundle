@@ -37,7 +37,7 @@ class TicketType extends AbstractType
                 'messages',
                 method_exists(AbstractType::class, 'getBlockPrefix') ? CollectionType::class : 'collection',
                 [
-                    'type'                                                                             => method_exists(
+                    method_exists(AbstractType::class, 'getBlockPrefix') ? 'entry_type' : 'type'       => method_exists(
                         AbstractType::class,
                         'getBlockPrefix'
                     ) ? TicketMessageType::class : new TicketMessageType($this->_userManager),
