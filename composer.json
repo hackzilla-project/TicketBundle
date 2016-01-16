@@ -1,7 +1,19 @@
 {
     "name": "hackzilla/ticket-bundle",
     "description": "This Bundle provides ticketing functionality for Symfony2 applications. Multilingual capable",
-    "keywords": ["ticket", "ticketing", "help desk", "helpdesk", "support", "multilingual", "english", "french", "russian", "german", "spanish"],
+    "keywords": [
+        "ticket",
+        "ticketing",
+        "help desk",
+        "helpdesk",
+        "support",
+        "multilingual",
+        "english",
+        "french",
+        "russian",
+        "german",
+        "spanish"
+    ],
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [

@@ -64,8 +64,7 @@ class TicketRepository extends EntityRepository
             ->where('t.status = :status')
             ->andWhere('t.lastMessage < :closeBeforeDate')
             ->setParameter('status', TicketMessage::STATUS_RESOLVED)
-            ->setParameter('closeBeforeDate', $closeBeforeDate)
-        ;
+            ->setParameter('closeBeforeDate', $closeBeforeDate);
 
         return $query->getQuery()->getResult();
     }

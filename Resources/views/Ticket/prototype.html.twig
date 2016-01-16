@@ -1,25 +1,25 @@
-    <div class="form-group row">
-        {{ form_label(form.message, '', { 'label_attr': {'class': 'col-lg-2 col-md-2 col-sm-2 control-label'} }) }}
-        <div class="col-lg-8 col-md-8 col-sm-8">
-            {{ form_widget(form.message, { 'attr': {'class': 'form-control', 'placeholder': 'LABEL_ENTER_DETAILS', 'rows': '5'} }) }}
-        </div>
+<div class="form-group row">
+    {{ form_label(form.message, '', { 'label_attr': {'class': 'col-lg-2 col-md-2 col-sm-2 control-label'} }) }}
+    <div class="col-lg-8 col-md-8 col-sm-8">
+        {{ form_widget(form.message, { 'attr': {'class': 'form-control', 'placeholder': 'LABEL_ENTER_DETAILS', 'rows': '5'} }) }}
     </div>
+</div>
 
-    <div class="form-group row">
-        {{ form_label(form.priority, '', { 'label_attr': {'class': 'col-lg-2 col-md-2 col-sm-2 control-label'} }) }}
-        <div class="col-lg-3 col-md-3 col-sm-3">
-            {{ form_widget(form.priority, { 'attr': {'class': 'form-control'} }) }}
-        </div>
+<div class="form-group row">
+    {{ form_label(form.priority, '', { 'label_attr': {'class': 'col-lg-2 col-md-2 col-sm-2 control-label'} }) }}
+    <div class="col-lg-3 col-md-3 col-sm-3">
+        {{ form_widget(form.priority, { 'attr': {'class': 'form-control'} }) }}
     </div>
+</div>
 
 {% if form.status is defined %}
     <div class="form-group row">
         {{ form_label(form.status, '', { 'label_attr': {'class': 'col-lg-2 col-md-2 col-sm-2 control-label'} }) }}
         <div class="col-lg-3 col-md-3 col-sm-3">
             {% if form.status.vars.block_prefixes.1 == 'checkbox' %}
-            {{ form_widget(form.status) }}
+                {{ form_widget(form.status) }}
             {% else %}
-            {{ form_widget(form.status, { 'attr': {'class': 'form-control'} }) }}
+                {{ form_widget(form.status, { 'attr': {'class': 'form-control'} }) }}
             {% endif %}
         </div>
     </div>

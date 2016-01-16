@@ -2,34 +2,42 @@
 {% import 'HackzillaTicketBundle:Macros:macros.html.twig' as macros %}
 
 {% block hackzilla_ticket_content -%}
-<h1>{{ 'HEADING_TICKET_LIST'|trans }}</h1>
+    <h1>{{ 'HEADING_TICKET_LIST'|trans }}</h1>
 
-<div class="row">
-    <div class="col-xs-4">
-        <div class="btn-group">
-            <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_OPEN'|trans}) }}" class="btn btn-default {{ ticketState != 'STATUS_CLOSED'|trans ? 'active' : '' }}">{{ 'STATUS_OPEN'|trans|upper }}</a>
-            <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_CLOSED'|trans}) }}" class="btn btn-default {{ ticketState == 'STATUS_CLOSED'|trans ? 'active' : '' }}">{{ 'STATUS_CLOSED'|trans|upper }}</a>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="btn-group">
+                <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_OPEN'|trans}) }}"
+                   class="btn btn-default {{ ticketState != 'STATUS_CLOSED'|trans ? 'active' : '' }}">{{ 'STATUS_OPEN'|trans|upper }}</a>
+                <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_CLOSED'|trans}) }}"
+                   class="btn btn-default {{ ticketState == 'STATUS_CLOSED'|trans ? 'active' : '' }}">{{ 'STATUS_CLOSED'|trans|upper }}</a>
+            </div>
+        </div>
+
+        <div class="col-xs-4 text-center">
+            <div class="btn-group">
+                <a href="{{ path('hackzilla_ticket') }}"
+                   class="btn btn-default {{ ticketPriority is null ? 'active' : '' }}"><span
+                            class="glyphicon glyphicon-remove"></span></a>
+                <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_HIGH'|trans}) }}"
+                   class="btn btn-danger {{ ticketPriority == 'PRIORITY_HIGH'|trans ? 'active' : '' }}">{{ 'PRIORITY_HIGH'|trans|upper }}</a>
+                <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_MEDIUM'|trans}) }}"
+                   class="btn btn-warning {{ ticketPriority == 'PRIORITY_MEDIUM'|trans ? 'active' : '' }}">{{ 'PRIORITY_MEDIUM'|trans|upper }}</a>
+                <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_LOW'|trans}) }}"
+                   class="btn btn-info {{ ticketPriority == 'PRIORITY_LOW'|trans ? 'active' : '' }}">{{ 'PRIORITY_LOW'|trans|upper }}</a>
+            </div>
+        </div>
+
+        <div class="col-xs-4 text-right">
+            <div class="btn-group">
+                <a href="{{ path('hackzilla_ticket_new') }}" class="btn btn-primary"><span
+                            class="glyphicon glyphicon-plus"></span> {{ 'BUTTON_NEW'|trans }}</a>
+            </div>
         </div>
     </div>
 
-    <div class="col-xs-4 text-center">
-        <div class="btn-group">
-            <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default {{ ticketPriority is null ? 'active' : '' }}"><span class="glyphicon glyphicon-remove"></span></a>
-            <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_HIGH'|trans}) }}" class="btn btn-danger {{ ticketPriority == 'PRIORITY_HIGH'|trans ? 'active' : '' }}">{{ 'PRIORITY_HIGH'|trans|upper }}</a>
-            <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_MEDIUM'|trans}) }}" class="btn btn-warning {{ ticketPriority == 'PRIORITY_MEDIUM'|trans ? 'active' : '' }}">{{ 'PRIORITY_MEDIUM'|trans|upper }}</a>
-            <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_LOW'|trans}) }}" class="btn btn-info {{ ticketPriority == 'PRIORITY_LOW'|trans ? 'active' : '' }}">{{ 'PRIORITY_LOW'|trans|upper }}</a>
-        </div>
-    </div>
-
-    <div class="col-xs-4 text-right">
-        <div class="btn-group">
-            <a href="{{ path('hackzilla_ticket_new') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {{ 'BUTTON_NEW'|trans }}</a>
-        </div>
-    </div>
-</div>
-
-<table class="table table-bordered table-striped">
-    <thead>
+    <table class="table table-bordered table-striped">
+        <thead>
         <tr>
             <th class="col-xs-1">{{ knp_pagination_sortable(pagination, 'HEADING_TICKET'|trans, 't.id') }}</th>
             <th{% if pagination.isSorted('t.subject') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_SUBJECT'|trans, 't.subject') }}</th>
@@ -39,27 +47,27 @@
             <th{% if pagination.isSorted('t.modified') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_MODIFIED'|trans, 't.lastMessage') }}</th>
             <th{% if pagination.isSorted('t.created') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_CREATED'|trans, 't.createdAt') }}</th>
         </tr>
-    </thead>
-    <tbody>
-    {% for entity in pagination %}
-        <tr>
-            <td><a href="{{ path('hackzilla_ticket_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td><a href="{{ path('hackzilla_ticket_show', { 'id': entity.id }) }}">{{ entity.subject }}</a></td>
-            <td>{{ entity.userCreatedObject }}</td>
-            <td>{{ macros.status_btn(entity.status, entity.statusString|trans, true) }}</td>
-            <td>{{ macros.priority_btn(entity.priority, entity.priorityString|trans, true) }}</td>
-            <td>{% if entity.lastMessage %}{{ entity.lastMessage|date('LABEL_DATE_TIME_FORMAT'|trans) }}{% endif %}</td>
-            <td>{% if entity.createdAt %}{{ entity.createdAt|date('LABEL_DATE_TIME_FORMAT'|trans) }}{% endif %}</td>
-        </tr>
-    {% else %}
-        <tr>
-            <td colspan="7">{{ 'MESSAGE_NO_TICKETS'|trans }}.</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-<div class="navigation text-right">
-    {{ knp_pagination_render(pagination, 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig') }}
-</div>
+        </thead>
+        <tbody>
+        {% for entity in pagination %}
+            <tr>
+                <td><a href="{{ path('hackzilla_ticket_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('hackzilla_ticket_show', { 'id': entity.id }) }}">{{ entity.subject }}</a></td>
+                <td>{{ entity.userCreatedObject }}</td>
+                <td>{{ macros.status_btn(entity.status, entity.statusString|trans, true) }}</td>
+                <td>{{ macros.priority_btn(entity.priority, entity.priorityString|trans, true) }}</td>
+                <td>{% if entity.lastMessage %}{{ entity.lastMessage|date('LABEL_DATE_TIME_FORMAT'|trans) }}{% endif %}</td>
+                <td>{% if entity.createdAt %}{{ entity.createdAt|date('LABEL_DATE_TIME_FORMAT'|trans) }}{% endif %}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">{{ 'MESSAGE_NO_TICKETS'|trans }}.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation text-right">
+        {{ knp_pagination_render(pagination, 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig') }}
+    </div>
 
 {% endblock %}
