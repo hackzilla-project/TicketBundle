@@ -8,14 +8,16 @@ class UserExtension extends \Twig_Extension
 {
     private $userManager;
 
-    public function __construct(ContainerInterface $container) {
+    public function __construct(ContainerInterface $container)
+    {
         $this->userManager = $container->get('hackzilla_ticket.user');
     }
 
-    public function getFilters() {
-        return array(
+    public function getFilters()
+    {
+        return [
             'isTicketAdmin' => new \Twig_SimpleFilter('isTicketAdmin', [$this, 'isTicketAdmin']),
-        );
+        ];
     }
 
     public function isTicketAdmin($user, $role)
@@ -24,10 +26,11 @@ class UserExtension extends \Twig_Extension
             $user = $this->userManager->getUserById($user);
         }
 
-        if (is_object($user))
+        if (is_object($user)) {
             return $user->hasRole($role);
-        else
+        } else {
             return false;
+        }
     }
 
     public function getName()

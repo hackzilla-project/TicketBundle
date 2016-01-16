@@ -15,26 +15,26 @@ class TicketManager implements TicketManagerInterface
     }
 
     /**
-    * Create a new instance of Ticket entity
-    */
+     * Create a new instance of Ticket entity.
+     */
     public function createTicket()
     {
-        return new Ticket;
+        return new Ticket();
     }
 
     /**
-    * Create a new instance of TicketMessage Entity
-    */
+     * Create a new instance of TicketMessage Entity.
+     */
     public function createMessage()
     {
-        return new TicketMessage;
+        return new TicketMessage();
     }
 
     /**
      * Update or Create a Ticket in the database
-     * Update or Create a TicketMessage in the database
+     * Update or Create a TicketMessage in the database.
      *
-     * @param Ticket $ticket
+     * @param Ticket        $ticket
      * @param TicketMessage $message
      *
      * @return Ticket
@@ -48,11 +48,12 @@ class TicketManager implements TicketManagerInterface
             $this->ObjectManager->persist($message);
         }
         $this->ObjectManager->flush();
+
         return $ticket;
     }
 
     /**
-     * Delete a ticket from the database
+     * Delete a ticket from the database.
      *
      * @param Ticket $ticket
      */
@@ -63,7 +64,7 @@ class TicketManager implements TicketManagerInterface
     }
 
     /**
-     * Find all tickets in the database
+     * Find all tickets in the database.
      *
      * @return array|\Hackzilla\Bundle\TicketBundle\Entity\Ticket[]
      */
@@ -73,7 +74,7 @@ class TicketManager implements TicketManagerInterface
     }
 
     /**
-     * Find ticket by criteria
+     * Find ticket by criteria.
      *
      * @param array $criteria
      *

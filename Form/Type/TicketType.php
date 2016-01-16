@@ -18,28 +18,28 @@ class TicketType extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('subject', 'text', array(
+            ->add('subject', 'text', [
                 'label' => 'LABEL_SUBJECT',
-            ))
-            ->add('messages', 'collection', array(
-                'type' => 'Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType',
+            ])
+            ->add('messages', 'collection', [
+                'type'    => 'Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType',
                 'options' => [
                     'new_ticket' => true,
                 ],
-                'label' => false,
+                'label'     => false,
                 'allow_add' => true,
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Hackzilla\Bundle\TicketBundle\Entity\Ticket',
-        ));
+        ]);
     }
 }

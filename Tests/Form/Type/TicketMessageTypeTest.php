@@ -30,10 +30,10 @@ class TicketMessageTypeTest extends TypeTestCase
 
     public function testSubmitValidData()
     {
-        $formData = array(
+        $formData = [
             'priority' => TicketMessage::PRIORITY_HIGH,
-            'message' => null,
-        );
+            'message'  => null,
+        ];
 
         $data = new TicketMessage();
         $data->setPriority(TicketMessage::PRIORITY_HIGH);
@@ -49,7 +49,7 @@ class TicketMessageTypeTest extends TypeTestCase
 
         $formEntity = $form->getData();
         $formEntity->setCreatedAt($data->getCreatedAt());
-        $this->assertEquals($data, $formEntity);
+        $this->assertSame($data, $formEntity);
 
         $view = $form->createView();
         $children = $view->children;

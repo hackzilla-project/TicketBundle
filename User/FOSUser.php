@@ -10,7 +10,7 @@ class FOSUser implements UserInterface
     private $securityContext;
     private $userManager;
 
-    function __construct(SecurityContextInterface $securityContext, UserManagerInterface $userManager)
+    public function __construct(SecurityContextInterface $securityContext, UserManagerInterface $userManager)
     {
         $this->securityContext = $securityContext;
         $this->userManager = $userManager;
@@ -31,14 +31,15 @@ class FOSUser implements UserInterface
     }
 
     /**
-     * @param integer $userId
+     * @param int $userId
+     *
      * @return mixed
      */
     public function getUserById($userId)
     {
-        $user = $this->userManager->findUserBy(array(
+        $user = $this->userManager->findUserBy([
             'id' => $userId,
-        ));
+        ]);
 
         return $user;
     }
@@ -46,7 +47,8 @@ class FOSUser implements UserInterface
     /**
      * @param $user
      * @param string $role
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasRole($user, $role)
     {
@@ -54,11 +56,12 @@ class FOSUser implements UserInterface
     }
 
     /**
-     * Current user granted permission
+     * Current user granted permission.
      *
      * @param $user
      * @param string $role
-     * @return boolean
+     *
+     * @return bool
      */
     public function isGranted($user, $role)
     {

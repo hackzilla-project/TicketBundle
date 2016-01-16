@@ -2,8 +2,8 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
+use Symfony\Component\EventDispatcher\Event;
 
 class TicketEvent extends Event
 {

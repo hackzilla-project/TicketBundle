@@ -2,9 +2,8 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\DataTransformer;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class StatusTransformerTest extends WebTestCase
 {
@@ -27,14 +26,14 @@ class StatusTransformerTest extends WebTestCase
 
     public function testTransform()
     {
-        $this->assertEquals($this->_object->transform(TicketMessage::STATUS_CLOSED), 1);
+        $this->assertSame($this->_object->transform(TicketMessage::STATUS_CLOSED), 1);
 
         $this->assertNull($this->_object->transform('TEST'));
     }
 
     public function testReverseTransform()
     {
-        $this->assertEquals($this->_object->reverseTransform(1), TicketMessage::STATUS_CLOSED);
+        $this->assertSame($this->_object->reverseTransform(1), TicketMessage::STATUS_CLOSED);
 
         $this->assertNull($this->_object->reverseTransform('TEST'));
     }

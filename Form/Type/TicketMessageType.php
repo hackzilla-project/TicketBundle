@@ -19,37 +19,37 @@ class TicketMessageType extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('message', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', array(
-                'label' => 'LABEL_MESSAGE',
+            ->add('message', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+                'label'    => 'LABEL_MESSAGE',
                 'required' => false,
-            ))
-            ->add('priority', 'Hackzilla\Bundle\TicketBundle\Form\Type\PriorityType', array(
+            ])
+            ->add('priority', 'Hackzilla\Bundle\TicketBundle\Form\Type\PriorityType', [
                 'label' => 'LABEL_PRIORITY',
-            ));
+            ]);
 
         // if existing ticket add status
         if (isset($options['new_ticket']) && !$options['new_ticket']) {
             $user = $this->_userManager->getCurrentUser();
 
             if ($this->_userManager->isGranted($user, 'ROLE_TICKET_ADMIN')) {
-                $builder->add('status', 'Hackzilla\Bundle\TicketBundle\Form\Type\StatusType', array(
+                $builder->add('status', 'Hackzilla\Bundle\TicketBundle\Form\Type\StatusType', [
                     'label' => 'LABEL_STATUS',
-                ));
+                ]);
             } else {
                 $statusTransformer = new StatusTransformer();
 
                 $builder
                     ->add(
-                        $builder->create('status', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', array(
-                            'label' => 'LABEL_MARK_SOLVED',
+                        $builder->create('status', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+                            'label'    => 'LABEL_MARK_SOLVED',
                             'required' => false,
-                            'value' => 'STATUS_CLOSED',
-                        ))->addModelTransformer($statusTransformer)
+                            'value'    => 'STATUS_CLOSED',
+                        ])->addModelTransformer($statusTransformer)
                     );
             }
         }
@@ -57,9 +57,9 @@ class TicketMessageType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Hackzilla\Bundle\TicketBundle\Entity\TicketMessage',
             'new_ticket' => false,
-        ));
+        ]);
     }
 }

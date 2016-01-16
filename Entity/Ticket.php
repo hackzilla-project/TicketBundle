@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Ticket
+ * Ticket.
  *
  * @ORM\Table(name="ticket")
  * @ORM\Entity(repositoryClass="Hackzilla\Bundle\TicketBundle\Entity\TicketRepository")
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Ticket
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -25,7 +25,7 @@ class Ticket
     protected $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="user_created_id", type="integer")
      */
@@ -33,7 +33,7 @@ class Ticket
     protected $userCreatedObject;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="last_user_id", type="integer")
      */
@@ -54,14 +54,14 @@ class Ticket
     protected $subject;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="status", type="smallint")
      */
     protected $status;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="priority", type="smallint")
      */
@@ -73,7 +73,7 @@ class Ticket
     protected $messages;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
@@ -86,9 +86,9 @@ class Ticket
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -96,9 +96,9 @@ class Ticket
     }
 
     /**
-     * Set status
+     * Set status.
      *
-     * @param integer $status
+     * @param int $status
      */
     public function setStatus($status)
     {
@@ -106,7 +106,7 @@ class Ticket
     }
 
     /**
-     * Set status string
+     * Set status string.
      *
      * @param string $status
      */
@@ -120,9 +120,9 @@ class Ticket
     }
 
     /**
-     * Get status
+     * Get status.
      *
-     * @return integer
+     * @return int
      */
     public function getStatus()
     {
@@ -130,7 +130,7 @@ class Ticket
     }
 
     /**
-     * Get status string
+     * Get status string.
      *
      * @return string
      */
@@ -144,9 +144,9 @@ class Ticket
     }
 
     /**
-     * Set priority
+     * Set priority.
      *
-     * @param integer $priority
+     * @param int $priority
      */
     public function setPriority($priority)
     {
@@ -154,7 +154,7 @@ class Ticket
     }
 
     /**
-     * Set priority string
+     * Set priority string.
      *
      * @param string $priority
      */
@@ -168,9 +168,9 @@ class Ticket
     }
 
     /**
-     * Get priority
+     * Get priority.
      *
-     * @return integer
+     * @return int
      */
     public function getPriority()
     {
@@ -178,7 +178,7 @@ class Ticket
     }
 
     /**
-     * Get priority string
+     * Get priority string.
      *
      * @return string
      */
@@ -192,9 +192,10 @@ class Ticket
     }
 
     /**
-     * Set userCreated
+     * Set userCreated.
      *
-     * @param integer|object $userCreated
+     * @param int|object $userCreated
+     *
      * @return Ticket
      */
     public function setUserCreated($userCreated)
@@ -211,9 +212,9 @@ class Ticket
     }
 
     /**
-     * Get userCreated
+     * Get userCreated.
      *
-     * @return integer
+     * @return int
      */
     public function getUserCreated()
     {
@@ -221,7 +222,7 @@ class Ticket
     }
 
     /**
-     * Get userCreated object
+     * Get userCreated object.
      *
      * @return object
      */
@@ -231,9 +232,9 @@ class Ticket
     }
 
     /**
-     * Set lastUser
+     * Set lastUser.
      *
-     * @param integer|object $lastUser
+     * @param int|object $lastUser
      *
      * @return Ticket
      */
@@ -251,9 +252,9 @@ class Ticket
     }
 
     /**
-     * Get lastUser
+     * Get lastUser.
      *
-     * @return integer
+     * @return int
      */
     public function getLastUser()
     {
@@ -261,7 +262,7 @@ class Ticket
     }
 
     /**
-     * Get lastUser object
+     * Get lastUser object.
      *
      * @return object
      */
@@ -271,7 +272,7 @@ class Ticket
     }
 
     /**
-     * Set lastMessage
+     * Set lastMessage.
      *
      * @param \DateTime $lastMessage
      *
@@ -285,7 +286,7 @@ class Ticket
     }
 
     /**
-     * Get lastMessage
+     * Get lastMessage.
      *
      * @return \DateTime
      */
@@ -295,7 +296,7 @@ class Ticket
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -309,7 +310,7 @@ class Ticket
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -319,7 +320,7 @@ class Ticket
     }
 
     /**
-     * Set subject
+     * Set subject.
      *
      * @param string $subject
      *
@@ -333,7 +334,7 @@ class Ticket
     }
 
     /**
-     * Get subject
+     * Get subject.
      *
      * @return string
      */
@@ -343,7 +344,7 @@ class Ticket
     }
 
     /**
-     * Add messages
+     * Add messages.
      *
      * @param TicketMessage $messages
      *
@@ -357,7 +358,7 @@ class Ticket
     }
 
     /**
-     * Remove messages
+     * Remove messages.
      *
      * @param TicketMessage $messages
      */
@@ -367,7 +368,7 @@ class Ticket
     }
 
     /**
-     * Get messages
+     * Get messages.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

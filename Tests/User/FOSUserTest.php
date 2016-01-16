@@ -37,4 +37,3 @@ class FOSUserTest extends WebTestCase
         return $userManager;
     }
 }
-
