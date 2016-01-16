@@ -2,6 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
+use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\User\UserInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,24 +24,37 @@ class TicketType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('subject', 'text', [
-                'label' => 'LABEL_SUBJECT',
-            ])
-            ->add('messages', 'collection', [
-                'type'    => 'Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType',
-                'options' => [
-                    'new_ticket' => true,
-                ],
-                'label'     => false,
-                'allow_add' => true,
-            ]);
+            ->add(
+                'subject',
+                'text',
+                [
+                    'label' => 'LABEL_SUBJECT',
+                ]
+            )
+            ->add(
+                'messages',
+                'collection',
+                [
+                    'type'      => method_exists(
+                        AbstractType::class,
+                        'getBlockPrefix'
+                    ) ? TicketMessageType::class : new TicketMessageType($this->_userManager),
+                    'options'   => [
+                        'new_ticket' => true,
+                    ],
+                    'label'     => false,
+                    'allow_add' => true,
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => 'Hackzilla\Bundle\TicketBundle\Entity\Ticket',
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Ticket::class,
+            ]
+        );
     }
 
     public function getName()

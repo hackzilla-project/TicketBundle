@@ -20,7 +20,7 @@ class PriorityType extends AbstractType
 
     public function getParent()
     {
-        return 'choice';
+        return method_exists(AbstractType::class, 'getBlockPrefix') ? ChoiceType::class : 'choice';
     }
 
     public function getName()
