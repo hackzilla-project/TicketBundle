@@ -17,7 +17,7 @@ class StatusType extends AbstractType
         $resolver->setDefaults(
             [
                 'choices_as_values' => true,
-                'choices' => array_flip($choices),
+                'choices'           => array_flip($choices),
             ]
         );
     }
