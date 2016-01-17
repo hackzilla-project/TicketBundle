@@ -1,6 +1,6 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\User;
+namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
