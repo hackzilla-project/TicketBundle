@@ -6,7 +6,6 @@ enabled:
   - ordered_use
   - short_array_syntax
   - php_unit_construct
-  - php_unit_strict
 
 disabled:
   - unalign_double_arrow
