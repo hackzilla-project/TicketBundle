@@ -4,13 +4,13 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class FOSUserTest extends WebTestCase
+class UserManagerTest extends WebTestCase
 {
     private $_object;
 
     public function setUp()
     {
-        $this->_object = new \Hackzilla\Bundle\TicketBundle\User\FOSUser(
+        $this->_object = new \Hackzilla\Bundle\TicketBundle\Manager\UserManager(
             $this->getMockSecurity(),
             $this->getMockUserManager()
         );
