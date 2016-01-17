@@ -6,11 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserManagerTest extends WebTestCase
 {
-    private $_object;
+    private $object;
 
     public function setUp()
     {
-        $this->_object = new \Hackzilla\Bundle\TicketBundle\Manager\UserManager(
+        $this->object = new \Hackzilla\Bundle\TicketBundle\Manager\UserManager(
             $this->getMockSecurity(),
             $this->getMockUserManager()
         );
@@ -32,11 +32,11 @@ class UserManagerTest extends WebTestCase
 
     public function tearDown()
     {
-        unset($this->_object);
+        unset($this->object);
     }
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->_object));
+        $this->assertTrue(\is_object($this->object));
     }
 }

@@ -13,11 +13,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TicketMessageType extends AbstractType
 {
-    private $_userManager;
+    private $userManager;
 
     public function __construct(UserManagerInterface $userManager)
     {
-        $this->_userManager = $userManager;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -45,9 +45,9 @@ class TicketMessageType extends AbstractType
 
         // if existing ticket add status
         if (isset($options['new_ticket']) && !$options['new_ticket']) {
-            $user = $this->_userManager->getCurrentUser();
+            $user = $this->userManager->getCurrentUser();
 
-            if ($this->_userManager->isGranted($user, 'ROLE_TICKET_ADMIN')) {
+            if ($this->userManager->isGranted($user, 'ROLE_TICKET_ADMIN')) {
                 $builder->add(
                     'status',
                     method_exists(AbstractType::class, 'getBlockPrefix') ? StatusType::class : new StatusType(),

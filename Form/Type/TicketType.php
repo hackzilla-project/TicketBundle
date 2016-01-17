@@ -12,11 +12,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TicketType extends AbstractType
 {
-    private $_userManager;
+    private $userManager;
 
     public function __construct(UserManagerInterface $userManager)
     {
-        $this->_userManager = $userManager;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -40,7 +40,7 @@ class TicketType extends AbstractType
                     method_exists(AbstractType::class, 'getBlockPrefix') ? 'entry_type' : 'type'       => method_exists(
                         AbstractType::class,
                         'getBlockPrefix'
-                    ) ? TicketMessageType::class : new TicketMessageType($this->_userManager),
+                    ) ? TicketMessageType::class : new TicketMessageType($this->userManager),
                     method_exists(AbstractType::class, 'getBlockPrefix') ? 'entry_options' : 'options' => [
                         'new_ticket' => true,
                     ],

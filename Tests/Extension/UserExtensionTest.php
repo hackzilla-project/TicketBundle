@@ -6,13 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserExtensionTest extends WebTestCase
 {
-    private $_object;
+    private $object;
 
     public function setUp()
     {
         $container = $this->getMockContainer();
 
-        $this->_object = new \Hackzilla\Bundle\TicketBundle\Extension\UserExtension($container);
+        $this->object = new \Hackzilla\Bundle\TicketBundle\Extension\UserExtension($container);
     }
 
     public function getMockContainer()
@@ -22,11 +22,11 @@ class UserExtensionTest extends WebTestCase
 
     public function tearDown()
     {
-        unset($this->_object);
+        unset($this->object);
     }
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->_object));
+        $this->assertTrue(\is_object($this->object));
     }
 }
