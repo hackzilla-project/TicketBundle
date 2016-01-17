@@ -1,18 +1,12 @@
-parameters:
-    hackzilla_ticket.user_load.class: Hackzilla\Bundle\TicketBundle\EventListener\UserLoad
-    hackzilla_ticket.twig_user.class: Hackzilla\Bundle\TicketBundle\Extension\UserExtension
-    hackzilla_ticket.ticket_manager.class: Hackzilla\Bundle\TicketBundle\Manager\TicketManager
-    hackzilla_ticket.user_bridge.class: Hackzilla\Bundle\TicketBundle\User\FOSUser
-
 services:
     hackzilla_ticket.listener:
-        class: %hackzilla_ticket.user_load.class%
+        class: Hackzilla\Bundle\TicketBundle\EventListener\UserLoad
         arguments: ['@service_container']
         tags:
             - { name: doctrine.event_listener, event: postLoad }
 
     hackzilla_ticket_user_extension:
-        class: %hackzilla_ticket.twig_user.class%
+        class: Hackzilla\Bundle\TicketBundle\Extension\UserExtension
         arguments: ['@service_container']
         tags:
             - { name: twig.extension }
@@ -22,7 +16,7 @@ services:
         arguments: ['@security.context', '@fos_user.user_manager']
 
     hackzilla_ticket.ticket_manager:
-        class: %hackzilla_ticket.ticket_manager.class%
+        class: Hackzilla\Bundle\TicketBundle\Manager\TicketManager
         arguments: ["@doctrine.orm.entity_manager"]
 
     hackzilla_ticket.form.type.ticket:
