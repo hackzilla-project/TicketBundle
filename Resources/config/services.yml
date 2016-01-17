@@ -17,8 +17,8 @@ services:
         tags:
             - { name: twig.extension }
 
-    hackzilla_ticket.user:
-        class: %hackzilla_ticket.user_bridge.class%
+    hackzilla_ticket.user_manager:
+        class: Hackzilla\Bundle\TicketBundle\User\UserManager
         arguments: ['@security.context', '@fos_user.user_manager']
 
     hackzilla_ticket.ticket_manager:
@@ -28,13 +28,13 @@ services:
     hackzilla_ticket.form.type.ticket:
         class: Hackzilla\Bundle\TicketBundle\Form\Type\TicketType
         arguments:
-            - '@hackzilla_ticket.user'
+            - '@hackzilla_ticket.user_manager'
         tags:
             - { name: form.type, alias: hackzilla_ticket }
 
     hackzilla_ticket.form.type.ticket_message:
         class: Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType
         arguments:
-            - '@hackzilla_ticket.user'
+            - '@hackzilla_ticket.user_manager'
         tags:
             - { name: form.type, alias: hackzilla_ticket_message }

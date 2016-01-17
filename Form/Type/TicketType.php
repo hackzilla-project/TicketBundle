@@ -3,7 +3,7 @@
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
-use Hackzilla\Bundle\TicketBundle\User\UserInterface;
+use Hackzilla\Bundle\TicketBundle\User\UserManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -14,7 +14,7 @@ class TicketType extends AbstractType
 {
     private $_userManager;
 
-    public function __construct(UserInterface $userManager)
+    public function __construct(UserManagerInterface $userManager)
     {
         $this->_userManager = $userManager;
     }

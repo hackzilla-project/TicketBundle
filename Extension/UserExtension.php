@@ -10,7 +10,7 @@ class UserExtension extends \Twig_Extension
 
     public function __construct(ContainerInterface $container)
     {
-        $this->userManager = $container->get('hackzilla_ticket.user');
+        $this->userManager = $container->get('hackzilla_ticket.user_manager');
     }
 
     public function getFilters()

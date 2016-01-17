@@ -2,7 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\User;
 
-interface UserInterface
+interface UserManagerInterface
 {
     public function getCurrentUser();
 

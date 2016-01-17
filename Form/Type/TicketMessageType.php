@@ -4,7 +4,7 @@ namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
-use Hackzilla\Bundle\TicketBundle\User\UserInterface;
+use Hackzilla\Bundle\TicketBundle\User\UserManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -15,7 +15,7 @@ class TicketMessageType extends AbstractType
 {
     private $_userManager;
 
-    public function __construct(UserInterface $userManager)
+    public function __construct(UserManagerInterface $userManager)
     {
         $this->_userManager = $userManager;
     }
