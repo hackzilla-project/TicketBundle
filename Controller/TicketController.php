@@ -27,7 +27,7 @@ class TicketController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $userManager = $this->get('hackzilla_ticket.user');
+        $userManager = $this->get('hackzilla_ticket.user_manager');
         $translator = $this->get('translator');
 
         $ticketState = $request->get('state', $translator->trans('STATUS_OPEN'));
@@ -69,7 +69,7 @@ class TicketController extends Controller
      */
     public function createAction(Request $request)
     {
-        $userManager = $this->get('hackzilla_ticket.user');
+        $userManager = $this->get('hackzilla_ticket.user_manager');
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
         $ticket = $ticketManager->createTicket();
@@ -105,7 +105,7 @@ class TicketController extends Controller
     public function newAction()
     {
         $entity = new Ticket();
-        $userManager = $this->get('hackzilla_ticket.user');
+        $userManager = $this->get('hackzilla_ticket.user_manager');
         $form = $this->createForm($this->formType(TicketType::class, new TicketType($userManager)), $entity);
 
         return $this->render(
@@ -129,7 +129,7 @@ class TicketController extends Controller
         if (!$ticket) {
             return $this->redirect($this->generateUrl('hackzilla_ticket'));
         }
-        $userManager = $this->get('hackzilla_ticket.user');
+        $userManager = $this->get('hackzilla_ticket.user_manager');
         $this->checkUserPermission($userManager->getCurrentUser(), $ticket);
 
         $data = ['ticket' => $ticket];
@@ -148,7 +148,7 @@ class TicketController extends Controller
             )->createView();
         }
 
-        if ($this->get('hackzilla_ticket.user')->isGranted($userManager->getCurrentUser(), 'ROLE_TICKET_ADMIN')) {
+        if ($this->get('hackzilla_ticket.user_manager')->isGranted($userManager->getCurrentUser(), 'ROLE_TICKET_ADMIN')) {
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
@@ -161,7 +161,7 @@ class TicketController extends Controller
      */
     private function checkUserPermission($user, Ticket $ticket)
     {
-        if (!\is_object($user) || (!$this->get('hackzilla_ticket.user')->isGranted(
+        if (!\is_object($user) || (!$this->get('hackzilla_ticket.user_manager')->isGranted(
                     $user,
                     'ROLE_TICKET_ADMIN'
                 ) && $ticket->getUserCreated() != $user->getId())
@@ -180,7 +180,7 @@ class TicketController extends Controller
      */
     public function replyAction(Request $request, Ticket $ticket)
     {
-        $userManager = $this->get('hackzilla_ticket.user');
+        $userManager = $this->get('hackzilla_ticket.user_manager');
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
         $user = $userManager->getCurrentUser();
@@ -223,7 +223,7 @@ class TicketController extends Controller
      */
     public function deleteAction(Request $request, Ticket $ticket)
     {
-        $userManager = $this->get('hackzilla_ticket.user');
+        $userManager = $this->get('hackzilla_ticket.user_manager');
         $user = $userManager->getCurrentUser();
 
         if (!\is_object($user) || !$userManager->isGranted($user, 'ROLE_TICKET_ADMIN')) {
