@@ -15,6 +15,13 @@ services:
         class: Hackzilla\Bundle\TicketBundle\Manager\UserManager
         arguments: ['@security.context', '@fos_user.user_manager']
 
+    hackzilla_ticket.user_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - %hackzilla_ticket.model.user.class%
+
     hackzilla_ticket.ticket_manager:
         class: Hackzilla\Bundle\TicketBundle\Manager\TicketManager
         arguments: ["@doctrine.orm.entity_manager"]
