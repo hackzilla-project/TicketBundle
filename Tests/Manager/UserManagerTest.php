@@ -2,32 +2,43 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class UserManagerTest extends WebTestCase
 {
     private $object;
+    private $tokenStorage;
 
     public function setUp()
     {
+        $this->tokenStorage = new TokenStorage();
+
         $this->object = new \Hackzilla\Bundle\TicketBundle\Manager\UserManager(
-            $this->getMockSecurity(),
-            $this->getMockUserManager()
+            $this->getMockAuthorizationChecker(),
+            $this->tokenStorage,
+            $this->getMockUserRepository()
         );
     }
 
-    private function getMockSecurity()
+    private function getMockAuthorizationChecker()
     {
-        $security = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
-
-        return $security;
+        return $this
+            ->getMockBuilder(AuthorizationChecker::class)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
-    private function getMockUserManager()
+    private function getMockUserRepository()
     {
-        $userManager = $this->getMock('FOS\UserBundle\Model\UserManagerInterface');
+        $userRepository = $this
+            ->getMockBuilder(EntityRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        return $userManager;
+        return $userRepository;
     }
 
     public function tearDown()

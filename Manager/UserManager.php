@@ -2,18 +2,22 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Doctrine\ORM\EntityRepository;
+use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class UserManager implements UserManagerInterface
 {
-    private $securityContext;
-    private $userManager;
+    private $authorizationChecker;
+    private $tokenStorage;
+    private $userRepository;
 
-    public function __construct(SecurityContextInterface $securityContext, UserManagerInterface $userManager)
+    public function __construct(AuthorizationChecker $authorizationChecker, TokenStorage $tokenStorage, EntityRepository $userRepository)
     {
-        $this->securityContext = $securityContext;
-        $this->userManager = $userManager; // should be User Repository
+        $this->authorizationChecker = $authorizationChecker;
+        $this->tokenStorage = $tokenStorage;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -21,7 +25,7 @@ class UserManager implements UserManagerInterface
      */
     public function getCurrentUser()
     {
-        $user = $this->securityContext->getToken()->getUser();
+        $user = $this->tokenStorage->getToken()->getUser();
 
         if ($user === 'anon.') {
             $user = 0;
@@ -33,40 +37,25 @@ class UserManager implements UserManagerInterface
     /**
      * @param int $userId
      *
-     * @return mixed
+     * @return UserInterface|null
      */
     public function getUserById($userId)
     {
-        $user = $this->userManager->findUserBy(
-            [
-                'id' => $userId,
-            ]
-        );
+        $user = $this->userRepository->find($userId);
 
         return $user;
     }
 
     /**
-     * @param        $user
-     * @param string $role
+     * Current user has permission.
+     *
+     * @param UserInterface $user
+     * @param string        $role
      *
      * @return bool
      */
-    public function hasRole($user, $role)
+    public function hasRole(UserInterface $user, $role)
     {
-        return $user->hasRole($role);
-    }
-
-    /**
-     * Current user granted permission.
-     *
-     * @param        $user
-     * @param string $role
-     *
-     * @return bool
-     */
-    public function isGranted($user, $role)
-    {
-        return $this->securityContext->isGranted($role);
+        return in_array(strtoupper($role), $user->getRoles(), true);
     }
 }
