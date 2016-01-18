@@ -197,7 +197,7 @@ class TicketController extends Controller
                 'new_ticket' => false,
             ]
         );
-        $form->submit($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $message->setUser($user);
