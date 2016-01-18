@@ -18,7 +18,11 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('hackzilla_ticket');
+        $treeBuilder->root('hackzilla_ticket')
+            ->children()
+                ->scalarNode('user_class')->isRequired()->cannotBeEmpty()->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

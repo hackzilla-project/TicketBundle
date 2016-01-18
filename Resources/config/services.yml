@@ -7,17 +7,24 @@ services:
 
     hackzilla_ticket_user_extension:
         class: Hackzilla\Bundle\TicketBundle\Extension\UserExtension
-        arguments: ['@service_container']
+        arguments: ['@hackzilla_ticket.user_manager']
         tags:
             - { name: twig.extension }
 
     hackzilla_ticket.user_manager:
         class: Hackzilla\Bundle\TicketBundle\Manager\UserManager
-        arguments: ['@security.context', '@fos_user.user_manager']
+        arguments: ['@security.authorization_checker', '@security.token_storage', '@hackzilla_ticket.user_repository']
+
+    hackzilla_ticket.user_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - %hackzilla_ticket.model.user.class%
 
     hackzilla_ticket.ticket_manager:
         class: Hackzilla\Bundle\TicketBundle\Manager\TicketManager
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ['@doctrine.orm.entity_manager']
 
     hackzilla_ticket.form.type.ticket:
         class: Hackzilla\Bundle\TicketBundle\Form\Type\TicketType

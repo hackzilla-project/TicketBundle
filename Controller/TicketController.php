@@ -8,6 +8,7 @@ use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
 use Hackzilla\Bundle\TicketBundle\TicketEvents;
+use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -148,7 +149,7 @@ class TicketController extends Controller
             )->createView();
         }
 
-        if ($this->get('hackzilla_ticket.user_manager')->isGranted($userManager->getCurrentUser(), 'ROLE_TICKET_ADMIN')) {
+        if ($userManager->getCurrentUser() && $this->get('hackzilla_ticket.user_manager')->hasRole($userManager->getCurrentUser(), TicketRole::Admin)) {
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
@@ -156,14 +157,14 @@ class TicketController extends Controller
     }
 
     /**
-     * @param \FOS\UserBundle\Model\UserInterface|string $user
+     * @param \Hackzilla\Bundle\TicketBundle\Model\UserInterface|string $user
      * @param Ticket                                     $ticket
      */
     private function checkUserPermission($user, Ticket $ticket)
     {
-        if (!\is_object($user) || (!$this->get('hackzilla_ticket.user_manager')->isGranted(
+        if (!\is_object($user) || (!$this->get('hackzilla_ticket.user_manager')->hasRole(
                     $user,
-                    'ROLE_TICKET_ADMIN'
+                    TicketRole::Admin
                 ) && $ticket->getUserCreated() != $user->getId())
         ) {
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
@@ -226,7 +227,7 @@ class TicketController extends Controller
         $userManager = $this->get('hackzilla_ticket.user_manager');
         $user = $userManager->getCurrentUser();
 
-        if (!\is_object($user) || !$userManager->isGranted($user, 'ROLE_TICKET_ADMIN')) {
+        if (!\is_object($user) || !$userManager->hasRole($user, TicketRole::Admin)) {
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 

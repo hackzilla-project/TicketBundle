@@ -5,6 +5,7 @@ namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -47,7 +48,7 @@ class TicketMessageType extends AbstractType
         if (isset($options['new_ticket']) && !$options['new_ticket']) {
             $user = $this->userManager->getCurrentUser();
 
-            if ($this->userManager->isGranted($user, 'ROLE_TICKET_ADMIN')) {
+            if ($this->userManager->hasRole($user, TicketRole::Admin)) {
                 $builder->add(
                     'status',
                     method_exists(AbstractType::class, 'getBlockPrefix') ? StatusType::class : new StatusType(),
