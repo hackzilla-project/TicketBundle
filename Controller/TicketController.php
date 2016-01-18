@@ -149,7 +149,11 @@ class TicketController extends Controller
             )->createView();
         }
 
-        if ($userManager->getCurrentUser() && $this->get('hackzilla_ticket.user_manager')->hasRole($userManager->getCurrentUser(), TicketRole::Admin)) {
+        if ($userManager->getCurrentUser() && $this->get('hackzilla_ticket.user_manager')->hasRole(
+                $userManager->getCurrentUser(),
+                TicketRole::Admin
+            )
+        ) {
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
@@ -158,7 +162,7 @@ class TicketController extends Controller
 
     /**
      * @param \Hackzilla\Bundle\TicketBundle\Model\UserInterface|string $user
-     * @param Ticket                                     $ticket
+     * @param Ticket                                                    $ticket
      */
     private function checkUserPermission($user, Ticket $ticket)
     {
