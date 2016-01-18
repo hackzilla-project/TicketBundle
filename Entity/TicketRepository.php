@@ -3,6 +3,7 @@
 namespace Hackzilla\Bundle\TicketBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Hackzilla\Bundle\TicketBundle\TicketRole;
 
 /**
  * TicketRepository.
@@ -40,7 +41,7 @@ class TicketRepository extends EntityRepository
         $user = $userManager->getCurrentUser();
 
         if (\is_object($user)) {
-            if (!$userManager->isGranted($user, 'ROLE_TICKET_ADMIN')) {
+            if (!$userManager->hasRole($user, TicketRole::Admin)) {
                 $query
                     ->andWhere('t.userCreated = :userId')
                     ->setParameter('userId', $user->getId());

@@ -27,7 +27,7 @@ class UserExtension extends \Twig_Extension
         }
 
         if (is_object($user)) {
-            return $user->hasRole($role);
+            return $this->userManager->hasRole($user, $role);
         } else {
             return false;
         }
