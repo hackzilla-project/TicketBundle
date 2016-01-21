@@ -4,15 +4,15 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class UserLoad extends WebTestCase
+class UserLoadTest extends WebTestCase
 {
-    private $_object;
+    private $object;
 
     public function setUp()
     {
         $container = $this->getMockContainer();
 
-        $this->_object = new \Hackzilla\Bundle\TicketBundle\EventListener\UserLoad($container);
+        $this->object = new \Hackzilla\Bundle\TicketBundle\EventListener\UserLoad($container);
     }
 
     public function getMockContainer()
@@ -22,11 +22,11 @@ class UserLoad extends WebTestCase
 
     public function tearDown()
     {
-        unset($this->_object);
+        unset($this->object);
     }
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->_object));
+        $this->assertTrue(\is_object($this->object));
     }
 }

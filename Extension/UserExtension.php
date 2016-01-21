@@ -2,20 +2,22 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 
 class UserExtension extends \Twig_Extension
 {
     private $userManager;
 
-    public function __construct(ContainerInterface $container) {
-        $this->userManager = $container->get('hackzilla_ticket.user');
+    public function __construct(UserManager $userManager)
+    {
+        $this->userManager = $userManager;
     }
 
-    public function getFilters() {
-        return array(
-            'isTicketAdmin' => new \Twig_Filter_Method($this, 'isTicketAdmin'),
-        );
+    public function getFilters()
+    {
+        return [
+            'isTicketAdmin' => new \Twig_SimpleFilter('isTicketAdmin', [$this, 'isTicketAdmin']),
+        ];
     }
 
     public function isTicketAdmin($user, $role)
@@ -24,10 +26,11 @@ class UserExtension extends \Twig_Extension
             $user = $this->userManager->getUserById($user);
         }
 
-        if (is_object($user))
-            return $user->hasRole($role);
-        else
+        if (is_object($user)) {
+            return $this->userManager->hasRole($user, $role);
+        } else {
             return false;
+        }
     }
 
     public function getName()

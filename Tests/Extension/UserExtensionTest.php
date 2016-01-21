@@ -2,31 +2,35 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Extension;
 
+use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserExtensionTest extends WebTestCase
 {
-    private $_object;
+    private $object;
 
     public function setUp()
     {
-        $container = $this->getMockContainer();
+        $userManager = $this->getMockUserManager();
 
-        $this->_object = new \Hackzilla\Bundle\TicketBundle\Extension\UserExtension($container);
+        $this->object = new \Hackzilla\Bundle\TicketBundle\Extension\UserExtension($userManager);
     }
 
-    public function getMockContainer()
+    public function getMockUserManager()
     {
-        return $this->getMock('Symfony\Component\DependencyInjection\Container');
+        return $this
+            ->getMockBuilder(UserManager::class)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     public function tearDown()
     {
-        unset($this->_object);
+        unset($this->object);
     }
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->_object));
+        $this->assertTrue(\is_object($this->object));
     }
 }

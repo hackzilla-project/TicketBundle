@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Message
+ * Message.
  *
  * @ORM\Table(name="ticket_message")
  * @ORM\Entity(repositoryClass="Hackzilla\Bundle\TicketBundle\Entity\TicketMessageRepository")
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class TicketMessage
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -29,7 +29,7 @@ class TicketMessage
     protected $ticket;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="user_id", type="integer")
      */
@@ -45,14 +45,14 @@ class TicketMessage
     protected $message;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="status", type="smallint")
      */
     protected $status;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="priority", type="smallint")
      */
@@ -73,27 +73,27 @@ class TicketMessage
     const STATUS_RESOLVED = 14;
     const STATUS_CLOSED = 15;
 
-    static public $statuses = array(
-        self::STATUS_INVALID => 'STATUS_INVALID',
-        self::STATUS_OPEN => 'STATUS_OPEN',
-        self::STATUS_IN_PROGRESS => 'STATUS_IN_PROGRESS',
+    public static $statuses = [
+        self::STATUS_INVALID               => 'STATUS_INVALID',
+        self::STATUS_OPEN                  => 'STATUS_OPEN',
+        self::STATUS_IN_PROGRESS           => 'STATUS_IN_PROGRESS',
         self::STATUS_INFORMATION_REQUESTED => 'STATUS_INFORMATION_REQUESTED',
-        self::STATUS_ON_HOLD => 'STATUS_ON_HOLD',
-        self::STATUS_RESOLVED => 'STATUS_RESOLVED',
-        self::STATUS_CLOSED => 'STATUS_CLOSED',
-    );
+        self::STATUS_ON_HOLD               => 'STATUS_ON_HOLD',
+        self::STATUS_RESOLVED              => 'STATUS_RESOLVED',
+        self::STATUS_CLOSED                => 'STATUS_CLOSED',
+    ];
 
     const PRIORITY_INVALID = 0;
     const PRIORITY_LOW = 20;
     const PRIORITY_MEDIUM = 21;
     const PRIORITY_HIGH = 22;
 
-    static public $priorities = array(
+    public static $priorities = [
         self::PRIORITY_INVALID => 'PRIORITY_INVALID',
-        self::PRIORITY_LOW => 'PRIORITY_LOW',
-        self::PRIORITY_MEDIUM => 'PRIORITY_MEDIUM',
-        self::PRIORITY_HIGH => 'PRIORITY_HIGH',
-    );
+        self::PRIORITY_LOW     => 'PRIORITY_LOW',
+        self::PRIORITY_MEDIUM  => 'PRIORITY_MEDIUM',
+        self::PRIORITY_HIGH    => 'PRIORITY_HIGH',
+    ];
 
     public function __construct()
     {
@@ -101,9 +101,9 @@ class TicketMessage
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -111,20 +111,21 @@ class TicketMessage
     }
 
     /**
-     * Set status
+     * Set status.
      *
-     * @param integer $status
+     * @param int $status
      *
      * @return $this
      */
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
     /**
-     * Set status string
+     * Set status string.
      *
      * @param string $status
      *
@@ -142,9 +143,9 @@ class TicketMessage
     }
 
     /**
-     * Get status
+     * Get status.
      *
-     * @return integer
+     * @return int
      */
     public function getStatus()
     {
@@ -152,7 +153,7 @@ class TicketMessage
     }
 
     /**
-     * Get status string
+     * Get status string.
      *
      * @return string
      */
@@ -166,9 +167,9 @@ class TicketMessage
     }
 
     /**
-     * Set priority
+     * Set priority.
      *
-     * @param integer $priority
+     * @param int $priority
      *
      * @return $this
      */
@@ -180,7 +181,7 @@ class TicketMessage
     }
 
     /**
-     * Set priority string
+     * Set priority string.
      *
      * @param string $priority
      *
@@ -198,9 +199,9 @@ class TicketMessage
     }
 
     /**
-     * Get priority
+     * Get priority.
      *
-     * @return integer
+     * @return int
      */
     public function getPriority()
     {
@@ -208,7 +209,7 @@ class TicketMessage
     }
 
     /**
-     * Get priority string
+     * Get priority string.
      *
      * @return string
      */
@@ -222,9 +223,9 @@ class TicketMessage
     }
 
     /**
-     * Set user
+     * Set user.
      *
-     * @param integer|object $user
+     * @param int|object $user
      *
      * @return $this
      */
@@ -242,9 +243,9 @@ class TicketMessage
     }
 
     /**
-     * Get user
+     * Get user.
      *
-     * @return integer
+     * @return int
      */
     public function getUser()
     {
@@ -252,7 +253,7 @@ class TicketMessage
     }
 
     /**
-     * Get user object
+     * Get user object.
      *
      * @return object
      */
@@ -262,7 +263,7 @@ class TicketMessage
     }
 
     /**
-     * Set message
+     * Set message.
      *
      * @param string $message
      *
@@ -276,7 +277,7 @@ class TicketMessage
     }
 
     /**
-     * Get message
+     * Get message.
      *
      * @return string
      */
@@ -286,7 +287,7 @@ class TicketMessage
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -300,7 +301,7 @@ class TicketMessage
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -310,7 +311,7 @@ class TicketMessage
     }
 
     /**
-     * Set ticket
+     * Set ticket.
      *
      * @param \Hackzilla\Bundle\TicketBundle\Entity\Ticket $ticket
      *
@@ -346,7 +347,7 @@ class TicketMessage
     }
 
     /**
-     * Get ticket
+     * Get ticket.
      *
      * @return Ticket
      */

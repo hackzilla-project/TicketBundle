@@ -2,52 +2,70 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
+use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Hackzilla\Bundle\TicketBundle\User\UserInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TicketType extends AbstractType
 {
-    private $_userManager;
+    private $userManager;
 
-    public function __construct(UserInterface $userManager)
+    public function __construct(UserManagerInterface $userManager)
     {
-        $this->_userManager = $userManager;
+        $this->userManager = $userManager;
     }
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                ->add('subject', 'text', array(
+            ->add(
+                'subject',
+                method_exists(AbstractType::class, 'getBlockPrefix') ? TextType::class : 'text',
+                [
                     'label' => 'LABEL_SUBJECT',
-                ))
-                ->add('messages', 'collection', array(
-                    'type' => new TicketMessageType($this->_userManager, true),
-                    'label' => false,
-                    'allow_add' => true,
-        ));
+                ]
+            )
+            ->add(
+                'messages',
+                method_exists(AbstractType::class, 'getBlockPrefix') ? CollectionType::class : 'collection',
+                [
+                    method_exists(AbstractType::class, 'getBlockPrefix') ? 'entry_type' : 'type'       => method_exists(
+                        AbstractType::class,
+                        'getBlockPrefix'
+                    ) ? TicketMessageType::class : new TicketMessageType($this->userManager),
+                    method_exists(AbstractType::class, 'getBlockPrefix') ? 'entry_options' : 'options' => [
+                        'new_ticket' => true,
+                    ],
+                    'label'                                                                            => false,
+                    'allow_add'                                                                        => true,
+                ]
+            );
     }
 
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Hackzilla\Bundle\TicketBundle\Entity\Ticket'
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => Ticket::class,
+            ]
+        );
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
-        return 'hackzilla_bundle_ticketbundle_tickettype';
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'ticket';
     }
 }

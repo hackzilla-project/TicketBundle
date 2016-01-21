@@ -18,15 +18,15 @@ class UserLoad
 
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'postLoad',
-        );
+        ];
     }
 
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $userManager = $this->container->get('hackzilla_ticket.user');
+        $userManager = $this->container->get('hackzilla_ticket.user_manager');
 
         if ($entity instanceof Ticket) {
             if (\is_null($entity->getUserCreatedObject())) {
@@ -35,7 +35,7 @@ class UserLoad
             if (\is_null($entity->getLastUserObject())) {
                 $entity->setLastUser($userManager->getUserById($entity->getLastUser()));
             }
-        } else if ($entity instanceof TicketMessage) {
+        } elseif ($entity instanceof TicketMessage) {
             if (\is_null($entity->getUserObject())) {
                 $entity->setUser($userManager->getUserById($entity->getUser()));
             }

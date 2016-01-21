@@ -2,12 +2,12 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
+use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 
 class TicketManagerCommand extends ContainerAwareCommand
 {
@@ -54,14 +54,15 @@ class TicketManagerCommand extends ContainerAwareCommand
         $message = $ticketmanager->createMessage();
 
         $message->setMessage($input->getArgument('message'))
-                ->setStatus(TicketMessage::STATUS_OPEN)
-                ->setPriority($input->getOption('priority'))
-                ->setUser($userManager->findUserByUsername('system'))
-                ->setTicket($ticket)
-        ;
+            ->setStatus(TicketMessage::STATUS_OPEN)
+            ->setPriority($input->getOption('priority'))
+            ->setUser($userManager->findUserByUsername('system'))
+            ->setTicket($ticket);
 
         $ticketmanager->updateTicket($ticket, $message);
 
-        $output->writeln("Ticket with subject '" .$ticket->getSubject(). "' has been created with ticketnumber #" .$ticket->getId(). "");
+        $output->writeln(
+            "Ticket with subject '".$ticket->getSubject()."' has been created with ticketnumber #".$ticket->getId().''
+        );
     }
 }

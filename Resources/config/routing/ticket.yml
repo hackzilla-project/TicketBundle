@@ -13,12 +13,12 @@ hackzilla_ticket_new:
 hackzilla_ticket_create:
     path:  /create
     defaults: { _controller: "HackzillaTicketBundle:Ticket:create" }
-    requirements: { _method: post }
+    methods: post
 
 hackzilla_ticket_delete:
     path:  /{id}/delete
     defaults: { _controller: "HackzillaTicketBundle:Ticket:delete" }
-    requirements: { _method: post|delete }
+    methods: post|delete
 
 hackzilla_ticket_reply:
     path:  /{id}/reply

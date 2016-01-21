@@ -6,20 +6,20 @@ use Symfony\Component\Form\Test\TypeTestCase;
 
 class PriorityTypeTest extends TypeTestCase
 {
-    private $_object;
+    private $object;
 
     public function setUp()
     {
-        $this->_object = new \Hackzilla\Bundle\TicketBundle\Form\Type\PriorityType();
+        $this->object = new \Hackzilla\Bundle\TicketBundle\Form\Type\PriorityType();
     }
 
     public function tearDown()
     {
-        unset($this->_object);
+        unset($this->object);
     }
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->_object));
+        $this->assertTrue(\is_object($this->object));
     }
 }
