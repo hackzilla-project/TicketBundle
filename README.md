@@ -1,5 +1,4 @@
-Ticketing Bundle v2
-===================
+# Ticketing Bundle v2
 
 Currently V2 is a work in progress, please use v1.
 
@@ -9,8 +8,7 @@ Languages: English, French, Russian, German and Spanish.
 [![Build Status](https://travis-ci.org/hackzilla/TicketBundle.png?branch=master)](https://travis-ci.org/hackzilla/TicketBundle)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/091d37a9-7862-4365-952c-814ce95c4d6c/mini.png)](https://insight.sensiolabs.com/projects/091d37a9-7862-4365-952c-814ce95c4d6c)
 
-Requirements
-------------
+## Requirements
 
 * PHP >= 5.5
 * Symfony ~2.7|~3.0
@@ -19,8 +17,7 @@ Requirements
 * Bootstrap v3 (optional) see: http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme
 
 
-Version Matrix
---------------
+## Version Matrix
 
 | Ticket Bundle                                                          | Symfony    | PHP   |
 | ---------------------------------------------------------------------- | ---------- | ----- |
@@ -29,13 +26,12 @@ Version Matrix
 | [0.x](https://github.com/hackzilla/TicketBundle/tree/0.9.x)            | ^2.3       | >=5.3 |
 
 
-Demo
-----
+## Demo
+
 
 See [Ticket Bundle Demo App](https://github.com/hackzilla/TicketBundleDemoApp) for an example installation.  This can also be used for confirming bugs.
 
-Installation
-------------
+### Step 1: Installation
 
 Add HackzillaTicketBundle in your composer.json:
 
@@ -136,8 +132,8 @@ You can assign ROLE_TICKET_ADMIN to any user you want to be able to administer t
 
 ```app/console doctrine:schema:update --force```
 
-Events
-------
+## Events
+
 
 TicketBundle show fires events for creating, updating, and deleting of tickets.
 
@@ -148,8 +144,7 @@ TicketBundle show fires events for creating, updating, and deleting of tickets.
 See for example of how to create listener: http://symfony.com/doc/current/cookbook/service_container/event_listener.html
 
 
-Migrating to 2.0
-----------------
+## Migrating to 2.0
 
 Add your user class into your config.
 
@@ -162,7 +157,6 @@ hackzilla_ticket:
 
 Your user class needs to implement ```Hackzilla\Bundle\TicketBundle\Model\UserInterface```
 
-Pull Requests
--------------
+## Pull Requests
 
 I'm open to pull requests for additional languages, features and/or improvements.
