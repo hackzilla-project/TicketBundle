@@ -34,8 +34,8 @@ See [Ticket Bundle Demo App](https://github.com/hackzilla/TicketBundleDemoApp) f
 
 ## Setup
 
-[Installation with FOSUserBundle](Resources/doc/setup/fosuserbundle.md)
-[Generic Installation](Resources/doc/setup/other.md)
+* [Installation with FOSUserBundle](Resources/doc/setup/fosuserbundle.md)
+* [Generic Installation](Resources/doc/setup/other.md)
 
 
 ## Events
