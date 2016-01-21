@@ -48,7 +48,7 @@ class TicketMessageType extends AbstractType
         if (isset($options['new_ticket']) && !$options['new_ticket']) {
             $user = $this->userManager->getCurrentUser();
 
-            if ($this->userManager->hasRole($user, TicketRole::Admin)) {
+            if ($this->userManager->hasRole($user, TicketRole::ADMIN)) {
                 $builder->add(
                     'status',
                     method_exists(AbstractType::class, 'getBlockPrefix') ? StatusType::class : new StatusType(),

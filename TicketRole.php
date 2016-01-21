@@ -4,5 +4,5 @@ namespace Hackzilla\Bundle\TicketBundle;
 
 class TicketRole
 {
-    const Admin = 'ROLE_TICKET_ADMIN';
+    const ADMIN = 'ROLE_TICKET_ADMIN';
 }
