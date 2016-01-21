@@ -1,4 +1,4 @@
-Ticketing Bundle v2 [WIP]
+Ticketing Bundle v2
 ===================
 
 Currently V2 is a work in progress, please use v1.
@@ -42,9 +42,32 @@ Add HackzillaTicketBundle in your composer.json:
 ```json
 {
     "require": {
-        "hackzilla/ticket-bundle": "~1.0",
+        "hackzilla/ticket-bundle": "~2.0@dev",
         "friendsofsymfony/user-bundle": "~2.0@dev",
     }
+}
+```
+
+Specify your user class in your config, if you are using FOSUserBundle, then this will be exactly the same.
+
+```yaml
+hackzilla_ticket:
+    user_class:             AppBundle\Entity\User
+```
+
+Your user class needs to implement ```Hackzilla\Bundle\TicketBundle\Model\UserInterface```
+
+If your using FOSUserBundle then you'll end up with a class like:
+
+```php
+<?php
+
+namespace AppBundle\Entity;
+
+use FOS\UserBundle\Model\User as BaseUser;
+
+class User extends BaseUser implements \Hackzilla\Bundle\TicketBundle\Model\UserInterface
+{
 }
 ```
 
@@ -128,7 +151,16 @@ See for example of how to create listener: http://symfony.com/doc/current/cookbo
 Migrating to 2.0
 ----------------
 
+Add your user class into your config.
 
+```yaml
+hackzilla_ticket:
+    user_class:             AppBundle\Entity\User
+```
+
+```Hackzilla\Bundle\TicketBundle\User\UserInterface``` has been replaced with ```Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface```
+
+Your user class needs to implement ```Hackzilla\Bundle\TicketBundle\Model\UserInterface```
 
 Pull Requests
 -------------
