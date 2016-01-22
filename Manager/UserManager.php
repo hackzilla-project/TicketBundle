@@ -5,20 +5,16 @@ namespace Hackzilla\Bundle\TicketBundle\Manager;
 use Doctrine\ORM\EntityRepository;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class UserManager implements UserManagerInterface
 {
-    private $authorizationChecker;
     private $tokenStorage;
     private $userRepository;
 
     public function __construct(
-        AuthorizationChecker $authorizationChecker,
         TokenStorage $tokenStorage,
         EntityRepository $userRepository
     ) {
-        $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
         $this->userRepository = $userRepository;
     }
