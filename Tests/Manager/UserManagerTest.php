@@ -17,18 +17,9 @@ class UserManagerTest extends WebTestCase
         $this->tokenStorage = new TokenStorage();
 
         $this->object = new \Hackzilla\Bundle\TicketBundle\Manager\UserManager(
-            $this->getMockAuthorizationChecker(),
             $this->tokenStorage,
             $this->getMockUserRepository()
         );
-    }
-
-    private function getMockAuthorizationChecker()
-    {
-        return $this
-            ->getMockBuilder(AuthorizationChecker::class)
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 
     private function getMockUserRepository()
