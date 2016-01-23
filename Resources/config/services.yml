@@ -20,8 +20,7 @@ services:
 
     hackzilla_ticket.user_repository:
         class: Doctrine\ORM\EntityRepository
-        factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - %hackzilla_ticket.model.user.class%
 
