@@ -5,15 +5,14 @@ namespace Hackzilla\Bundle\TicketBundle\EventListener;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class UserLoad
 {
-    protected $container;
+    protected $userRepository;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct($userRepository)
     {
-        $this->container = $container;
+        $this->userRepository = $userRepository;
     }
 
     public function getSubscribedEvents()
@@ -26,18 +25,18 @@ class UserLoad
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $userManager = $this->container->get('hackzilla_ticket.user_manager');
+        $userRepository = $args->getEntityManager()->getRepository($this->userRepository);
 
         if ($entity instanceof Ticket) {
             if (\is_null($entity->getUserCreatedObject())) {
-                $entity->setUserCreated($userManager->getUserById($entity->getUserCreated()));
+                $entity->setUserCreated($userRepository->find($entity->getUserCreated()));
             }
             if (\is_null($entity->getLastUserObject())) {
-                $entity->setLastUser($userManager->getUserById($entity->getLastUser()));
+                $entity->setLastUser($userRepository->find($entity->getLastUser()));
             }
         } elseif ($entity instanceof TicketMessage) {
             if (\is_null($entity->getUserObject())) {
-                $entity->setUser($userManager->getUserById($entity->getUser()));
+                $entity->setUser($userRepository->find($entity->getUser()));
             }
         }
     }

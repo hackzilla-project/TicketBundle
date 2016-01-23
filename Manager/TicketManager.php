@@ -8,9 +8,12 @@ use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 
 class TicketManager implements TicketManagerInterface
 {
+    private $objectManager;
+    private $repository;
+
     public function __construct(ObjectManager $om)
     {
-        $this->ObjectManager = $om;
+        $this->objectManager = $om;
         $this->repository = $om->getRepository('HackzillaTicketBundle:Ticket');
     }
 
@@ -42,12 +45,12 @@ class TicketManager implements TicketManagerInterface
     public function updateTicket(Ticket $ticket, TicketMessage $message = null)
     {
         if (!\is_null($ticket)) {
-            $this->ObjectManager->persist($ticket);
+            $this->objectManager->persist($ticket);
         }
         if (!\is_null($message)) {
-            $this->ObjectManager->persist($message);
+            $this->objectManager->persist($message);
         }
-        $this->ObjectManager->flush();
+        $this->objectManager->flush();
 
         return $ticket;
     }
@@ -59,8 +62,8 @@ class TicketManager implements TicketManagerInterface
      */
     public function deleteTicket(Ticket $ticket)
     {
-        $this->ObjectManager->remove($ticket);
-        $this->ObjectManager->flush();
+        $this->objectManager->remove($ticket);
+        $this->objectManager->flush();
     }
 
     /**

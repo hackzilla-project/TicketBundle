@@ -62,6 +62,8 @@ hackzilla_ticket:
 
 Your user class needs to implement ```Hackzilla\Bundle\TicketBundle\Model\UserInterface```
 
+Roles are now checked against the User
+
 
 ## Pull Requests
 

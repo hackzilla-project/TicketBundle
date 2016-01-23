@@ -5,7 +5,6 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class UserManagerTest extends WebTestCase
 {
@@ -17,18 +16,9 @@ class UserManagerTest extends WebTestCase
         $this->tokenStorage = new TokenStorage();
 
         $this->object = new \Hackzilla\Bundle\TicketBundle\Manager\UserManager(
-            $this->getMockAuthorizationChecker(),
             $this->tokenStorage,
             $this->getMockUserRepository()
         );
-    }
-
-    private function getMockAuthorizationChecker()
-    {
-        return $this
-            ->getMockBuilder(AuthorizationChecker::class)
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 
     private function getMockUserRepository()

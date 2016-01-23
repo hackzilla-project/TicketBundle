@@ -62,25 +62,25 @@
 
     {% if form is defined %}
         <div class="well well-sm">
-            <form action="{{ path('hackzilla_ticket_reply', {id: ticket.id}) }}" method="post" {{ form_enctype(form) }}>
-                {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form} %}
+            {{ form_start(form, {'method': 'POST', 'action': path('hackzilla_ticket_reply', {'id': ticket.id})}) }}
+            {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form} %}
 
-                {{ form_rest(form) }}
+            {{ form_rest(form) }}
 
-                <p class="form_actions">
-                    <button type="submit" class="btn btn-primary">{{ 'BUTTON_UPDATE'|trans }}</button>
-                </p>
-            </form>
+            <p class="form_actions">
+                <button type="submit" class="btn btn-primary">{{ 'BUTTON_UPDATE'|trans }}</button>
+            </p>
+            {{ form_end(form) }}
         </div>
     {% endif %}
 
     {% if delete_form is defined %}
-        <form action="{{ path('hackzilla_ticket_delete', { 'id': ticket.id }) }}" method="post" class="text-right">
-            <input type="hidden" name="_method" value="DELETE"/>
-            {{ form_widget(delete_form) }}
+        {{ form_start(form, {'method': 'POST', 'action': path('hackzilla_ticket_delete', {'id': ticket.id}), 'attr': {'class': 'text-right'}}) }}
+        <input type="hidden" name="_method" value="DELETE"/>
+        {{ form_widget(delete_form) }}
 
-            <button type="submit" class="btn btn-danger">{{ 'BUTTON_DELETE'|trans }}</button>
-        </form>
+        <button type="submit" class="btn btn-danger">{{ 'BUTTON_DELETE'|trans }}</button>
+        {{ form_end(delete_form) }}
     {% endif %}
 
 {% endblock %}

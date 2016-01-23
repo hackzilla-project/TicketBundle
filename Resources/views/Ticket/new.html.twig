@@ -4,8 +4,7 @@
     <h1>{{ 'HEADING_NEW_TICKET'|trans }}</h1>
 
     <div class="well well-sm">
-        <form action="{{ path('hackzilla_ticket_create') }}" method="post" {{ form_enctype(form) }}
-              class="form-horizontal" role="form">
+        {{ form_start(form, {'method': 'POST', 'action': path('hackzilla_ticket_create')}) }}
             <div class="form-group row">
                 {{ form_label(form.subject, '', { 'label_attr': {'class': 'col-lg-2 col-md-2 col-sm-2 control-label'} }) }}
                 <div class="col-lg-8 col-md-8 col-sm-8">
@@ -26,6 +25,6 @@
                     </a>
                 </div>
             </div>
-        </form>
+        {{ form_end(form) }}
     </div>
 {% endblock %}
