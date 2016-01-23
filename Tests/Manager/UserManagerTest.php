@@ -5,7 +5,6 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class UserManagerTest extends WebTestCase
 {

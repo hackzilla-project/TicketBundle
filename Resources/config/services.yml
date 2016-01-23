@@ -1,7 +1,8 @@
 services:
     hackzilla_ticket.listener:
         class: Hackzilla\Bundle\TicketBundle\EventListener\UserLoad
-        arguments: ['@service_container']
+        arguments:
+            - %hackzilla_ticket.model.user.class%
         tags:
             - { name: doctrine.event_listener, event: postLoad }
 
