@@ -75,7 +75,7 @@
     {% endif %}
 
     {% if delete_form is defined %}
-        {{ form_start(form, {'method': 'POST', 'action': path('hackzilla_ticket_delete', {'id': ticket.id}), 'attr': {'class': 'text-right'}}) }}
+        {{ form_start(delete_form, {'method': 'POST', 'action': path('hackzilla_ticket_delete', {'id': ticket.id}), 'attr': {'class': 'text-right'}}) }}
         <input type="hidden" name="_method" value="DELETE"/>
         {{ form_widget(delete_form) }}
 
