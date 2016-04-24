@@ -2,7 +2,6 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Extension;
 
-use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserExtensionTest extends WebTestCase
@@ -19,7 +18,7 @@ class UserExtensionTest extends WebTestCase
     public function getMockUserManager()
     {
         return $this
-            ->getMockBuilder(UserManager::class)
+            ->getMockBuilder('Hackzilla\Bundle\TicketBundle\Manager\UserManager')
             ->disableOriginalConstructor()
             ->getMock();
     }

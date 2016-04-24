@@ -2,7 +2,6 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\EventListener;
 
-use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserLoadTest extends WebTestCase
@@ -19,7 +18,7 @@ class UserLoadTest extends WebTestCase
     public function getUserManagerMock()
     {
         return $this
-            ->getMockBuilder(UserManager::class)
+            ->getMockBuilder('Hackzilla\Bundle\TicketBundle\Manager\UserManager')
             ->disableOriginalConstructor()
             ->getMock();
     }

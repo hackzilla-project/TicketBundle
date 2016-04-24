@@ -2,7 +2,6 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
@@ -24,7 +23,7 @@ class UserManagerTest extends WebTestCase
     private function getMockUserRepository()
     {
         $userRepository = $this
-            ->getMockBuilder(EntityRepository::class)
+            ->getMockBuilder('Doctrine\ORM\EntityRepository')
             ->disableOriginalConstructor()
             ->getMock();
 

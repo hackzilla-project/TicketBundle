@@ -2,13 +2,10 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,7 +27,7 @@ class TicketMessageType extends AbstractType
         $builder
             ->add(
                 'message',
-                method_exists(AbstractType::class, 'getBlockPrefix') ? TextareaType::class : 'textarea',
+                method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ? 'Symfony\Component\Form\Extension\Core\Type\TextareaType' : 'textarea',
                 [
                     'label'    => 'LABEL_MESSAGE',
                     'required' => false,
@@ -38,7 +35,7 @@ class TicketMessageType extends AbstractType
             )
             ->add(
                 'priority',
-                method_exists(AbstractType::class, 'getBlockPrefix') ? PriorityType::class : new PriorityType(),
+                method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ? 'Hackzilla\Bundle\TicketBundle\Form\Type\PriorityType' : new PriorityType(),
                 [
                     'label' => 'LABEL_PRIORITY',
                 ]
@@ -51,7 +48,7 @@ class TicketMessageType extends AbstractType
             if ($this->userManager->hasRole($user, TicketRole::ADMIN)) {
                 $builder->add(
                     'status',
-                    method_exists(AbstractType::class, 'getBlockPrefix') ? StatusType::class : new StatusType(),
+                    method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ? 'Hackzilla\Bundle\TicketBundle\Form\Type\StatusType' : new StatusType(),
                     [
                         'label' => 'LABEL_STATUS',
                     ]
@@ -63,7 +60,7 @@ class TicketMessageType extends AbstractType
                     ->add(
                         $builder->create(
                             'status',
-                            method_exists(AbstractType::class, 'getBlockPrefix') ? CheckboxType::class : 'checkbox',
+                            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ? 'Symfony\Component\Form\Extension\Core\Type\CheckboxType' : 'checkbox',
                             [
                                 'label'    => 'LABEL_MARK_SOLVED',
                                 'required' => false,
@@ -79,7 +76,7 @@ class TicketMessageType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => TicketMessage::class,
+                'data_class' => 'Hackzilla\Bundle\TicketBundle\Entity\TicketMessage',
                 'new_ticket' => false,
             ]
         );

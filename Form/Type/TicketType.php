@@ -28,20 +28,20 @@ class TicketType extends AbstractType
         $builder
             ->add(
                 'subject',
-                method_exists(AbstractType::class, 'getBlockPrefix') ? TextType::class : 'text',
+                method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ? 'Symfony\Component\Form\Extension\Core\Type\TextType' : 'text',
                 [
                     'label' => 'LABEL_SUBJECT',
                 ]
             )
             ->add(
                 'messages',
-                method_exists(AbstractType::class, 'getBlockPrefix') ? CollectionType::class : 'collection',
+                method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ? 'Symfony\Component\Form\Extension\Core\Type\CollectionType' : 'collection',
                 [
-                    method_exists(AbstractType::class, 'getBlockPrefix') ? 'entry_type' : 'type'       => method_exists(
-                        AbstractType::class,
+                    method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ? 'entry_type' : 'type'       => method_exists(
+                        'Symfony\Component\Form\AbstractType',
                         'getBlockPrefix'
-                    ) ? TicketMessageType::class : new TicketMessageType($this->userManager),
-                    method_exists(AbstractType::class, 'getBlockPrefix') ? 'entry_options' : 'options' => [
+                    ) ? 'Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType' : new TicketMessageType($this->userManager),
+                    method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ? 'entry_options' : 'options' => [
                         'new_ticket' => true,
                     ],
                     'label'                                                                            => false,
@@ -54,7 +54,7 @@ class TicketType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => Ticket::class,
+                'data_class' => 'Hackzilla\Bundle\TicketBundle\Entity\Ticket',
             ]
         );
     }

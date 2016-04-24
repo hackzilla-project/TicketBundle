@@ -24,7 +24,7 @@ class StatusType extends AbstractType
 
     public function getParent()
     {
-        return method_exists(AbstractType::class, 'getBlockPrefix') ? ChoiceType::class : 'choice';
+        return method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ? 'Symfony\Component\Form\Extension\Core\Type\ChoiceType' : 'choice';
     }
 
     public function getName()
