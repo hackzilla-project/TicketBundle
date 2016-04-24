@@ -4,7 +4,6 @@ enabled:
   - align_double_arrow
   - newline_after_open_tag
   - ordered_use
-  - short_array_syntax
   - php_unit_construct
 
 disabled:
