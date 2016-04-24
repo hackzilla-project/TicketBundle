@@ -18,6 +18,13 @@ Requirements
 Installation
 ------------
 
+| Ticket Bundle                                                          | Symfony    | PHP   |
+| ---------------------------------------------------------------------- | ---------- | ----- |
+| [3.x](https://github.com/hackzilla/TicketBundle/tree/master) (master)  | ^2.7\|^3.0 | >=5.5 |
+| [2.x](https://github.com/hackzilla/TicketBundle/tree/2.x)              | ^2.7\|^3.0 | >=5.3 |
+| [1.x](https://github.com/hackzilla/TicketBundle/tree/1.x)              | ^2.3       | >=5.3 |
+| [0.x](https://github.com/hackzilla/TicketBundle/tree/0.9.x)            | ^2.3       | >=5.3 |
+
 Add HackzillaTicketBundle in your composer.json:
 
 ```json
