@@ -236,17 +236,20 @@ class TicketController extends Controller
         }
 
         $form = $this->createDeleteForm($ticket->getId());
-        $form->submit($request);
 
-        if ($form->isValid()) {
-            if (!$ticket) {
-                throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
+        if ($request->isMethod('DELETE')) {
+            $form->submit($request->request->get($form->getName()));
+
+            if ($form->isValid()) {
+                if (!$ticket) {
+                    throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
+                }
+
+                $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
+                $ticketManager->deleteTicket($ticket);
+                $event = new TicketEvent($ticket);
+                $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_DELETE, $event);
             }
-
-            $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-            $ticketManager->deleteTicket($ticket);
-            $event = new TicketEvent($ticket);
-            $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_DELETE, $event);
         }
 
         return $this->redirect($this->generateUrl('hackzilla_ticket'));
