@@ -25,7 +25,7 @@ class TicketMessageRepository extends EntityRepository
         static $statuses = false;
 
         if ($statuses === false) {
-            $statuses = [];
+            $statuses = array();
 
             foreach (TicketMessage::$statuses as $id => $value) {
                 $statuses[$id] = $translator->trans($value);
@@ -48,7 +48,7 @@ class TicketMessageRepository extends EntityRepository
         static $priorities = false;
 
         if ($priorities === false) {
-            $priorities = [];
+            $priorities = array();
 
             foreach (TicketMessage::$priorities as $id => $value) {
                 $priorities[$id] = $translator->trans($value);

@@ -73,7 +73,7 @@ class TicketMessage
     const STATUS_RESOLVED = 14;
     const STATUS_CLOSED = 15;
 
-    public static $statuses = [
+    public static $statuses = array(
         self::STATUS_INVALID               => 'STATUS_INVALID',
         self::STATUS_OPEN                  => 'STATUS_OPEN',
         self::STATUS_IN_PROGRESS           => 'STATUS_IN_PROGRESS',
@@ -81,19 +81,19 @@ class TicketMessage
         self::STATUS_ON_HOLD               => 'STATUS_ON_HOLD',
         self::STATUS_RESOLVED              => 'STATUS_RESOLVED',
         self::STATUS_CLOSED                => 'STATUS_CLOSED',
-    ];
+    );
 
     const PRIORITY_INVALID = 0;
     const PRIORITY_LOW = 20;
     const PRIORITY_MEDIUM = 21;
     const PRIORITY_HIGH = 22;
 
-    public static $priorities = [
+    public static $priorities = array(
         self::PRIORITY_INVALID => 'PRIORITY_INVALID',
         self::PRIORITY_LOW     => 'PRIORITY_LOW',
         self::PRIORITY_MEDIUM  => 'PRIORITY_MEDIUM',
         self::PRIORITY_HIGH    => 'PRIORITY_HIGH',
-    ];
+    );
 
     public function __construct()
     {

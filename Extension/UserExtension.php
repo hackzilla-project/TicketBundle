@@ -15,9 +15,9 @@ class UserExtension extends \Twig_Extension
 
     public function getFilters()
     {
-        return [
-            'isTicketAdmin' => new \Twig_SimpleFilter('isTicketAdmin', [$this, 'isTicketAdmin']),
-        ];
+        return array(
+            'isTicketAdmin' => new \Twig_SimpleFilter('isTicketAdmin', array($this, 'isTicketAdmin')),
+        );
     }
 
     public function isTicketAdmin($user, $role)
@@ -28,9 +28,9 @@ class UserExtension extends \Twig_Extension
 
         if (is_object($user)) {
             return $this->userManager->hasRole($user, $role);
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public function getName()

@@ -131,7 +131,7 @@ class TicketController extends Controller
         $userManager = $this->get('hackzilla_ticket.user_manager');
         $this->checkUserPermission($userManager->getCurrentUser(), $ticket);
 
-        $data = ['ticket' => $ticket];
+        $data = array('ticket' => $ticket);
 
         $message = new TicketMessage();
         $message->setPriority($ticket->getPriority());
@@ -141,9 +141,9 @@ class TicketController extends Controller
             $data['form'] = $this->createForm(
                 $this->formType('Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType', new TicketMessageType($userManager)),
                 $message,
-                [
+                array(
                     'new_ticket' => false,
-                ]
+                )
             )->createView();
         }
 
@@ -195,9 +195,9 @@ class TicketController extends Controller
         $form = $this->createForm(
             $this->formType('Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType', new TicketMessageType($userManager)),
             $message,
-            [
+            array(
                 'new_ticket' => false,
-            ]
+            )
         );
         $form->handleRequest($request);
 

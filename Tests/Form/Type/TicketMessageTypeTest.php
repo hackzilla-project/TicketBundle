@@ -22,21 +22,21 @@ class TicketMessageTypeTest extends TypeTestCase
     {
         $ticketMessageType = new TicketMessageType($this->user);
 
-        return [
+        return array(
             new PreloadedExtension(
-                [
+                array(
                     $ticketMessageType->getBlockPrefix() => $ticketMessageType,
-                ], []
+                ), array()
             ),
-        ];
+        );
     }
 
     public function testSubmitValidData()
     {
-        $formData = [
+        $formData = array(
             'priority' => TicketMessage::PRIORITY_HIGH,
             'message'  => null,
-        ];
+        );
 
         $data = new TicketMessage();
         $data->setPriority(TicketMessage::PRIORITY_HIGH);
@@ -44,9 +44,9 @@ class TicketMessageTypeTest extends TypeTestCase
         $form = $this->factory->create(
             method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ? 'Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType' : new TicketMessageType($this->user),
             null,
-            [
+            array(
                 'new_ticket' => true,
-            ]
+            )
         );
 
         // submit the data to the form directly

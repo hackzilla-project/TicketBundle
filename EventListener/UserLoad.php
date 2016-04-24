@@ -17,9 +17,9 @@ class UserLoad
 
     public function getSubscribedEvents()
     {
-        return [
+        return array(
             'postLoad',
-        ];
+        );
     }
 
     public function postLoad(LifecycleEventArgs $args)

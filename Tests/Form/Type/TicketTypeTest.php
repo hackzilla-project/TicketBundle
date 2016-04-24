@@ -23,19 +23,19 @@ class TicketTypeTest extends TypeTestCase
         $ticketType = new TicketType($this->user);
         $ticketMessageType = new TicketMessageType($this->user);
 
-        return [
+        return array(
             new PreloadedExtension(
-                [
+                array(
                     $ticketType->getBlockPrefix()        => $ticketType,
                     $ticketMessageType->getBlockPrefix() => $ticketMessageType,
-                ], []
+                ), array()
             ),
-        ];
+        );
     }
 
     public function testSubmitValidData()
     {
-        $formData = [];
+        $formData = array();
 
         $data = new \Hackzilla\Bundle\TicketBundle\Entity\Ticket();
 
