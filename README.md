@@ -1,7 +1,5 @@
 # Ticketing Bundle v2
 
-Currently V2 is a work in progress, please use v1.
-
 Simple multilingual ticketing bundle to add to any project.
 Languages: English, French, Russian, German and Spanish.
 
@@ -11,7 +9,7 @@ Languages: English, French, Russian, German and Spanish.
 
 ## Requirements
 
-* PHP >= 5.5
+* PHP >= 5.3.2
 * Symfony ~2.7|~3.0
 * FOSUserBundle
 * Knp Paginator
