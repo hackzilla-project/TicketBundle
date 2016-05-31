@@ -41,7 +41,7 @@
         <tr>
             <th class="col-xs-1">{{ knp_pagination_sortable(pagination, 'HEADING_TICKET'|trans, 't.id') }}</th>
             <th{% if pagination.isSorted('t.subject') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_SUBJECT'|trans, 't.subject') }}</th>
-            <th{% if pagination.isSorted('t.userCreated') %} class="sorted {{ direction }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_AUTHOR'|trans, 't.userCreated') }}</th>
+            <th{% if pagination.isSorted('t.userCreated') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_AUTHOR'|trans, 't.userCreated') }}</th>
             <th{% if pagination.isSorted('t.status') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_STATUS'|trans, 't.status') }}</th>
             <th{% if pagination.isSorted('t.priority') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_PRIORITY'|trans, 't.priority') }}</th>
             <th{% if pagination.isSorted('t.modified') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_MODIFIED'|trans, 't.lastMessage') }}</th>
