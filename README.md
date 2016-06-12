@@ -9,7 +9,7 @@ Languages: English, French, Russian, German and Spanish.
 
 ## Requirements
 
-* PHP >= 5.3.2
+* PHP >= 5.4 (5.3 will probably work but untested)
 * Symfony ~2.7|~3.0
 * FOSUserBundle
 * Knp Paginator
