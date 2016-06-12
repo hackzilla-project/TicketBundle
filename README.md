@@ -1,6 +1,6 @@
-# Ticketing Bundle v2
+# Ticketing Bundle v3
 
-Currently V2 is a work in progress, please use v1.
+Currently v3 is a work in progress, please use v2.
 
 Simple multilingual ticketing bundle to add to any project.
 Languages: English, French, Russian, German and Spanish.
@@ -50,7 +50,27 @@ TicketBundle show fires events for creating, updating, and deleting of tickets.
 See for example of how to create listener: http://symfony.com/doc/current/cookbook/service_container/event_listener.html
 
 
-## Migrating to 2.0
+## Migration from v2 to v3
+
+Add your user, ticket and ticket message entities into your config.
+
+```yaml
+hackzilla_ticket:
+    user_class:             AppBundle\Entity\User
+    ticket_class:             AppBundle\Entity\Ticket
+    message_class:             AppBundle\Entity\Message
+```
+
+Your entities  needs to implement:
+
+| Entity | Interface |
+|--------|-------|
+| User | ```Hackzilla\Bundle\TicketBundle\Model\UserInterface``` |
+| Ticket | ```Hackzilla\Bundle\TicketBundle\Model\MessageInterface``` |
+| Message | ```Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface``` |
+
+
+## Migrating from v1 to v2
 
 Add your user class into your config.
 
