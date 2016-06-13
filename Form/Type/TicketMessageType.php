@@ -30,7 +30,7 @@ class TicketMessageType extends AbstractType
         $builder
             ->add(
                 'message',
-                method_exists(AbstractType::class, 'getBlockPrefix') ? TextareaType::class : 'textarea',
+                TextareaType::class,
                 [
                     'label'    => 'LABEL_MESSAGE',
                     'required' => false,
@@ -38,7 +38,7 @@ class TicketMessageType extends AbstractType
             )
             ->add(
                 'priority',
-                method_exists(AbstractType::class, 'getBlockPrefix') ? PriorityType::class : new PriorityType(),
+                PriorityType::class,
                 [
                     'label' => 'LABEL_PRIORITY',
                 ]
@@ -51,7 +51,7 @@ class TicketMessageType extends AbstractType
             if ($this->userManager->hasRole($user, TicketRole::ADMIN)) {
                 $builder->add(
                     'status',
-                    method_exists(AbstractType::class, 'getBlockPrefix') ? StatusType::class : new StatusType(),
+                    StatusType::class,
                     [
                         'label' => 'LABEL_STATUS',
                     ]
@@ -63,7 +63,7 @@ class TicketMessageType extends AbstractType
                     ->add(
                         $builder->create(
                             'status',
-                            method_exists(AbstractType::class, 'getBlockPrefix') ? CheckboxType::class : 'checkbox',
+                            CheckboxType::class,
                             [
                                 'label'    => 'LABEL_MARK_SOLVED',
                                 'required' => false,
@@ -83,11 +83,6 @@ class TicketMessageType extends AbstractType
                 'new_ticket' => false,
             ]
         );
-    }
-
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 
     public function getBlockPrefix()

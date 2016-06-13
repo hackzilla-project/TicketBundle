@@ -2,7 +2,6 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,12 +24,7 @@ class PriorityType extends AbstractType
 
     public function getParent()
     {
-        return method_exists(AbstractType::class, 'getBlockPrefix') ? ChoiceType::class : 'choice';
-    }
-
-    public function getName()
-    {
-        return $this->getBlockPrefix();
+        return ChoiceType::class;
     }
 
     public function getBlockPrefix()
