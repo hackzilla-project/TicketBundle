@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Ticket.
  *
  * @ORM\Table(name="ticket")
- * @ORM\Entity(repositoryClass="Hackzilla\Bundle\TicketBundle\Entity\TicketRepository")
+ * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks
  */
 class Ticket implements TicketInterface
