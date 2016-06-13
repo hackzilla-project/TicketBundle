@@ -3,46 +3,56 @@
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\Bundle\TicketBundle\TicketRole;
 
 class TicketManager implements TicketManagerInterface
 {
     private $objectManager;
     private $repository;
+    private $ticketClass;
+    private $ticketMessageClass;
 
-    public function __construct(ObjectManager $om)
+    public function __construct(ObjectManager $om, $ticketClass, $ticketMessageClass)
     {
         $this->objectManager = $om;
-        $this->repository = $om->getRepository('HackzillaTicketBundle:Ticket');
+        $this->repository = $om->getRepository($ticketClass);
+        $this->ticketClass = $ticketClass;
+        $this->ticketMessageClass = $ticketMessageClass;
     }
 
     /**
      * Create a new instance of Ticket entity.
+     *
+     * @return TicketInterface
      */
     public function createTicket()
     {
-        return new Ticket();
+        return new $this->ticketClass();
     }
 
     /**
      * Create a new instance of TicketMessage Entity.
+     *
+     * @return TicketMessageInterface
      */
     public function createMessage()
     {
-        return new TicketMessage();
+        return new $this->ticketMessageClass();
     }
 
     /**
      * Update or Create a Ticket in the database
      * Update or Create a TicketMessage in the database.
      *
-     * @param Ticket        $ticket
-     * @param TicketMessage $message
+     * @param TicketInterface        $ticket
+     * @param TicketMessageInterface $message
      *
-     * @return Ticket
+     * @return TicketInterface
      */
-    public function updateTicket(Ticket $ticket, TicketMessage $message = null)
+    public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null)
     {
         if (!\is_null($ticket)) {
             $this->objectManager->persist($ticket);
@@ -58,9 +68,11 @@ class TicketManager implements TicketManagerInterface
     /**
      * Delete a ticket from the database.
      *
-     * @param Ticket $ticket
+     * @param TicketInterface $ticket
+     *
+     * @return void
      */
-    public function deleteTicket(Ticket $ticket)
+    public function deleteTicket(TicketInterface $ticket)
     {
         $this->objectManager->remove($ticket);
         $this->objectManager->flush();
@@ -69,7 +81,7 @@ class TicketManager implements TicketManagerInterface
     /**
      * Find all tickets in the database.
      *
-     * @return array|\Hackzilla\Bundle\TicketBundle\Entity\Ticket[]
+     * @return array|TicketInterface[]
      */
     public function findTickets()
     {
@@ -81,10 +93,127 @@ class TicketManager implements TicketManagerInterface
      *
      * @param array $criteria
      *
-     * @return array|\Hackzilla\Bundle\TicketBundle\Entity\Ticket[]
+     * @return array|TicketInterface[]
      */
     public function findTicketsBy(array $criteria)
     {
         return $this->repository->findBy($criteria);
+    }
+
+    /**
+     * @param UserManagerInterface $userManager
+     * @param int                  $ticketStatus
+     * @param int                  $ticketPriority
+     *
+     * @return mixed
+     */
+    public function getTicketList(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
+    {
+        $query = $this->repository->createQueryBuilder('t')
+//            ->select($this->ticketClass.' t')
+            ->orderBy('t.lastMessage', 'DESC');
+
+        switch ($ticketStatus) {
+            case TicketMessage::STATUS_CLOSED:
+                $query
+                    ->andWhere('t.status = :status')
+                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED);
+                break;
+
+            case TicketMessage::STATUS_OPEN:
+            default:
+                $query
+                    ->andWhere('t.status != :status')
+                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED);
+        }
+
+        if ($ticketPriority) {
+            $query
+                ->andWhere('t.priority = :priority')
+                ->setParameter('priority', $ticketPriority);
+        }
+
+        $user = $userManager->getCurrentUser();
+
+        if (\is_object($user)) {
+            if (!$userManager->hasRole($user, TicketRole::ADMIN)) {
+                $query
+                    ->andWhere('t.userCreated = :userId')
+                    ->setParameter('userId', $user->getId());
+            }
+        } else {
+            // anonymous user
+            $query
+                ->andWhere('t.userCreated = :userId')
+                ->setParameter('userId', 0);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param int $days
+     *
+     * @return mixed
+     */
+    public function getResolvedTicketOlderThan($days)
+    {
+        $closeBeforeDate = new \DateTime();
+        $closeBeforeDate->sub(new \DateInterval('P'.$days.'D'));
+
+        $query = $this->repository->createQueryBuilder('t')
+//            ->select($this->ticketClass.' t')
+            ->where('t.status = :status')
+            ->andWhere('t.lastMessage < :closeBeforeDate')
+            ->setParameter('status', TicketMessageInterface::STATUS_RESOLVED)
+            ->setParameter('closeBeforeDate', $closeBeforeDate);
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Lookup status code.
+     *
+     * @param object $translator
+     * @param string $statusStr
+     *
+     * @return int
+     */
+    public function getTicketStatus($translator, $statusStr)
+    {
+        static $statuses = false;
+
+        if ($statuses === false) {
+            $statuses = [];
+
+            foreach (TicketMessageInterface::STATUSES as $id => $value) {
+                $statuses[$id] = $translator->trans($value);
+            }
+        }
+
+        return \array_search($statusStr, $statuses);
+    }
+
+    /**
+     * Lookup priority code.
+     *
+     * @param object $translator
+     * @param string $priorityStr
+     *
+     * @return int
+     */
+    public function getTicketPriority($translator, $priorityStr)
+    {
+        static $priorities = false;
+
+        if ($priorities === false) {
+            $priorities = [];
+
+            foreach (TicketMessageInterface::PRIORITIES as $id => $value) {
+                $priorities[$id] = $translator->trans($value);
+            }
+        }
+
+        return \array_search($priorityStr, $priorities);
     }
 }
