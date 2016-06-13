@@ -12,7 +12,7 @@ Languages: English, French, Russian, German and Spanish.
 ## Requirements
 
 * PHP >= 5.5
-* Symfony ~2.7|~3.0
+* Symfony ~2.8|~3.0
 * FOSUserBundle
 * Knp Paginator
 * Bootstrap v3 (optional) see: http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme
@@ -22,7 +22,7 @@ Languages: English, French, Russian, German and Spanish.
 
 | Ticket Bundle                                                          | Symfony    | PHP   |
 | ---------------------------------------------------------------------- | ---------- | ----- |
-| [3.x](https://github.com/hackzilla/TicketBundle/tree/master) (master)  | ^2.7\|^3.0 | >=5.5 |
+| [3.x](https://github.com/hackzilla/TicketBundle/tree/master) (master)  | ^2.8\|^3.0 | >=5.5 |
 | [2.x](https://github.com/hackzilla/TicketBundle/tree/2.x)              | ^2.7\|^3.0 | >=5.3 |
 | [1.x](https://github.com/hackzilla/TicketBundle/tree/1.x)              | ^2.3       | >=5.3 |
 | [0.x](https://github.com/hackzilla/TicketBundle/tree/0.9.x)            | ^2.3       | >=5.3 |
