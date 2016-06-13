@@ -3,6 +3,7 @@
 namespace Hackzilla\Bundle\TicketBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 
 /**
  * TicketMessageRepository.
@@ -27,7 +28,7 @@ class TicketMessageRepository extends EntityRepository
         if ($statuses === false) {
             $statuses = [];
 
-            foreach (TicketMessage::$statuses as $id => $value) {
+            foreach (TicketMessageInterface::STATUSES as $id => $value) {
                 $statuses[$id] = $translator->trans($value);
             }
         }
@@ -50,7 +51,7 @@ class TicketMessageRepository extends EntityRepository
         if ($priorities === false) {
             $priorities = [];
 
-            foreach (TicketMessage::$priorities as $id => $value) {
+            foreach (TicketMessageInterface::PRIORITIES as $id => $value) {
                 $priorities[$id] = $translator->trans($value);
             }
         }

@@ -4,6 +4,9 @@ namespace Hackzilla\Bundle\TicketBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Hackzilla\Bundle\TicketBundle\Entity\TicketRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Ticket
+class Ticket implements TicketInterface
 {
     /**
      * @var int
@@ -99,24 +102,32 @@ class Ticket
      * Set status.
      *
      * @param int $status
+     *
+     * @return $this
      */
     public function setStatus($status)
     {
         $this->status = $status;
+
+        return $this;
     }
 
     /**
      * Set status string.
      *
      * @param string $status
+     *
+     * @return $this
      */
     public function setStatusString($status)
     {
-        $status = \array_search(\strtolower($status), TicketMessage::$statuses);
+        $status = \array_search(\strtolower($status), TicketMessageInterface::STATUSES);
 
         if ($status > 0) {
             $this->setStatus($status);
         }
+
+        return $this;
     }
 
     /**
@@ -136,35 +147,43 @@ class Ticket
      */
     public function getStatusString()
     {
-        if (isset(TicketMessage::$statuses[$this->status])) {
-            return TicketMessage::$statuses[$this->status];
+        if (in_array($this->status, TicketMessageInterface::STATUSES)) {
+            return TicketMessageInterface::STATUSES[$this->status];
         }
 
-        return TicketMessage::$statuses[0];
+        return TicketMessageInterface::STATUSES[0];
     }
 
     /**
      * Set priority.
      *
      * @param int $priority
+     *
+     * @return $this
      */
     public function setPriority($priority)
     {
         $this->priority = $priority;
+
+        return $this;
     }
 
     /**
      * Set priority string.
      *
      * @param string $priority
+     *
+     * @return $this
      */
     public function setPriorityString($priority)
     {
-        $priority = \array_search(\strtolower($priority), TicketMessage::$priorities);
+        $priority = \array_search(\strtolower($priority), TicketMessageInterface::PRIORITIES);
 
         if ($priority > 0) {
             $this->setPriority($priority);
         }
+
+        return $this;
     }
 
     /**
@@ -184,11 +203,11 @@ class Ticket
      */
     public function getPriorityString()
     {
-        if (isset(TicketMessage::$priorities[$this->priority])) {
-            return TicketMessage::$priorities[$this->priority];
+        if (in_array($this->priority, TicketMessageInterface::PRIORITIES)) {
+            return TicketMessageInterface::PRIORITIES[$this->priority];
         }
 
-        return TicketMessage::$priorities[0];
+        return TicketMessageInterface::PRIORITIES[0];
     }
 
     /**
@@ -196,7 +215,7 @@ class Ticket
      *
      * @param int|object $userCreated
      *
-     * @return Ticket
+     * @return $this
      */
     public function setUserCreated($userCreated)
     {
@@ -236,7 +255,7 @@ class Ticket
      *
      * @param int|object $lastUser
      *
-     * @return Ticket
+     * @return $this
      */
     public function setLastUser($lastUser)
     {
@@ -264,7 +283,7 @@ class Ticket
     /**
      * Get lastUser object.
      *
-     * @return object
+     * @return UserInterface
      */
     public function getLastUserObject()
     {
@@ -276,7 +295,7 @@ class Ticket
      *
      * @param \DateTime $lastMessage
      *
-     * @return Ticket
+     * @return $this
      */
     public function setLastMessage($lastMessage)
     {
@@ -300,7 +319,7 @@ class Ticket
      *
      * @param \DateTime $createdAt
      *
-     * @return Ticket
+     * @return $this
      */
     public function setCreatedAt($createdAt)
     {
@@ -324,7 +343,7 @@ class Ticket
      *
      * @param string $subject
      *
-     * @return Ticket
+     * @return $this
      */
     public function setSubject($subject)
     {
@@ -344,27 +363,31 @@ class Ticket
     }
 
     /**
-     * Add messages.
+     * Add message.
      *
-     * @param TicketMessage $messages
+     * @param TicketMessageInterface $message
      *
-     * @return Ticket
+     * @return $this
      */
-    public function addMessage(TicketMessage $messages)
+    public function addMessage(TicketMessageInterface $message)
     {
-        $this->messages[] = $messages;
+        $this->messages[] = $message;
 
         return $this;
     }
 
     /**
-     * Remove messages.
+     * Remove message.
      *
-     * @param TicketMessage $messages
+     * @param TicketMessageInterface $message
+     *
+     * @return $this
      */
-    public function removeMessage(TicketMessage $messages)
+    public function removeMessage(TicketMessageInterface $message)
     {
-        $this->messages->removeElement($messages);
+        $this->messages->removeElement($message);
+
+        return $this;
     }
 
     /**
