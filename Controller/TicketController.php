@@ -7,10 +7,10 @@ use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketEvents;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -29,19 +29,16 @@ class TicketController extends Controller
     public function indexAction(Request $request)
     {
         $userManager = $this->get('hackzilla_ticket.user_manager');
+        $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
         $translator = $this->get('translator');
 
         $ticketState = $request->get('state', $translator->trans('STATUS_OPEN'));
         $ticketPriority = $request->get('priority', null);
 
-        $repositoryTicket = $this->getDoctrine()->getRepository('HackzillaTicketBundle:Ticket');
-
-        $repositoryTicketMessage = $this->getDoctrine()->getRepository('HackzillaTicketBundle:TicketMessage');
-
-        $query = $repositoryTicket->getTicketList(
+        $query = $ticketManager->getTicketList(
             $userManager,
-            $repositoryTicketMessage->getTicketStatus($translator, $ticketState),
-            $repositoryTicketMessage->getTicketPriority($translator, $ticketPriority)
+            $ticketManager->getTicketStatus($translator, $ticketState),
+            $ticketManager->getTicketPriority($translator, $ticketPriority)
         );
 
         $paginator = $this->get('knp_paginator');
@@ -74,12 +71,12 @@ class TicketController extends Controller
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
         $ticket = $ticketManager->createTicket();
-        $form = $this->createForm($this->formType(TicketType::class, new TicketType($userManager)), $ticket);
+        $form = $this->createForm(TicketType::class, $ticket);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $message = $ticket->getMessages()->current();
-            $message->setStatus(TicketMessage::STATUS_OPEN)
+            $message->setStatus(TicketMessageInterface::STATUS_OPEN)
                 ->setUser($userManager->getCurrentUser())
                 ->setTicket($ticket);
 
@@ -107,7 +104,7 @@ class TicketController extends Controller
     {
         $entity = new Ticket();
         $userManager = $this->get('hackzilla_ticket.user_manager');
-        $form = $this->createForm($this->formType(TicketType::class, new TicketType($userManager)), $entity);
+        $form = $this->createForm(TicketType::class, $entity);
 
         return $this->render(
             'HackzillaTicketBundle:Ticket:new.html.twig',
@@ -139,9 +136,9 @@ class TicketController extends Controller
         $message->setPriority($ticket->getPriority());
         $message->setStatus($ticket->getStatus());
 
-        if (TicketMessage::STATUS_CLOSED != $ticket->getStatus()) {
+        if (TicketMessageInterface::STATUS_CLOSED != $ticket->getStatus()) {
             $data['form'] = $this->createForm(
-                $this->formType(TicketMessageType::class, new TicketMessageType($userManager)),
+                TicketMessageType::class,
                 $message,
                 [
                     'new_ticket' => false,
@@ -195,7 +192,7 @@ class TicketController extends Controller
         $message->setPriority($ticket->getPriority());
 
         $form = $this->createForm(
-            $this->formType(TicketMessageType::class, new TicketMessageType($userManager)),
+            TicketMessageType::class,
             $message,
             [
                 'new_ticket' => false,
@@ -265,13 +262,8 @@ class TicketController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
-            ->add('id', $this->formType(HiddenType::class, 'hidden'))
+            ->add('id', HiddenType::class)
             ->getForm()
         ;
-    }
-
-    private function formType($class, $type)
-    {
-        return method_exists(AbstractType::class, 'getBlockPrefix') ? $class : $type;
     }
 }
