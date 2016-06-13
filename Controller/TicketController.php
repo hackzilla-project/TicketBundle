@@ -103,7 +103,6 @@ class TicketController extends Controller
     public function newAction()
     {
         $entity = new Ticket();
-        $userManager = $this->get('hackzilla_ticket.user_manager');
         $form = $this->createForm(TicketType::class, $entity);
 
         return $this->render(

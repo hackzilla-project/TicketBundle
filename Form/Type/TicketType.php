@@ -12,13 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TicketType extends AbstractType
 {
-    private $userManager;
-
-    public function __construct(UserManagerInterface $userManager)
-    {
-        $this->userManager = $userManager;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
