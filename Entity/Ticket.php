@@ -147,7 +147,7 @@ class Ticket implements TicketInterface
      */
     public function getStatusString()
     {
-        if (in_array($this->status, TicketMessageInterface::STATUSES)) {
+        if (array_key_exists($this->status, TicketMessageInterface::STATUSES)) {
             return TicketMessageInterface::STATUSES[$this->status];
         }
 
@@ -203,7 +203,7 @@ class Ticket implements TicketInterface
      */
     public function getPriorityString()
     {
-        if (in_array($this->priority, TicketMessageInterface::PRIORITIES)) {
+        if (array_key_exists($this->priority, TicketMessageInterface::PRIORITIES)) {
             return TicketMessageInterface::PRIORITIES[$this->priority];
         }
 
