@@ -159,6 +159,7 @@ interface TicketInterface
      * @return $this
      */
     public function setSubject($subject);
+
     /**
      * Get ticket subject.
      *
