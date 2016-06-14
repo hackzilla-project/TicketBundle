@@ -68,7 +68,7 @@ class TicketMessage implements TicketMessageInterface
      */
     protected $createdAt;
 
-    
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());

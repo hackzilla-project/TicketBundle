@@ -15,6 +15,13 @@ class TicketManager implements TicketManagerInterface
     private $ticketClass;
     private $ticketMessageClass;
 
+    /**
+     * TicketManager constructor.
+     *
+     * @param ObjectManager $om
+     * @param string        $ticketClass
+     * @param string        $ticketMessageClass
+     */
     public function __construct(ObjectManager $om, $ticketClass, $ticketMessageClass)
     {
         $this->objectManager = $om;
@@ -68,9 +75,7 @@ class TicketManager implements TicketManagerInterface
     /**
      * Delete a ticket from the database.
      *
-     * @param TicketInterface $ticket
-     *
-     * @return void
+     * @param TicketInterface $ticket*
      */
     public function deleteTicket(TicketInterface $ticket)
     {

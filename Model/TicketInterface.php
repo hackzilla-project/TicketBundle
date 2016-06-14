@@ -2,8 +2,6 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
-
-
 interface TicketInterface
 {
     /**

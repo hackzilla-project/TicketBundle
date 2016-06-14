@@ -146,7 +146,6 @@ interface TicketMessageInterface
      */
     public function getTicket();
 
-
     const STATUS_INVALID = 0;
     const STATUS_OPEN = 10;
     const STATUS_IN_PROGRESS = 11;
@@ -176,5 +175,4 @@ interface TicketMessageInterface
         self::PRIORITY_MEDIUM  => 'PRIORITY_MEDIUM',
         self::PRIORITY_HIGH    => 'PRIORITY_HIGH',
     ];
-
 }
