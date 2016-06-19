@@ -69,7 +69,7 @@ Your entities  needs to implement:
 | Ticket | ```Hackzilla\Bundle\TicketBundle\Model\MessageInterface``` |
 | Message | ```Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface``` |
 
-Any reference to TicketMessage consts will need to use TicketMessageInterface.
+Any reference to TicketMessage constants will need to use TicketMessageInterface.
 
 
 ## Migrating from v1 to v2
