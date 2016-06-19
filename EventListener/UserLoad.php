@@ -25,6 +25,12 @@ class UserLoad
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
+        // Ignore any entity lifecycle events not relating to this bundles entities.
+        if (!$entity instanceof Ticket && !$entity instanceof TicketMessage) {
+            return;
+        }
+
         $userRepository = $args->getEntityManager()->getRepository($this->userRepository);
 
         if ($entity instanceof Ticket) {

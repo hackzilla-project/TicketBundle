@@ -21,6 +21,8 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->root('hackzilla_ticket')
             ->children()
                 ->scalarNode('user_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('ticket_class')->cannotBeEmpty()->defaultValue('Hackzilla\Bundle\TicketBundle\Entity\Ticket')->end()
+                ->scalarNode('message_class')->cannotBeEmpty()->defaultValue('Hackzilla\Bundle\TicketBundle\Entity\TicketMessage')->end()
             ->end()
         ;
 

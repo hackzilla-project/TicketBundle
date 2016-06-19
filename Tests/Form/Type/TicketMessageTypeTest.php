@@ -5,7 +5,6 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 
@@ -15,7 +14,7 @@ class TicketMessageTypeTest extends TypeTestCase
 
     protected function setUp()
     {
-        $this->user = $this->getMock(UserManagerInterface::class);
+        $this->user = $this->createMock(UserManagerInterface::class);
 
         parent::setUp();
     }
@@ -43,8 +42,7 @@ class TicketMessageTypeTest extends TypeTestCase
         $data = new TicketMessage();
         $data->setPriority(TicketMessage::PRIORITY_HIGH);
 
-        $form = $this->factory->create(
-            method_exists(AbstractType::class, 'getBlockPrefix') ? TicketMessageType::class : new TicketMessageType($this->user),
+        $form = $this->factory->create(TicketMessageType::class,
             null,
             [
                 'new_ticket' => true,

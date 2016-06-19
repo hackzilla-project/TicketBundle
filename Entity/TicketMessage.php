@@ -3,6 +3,9 @@
 namespace Hackzilla\Bundle\TicketBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -11,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="ticket_message")
  * @ORM\Entity(repositoryClass="Hackzilla\Bundle\TicketBundle\Entity\TicketMessageRepository")
  */
-class TicketMessage
+class TicketMessage implements TicketMessageInterface
 {
     /**
      * @var int
@@ -65,36 +68,6 @@ class TicketMessage
      */
     protected $createdAt;
 
-    const STATUS_INVALID = 0;
-    const STATUS_OPEN = 10;
-    const STATUS_IN_PROGRESS = 11;
-    const STATUS_INFORMATION_REQUESTED = 12;
-    const STATUS_ON_HOLD = 13;
-    const STATUS_RESOLVED = 14;
-    const STATUS_CLOSED = 15;
-
-    public static $statuses = [
-        self::STATUS_INVALID               => 'STATUS_INVALID',
-        self::STATUS_OPEN                  => 'STATUS_OPEN',
-        self::STATUS_IN_PROGRESS           => 'STATUS_IN_PROGRESS',
-        self::STATUS_INFORMATION_REQUESTED => 'STATUS_INFORMATION_REQUESTED',
-        self::STATUS_ON_HOLD               => 'STATUS_ON_HOLD',
-        self::STATUS_RESOLVED              => 'STATUS_RESOLVED',
-        self::STATUS_CLOSED                => 'STATUS_CLOSED',
-    ];
-
-    const PRIORITY_INVALID = 0;
-    const PRIORITY_LOW = 20;
-    const PRIORITY_MEDIUM = 21;
-    const PRIORITY_HIGH = 22;
-
-    public static $priorities = [
-        self::PRIORITY_INVALID => 'PRIORITY_INVALID',
-        self::PRIORITY_LOW     => 'PRIORITY_LOW',
-        self::PRIORITY_MEDIUM  => 'PRIORITY_MEDIUM',
-        self::PRIORITY_HIGH    => 'PRIORITY_HIGH',
-    ];
-
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
@@ -133,7 +106,7 @@ class TicketMessage
      */
     public function setStatusString($status)
     {
-        $status = \array_search(\strtolower($status), self::$statuses);
+        $status = \array_search(\strtolower($status), TicketMessageInterface::STATUSES);
 
         if ($status > 0) {
             $this->setStatus($status);
@@ -159,11 +132,11 @@ class TicketMessage
      */
     public function getStatusString()
     {
-        if (isset(self::$statuses[$this->status])) {
-            return self::$statuses[$this->status];
+        if (in_array($this->status, TicketMessageInterface::STATUSES)) {
+            return TicketMessageInterface::STATUSES[$this->status];
         }
 
-        return self::$statuses[0];
+        return TicketMessageInterface::STATUSES[0];
     }
 
     /**
@@ -189,7 +162,7 @@ class TicketMessage
      */
     public function setPriorityString($priority)
     {
-        $priority = \array_search(\strtolower($priority), self::$priorities);
+        $priority = \array_search(\strtolower($priority), TicketMessageInterface::PRIORITIES);
 
         if ($priority > 0) {
             $this->setPriority($priority);
@@ -215,17 +188,17 @@ class TicketMessage
      */
     public function getPriorityString()
     {
-        if (isset(self::$priorities[$this->priority])) {
-            return self::$priorities[$this->priority];
+        if (in_array($this->priority, TicketMessageInterface::PRIORITIES)) {
+            return TicketMessageInterface::PRIORITIES[$this->priority];
         }
 
-        return self::$priorities[0];
+        return TicketMessageInterface::PRIORITIES[0];
     }
 
     /**
      * Set user.
      *
-     * @param int|object $user
+     * @param int|UserInterface $user
      *
      * @return $this
      */
@@ -255,7 +228,7 @@ class TicketMessage
     /**
      * Get user object.
      *
-     * @return object
+     * @return UserInterface
      */
     public function getUserObject()
     {
@@ -313,11 +286,11 @@ class TicketMessage
     /**
      * Set ticket.
      *
-     * @param \Hackzilla\Bundle\TicketBundle\Entity\Ticket $ticket
+     * @param TicketInterface $ticket
      *
      * @return $this
      */
-    public function setTicket(Ticket $ticket = null)
+    public function setTicket(TicketInterface $ticket = null)
     {
         $this->ticket = $ticket;
 
@@ -349,7 +322,7 @@ class TicketMessage
     /**
      * Get ticket.
      *
-     * @return Ticket
+     * @return TicketInterface
      */
     public function getTicket()
     {

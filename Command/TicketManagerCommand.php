@@ -46,20 +46,19 @@ class TicketManagerCommand extends ContainerAwareCommand
     {
         $userManager = $this->getContainer()->get('fos_user.user_manager');
 
-        $ticketmanager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
+        $ticketManager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
 
-        $ticket = $ticketmanager->createTicket();
-        $ticket->setSubject($input->getArgument('subject'));
+        $ticket = $ticketManager->createTicket()
+            ->setSubject($input->getArgument('subject'));
 
-        $message = $ticketmanager->createMessage();
-
-        $message->setMessage($input->getArgument('message'))
+        $message = $ticketManager->createMessage()
+            ->setMessage($input->getArgument('message'))
             ->setStatus(TicketMessage::STATUS_OPEN)
             ->setPriority($input->getOption('priority'))
             ->setUser($userManager->findUserByUsername('system'))
             ->setTicket($ticket);
 
-        $ticketmanager->updateTicket($ticket, $message);
+        $ticketManager->updateTicket($ticket, $message);
 
         $output->writeln(
             "Ticket with subject '".$ticket->getSubject()."' has been created with ticketnumber #".$ticket->getId().''

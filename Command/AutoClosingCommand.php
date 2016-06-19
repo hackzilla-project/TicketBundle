@@ -52,14 +52,15 @@ class AutoClosingCommand extends ContainerAwareCommand
         $resolved_tickets = $ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));
 
         foreach ($resolved_tickets as $ticket) {
-            $message = $ticket_manager->createMessage();
-            $message->setMessage(
-                $translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $translator->trans('STATUS_CLOSED')])
-            )
+            $message = $ticket_manager->createMessage()
+                ->setMessage(
+                    $translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $translator->trans('STATUS_CLOSED')])
+                )
                 ->setStatus(TicketMessage::STATUS_CLOSED)
                 ->setPriority($ticket->getPriority())
                 ->setUser($userManager->findUserByUsername($username))
                 ->setTicket($ticket);
+
             $ticket->setStatus(TicketMessage::STATUS_CLOSED);
             $ticket_manager->updateTicket($ticket, $message);
 
