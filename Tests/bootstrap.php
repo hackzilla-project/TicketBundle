@@ -1,6 +1,6 @@
 <?php
 
-putenv("SYMFONY_DEPRECATIONS_HELPER=weak");
+putenv('SYMFONY_DEPRECATIONS_HELPER=weak');
 
 if (is_file('vendor/autoload.php')) {
     include 'vendor/autoload.php';
