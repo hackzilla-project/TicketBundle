@@ -16,10 +16,8 @@ matrix:
   include:
     - php: 5.6
       env: CS_FIXER=run
-    - php: 5.5
-      env: COMPOSER_FLAGS="--prefer-lowest"
     - php: 5.6
-      env: SYMFONY_VERSION=2.7.*
+      env: COMPOSER_FLAGS="--prefer-lowest"
     - php: 5.6
       env: SYMFONY_VERSION=2.8.*
     - php: 5.6
