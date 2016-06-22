@@ -3,7 +3,6 @@
 namespace Hackzilla\Bundle\TicketBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
@@ -11,74 +10,51 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Ticket.
- *
- * @ORM\Table(name="ticket")
- * @ORM\Entity()
- * @ORM\HasLifecycleCallbacks
  */
 class Ticket implements TicketInterface
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="user_created_id", type="integer")
      */
     protected $userCreated;
     protected $userCreatedObject;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="last_user_id", type="integer")
      */
     protected $lastUser;
     protected $lastUserObject;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="last_message", type="datetime")
      */
     protected $lastMessage;
 
     /**
-     * @ORM\Column(name="subject", type="string", length=255)
      * @Assert\NotBlank()
      */
     protected $subject;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="status", type="smallint")
      */
     protected $status;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="priority", type="smallint")
      */
     protected $priority;
 
-    /**
-     * @ORM\OneToMany(targetEntity="TicketMessage",  mappedBy="ticket")
-     */
+
     protected $messages;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @var \DateTime
      */
     protected $createdAt;
 
