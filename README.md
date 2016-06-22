@@ -11,7 +11,7 @@ Languages: English, French, Russian, German and Spanish.
 
 ## Requirements
 
-* PHP >= 5.5
+* PHP >= 5.6
 * Symfony ~2.8|~3.0
 * FOSUserBundle
 * Knp Paginator
@@ -22,7 +22,7 @@ Languages: English, French, Russian, German and Spanish.
 
 | Ticket Bundle                                                          | Symfony    | PHP   |
 | ---------------------------------------------------------------------- | ---------- | ----- |
-| [3.x](https://github.com/hackzilla/TicketBundle/tree/master) (master)  | ^2.8\|^3.0 | >=5.5 |
+| [3.x](https://github.com/hackzilla/TicketBundle/tree/master) (master)  | ^2.8\|^3.0 | >=5.6 |
 | [2.x](https://github.com/hackzilla/TicketBundle/tree/2.x)              | ^2.7\|^3.0 | >=5.3 |
 | [1.x](https://github.com/hackzilla/TicketBundle/tree/1.x)              | ^2.3       | >=5.3 |
 | [0.x](https://github.com/hackzilla/TicketBundle/tree/0.9.x)            | ^2.3       | >=5.3 |
@@ -50,15 +50,13 @@ TicketBundle show fires events for creating, updating, and deleting of tickets.
 See for example of how to create listener: http://symfony.com/doc/current/cookbook/service_container/event_listener.html
 
 
-## Migration from v2 to v3
-
 Add your user, ticket and ticket message entities into your config.
 
 ```yaml
 hackzilla_ticket:
     user_class:             AppBundle\Entity\User
-    ticket_class:             AppBundle\Entity\Ticket
-    message_class:             AppBundle\Entity\Message
+    ticket_class:           AppBundle\Entity\Ticket
+    message_class:          AppBundle\Entity\Message
 ```
 
 Your entities  needs to implement:
@@ -69,8 +67,18 @@ Your entities  needs to implement:
 | Ticket | ```Hackzilla\Bundle\TicketBundle\Model\MessageInterface``` |
 | Message | ```Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface``` |
 
-Any reference to TicketMessage constants will need to use TicketMessageInterface.
+## Migration from v2 to v3
 
+Ticket and TicketMessage entities still exist and the config will default to them if not overridden.
+
+```yaml
+hackzilla_ticket:
+    user_class:             AppBundle\Entity\User
+    ticket_class:           Hackzilla\Bundle\TicketBundle\Entity\Ticket
+    message_class:          Hackzilla\Bundle\TicketBundle\Entity\TicketMessage
+```
+
+Any reference to TicketMessage constants will need to use TicketMessageInterface.
 
 ## Migrating from v1 to v2
 
