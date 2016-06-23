@@ -2,6 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\DependencyInjection\Compiler;
 
+use Hackzilla\Bundle\TicketBundle\DependencyInjection\HackzillaTicketExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -14,6 +15,7 @@ class DoctrineOrmMappingsPass extends \Doctrine\Bundle\DoctrineBundle\Dependency
 
     public function process(ContainerBuilder $container)
     {
+        $bundleDirectory = HackzillaTicketExtension::bundleDirectory();
         $namespaces = [];
 
         if (
