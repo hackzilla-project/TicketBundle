@@ -2,39 +2,25 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Message.
- *
- * @ORM\Table(name="ticket_message")
- * @ORM\Entity(repositoryClass="Hackzilla\Bundle\TicketBundle\Entity\TicketMessageRepository")
+ * Ticket Message.
  */
 class TicketMessage implements TicketMessageInterface
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="messages")
-     * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id", onDelete="CASCADE")
-     */
     protected $ticket;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="user_id", type="integer")
      */
     protected $user;
     protected $userObject;
@@ -42,29 +28,22 @@ class TicketMessage implements TicketMessageInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="message", type="text", nullable=true)
      * @Assert\NotBlank()
      */
     protected $message;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="status", type="smallint")
      */
     protected $status;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="priority", type="smallint")
      */
     protected $priority;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime")
      */
     protected $createdAt;
 
