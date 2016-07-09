@@ -3,7 +3,6 @@
 namespace Hackzilla\Bundle\TicketBundle\Entity;
 
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessage\MessageAttachmentInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
