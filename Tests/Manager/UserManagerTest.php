@@ -3,6 +3,7 @@
 namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
 use Doctrine\ORM\EntityRepository;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
@@ -15,7 +16,7 @@ class UserManagerTest extends WebTestCase
     {
         $this->tokenStorage = new TokenStorage();
 
-        $this->object = new \Hackzilla\Bundle\TicketBundle\Manager\UserManager(
+        $this->object = new UserManager(
             $this->tokenStorage,
             $this->getMockUserRepository()
         );
@@ -38,6 +39,6 @@ class UserManagerTest extends WebTestCase
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->object));
+        $this->assertInstanceOf(UserManager::class, $this->object);
     }
 }

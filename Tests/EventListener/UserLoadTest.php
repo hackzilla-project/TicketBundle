@@ -2,6 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\EventListener;
 
+use Hackzilla\Bundle\TicketBundle\EventListener\UserLoad;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -13,7 +14,7 @@ class UserLoadTest extends WebTestCase
     {
         $userManager = $this->getUserManagerMock();
 
-        $this->object = new \Hackzilla\Bundle\TicketBundle\EventListener\UserLoad($userManager);
+        $this->object = new UserLoad($userManager);
     }
 
     public function getUserManagerMock()
@@ -31,6 +32,6 @@ class UserLoadTest extends WebTestCase
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->object));
+        $this->assertInstanceOf(UserLoad::class, $this->object);
     }
 }

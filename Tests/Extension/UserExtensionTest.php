@@ -2,6 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Extension;
 
+use Hackzilla\Bundle\TicketBundle\Extension\UserExtension;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -13,7 +14,7 @@ class UserExtensionTest extends WebTestCase
     {
         $userManager = $this->getMockUserManager();
 
-        $this->object = new \Hackzilla\Bundle\TicketBundle\Extension\UserExtension($userManager);
+        $this->object = new UserExtension($userManager);
     }
 
     public function getMockUserManager()
@@ -31,6 +32,6 @@ class UserExtensionTest extends WebTestCase
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->object));
+        $this->assertInstanceOf(UserExtension::class, $this->object);
     }
 }

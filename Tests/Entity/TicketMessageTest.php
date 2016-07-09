@@ -2,6 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Entity;
 
+use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TicketMessageTest extends WebTestCase
@@ -10,7 +11,7 @@ class TicketMessageTest extends WebTestCase
 
     public function setUp()
     {
-        $this->object = new \Hackzilla\Bundle\TicketBundle\Entity\TicketMessage();
+        $this->object = new TicketMessage();
     }
 
     public function tearDown()
@@ -20,6 +21,6 @@ class TicketMessageTest extends WebTestCase
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->object));
+        $this->assertInstanceOf(TicketMessage::class, $this->object);
     }
 }
