@@ -49,7 +49,7 @@ services:
     hackzilla_ticket.features:
         class: Hackzilla\Bundle\TicketBundle\Component\TicketFeatures
         arguments:
-            - '%%hackzilla_ticket.features%%'
+            - '%hackzilla_ticket.features%'
             - '%hackzilla_ticket.model.message.class%'
 
     hackzilla_ticket.component.twig_extension.ticket_features:
