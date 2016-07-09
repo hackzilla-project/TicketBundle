@@ -50,9 +50,8 @@
                 </div>
                 <div class="panel-body">
                     {{ message.message|nl2br }}
-                    {% if(message.filename) %}
-                        <br>
-                        <img src="{{ vich_uploader_asset( message, 'file') }}" />
+                    {% if(hasTicketFeature('attachment')) %}
+                        {{ include('@HackzillaTicket/Ticket/show_attachment.html.twig', {'message': message}) }}
                     {% endif %}
                 </div>
             </div>

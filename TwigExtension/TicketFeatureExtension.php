@@ -17,6 +17,13 @@ class TicketFeatureExtension extends \Twig_Extension
         $this->ticketFeatures = $ticketFeatures;
     }
 
+    public function getFunctions()
+    {
+        return [
+            new \Twig_SimpleFunction('hasTicketFeature', [$this, 'hasFeature']),
+        ];
+    }
+
     public function hasFeature($feature)
     {
         return $this->ticketFeatures->hasFeature($feature);
