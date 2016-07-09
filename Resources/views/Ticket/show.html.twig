@@ -50,6 +50,10 @@
                 </div>
                 <div class="panel-body">
                     {{ message.message|nl2br }}
+                    {% if(message.filename) %}
+                        <br>
+                        <img src="{{ vich_uploader_asset( message, 'file') }}" />
+                    {% endif %}
                 </div>
             </div>
         {% endif %}
@@ -58,7 +62,7 @@
         {% set previousPriority = message.priority %}
     {% endfor %}
 
-    <hr/>
+    <hr />
 
     {% if form is defined %}
         <div class="well well-sm">

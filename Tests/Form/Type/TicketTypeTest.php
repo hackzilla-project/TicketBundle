@@ -2,6 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
+use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
@@ -22,7 +23,7 @@ class TicketTypeTest extends TypeTestCase
     protected function getExtensions()
     {
         $ticketType = new TicketType($this->user);
-        $ticketMessageType = new TicketMessageType($this->user);
+        $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''));
 
         return [
             new PreloadedExtension(

@@ -103,6 +103,7 @@ class TicketController extends Controller
     public function newAction()
     {
         $entity = new Ticket();
+
         $form = $this->createForm(TicketType::class, $entity);
 
         return $this->render(

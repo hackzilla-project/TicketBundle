@@ -2,12 +2,14 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
+use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,10 +17,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TicketMessageType extends AbstractType
 {
     private $userManager;
+    private $features;
 
-    public function __construct(UserManagerInterface $userManager)
+    public function __construct(UserManagerInterface $userManager, TicketFeatures $features)
     {
         $this->userManager = $userManager;
+        $this->features = $features;
     }
 
     /**
@@ -42,7 +46,20 @@ class TicketMessageType extends AbstractType
                 [
                     'label' => 'LABEL_PRIORITY',
                 ]
-            );
+            )
+        ;
+
+        if ($this->features->hasFeature('attachment')) {
+            $builder
+                  ->add(
+                    'file',
+                    FileType::class, [
+                        'label' => 'LABEL_ATTACHMENT',
+                        'required' => false,
+                    ]
+                )
+            ;
+        }
 
         // if existing ticket add status
         if (isset($options['new_ticket']) && !$options['new_ticket']) {
