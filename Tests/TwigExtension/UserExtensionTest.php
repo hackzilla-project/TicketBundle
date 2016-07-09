@@ -1,8 +1,8 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Tests\Extension;
+namespace Hackzilla\Bundle\TicketBundle\Tests\TwigExtension;
 
-use Hackzilla\Bundle\TicketBundle\Extension\UserExtension;
+use Hackzilla\Bundle\TicketBundle\TwigExtension\UserExtension;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

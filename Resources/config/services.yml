@@ -7,7 +7,7 @@ services:
             - { name: doctrine.event_listener, event: postLoad }
 
     hackzilla_ticket_user_extension:
-        class: Hackzilla\Bundle\TicketBundle\Extension\UserExtension
+        class: Hackzilla\Bundle\TicketBundle\TwigExtension\UserExtension
         arguments: ['@hackzilla_ticket.user_manager']
         tags:
             - { name: twig.extension }
@@ -53,7 +53,7 @@ services:
             - '%hackzilla_ticket.model.message.class%'
 
     hackzilla_ticket.component.twig_extension.ticket_features:
-        class: Hackzilla\Bundle\TicketBundle\Component\TwigExtension\TicketFeatureExtension
+        class: Hackzilla\Bundle\TicketBundle\TwigExtension\TicketFeatureExtension
         arguments:
             - '@hackzilla_ticket.features'
         tags:

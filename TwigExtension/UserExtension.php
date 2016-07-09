@@ -1,6 +1,6 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Extension;
+namespace Hackzilla\Bundle\TicketBundle\TwigExtension;
 
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 
@@ -28,9 +28,9 @@ class UserExtension extends \Twig_Extension
 
         if (is_object($user)) {
             return $this->userManager->hasRole($user, $role);
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public function getName()

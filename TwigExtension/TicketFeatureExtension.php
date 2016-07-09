@@ -1,6 +1,6 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Component\TwigExtension;
+namespace Hackzilla\Bundle\TicketBundle\TwigExtension;
 
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 
