@@ -2,7 +2,6 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
-use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -11,6 +10,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TicketType extends AbstractType
 {
+    private $ticketClass;
+
+    public function __construct($ticketClass)
+    {
+        $this->ticketClass = $ticketClass;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -43,7 +49,7 @@ class TicketType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => Ticket::class,
+                'data_class' => $this->ticketClass,
             ]
         );
     }

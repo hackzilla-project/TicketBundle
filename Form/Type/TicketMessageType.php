@@ -2,7 +2,6 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
@@ -15,10 +14,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TicketMessageType extends AbstractType
 {
     private $userManager;
+    private $messageClass;
 
-    public function __construct(UserManagerInterface $userManager)
+    public function __construct(UserManagerInterface $userManager, $messageClass)
     {
         $this->userManager = $userManager;
+        $this->messageClass = $messageClass;
     }
 
     /**
@@ -42,7 +43,8 @@ class TicketMessageType extends AbstractType
                 [
                     'label' => 'LABEL_PRIORITY',
                 ]
-            );
+            )
+        ;
 
         // if existing ticket add status
         if (isset($options['new_ticket']) && !$options['new_ticket']) {
@@ -79,7 +81,7 @@ class TicketMessageType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => TicketMessage::class,
+                'data_class' => $this->messageClass,
                 'new_ticket' => false,
             ]
         );

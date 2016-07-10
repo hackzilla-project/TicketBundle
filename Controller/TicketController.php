@@ -3,10 +3,10 @@
 namespace Hackzilla\Bundle\TicketBundle\Controller;
 
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
+use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketEvents;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
@@ -102,7 +102,9 @@ class TicketController extends Controller
      */
     public function newAction()
     {
-        $entity = new Ticket();
+        $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
+        $entity = $ticketManager->createTicket();
+
         $form = $this->createForm(TicketType::class, $entity);
 
         return $this->render(
@@ -115,23 +117,28 @@ class TicketController extends Controller
     }
 
     /**
-     * Finds and displays a Ticket entity.
+     * Finds and displays a TicketInterface entity.
      *
-     * @param Ticket $ticket
+     * @param int $ticketId
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction(Ticket $ticket = null)
+    public function showAction($ticketId)
     {
+        $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
+        $ticket = $ticketManager->getTicket($ticketId);
+
         if (!$ticket) {
             return $this->redirect($this->generateUrl('hackzilla_ticket'));
         }
+
         $userManager = $this->get('hackzilla_ticket.user_manager');
         $this->checkUserPermission($userManager->getCurrentUser(), $ticket);
 
         $data = ['ticket' => $ticket];
 
-        $message = new TicketMessage();
+
+        $message = $ticketManager->createMessage();
         $message->setPriority($ticket->getPriority());
         $message->setStatus($ticket->getStatus());
 
@@ -160,7 +167,7 @@ class TicketController extends Controller
      * @param \Hackzilla\Bundle\TicketBundle\Model\UserInterface|string $user
      * @param Ticket                                                    $ticket
      */
-    private function checkUserPermission($user, Ticket $ticket)
+    private function checkUserPermission($user, TicketInterface $ticket)
     {
         if (!\is_object($user) || (!$this->get('hackzilla_ticket.user_manager')->hasRole(
                     $user,
@@ -172,17 +179,22 @@ class TicketController extends Controller
     }
 
     /**
-     * Finds and displays a Ticket entity.
+     * Finds and displays a TicketInterface entity.
      *
-     * @param Request $request
-     * @param Ticket  $ticket
+     * @param Request         $request
+     * @param int $ticketId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function replyAction(Request $request, Ticket $ticket)
+    public function replyAction(Request $request, $ticketId)
     {
         $userManager = $this->get('hackzilla_ticket.user_manager');
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
+        $ticket = $ticketManager->getTicket($ticketId);
+
+        if (!$ticket) {
+            throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
+        }
 
         $user = $userManager->getCurrentUser();
         $this->checkUserPermission($user, $ticket);
@@ -208,7 +220,7 @@ class TicketController extends Controller
             $event = new TicketEvent($ticket);
             $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_UPDATE, $event);
 
-            return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['id' => $ticket->getId()]));
+            return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
 
         return $this->showAction($ticket);
@@ -218,11 +230,11 @@ class TicketController extends Controller
      * Deletes a Ticket entity.
      *
      * @param Request $request
-     * @param Ticket  $ticket
+     * @param int  $ticketId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request, Ticket $ticket)
+    public function deleteAction(Request $request, $ticketId)
     {
         $userManager = $this->get('hackzilla_ticket.user_manager');
         $user = $userManager->getCurrentUser();
@@ -231,17 +243,19 @@ class TicketController extends Controller
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
-        $form = $this->createDeleteForm($ticket->getId());
+        $form = $this->createDeleteForm($ticketId);
 
         if ($request->isMethod('DELETE')) {
             $form->submit($request->request->get($form->getName()));
 
             if ($form->isValid()) {
+                $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
+                $ticket = $ticketManager->getTicket($ticketId);
+
                 if (!$ticket) {
                     throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
                 }
 
-                $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
                 $ticketManager->deleteTicket($ticket);
                 $event = new TicketEvent($ticket);
                 $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_DELETE, $event);
