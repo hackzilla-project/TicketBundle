@@ -107,13 +107,13 @@ class TicketManager implements TicketManagerInterface
     /**
      * Find ticket in the database.
      *
-     * @param int $id
+     * @param int $ticketId
      *
      * @return TicketInterface
      */
-    public function getTicket($id)
+    public function getTicket($ticketId)
     {
-        return $this->repository->find($id);
+        return $this->repository->find($ticketId);
     }
 
     /**
