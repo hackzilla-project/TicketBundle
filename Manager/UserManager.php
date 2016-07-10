@@ -20,7 +20,7 @@ class UserManager implements UserManagerInterface
     }
 
     /**
-     * @return int
+     * @return int|UserInterface
      */
     public function getCurrentUser()
     {

@@ -43,11 +43,21 @@ class TicketManager implements TicketManagerInterface
     /**
      * Create a new instance of TicketMessage Entity.
      *
+     * @param TicketInterface $ticket
+     *
      * @return TicketMessageInterface
      */
-    public function createMessage()
+    public function createMessage(TicketInterface $ticket = null)
     {
-        return new $this->ticketMessageClass();
+        $message = new $this->ticketMessageClass();
+        $message->setStatus(TicketMessage::STATUS_OPEN);
+
+        if ($ticket) {
+            $message->setTicket($ticket);
+            $message->setPriority($ticket->getPriority());
+        }
+
+        return $message;
     }
 
     /**
@@ -61,10 +71,11 @@ class TicketManager implements TicketManagerInterface
      */
     public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null)
     {
-        if (!\is_null($ticket)) {
+        if (is_null($ticket->getId())) {
             $this->objectManager->persist($ticket);
         }
         if (!\is_null($message)) {
+            $message->setTicket($ticket);
             $this->objectManager->persist($message);
         }
         $this->objectManager->flush();

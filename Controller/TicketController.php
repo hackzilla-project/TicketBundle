@@ -40,8 +40,7 @@ class TicketController extends Controller
             $ticketManager->getTicketPriority($translator, $ticketPriority)
         );
 
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
+        $pagination = $this->get('knp_paginator')->paginate(
             $query->getQuery(),
             $request->query->get('page', 1)/*page number*/,
             10/*limit per page*/
@@ -76,15 +75,14 @@ class TicketController extends Controller
         if ($form->isValid()) {
             $message = $ticket->getMessages()->current();
             $message->setStatus(TicketMessageInterface::STATUS_OPEN)
-                ->setUser($userManager->getCurrentUser())
-                ->setTicket($ticket);
+                ->setUser($userManager->getCurrentUser());
 
             $ticketManager->updateTicket($ticket, $message);
 
             $event = new TicketEvent($ticket);
             $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_CREATE, $event);
 
-            return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['id' => $ticket->getId()]));
+            return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
 
         return $this->render(
@@ -136,19 +134,12 @@ class TicketController extends Controller
 
         $data = ['ticket' => $ticket];
 
-
         $message = $ticketManager->createMessage();
         $message->setPriority($ticket->getPriority());
         $message->setStatus($ticket->getStatus());
 
         if (TicketMessageInterface::STATUS_CLOSED != $ticket->getStatus()) {
-            $data['form'] = $this->createForm(
-                TicketMessageType::class,
-                $message,
-                [
-                    'new_ticket' => false,
-                ]
-            )->createView();
+            $data['form'] = $this->createMessageForm($message)->createView();
         }
 
         if ($userManager->getCurrentUser() && $this->get('hackzilla_ticket.user_manager')->hasRole(
@@ -198,31 +189,21 @@ class TicketController extends Controller
         $user = $userManager->getCurrentUser();
         $this->checkUserPermission($user, $ticket);
 
-        $message = $ticketManager->createMessage();
-        $message->setPriority($ticket->getPriority());
+        $message = $ticketManager->createMessage($ticket);
 
-        $form = $this->createForm(
-            TicketMessageType::class,
-            $message,
-            [
-                'new_ticket' => false,
-            ]
-        );
+        $form = $this->createMessageForm($message);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $message->setUser($user);
-            $message->setTicket($ticket);
-
             $ticketManager->updateTicket($ticket, $message);
 
-            $event = new TicketEvent($ticket);
-            $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_UPDATE, $event);
+            $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_UPDATE, new TicketEvent($ticket));
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
 
-        return $this->showAction($ticket);
+        return $this->showAction($ticket->getId());
     }
 
     /**
@@ -277,5 +258,23 @@ class TicketController extends Controller
             ->add('id', HiddenType::class)
             ->getForm()
         ;
+    }
+
+    /**
+     * @param TicketMessageInterface $message
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createMessageForm(TicketMessageInterface $message)
+    {
+        $form = $this->createForm(
+            TicketMessageType::class,
+            $message,
+            [
+                'new_ticket' => false,
+            ]
+        );
+
+        return $form;
     }
 }

@@ -55,8 +55,7 @@ class TicketManagerCommand extends ContainerAwareCommand
             ->setMessage($input->getArgument('message'))
             ->setStatus(TicketMessage::STATUS_OPEN)
             ->setPriority($input->getOption('priority'))
-            ->setUser($userManager->findUserByUsername('system'))
-            ->setTicket($ticket);
+            ->setUser($userManager->findUserByUsername('system'));
 
         $ticketManager->updateTicket($ticket, $message);
 
