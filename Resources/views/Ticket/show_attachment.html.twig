@@ -1,4 +1,4 @@
-{% if message.filename %}
+{% if message.attachmentName %}
 <br>
-<img src="{{ vich_uploader_asset(message, 'file') }}" />
+<img src="{{ vich_uploader_asset(message, 'attachmentFile') }}" />
 {% endif %}

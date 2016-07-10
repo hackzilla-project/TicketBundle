@@ -3,7 +3,6 @@
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
@@ -54,7 +53,7 @@ class TicketMessageType extends AbstractType
         if ($this->features->hasFeature('attachment')) {
             $builder
                   ->add(
-                    'file',
+                    'attachmentFile',
                     FileType::class, [
                         'label' => 'LABEL_ATTACHMENT',
                         'required' => false,

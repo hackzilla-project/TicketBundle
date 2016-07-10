@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Ticket.
  */
-class Ticket implements TicketInterface
+class TicketWithAttachment implements TicketInterface
 {
     use TicketTrait;
 }

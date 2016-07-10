@@ -19,11 +19,17 @@ class DoctrineOrmMappingsPass extends \Doctrine\Bundle\DoctrineBundle\Dependency
         $namespaces = [];
 
         if (
+            $container->getParameter('hackzilla_ticket.model.ticket.class') === 'Hackzilla\Bundle\TicketBundle\Entity\TicketWithAttachment'
+            ||
+            $container->getParameter('hackzilla_ticket.model.message.class') === 'Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment'
+        ) {
+            $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/attachment')] = 'Hackzilla\Bundle\TicketBundle\Entity';
+        } elseif (
             $container->getParameter('hackzilla_ticket.model.ticket.class') === 'Hackzilla\Bundle\TicketBundle\Entity\Ticket'
             ||
             $container->getParameter('hackzilla_ticket.model.message.class') === 'Hackzilla\Bundle\TicketBundle\Entity\TicketMessage'
         ) {
-            $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model')] = 'Hackzilla\Bundle\TicketBundle\Entity';
+            $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/plain')] = 'Hackzilla\Bundle\TicketBundle\Entity';
         }
 
         $arguments = [$namespaces, '.orm.xml'];
