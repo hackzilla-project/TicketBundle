@@ -34,7 +34,7 @@ services:
     hackzilla_ticket.form.type.ticket:
         class: Hackzilla\Bundle\TicketBundle\Form\Type\TicketType
         arguments:
-            - '@hackzilla_ticket.user_manager'
+            - '%hackzilla_ticket.model.ticket.class%'
         tags:
             - { name: form.type, alias: hackzilla_ticket }
 
@@ -43,6 +43,7 @@ services:
         arguments:
             - '@hackzilla_ticket.user_manager'
             - '@hackzilla_ticket.features'
+            - '%hackzilla_ticket.model.message.class%'
         tags:
             - { name: form.type, alias: hackzilla_ticket_message }
 

@@ -18,11 +18,13 @@ class TicketMessageType extends AbstractType
 {
     private $userManager;
     private $features;
+    private $messageClass;
 
-    public function __construct(UserManagerInterface $userManager, TicketFeatures $features)
+    public function __construct(UserManagerInterface $userManager, TicketFeatures $features, $messageClass)
     {
         $this->userManager = $userManager;
         $this->features = $features;
+        $this->messageClass = $messageClass;
     }
 
     /**
@@ -96,7 +98,7 @@ class TicketMessageType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => TicketMessage::class,
+                'data_class' => $this->messageClass,
                 'new_ticket' => false,
             ]
         );

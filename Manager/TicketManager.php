@@ -94,6 +94,18 @@ class TicketManager implements TicketManagerInterface
     }
 
     /**
+     * Find ticket in the database.
+     *
+     * @param int $id
+     *
+     * @return TicketInterface
+     */
+    public function getTicket($id)
+    {
+        return $this->repository->find($id);
+    }
+
+    /**
      * Find ticket by criteria.
      *
      * @param array $criteria

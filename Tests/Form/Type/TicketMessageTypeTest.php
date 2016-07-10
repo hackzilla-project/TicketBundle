@@ -22,7 +22,7 @@ class TicketMessageTypeTest extends TypeTestCase
 
     protected function getExtensions()
     {
-        $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''));
+        $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''), TicketMessage::class);
 
         return [
             new PreloadedExtension(
@@ -47,7 +47,8 @@ class TicketMessageTypeTest extends TypeTestCase
             null,
             [
                 'new_ticket' => true,
-            ]
+            ],
+            TicketMessage::class
         );
 
         // submit the data to the form directly
