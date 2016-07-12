@@ -130,7 +130,7 @@ class TicketController extends Controller
         }
 
         $userManager = $this->get('hackzilla_ticket.user_manager');
-        $this->checkUserPermission($userManager->getCurrentUser(), $ticket);
+        $userManager->hasPermission($userManager->getCurrentUser(), $ticket);
 
         $data = ['ticket' => $ticket];
 
@@ -154,21 +154,6 @@ class TicketController extends Controller
     }
 
     /**
-     * @param \Hackzilla\Bundle\TicketBundle\Model\UserInterface|string $user
-     * @param TicketInterface                                           $ticket
-     */
-    private function checkUserPermission($user, TicketInterface $ticket)
-    {
-        if (!\is_object($user) || (!$this->get('hackzilla_ticket.user_manager')->hasRole(
-                    $user,
-                    TicketRole::ADMIN
-                ) && $ticket->getUserCreated() != $user->getId())
-        ) {
-            throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
-        }
-    }
-
-    /**
      * Finds and displays a TicketInterface entity.
      *
      * @param Request         $request
@@ -180,14 +165,14 @@ class TicketController extends Controller
     {
         $userManager = $this->get('hackzilla_ticket.user_manager');
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-        $ticket = $ticketManager->getTicket($ticketId);
+        $ticket = $ticketManager->getTicketById($ticketId);
 
         if (!$ticket) {
             throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
         }
 
         $user = $userManager->getCurrentUser();
-        $this->checkUserPermission($user, $ticket);
+        $userManager->hasPermission($user, $ticket);
 
         $message = $ticketManager->createMessage($ticket);
 
