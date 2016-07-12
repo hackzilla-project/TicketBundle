@@ -14,7 +14,9 @@ interface TicketManagerInterface
 
     public function deleteTicket(TicketInterface $ticket);
 
-    public function getTicket($ticketId);
+    public function getTicketById($ticketId);
+
+    public function getMessageById($ticketMessageId);
 
     public function findTickets();
 

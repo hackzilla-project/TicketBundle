@@ -123,7 +123,7 @@ class TicketController extends Controller
     public function showAction($ticketId)
     {
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-        $ticket = $ticketManager->getTicket($ticketId);
+        $ticket = $ticketManager->getTicketById($ticketId);
 
         if (!$ticket) {
             return $this->redirect($this->generateUrl('hackzilla_ticket'));
@@ -215,7 +215,7 @@ class TicketController extends Controller
 
             if ($form->isValid()) {
                 $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-                $ticket = $ticketManager->getTicket($ticketId);
+                $ticket = $ticketManager->getTicketById($ticketId);
 
                 if (!$ticket) {
                     throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
