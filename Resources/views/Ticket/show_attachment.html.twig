@@ -1,4 +1,8 @@
 {% if message.attachmentName %}
 <br>
-<img src="{{ vich_uploader_asset(message, 'attachmentFile') }}" />
+<div class="ticket_attachment">
+    <span class="glyphicon glyphicon-paperclip"></span>
+    <a href="{{ path('hackzilla_ticket_attachment', {ticketMessageId: message.id}) }}">{{ message.attachmentName }}</a>
+    {{ macros.bytesToSize(message.attachmentSize) }}
+</div>
 {% endif %}

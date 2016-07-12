@@ -23,3 +23,7 @@ hackzilla_ticket_delete:
 hackzilla_ticket_reply:
     path:  /{ticketId}/reply
     defaults: { _controller: "HackzillaTicketBundle:Ticket:reply" }
+
+hackzilla_ticket_attachment:
+    path:  /attachment/{ticketMessageId}/download
+    defaults: { _controller: "HackzillaTicketBundle:TicketAttachment:download" }
