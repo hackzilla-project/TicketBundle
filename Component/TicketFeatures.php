@@ -7,7 +7,7 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface
 class TicketFeatures
 {
     private $features;
-    
+
     /**
      *
      * @param array  $features

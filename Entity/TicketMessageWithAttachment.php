@@ -11,7 +11,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * Ticket Message.
  *
- * @Vich\Uploadable
  */
 class TicketMessageWithAttachment implements TicketMessageInterface, MessageAttachmentInterface
 {
