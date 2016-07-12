@@ -9,6 +9,8 @@
     <field name="status" type="smallint" column="status" precision="0" scale="0" nullable="false"/>
     <field name="priority" type="smallint" column="priority" precision="0" scale="0" nullable="false"/>
     <field name="attachmentName" type="string" column="attachment_name" length="255" nullable="true"/>
+    <field name="attachmentSize" type="integer" column="attachment_size" nullable="true"/>
+    <field name="attachmentMimeType" type="string" column="attachment_mimetype" length="255" nullable="true"/>
     <field name="createdAt" type="datetime" column="created_at" precision="0" scale="0" nullable="false"/>
     <many-to-one field="ticket" target-entity="Hackzilla\Bundle\TicketBundle\Entity\TicketWithAttachment" inversed-by="messages" fetch="LAZY">
       <join-columns>

@@ -22,6 +22,16 @@ trait TicketMessageAttachment
     protected $attachmentName;
 
     /**
+     * @var integer $attachmentSize
+     */
+    protected $attachmentSize;
+
+    /**
+     * @var string $attachmentMimeType
+     */
+    protected $attachmentMimeType;
+
+    /**
      * @inheritDoc
      */
     public function setAttachmentFile(File $file = null)
@@ -55,5 +65,42 @@ trait TicketMessageAttachment
     public function getAttachmentName()
     {
         return $this->attachmentName;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function setAttachmentSize($size)
+    {
+        $this->attachmentSize = $size;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAttachmentSize()
+    {
+        return $this->attachmentSize;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setAttachmentMimeType($mimeType)
+    {
+        $this->attachmentMimeType =  $mimeType;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAttachmentMimeType()
+    {
+        return $this->attachmentMimeType;
     }
 }

@@ -59,3 +59,8 @@ services:
             - '@hackzilla_ticket.features'
         tags:
             - { name: twig.extension }
+
+    hackzilla_ticket.file_upload_subscriber:
+        class: Hackzilla\Bundle\TicketBundle\EventListener\FileSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
