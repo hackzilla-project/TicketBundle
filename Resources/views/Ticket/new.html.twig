@@ -9,6 +9,7 @@
                 {{ form_label(form.subject, '', { 'label_attr': {'class': 'col-lg-2 col-md-2 col-sm-2 control-label'} }) }}
                 <div class="col-lg-8 col-md-8 col-sm-8">
                     {{ form_widget(form.subject, { 'attr': {'class': 'form-control', 'placeholder': 'LABEL_ENTER_SUBJECT' } }) }}
+                    {{ form_errors(form.subject) }}
                 </div>
             </div>
 

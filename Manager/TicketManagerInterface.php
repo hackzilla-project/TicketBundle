@@ -8,11 +8,15 @@ interface TicketManagerInterface
 {
     public function createTicket();
 
-    public function createMessage();
+    public function createMessage(TicketInterface $ticket = null);
 
     public function updateTicket(TicketInterface $ticket);
 
     public function deleteTicket(TicketInterface $ticket);
+
+    public function getTicketById($ticketId);
+
+    public function getMessageById($ticketMessageId);
 
     public function findTickets();
 

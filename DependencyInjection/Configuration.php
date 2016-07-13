@@ -18,11 +18,17 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
+
         $treeBuilder->root('hackzilla_ticket')
             ->children()
                 ->scalarNode('user_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('ticket_class')->cannotBeEmpty()->defaultValue('Hackzilla\Bundle\TicketBundle\Entity\Ticket')->end()
                 ->scalarNode('message_class')->cannotBeEmpty()->defaultValue('Hackzilla\Bundle\TicketBundle\Entity\TicketMessage')->end()
+                ->arrayNode('features')
+                    ->children()
+                        ->booleanNode('attachment')->defaultTrue()
+                    ->end()
+                ->end()
             ->end()
         ;
 

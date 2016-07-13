@@ -32,6 +32,9 @@
         "doctrine/doctrine-bundle": "~1.4",
         "knplabs/knp-paginator-bundle": "~2.3"
     },
+    "suggest": {
+        "vich/uploader-bundle": "Allow attaching files to ticket messages"
+    },
     "require-dev": {
         "symfony/form": "^2.8 || ^3.0",
         "symfony/phpunit-bridge": "^2.8 || ^3.0",

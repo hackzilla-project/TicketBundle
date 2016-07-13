@@ -28,6 +28,8 @@ class HackzillaTicketExtension extends Extension
         $container->setParameter('hackzilla_ticket.model.user.class', $config['user_class']);
         $container->setParameter('hackzilla_ticket.model.ticket.class', $config['ticket_class']);
         $container->setParameter('hackzilla_ticket.model.message.class', $config['message_class']);
+
+        $container->setParameter('hackzilla_ticket.features', $config['features']);
     }
 
     public static function bundleDirectory()

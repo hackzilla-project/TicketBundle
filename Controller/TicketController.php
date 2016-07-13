@@ -2,11 +2,9 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Controller;
 
-use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
-use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketEvents;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
@@ -41,8 +39,7 @@ class TicketController extends Controller
             $ticketManager->getTicketPriority($translator, $ticketPriority)
         );
 
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
+        $pagination = $this->get('knp_paginator')->paginate(
             $query->getQuery(),
             $request->query->get('page', 1)/*page number*/,
             10/*limit per page*/
@@ -77,15 +74,14 @@ class TicketController extends Controller
         if ($form->isValid()) {
             $message = $ticket->getMessages()->current();
             $message->setStatus(TicketMessageInterface::STATUS_OPEN)
-                ->setUser($userManager->getCurrentUser())
-                ->setTicket($ticket);
+                ->setUser($userManager->getCurrentUser());
 
             $ticketManager->updateTicket($ticket, $message);
 
             $event = new TicketEvent($ticket);
             $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_CREATE, $event);
 
-            return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['id' => $ticket->getId()]));
+            return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
 
         return $this->render(
@@ -126,30 +122,23 @@ class TicketController extends Controller
     public function showAction($ticketId)
     {
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-        $ticket = $ticketManager->getTicket($ticketId);
+        $ticket = $ticketManager->getTicketById($ticketId);
 
         if (!$ticket) {
             return $this->redirect($this->generateUrl('hackzilla_ticket'));
         }
 
         $userManager = $this->get('hackzilla_ticket.user_manager');
-        $this->checkUserPermission($userManager->getCurrentUser(), $ticket);
+        $userManager->hasPermission($userManager->getCurrentUser(), $ticket);
 
         $data = ['ticket' => $ticket];
-
 
         $message = $ticketManager->createMessage();
         $message->setPriority($ticket->getPriority());
         $message->setStatus($ticket->getStatus());
 
         if (TicketMessageInterface::STATUS_CLOSED != $ticket->getStatus()) {
-            $data['form'] = $this->createForm(
-                TicketMessageType::class,
-                $message,
-                [
-                    'new_ticket' => false,
-                ]
-            )->createView();
+            $data['form'] = $this->createMessageForm($message)->createView();
         }
 
         if ($userManager->getCurrentUser() && $this->get('hackzilla_ticket.user_manager')->hasRole(
@@ -164,25 +153,10 @@ class TicketController extends Controller
     }
 
     /**
-     * @param \Hackzilla\Bundle\TicketBundle\Model\UserInterface|string $user
-     * @param Ticket                                                    $ticket
-     */
-    private function checkUserPermission($user, TicketInterface $ticket)
-    {
-        if (!\is_object($user) || (!$this->get('hackzilla_ticket.user_manager')->hasRole(
-                    $user,
-                    TicketRole::ADMIN
-                ) && $ticket->getUserCreated() != $user->getId())
-        ) {
-            throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
-        }
-    }
-
-    /**
      * Finds and displays a TicketInterface entity.
      *
-     * @param Request         $request
-     * @param int $ticketId
+     * @param Request $request
+     * @param int     $ticketId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -190,47 +164,37 @@ class TicketController extends Controller
     {
         $userManager = $this->get('hackzilla_ticket.user_manager');
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-        $ticket = $ticketManager->getTicket($ticketId);
+        $ticket = $ticketManager->getTicketById($ticketId);
 
         if (!$ticket) {
             throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
         }
 
         $user = $userManager->getCurrentUser();
-        $this->checkUserPermission($user, $ticket);
+        $userManager->hasPermission($user, $ticket);
 
-        $message = $ticketManager->createMessage();
-        $message->setPriority($ticket->getPriority());
+        $message = $ticketManager->createMessage($ticket);
 
-        $form = $this->createForm(
-            TicketMessageType::class,
-            $message,
-            [
-                'new_ticket' => false,
-            ]
-        );
+        $form = $this->createMessageForm($message);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $message->setUser($user);
-            $message->setTicket($ticket);
-
             $ticketManager->updateTicket($ticket, $message);
 
-            $event = new TicketEvent($ticket);
-            $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_UPDATE, $event);
+            $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_UPDATE, new TicketEvent($ticket));
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
 
-        return $this->showAction($ticket);
+        return $this->showAction($ticket->getId());
     }
 
     /**
      * Deletes a Ticket entity.
      *
      * @param Request $request
-     * @param int  $ticketId
+     * @param int     $ticketId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -250,7 +214,7 @@ class TicketController extends Controller
 
             if ($form->isValid()) {
                 $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-                $ticket = $ticketManager->getTicket($ticketId);
+                $ticket = $ticketManager->getTicketById($ticketId);
 
                 if (!$ticket) {
                     throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
@@ -278,5 +242,23 @@ class TicketController extends Controller
             ->add('id', HiddenType::class)
             ->getForm()
         ;
+    }
+
+    /**
+     * @param TicketMessageInterface $message
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createMessageForm(TicketMessageInterface $message)
+    {
+        $form = $this->createForm(
+            TicketMessageType::class,
+            $message,
+            [
+                'new_ticket' => false,
+            ]
+        );
+
+        return $form;
     }
 }

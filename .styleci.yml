@@ -10,3 +10,4 @@ enabled:
 disabled:
   - unalign_double_arrow
   - unalign_equals
+  - simplified_null_return

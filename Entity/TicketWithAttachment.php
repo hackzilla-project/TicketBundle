@@ -8,7 +8,7 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 /**
  * Ticket.
  */
-class Ticket implements TicketInterface
+class TicketWithAttachment implements TicketInterface
 {
     use TicketTrait;
 }

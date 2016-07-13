@@ -7,7 +7,7 @@ services:
             - { name: doctrine.event_listener, event: postLoad }
 
     hackzilla_ticket_user_extension:
-        class: Hackzilla\Bundle\TicketBundle\Extension\UserExtension
+        class: Hackzilla\Bundle\TicketBundle\TwigExtension\UserExtension
         arguments: ['@hackzilla_ticket.user_manager']
         tags:
             - { name: twig.extension }
@@ -42,6 +42,25 @@ services:
         class: Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType
         arguments:
             - '@hackzilla_ticket.user_manager'
+            - '@hackzilla_ticket.features'
             - '%hackzilla_ticket.model.message.class%'
         tags:
             - { name: form.type, alias: hackzilla_ticket_message }
+
+    hackzilla_ticket.features:
+        class: Hackzilla\Bundle\TicketBundle\Component\TicketFeatures
+        arguments:
+            - '%hackzilla_ticket.features%'
+            - '%hackzilla_ticket.model.message.class%'
+
+    hackzilla_ticket.component.twig_extension.ticket_features:
+        class: Hackzilla\Bundle\TicketBundle\TwigExtension\TicketFeatureExtension
+        arguments:
+            - '@hackzilla_ticket.features'
+        tags:
+            - { name: twig.extension }
+
+    hackzilla_ticket.file_upload_subscriber:
+        class: Hackzilla\Bundle\TicketBundle\EventListener\FileSubscriber
+        tags:
+            - { name: kernel.event_subscriber }

@@ -67,6 +67,14 @@ Your entities  needs to implement:
 | Ticket | ```Hackzilla\Bundle\TicketBundle\Model\MessageInterface``` |
 | Message | ```Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface``` |
 
+## Optional Features
+
+These optional features that can be turned on or off.
+
+### Features
+
+* [Attachments](Resources/doc/setup/feature/attachments.md)
+
 ## Migration from v2 to v3
 
 Ticket and TicketMessage entities still exist and the config will default to them if not overridden.

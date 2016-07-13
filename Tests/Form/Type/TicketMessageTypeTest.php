@@ -22,7 +22,7 @@ class TicketMessageTypeTest extends TypeTestCase
 
     protected function getExtensions()
     {
-        $ticketMessageType = new TicketMessageType($this->user, TicketMessage::class);
+        $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''), TicketMessage::class);
 
         return [
             new PreloadedExtension(
