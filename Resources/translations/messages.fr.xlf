@@ -202,6 +202,10 @@
         <source>ERROR_FIND_TICKET_ENTITY</source>
         <target>Impossible de recupérer les tickets.</target>
       </trans-unit>
+      <trans-unit id="label_ticket_attachment" resname="ERROR_FIND_TICKET_ENTITY">
+        <source>LABEL_ATTACHMENT</source>
+        <target>Pièce jointe</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
