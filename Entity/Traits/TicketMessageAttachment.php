@@ -3,6 +3,7 @@
 namespace Hackzilla\Bundle\TicketBundle\Entity\Traits;
 
 use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 trait TicketMessageAttachment
 {
