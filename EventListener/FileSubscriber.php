@@ -7,11 +7,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Vich\UploaderBundle\Event as VichEvent;
 
 /**
- * Class FileSubscriber
+ * Class FileSubscriber.
  *
  * Source: https://gist.github.com/hubgit/0cdf96c296f20017fe91#file-filesubscriber-php
- *
- * @package Hackzilla\Bundle\TicketBundle\EventListener
  */
 class FileSubscriber implements EventSubscriberInterface
 {
@@ -21,9 +19,10 @@ class FileSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            VichEvent\Events::POST_UPLOAD => 'postUpload'
+            VichEvent\Events::POST_UPLOAD => 'postUpload',
         ];
     }
+
     /**
      * @param VichEvent\Event $event
      */

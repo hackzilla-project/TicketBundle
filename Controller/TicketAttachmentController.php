@@ -3,7 +3,6 @@
 namespace Hackzilla\Bundle\TicketBundle\Controller;
 
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment;
-use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -14,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class TicketAttachmentController extends Controller
 {
     /**
-     * Download attachment on message
+     * Download attachment on message.
      *
      * @param int $ticketMessageId
      *

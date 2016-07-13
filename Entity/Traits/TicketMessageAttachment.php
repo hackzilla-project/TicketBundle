@@ -3,36 +3,35 @@
 namespace Hackzilla\Bundle\TicketBundle\Entity\Traits;
 
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 trait TicketMessageAttachment
 {
     /**
      * NOTE: This field is not persisted to database!
      *
-     * @var File $file
+     * @var File
      *
      * @Vich\UploadableField(mapping="ticket_message_attachment", fileNameProperty="attachmentName")
      */
     protected $attachmentFile;
 
     /**
-     * @var string $attachmentName
+     * @var string
      */
     protected $attachmentName;
 
     /**
-     * @var integer $attachmentSize
+     * @var int
      */
     protected $attachmentSize;
 
     /**
-     * @var string $attachmentMimeType
+     * @var string
      */
     protected $attachmentMimeType;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setAttachmentFile(File $file = null)
     {
@@ -42,7 +41,7 @@ trait TicketMessageAttachment
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getAttachmentFile()
     {
@@ -50,7 +49,7 @@ trait TicketMessageAttachment
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setAttachmentName($name)
     {
@@ -60,16 +59,15 @@ trait TicketMessageAttachment
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getAttachmentName()
     {
         return $this->attachmentName;
     }
 
-
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setAttachmentSize($size)
     {
@@ -79,7 +77,7 @@ trait TicketMessageAttachment
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getAttachmentSize()
     {
@@ -87,7 +85,7 @@ trait TicketMessageAttachment
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setAttachmentMimeType($mimeType)
     {
@@ -97,7 +95,7 @@ trait TicketMessageAttachment
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getAttachmentMimeType()
     {

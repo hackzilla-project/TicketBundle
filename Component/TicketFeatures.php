@@ -9,7 +9,6 @@ class TicketFeatures
     private $features;
 
     /**
-     *
      * @param array  $features
      * @param string $messageClass TicketMessage class
      */
@@ -23,6 +22,13 @@ class TicketFeatures
         $this->features = $features;
     }
 
+    /**
+     * Check if feature exists or whether enabled.
+     *
+     * @param $feature
+     *
+     * @return bool|null
+     */
     public function hasFeature($feature)
     {
         if (!isset($this->features[$feature])) {

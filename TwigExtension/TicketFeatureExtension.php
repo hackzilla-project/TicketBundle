@@ -9,7 +9,6 @@ class TicketFeatureExtension extends \Twig_Extension
     private $ticketFeatures;
 
     /**
-     *
      * @param TicketFeatures $ticketFeatures
      */
     public function __construct(TicketFeatures $ticketFeatures)
@@ -24,6 +23,11 @@ class TicketFeatureExtension extends \Twig_Extension
         ];
     }
 
+    /**
+     * @param string $feature
+     *
+     * @return bool|null
+     */
     public function hasFeature($feature)
     {
         return $this->ticketFeatures->hasFeature($feature);

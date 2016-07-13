@@ -52,10 +52,11 @@ class TicketMessageType extends AbstractType
 
         if ($this->features->hasFeature('attachment')) {
             $builder
-                  ->add(
+                ->add(
                     'attachmentFile',
-                    FileType::class, [
-                        'label' => 'LABEL_ATTACHMENT',
+                    FileType::class,
+                    [
+                        'label'    => 'LABEL_ATTACHMENT',
                         'required' => false,
                     ]
                 )
@@ -88,7 +89,8 @@ class TicketMessageType extends AbstractType
                                 'value'    => 'STATUS_CLOSED',
                             ]
                         )->addModelTransformer($statusTransformer)
-                    );
+                    )
+                ;
             }
         }
     }

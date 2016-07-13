@@ -5,7 +5,6 @@ namespace Hackzilla\Bundle\TicketBundle\Controller;
 use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
-use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketEvents;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
@@ -156,8 +155,8 @@ class TicketController extends Controller
     /**
      * Finds and displays a TicketInterface entity.
      *
-     * @param Request         $request
-     * @param int $ticketId
+     * @param Request $request
+     * @param int     $ticketId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -195,7 +194,7 @@ class TicketController extends Controller
      * Deletes a Ticket entity.
      *
      * @param Request $request
-     * @param int  $ticketId
+     * @param int     $ticketId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
