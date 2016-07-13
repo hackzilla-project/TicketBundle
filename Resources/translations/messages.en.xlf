@@ -202,7 +202,7 @@
         <source>ERROR_FIND_TICKET_ENTITY</source>
         <target>Unable to find Ticket entity.</target>
       </trans-unit>
-      <trans-unit id="label_ticket_attachment" resname="ERROR_FIND_TICKET_ENTITY">
+      <trans-unit id="label_ticket_attachment">
         <source>LABEL_ATTACHMENT</source>
         <target>Attachment</target>
       </trans-unit>
