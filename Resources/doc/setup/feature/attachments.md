@@ -56,5 +56,5 @@ public function registerBundles()
 
 If you want to implement your own entities then you will want to extend 
     
-    ```\Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface```
+``` \Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface ```
    
