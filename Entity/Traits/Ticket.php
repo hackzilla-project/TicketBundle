@@ -36,6 +36,8 @@ trait Ticket
 
     /**
      * @Assert\NotBlank()
+     *
+     * @var string
      */
     protected $subject;
 
@@ -50,6 +52,12 @@ trait Ticket
     protected $priority;
 
 
+    /**
+     * @Assert\Count(min = "1")
+     * @Assert\Valid()
+     *
+     * @var ArrayCollection
+     */
     protected $messages;
 
     /**

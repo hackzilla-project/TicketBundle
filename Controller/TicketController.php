@@ -187,7 +187,17 @@ class TicketController extends Controller
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
 
-        return $this->showAction($ticket->getId());
+        $data = ['ticket' => $ticket, 'form' => $form->createView()];
+
+        if ($userManager->getCurrentUser() && $this->get('hackzilla_ticket.user_manager')->hasRole(
+                $userManager->getCurrentUser(),
+                TicketRole::ADMIN
+            )
+        ) {
+            $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
+        }
+
+        return $this->render('HackzillaTicketBundle:Ticket:show.html.twig', $data);
     }
 
     /**
