@@ -63,6 +63,7 @@
     {% if form is defined %}
         <div class="well well-sm">
             {{ form_start(form, {'method': 'POST', 'action': path('hackzilla_ticket_reply', {'id': ticket.id})}) }}
+
             {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form} %}
 
             {{ form_rest(form) }}
