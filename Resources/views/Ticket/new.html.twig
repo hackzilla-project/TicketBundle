@@ -12,7 +12,11 @@
                 </div>
             </div>
 
-            {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form.messages.vars.prototype} %}
+            {% if form.messages|length == 0 %}
+                {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form.messages.vars.prototype} %}
+            {% else %}
+                {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form.messages.__name__} %}
+            {% endif %}
 
             {{ form_rest(form) }}
 

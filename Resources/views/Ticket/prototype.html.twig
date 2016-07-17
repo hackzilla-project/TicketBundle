@@ -2,6 +2,7 @@
     {{ form_label(form.message, '', { 'label_attr': {'class': 'col-lg-2 col-md-2 col-sm-2 control-label'} }) }}
     <div class="col-lg-8 col-md-8 col-sm-8">
         {{ form_widget(form.message, { 'attr': {'class': 'form-control', 'placeholder': 'LABEL_ENTER_DETAILS', 'rows': '5'} }) }}
+        {{ form_errors(form.message) }}
     </div>
 </div>
 
@@ -9,6 +10,8 @@
     {{ form_label(form.priority, '', { 'label_attr': {'class': 'col-lg-2 col-md-2 col-sm-2 control-label'} }) }}
     <div class="col-lg-3 col-md-3 col-sm-3">
         {{ form_widget(form.priority, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.priority) }}
+
     </div>
 </div>
 

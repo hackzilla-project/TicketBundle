@@ -69,6 +69,8 @@ class Ticket
 
     /**
      * @ORM\OneToMany(targetEntity="TicketMessage",  mappedBy="ticket")
+     * @Assert\Count(min = "1")
+     * @Assert\Valid()
      */
     protected $messages;
 
