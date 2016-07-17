@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('ticket_class')->cannotBeEmpty()->defaultValue('Hackzilla\Bundle\TicketBundle\Entity\Ticket')->end()
                 ->scalarNode('message_class')->cannotBeEmpty()->defaultValue('Hackzilla\Bundle\TicketBundle\Entity\TicketMessage')->end()
                 ->arrayNode('features')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->booleanNode('attachment')->defaultTrue()
                     ->end()
