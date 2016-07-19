@@ -19,17 +19,27 @@ class TicketManager implements TicketManagerInterface
     /**
      * TicketManager constructor.
      *
-     * @param ObjectManager $om
      * @param string        $ticketClass
      * @param string        $ticketMessageClass
      */
-    public function __construct(ObjectManager $om, $ticketClass, $ticketMessageClass)
+    public function __construct($ticketClass, $ticketMessageClass)
     {
-        $this->objectManager = $om;
-        $this->ticketRepository = $om->getRepository($ticketClass);
-        $this->messageRepository = $om->getRepository($ticketMessageClass);
         $this->ticketClass = $ticketClass;
         $this->ticketMessageClass = $ticketMessageClass;
+    }
+
+    /**
+     * @param ObjectManager $om
+     *
+     * @return $this
+     */
+    public function setEntityManager(ObjectManager $om)
+    {
+        $this->objectManager = $om;
+        $this->ticketRepository = $om->getRepository($this->ticketClass);
+        $this->messageRepository = $om->getRepository($this->ticketMessageClass);
+
+        return $this;
     }
 
     /**
