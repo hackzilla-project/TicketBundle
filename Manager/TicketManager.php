@@ -83,9 +83,9 @@ class TicketManager implements TicketManagerInterface
         $message = new $this->ticketMessageClass();
 
         if ($ticket) {
-            $message->setTicket($ticket);
             $message->setPriority($ticket->getPriority());
             $message->setStatus($ticket->getStatus());
+            $message->setTicket($ticket);
         } else {
             $message->setStatus(TicketMessage::STATUS_OPEN);
         }
