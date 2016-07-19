@@ -12,11 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 trait TicketMessageTrait
 {
-    /**
-     * @var int
-     */
-    protected $id;
-
     protected $ticket;
 
     /**
@@ -50,16 +45,6 @@ trait TicketMessageTrait
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

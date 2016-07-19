@@ -14,4 +14,19 @@ class TicketMessageWithAttachment implements TicketMessageInterface, MessageAtta
 {
     use TicketMessageTrait;
     use MessageAttachmentTrait;
+
+    /**
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }

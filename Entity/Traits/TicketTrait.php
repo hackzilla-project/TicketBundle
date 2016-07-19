@@ -15,11 +15,6 @@ trait TicketTrait
     /**
      * @var int
      */
-    protected $id;
-
-    /**
-     * @var int
-     */
     protected $userCreated;
     protected $userCreatedObject;
 
@@ -69,16 +64,6 @@ trait TicketTrait
     {
         $this->setCreatedAt(new \DateTime());
         $this->messages = new ArrayCollection();
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

@@ -11,4 +11,19 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 class TicketWithAttachment implements TicketInterface
 {
     use TicketTrait;
+
+    /**
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }

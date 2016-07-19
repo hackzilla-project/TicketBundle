@@ -11,4 +11,19 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 class TicketMessage implements TicketMessageInterface
 {
     use TicketMessageTrait;
+
+    /**
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }
