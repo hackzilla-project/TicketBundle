@@ -96,7 +96,7 @@ trait TicketMessageTrait
      */
     public function getStatusString()
     {
-        if (in_array($this->status, TicketMessageInterface::STATUSES)) {
+        if (!empty(TicketMessageInterface::STATUSES[$this->status])) {
             return TicketMessageInterface::STATUSES[$this->status];
         }
 
@@ -152,7 +152,7 @@ trait TicketMessageTrait
      */
     public function getPriorityString()
     {
-        if (in_array($this->priority, TicketMessageInterface::PRIORITIES)) {
+        if (!empty(TicketMessageInterface::PRIORITIES[$this->priority])) {
             return TicketMessageInterface::PRIORITIES[$this->priority];
         }
 
