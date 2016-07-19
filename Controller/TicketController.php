@@ -35,8 +35,8 @@ class TicketController extends Controller
 
         $query = $ticketManager->getTicketList(
             $userManager,
-            $ticketManager->getTicketStatus($translator, $ticketState),
-            $ticketManager->getTicketPriority($translator, $ticketPriority)
+            $ticketManager->getTicketStatus($ticketState),
+            $ticketManager->getTicketPriority($ticketPriority)
         );
 
         $pagination = $this->get('knp_paginator')->paginate(

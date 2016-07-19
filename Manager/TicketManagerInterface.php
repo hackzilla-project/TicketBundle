@@ -48,20 +48,18 @@ interface TicketManagerInterface
     /**
      * Lookup status code.
      *
-     * @param object $translator
      * @param string $statusStr
      *
      * @return int
      */
-    public function getTicketStatus($translator, $statusStr);
+    public function getTicketStatus($statusStr);
 
     /**
      * Lookup priority code.
      *
-     * @param object $translator
      * @param string $priorityStr
      *
      * @return int
      */
-    public function getTicketPriority($translator, $priorityStr);
+    public function getTicketPriority($priorityStr);
 }

@@ -240,12 +240,11 @@ class TicketManager implements TicketManagerInterface
     /**
      * Lookup status code.
      *
-     * @param object $translator
      * @param string $statusStr
      *
      * @return int
      */
-    public function getTicketStatus($translator, $statusStr)
+    public function getTicketStatus($statusStr)
     {
         static $statuses = false;
 
@@ -253,7 +252,7 @@ class TicketManager implements TicketManagerInterface
             $statuses = [];
 
             foreach (TicketMessageInterface::STATUSES as $id => $value) {
-                $statuses[$id] = $translator->trans($value);
+                $statuses[$id] = $this->translator->trans($value);
             }
         }
 
@@ -263,12 +262,11 @@ class TicketManager implements TicketManagerInterface
     /**
      * Lookup priority code.
      *
-     * @param object $translator
      * @param string $priorityStr
      *
      * @return int
      */
-    public function getTicketPriority($translator, $priorityStr)
+    public function getTicketPriority($priorityStr)
     {
         static $priorities = false;
 
@@ -276,7 +274,7 @@ class TicketManager implements TicketManagerInterface
             $priorities = [];
 
             foreach (TicketMessageInterface::PRIORITIES as $id => $value) {
-                $priorities[$id] = $translator->trans($value);
+                $priorities[$id] = $this->translator->trans($value);
             }
         }
 
