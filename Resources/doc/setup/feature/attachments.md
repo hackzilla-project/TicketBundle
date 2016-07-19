@@ -32,7 +32,7 @@ vich_uploader:
             upload_destination: %kernel.root_dir%/../var/uploads/attachment/
 ```
 
-See [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/index.md) documention for more details.
+See [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/index.md) documentation for more details.
 
 Don't forget to register VichUploaderBundle in AppKernel.
 
@@ -57,4 +57,3 @@ public function registerBundles()
 If you want to implement your own entities then you will want to extend 
     
 ``` \Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface ```
-   
