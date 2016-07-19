@@ -3,6 +3,7 @@
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
@@ -63,7 +64,11 @@ class TicketManager implements TicketManagerInterface
      */
     public function createTicket()
     {
-        return new $this->ticketClass();
+        $ticket = new $this->ticketClass();
+        $ticket->setPriority(TicketMessageInterface::PRIORITY_MEDIUM);
+        $ticket->setStatus(TicketMessageInterface::STATUS_OPEN);
+
+        return $ticket;
     }
 
     /**
@@ -76,11 +81,13 @@ class TicketManager implements TicketManagerInterface
     public function createMessage(TicketInterface $ticket = null)
     {
         $message = new $this->ticketMessageClass();
-        $message->setStatus(TicketMessage::STATUS_OPEN);
 
         if ($ticket) {
             $message->setTicket($ticket);
             $message->setPriority($ticket->getPriority());
+            $message->setStatus($ticket->getStatus());
+        } else {
+            $message->setStatus(TicketMessage::STATUS_OPEN);
         }
 
         return $message;
