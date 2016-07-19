@@ -3,6 +3,7 @@
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 
 interface TicketManagerInterface
 {
@@ -10,7 +11,7 @@ interface TicketManagerInterface
 
     public function createMessage(TicketInterface $ticket = null);
 
-    public function updateTicket(TicketInterface $ticket);
+    public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null);
 
     public function deleteTicket(TicketInterface $ticket);
 
