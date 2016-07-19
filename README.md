@@ -13,9 +13,12 @@ Languages: English, French, Russian, German and Spanish.
 
 * PHP >= 5.6
 * Symfony ~2.8|~3.0
-* FOSUserBundle
 * Knp Paginator
 * Bootstrap v3 (optional) see: http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme
+
+## Optional Requirements
+
+* FOSUserBundle
 
 
 ## Version Matrix
