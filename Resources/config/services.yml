@@ -31,6 +31,7 @@ services:
             - '%hackzilla_ticket.model.message.class%'
         calls:
             - [ setEntityManager, ['@doctrine.orm.entity_manager'] ]
+            - [ setTranslator, ['@translator'] ]
 
     hackzilla_ticket.form.type.ticket:
         class: Hackzilla\Bundle\TicketBundle\Form\Type\TicketType

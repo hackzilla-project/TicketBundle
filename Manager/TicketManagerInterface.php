@@ -5,10 +5,13 @@ namespace Hackzilla\Bundle\TicketBundle\Manager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 interface TicketManagerInterface
 {
     public function setEntityManager(ObjectManager $om);
+
+    public function setTranslator(TranslatorInterface $translator);
 
     public function createTicket();
 

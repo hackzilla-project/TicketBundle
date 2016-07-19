@@ -7,9 +7,11 @@ use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class TicketManager implements TicketManagerInterface
 {
+    private $translator;
     private $objectManager;
     private $ticketRepository;
     private $messageRepository;
@@ -38,6 +40,18 @@ class TicketManager implements TicketManagerInterface
         $this->objectManager = $om;
         $this->ticketRepository = $om->getRepository($this->ticketClass);
         $this->messageRepository = $om->getRepository($this->ticketMessageClass);
+
+        return $this;
+    }
+
+    /**
+     * @param TranslatorInterface $translator
+     *
+     * @return $this
+     */
+    public function setTranslator(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
 
         return $this;
     }
