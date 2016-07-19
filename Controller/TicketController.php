@@ -26,11 +26,10 @@ class TicketController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $userManager = $this->get('hackzilla_ticket.user_manager');
+        $userManager = $this->getUserManager();
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-        $translator = $this->get('translator');
 
-        $ticketState = $request->get('state', $translator->trans('STATUS_OPEN'));
+        $ticketState = $request->get('state', $this->get('translator')->trans('STATUS_OPEN'));
         $ticketPriority = $request->get('priority', null);
 
         $query = $ticketManager->getTicketList(
@@ -64,7 +63,6 @@ class TicketController extends Controller
      */
     public function createAction(Request $request)
     {
-        $userManager = $this->get('hackzilla_ticket.user_manager');
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
         $ticket = $ticketManager->createTicket();
@@ -74,12 +72,10 @@ class TicketController extends Controller
         if ($form->isValid()) {
             $message = $ticket->getMessages()->current();
             $message->setStatus(TicketMessageInterface::STATUS_OPEN)
-                ->setUser($userManager->getCurrentUser());
+                ->setUser($this->getUserManager()->getCurrentUser());
 
             $ticketManager->updateTicket($ticket, $message);
-
-            $event = new TicketEvent($ticket);
-            $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_CREATE, $event);
+            $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_CREATE, new TicketEvent($ticket));
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
@@ -128,21 +124,19 @@ class TicketController extends Controller
             return $this->redirect($this->generateUrl('hackzilla_ticket'));
         }
 
-        $userManager = $this->get('hackzilla_ticket.user_manager');
-        $userManager->hasPermission($userManager->getCurrentUser(), $ticket);
+        $currentUser = $this->getUserManager()->getCurrentUser();
+        $this->getUserManager()->hasPermission($currentUser, $ticket);
 
         $data = ['ticket' => $ticket];
 
-        $message = $ticketManager->createMessage();
-        $message->setPriority($ticket->getPriority());
-        $message->setStatus($ticket->getStatus());
+        $message = $ticketManager->createMessage($ticket);
 
         if (TicketMessageInterface::STATUS_CLOSED != $ticket->getStatus()) {
             $data['form'] = $this->createMessageForm($message)->createView();
         }
 
-        if ($userManager->getCurrentUser() && $this->get('hackzilla_ticket.user_manager')->hasRole(
-                $userManager->getCurrentUser(),
+        if ($currentUser && $this->getUserManager()->hasRole(
+                $currentUser,
                 TicketRole::ADMIN
             )
         ) {
@@ -162,7 +156,6 @@ class TicketController extends Controller
      */
     public function replyAction(Request $request, $ticketId)
     {
-        $userManager = $this->get('hackzilla_ticket.user_manager');
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
         $ticket = $ticketManager->getTicketById($ticketId);
 
@@ -170,8 +163,8 @@ class TicketController extends Controller
             throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
         }
 
-        $user = $userManager->getCurrentUser();
-        $userManager->hasPermission($user, $ticket);
+        $user = $this->getUserManager()->getCurrentUser();
+        $this->getUserManager()->hasPermission($user, $ticket);
 
         $message = $ticketManager->createMessage($ticket);
 
@@ -189,8 +182,8 @@ class TicketController extends Controller
 
         $data = ['ticket' => $ticket, 'form' => $form->createView()];
 
-        if ($userManager->getCurrentUser() && $this->get('hackzilla_ticket.user_manager')->hasRole(
-                $userManager->getCurrentUser(),
+        if ($user && $this->get('hackzilla_ticket.user_manager')->hasRole(
+                $user,
                 TicketRole::ADMIN
             )
         ) {
@@ -210,7 +203,7 @@ class TicketController extends Controller
      */
     public function deleteAction(Request $request, $ticketId)
     {
-        $userManager = $this->get('hackzilla_ticket.user_manager');
+        $userManager = $this->getUserManager();
         $user = $userManager->getCurrentUser();
 
         if (!\is_object($user) || !$userManager->hasRole($user, TicketRole::ADMIN)) {
@@ -270,5 +263,15 @@ class TicketController extends Controller
         );
 
         return $form;
+    }
+
+    /**
+     * @return \Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface
+     */
+    private function getUserManager()
+    {
+        $userManager = $this->get('hackzilla_ticket.user_manager');
+
+        return $userManager;
     }
 }
