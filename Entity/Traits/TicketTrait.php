@@ -8,9 +8,9 @@ use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Ticket.
+ * Ticket Trait.
  */
-trait Ticket
+trait TicketTrait
 {
     /**
      * @var int

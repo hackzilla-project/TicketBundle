@@ -1,11 +1,11 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Entity\Traits;
+namespace Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketFeature;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-trait TicketMessageAttachment
+trait MessageAttachmentTrait
 {
     /**
      * NOTE: This field is not persisted to database!

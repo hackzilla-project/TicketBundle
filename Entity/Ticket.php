@@ -2,7 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Entity;
 
-use Hackzilla\Bundle\TicketBundle\Entity\Traits\Ticket as TicketTrait;
+use Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketTrait;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 
 /**
