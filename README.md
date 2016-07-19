@@ -50,7 +50,9 @@ These optional features that can be turned on or off.
 ### Features
 
 * [Attachments](Resources/doc/setup/feature/attachments.md)
+* [Custom Entities](Resources/doc/setup/feature/custom-entities.md)
 * [Events](Resources/doc/setup/feature/events.md)
+
 
 ## Migrate a Previous Version
 
