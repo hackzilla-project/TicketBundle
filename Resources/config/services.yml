@@ -61,6 +61,13 @@ services:
             - '@hackzilla_ticket.features'
         tags:
             - { name: twig.extension }
+            
+    hackzilla_ticket.component.twig_extension.ticket_global:
+        class: Hackzilla\Bundle\TicketBundle\TwigExtension\TicketGlobalExtension
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension }
 
     hackzilla_ticket.file_upload_subscriber:
         class: Hackzilla\Bundle\TicketBundle\EventListener\FileSubscriber
