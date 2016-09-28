@@ -45,7 +45,7 @@ class TicketController extends Controller
         );
 
         return $this->render(
-            'HackzillaTicketBundle:Ticket:index.html.twig',
+            $this->container->getParameter('hackzilla_ticket.templates.index'),
             [
                 'pagination'     => $pagination,
                 'ticketState'    => $ticketState,
@@ -81,7 +81,7 @@ class TicketController extends Controller
         }
 
         return $this->render(
-            'HackzillaTicketBundle:Ticket:new.html.twig',
+            $this->container->getParameter('hackzilla_ticket.templates.new'),
             [
                 'entity' => $ticket,
                 'form'   => $form->createView(),
@@ -100,7 +100,7 @@ class TicketController extends Controller
         $form = $this->createForm(TicketType::class, $entity);
 
         return $this->render(
-            'HackzillaTicketBundle:Ticket:new.html.twig',
+            $this->container->getParameter('hackzilla_ticket.templates.new'),
             [
                 'entity' => $entity,
                 'form'   => $form->createView(),
@@ -143,7 +143,7 @@ class TicketController extends Controller
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
-        return $this->render('HackzillaTicketBundle:Ticket:show.html.twig', $data);
+        return $this->render($this->container->getParameter('hackzilla_ticket.templates.show'), $data);
     }
 
     /**
@@ -190,7 +190,7 @@ class TicketController extends Controller
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
-        return $this->render('HackzillaTicketBundle:Ticket:show.html.twig', $data);
+        return $this->render($this->container->getParameter('hackzilla_ticket.templates.show'), $data);
     }
 
     /**
