@@ -28,23 +28,23 @@
       </trans-unit>
       <trans-unit id="priority_low">
         <source>PRIORITY_LOW</source>
-        <target>gerig</target>
+        <target>gering</target>
       </trans-unit>
       <trans-unit id="priority_medium">
         <source>PRIORITY_MEDIUM</source>
-        <target>mittelere</target>
+        <target>mittel</target>
       </trans-unit>
       <trans-unit id="priority_high">
         <source>PRIORITY_HIGH</source>
-        <target>höhe</target>
+        <target>hoch</target>
       </trans-unit>
       <trans-unit id="status_invalid">
         <source>STATUS_INVALID</source>
-        <target>nicht gültig</target>
+        <target>ungültig</target>
       </trans-unit>
       <trans-unit id="priority_invalid">
         <source>PRIORITY_INVALID</source>
-        <target>nicht gültig</target>
+        <target>ungültig</target>
       </trans-unit>
       <trans-unit id="heading_subject">
         <source>HEADING_SUBJECT</source>
@@ -68,7 +68,7 @@
       </trans-unit>
       <trans-unit id="heading_ticket_list">
         <source>HEADING_TICKET_LIST</source>
-        <target>Liste der Aufgaben</target>
+        <target>Liste der Tickets</target>
       </trans-unit>
       <trans-unit id="heading_ticket">
         <source>HEADING_TICKET</source>
@@ -76,11 +76,11 @@
       </trans-unit>
       <trans-unit id="heading_new_ticket">
         <source>HEADING_NEW_TICKET</source>
-        <target>Neue Aufgabe</target>
+        <target>Neues Ticket</target>
       </trans-unit>
       <trans-unit id="heading_ticket_id">
         <source>HEADING_TICKET_ID</source>
-        <target>Aufgabe nº%id%</target>
+        <target>Ticket nº%id%</target>
       </trans-unit>
       <trans-unit id="heading_ticket_thread">
         <source>HEADING_TICKET_THREAD</source>
@@ -88,11 +88,11 @@
       </trans-unit>
       <trans-unit id="heading_last_message_by">
         <source>HEADING_LAST_MESSAGE_BY</source>
-        <target>Vorig Nachricht von</target>
+        <target>Vorige Nachricht von</target>
       </trans-unit>
       <trans-unit id="heading_last_modified">
         <source>HEADING_LAST_MODIFIED</source>
-        <target>Vorig Änderung</target>
+        <target>Vorige Änderung</target>
       </trans-unit>
       <trans-unit id="heading_author">
         <source>HEADING_AUTHOR</source>
@@ -112,15 +112,15 @@
       </trans-unit>
       <trans-unit id="button_create">
         <source>BUTTON_CREATE</source>
-        <target>Beginnen</target>
+        <target>Erstellen</target>
       </trans-unit>
       <trans-unit id="button_new">
         <source>BUTTON_NEW</source>
-        <target>Neue Aufgabe</target>
+        <target>Neues Ticket</target>
       </trans-unit>
       <trans-unit id="button_toggle_state">
         <source>BUTTON_TOGGLE_STATE</source>
-        <target>Zeige der Aufgaben %state%s</target>
+        <target>Zeige das Ticket %state%s</target>
       </trans-unit>
       <trans-unit id="label_author">
         <source>LABEL_AUTHOR</source>
@@ -172,15 +172,15 @@
       </trans-unit>
       <trans-unit id="label_date_format">
         <source>LABEL_DATE_FORMAT</source>
-        <target>Y/m/d</target>
+        <target>d.m.Y</target>
       </trans-unit>
       <trans-unit id="label_date_time_format">
         <source>LABEL_DATE_TIME_FORMAT</source>
-        <target>Y/m/d H:i:s</target>
+        <target>H:i:s d.m.Y</target>
       </trans-unit>
       <trans-unit id="message_no_tickets">
         <source>MESSAGE_NO_TICKETS</source>
-        <target>Keine Aufgaben gefunden</target>
+        <target>Kein Ticket gefunden</target>
       </trans-unit>
       <trans-unit id="message_empty">
         <source>MESSAGE_EMPTY</source>
@@ -188,7 +188,7 @@
       </trans-unit>
       <trans-unit id="message_ticket_opened">
         <source>MESSAGE_TICKET_OPENED</source>
-        <target>Aufgabe mit %priority% Dringlichkeit begonnen.</target>
+        <target>Ticket mit %priority% Dringlichkeit begonnen.</target>
       </trans-unit>
       <trans-unit id="message_status_changed">
         <source>MESSAGE_STATUS_CHANGED</source>
@@ -200,7 +200,7 @@
       </trans-unit>
       <trans-unit id="error_find_ticket_entity">
         <source>ERROR_FIND_TICKET_ENTITY</source>
-        <target>Aufgabe unmöglich zu finden.</target>
+        <target>Ticket unmöglich zu finden.</target>
       </trans-unit>
       <trans-unit id="label_ticket_attachment">
         <source>LABEL_ATTACHMENT</source>
