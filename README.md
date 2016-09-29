@@ -53,6 +53,19 @@ These optional features that can be turned on or off.
 * [Custom Entities](Resources/doc/setup/feature/custom-entities.md)
 * [Events](Resources/doc/setup/feature/events.md)
 
+## Custom Templates (Optional)
+
+```
+config.yml
+
+hackzilla_ticket:
+    templates: 
+        index: 'YOURTicketBundle:Ticket:index.html.twig'
+        new: 'YOURTicketBundle:Ticket:new.html.twig'
+        prototype: 'YOURTicketBundle:Ticket:prototype.html.twig'
+        show: 'YOURTicketBundle:Ticket:show.html.twig'
+        show_attachment: 'YOURTicketBundle:Ticket:show_attachment.html.twig'
+```
 
 ## Migrate a Previous Version
 

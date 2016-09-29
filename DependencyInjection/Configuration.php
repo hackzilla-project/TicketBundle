@@ -30,6 +30,18 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('attachment')->defaultTrue()
                     ->end()
                 ->end()
+                ->arrayNode('templates')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('index')->defaultValue('HackzillaTicketBundle:Ticket:index.html.twig')->end()
+                        ->scalarNode('new')->defaultValue('HackzillaTicketBundle:Ticket:new.html.twig')->end()
+                        ->scalarNode('prototype')->defaultValue('HackzillaTicketBundle:Ticket:prototype.html.twig')->end()
+                        ->scalarNode('show')->defaultValue('HackzillaTicketBundle:Ticket:show.html.twig')->end()
+                        ->scalarNode('show_attachment')->defaultValue('HackzillaTicketBundle:Ticket:show_attachment.html.twig')->end()
+                        ->scalarNode('macros')->defaultValue('HackzillaTicketBundle:Macros:macros.html.twig')->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 
