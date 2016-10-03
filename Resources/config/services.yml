@@ -65,7 +65,7 @@ services:
     hackzilla_ticket.component.twig_extension.ticket_global:
         class: Hackzilla\Bundle\TicketBundle\TwigExtension\TicketGlobalExtension
         arguments:
-            - @service_container
+            - '@service_container'
         tags:
             - { name: twig.extension }
 
