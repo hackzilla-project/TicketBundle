@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('features')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->booleanNode('attachment')->defaultTrue()
+                        ->booleanNode('attachment')->defaultTrue()->end()
                     ->end()
                 ->end()
                 ->arrayNode('templates')
