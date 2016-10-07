@@ -93,4 +93,4 @@ You can assign ROLE_TICKET_ADMIN to any user you want to be able to administer t
 
 ## Step 5: Create tables
 
-```app/console doctrine:schema:update --force```
+```bin/console doctrine:schema:update --force```
