@@ -6,7 +6,10 @@ use Doctrine\ORM\EntityRepository;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
+use Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 
 class UserManagerTest extends WebTestCase
 {
@@ -17,7 +20,9 @@ class UserManagerTest extends WebTestCase
     public function setUp()
     {
         $this->tokenStorage = new TokenStorage();
-        $this->authorizationChecker = new AuthorizationChecker();
+        $authenticationProviderManager = new AuthenticationProviderManager([new AnonymousAuthenticationProvider('secret')]);
+        $accessDecisionManager = new AccessDecisionManager();
+        $this->authorizationChecker = new AuthorizationChecker($this->tokenStorage, $authenticationProviderManager, $accessDecisionManager);
 
         $this->object = new UserManager(
             $this->tokenStorage,
