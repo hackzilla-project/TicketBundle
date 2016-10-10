@@ -15,21 +15,21 @@ class UserManager implements UserManagerInterface
      * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
      */
     private $tokenStorage;
-    
+
     /**
      * @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
      */
     private $authorizationChecker;
-    
+
     /**
      * @var \Doctrine\ORM\EntityRepository
      */
     private $userRepository;
 
     /**
-     * @param TokenStorage $tokenStorage
+     * @param TokenStorage                  $tokenStorage
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param EntityRepository $userRepository
+     * @param EntityRepository              $userRepository
      */
     public function __construct(
         TokenStorage $tokenStorage,
