@@ -4,30 +4,27 @@ namespace Hackzilla\Bundle\TicketBundle\TwigExtension;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class TicketGlobalExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface {
+class TicketGlobalExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
+{
 
     /**
-     *
-     * @access protected
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
 
     /**
-     *
-     * @access public
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container) {
+    public function __construct(ContainerInterface $container)
+    {
         $this->container = $container;
     }
 
     /**
-     *
-     * @access public
      * @return array
      */
-    public function getGlobals() {
+    public function getGlobals() 
+    {
         return array(
             'hackzilla_ticket' => array(
                 'templates' => array(
@@ -43,11 +40,10 @@ class TicketGlobalExtension extends \Twig_Extension implements \Twig_Extension_G
     }
 
     /**
-     *
-     * @access public
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return 'ticketGlobal';
     }
 
