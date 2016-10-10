@@ -18,7 +18,7 @@ class UserManagerTest extends WebTestCase
     {
         $this->tokenStorage = new TokenStorage();
         $this->authorizationChecker = new AuthorizationChecker();
-        
+
         $this->object = new UserManager(
             $this->tokenStorage,
             $this->getMockUserRepository(),
