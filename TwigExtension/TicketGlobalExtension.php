@@ -23,20 +23,20 @@ class TicketGlobalExtension extends \Twig_Extension implements \Twig_Extension_G
     /**
      * @return array
      */
-    public function getGlobals() 
+    public function getGlobals()
     {
-        return array(
+        return [
             'hackzilla_ticket' => [
                 'templates' => [
-                    'index' => $this->container->getParameter('hackzilla_ticket.templates.index'),
-                    'new' => $this->container->getParameter('hackzilla_ticket.templates.new'),
-                    'show' => $this->container->getParameter('hackzilla_ticket.templates.show'),
+                    'index'           => $this->container->getParameter('hackzilla_ticket.templates.index'),
+                    'new'             => $this->container->getParameter('hackzilla_ticket.templates.new'),
+                    'show'            => $this->container->getParameter('hackzilla_ticket.templates.show'),
                     'show_attachment' => $this->container->getParameter('hackzilla_ticket.templates.show_attachment'),
-                    'prototype' => $this->container->getParameter('hackzilla_ticket.templates.prototype'),
-                    'macros' => $this->container->getParameter('hackzilla_ticket.templates.macros'),
+                    'prototype'       => $this->container->getParameter('hackzilla_ticket.templates.prototype'),
+                    'macros'          => $this->container->getParameter('hackzilla_ticket.templates.macros'),
                 ],
             ]
-        );
+        ];
     }
 
     /**
