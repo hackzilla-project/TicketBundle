@@ -35,7 +35,7 @@ class TicketGlobalExtension extends \Twig_Extension implements \Twig_Extension_G
                     'prototype'       => $this->container->getParameter('hackzilla_ticket.templates.prototype'),
                     'macros'          => $this->container->getParameter('hackzilla_ticket.templates.macros'),
                 ],
-            ]
+            ],
         ];
     }
 
