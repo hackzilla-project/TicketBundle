@@ -16,6 +16,7 @@ services:
         class: Hackzilla\Bundle\TicketBundle\Manager\UserManager
         arguments:
             - '@security.token_storage'
+            - '@security.authorization_checker'
             - '@hackzilla_ticket.user_repository'
 
     hackzilla_ticket.user_repository:
