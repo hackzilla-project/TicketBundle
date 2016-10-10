@@ -6,7 +6,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TicketGlobalExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
-
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
@@ -46,5 +45,4 @@ class TicketGlobalExtension extends \Twig_Extension implements \Twig_Extension_G
     {
         return 'ticketGlobal';
     }
-
 }
