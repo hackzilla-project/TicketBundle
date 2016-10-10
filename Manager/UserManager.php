@@ -33,11 +33,12 @@ class UserManager implements UserManagerInterface
      */
     public function __construct(
         TokenStorage $tokenStorage,
-        AuthorizationCheckerInterface $authorizationChecker,
-        EntityRepository $userRepository
+        EntityRepository $userRepository,
+        AuthorizationCheckerInterface $authorizationChecker
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->userRepository = $userRepository;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
