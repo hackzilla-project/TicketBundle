@@ -16,8 +16,8 @@ services:
         class: Hackzilla\Bundle\TicketBundle\Manager\UserManager
         arguments:
             - '@security.token_storage'
-            - '@security.authorization_checker'
             - '@hackzilla_ticket.user_repository'
+            - '@security.authorization_checker'
 
     hackzilla_ticket.user_repository:
         class: Doctrine\ORM\EntityRepository
