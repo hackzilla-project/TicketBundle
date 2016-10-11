@@ -7,18 +7,38 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class UserManager implements UserManagerInterface
 {
+    /**
+     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
+     */
     private $tokenStorage;
+
+    /**
+     * @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+     */
+    private $authorizationChecker;
+
+    /**
+     * @var \Doctrine\ORM\EntityRepository
+     */
     private $userRepository;
 
+    /**
+     * @param TokenStorage                  $tokenStorage
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param EntityRepository              $userRepository
+     */
     public function __construct(
         TokenStorage $tokenStorage,
-        EntityRepository $userRepository
+        EntityRepository $userRepository,
+        AuthorizationCheckerInterface $authorizationChecker
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->userRepository = $userRepository;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -61,7 +81,7 @@ class UserManager implements UserManagerInterface
      */
     public function hasRole(UserInterface $user, $role)
     {
-        return in_array(strtoupper($role), $user->getRoles(), true);
+        return $this->authorizationChecker->isGranted($role);
     }
 
     /**

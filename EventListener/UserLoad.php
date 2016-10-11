@@ -3,8 +3,8 @@
 namespace Hackzilla\Bundle\TicketBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 
 class UserLoad
 {
@@ -27,20 +27,20 @@ class UserLoad
         $entity = $args->getEntity();
 
         // Ignore any entity lifecycle events not relating to this bundles entities.
-        if (!$entity instanceof Ticket && !$entity instanceof TicketMessage) {
+        if (!$entity instanceof TicketInterface && !$entity instanceof TicketMessageInterface) {
             return;
         }
 
         $userRepository = $args->getEntityManager()->getRepository($this->userRepository);
 
-        if ($entity instanceof Ticket) {
+        if ($entity instanceof TicketInterface) {
             if (\is_null($entity->getUserCreatedObject())) {
                 $entity->setUserCreated($userRepository->find($entity->getUserCreated()));
             }
             if (\is_null($entity->getLastUserObject())) {
                 $entity->setLastUser($userRepository->find($entity->getLastUser()));
             }
-        } elseif ($entity instanceof TicketMessage) {
+        } elseif ($entity instanceof TicketMessageInterface) {
             if (\is_null($entity->getUserObject())) {
                 $entity->setUser($userRepository->find($entity->getUser()));
             }

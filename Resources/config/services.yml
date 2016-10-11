@@ -17,6 +17,7 @@ services:
         arguments:
             - '@security.token_storage'
             - '@hackzilla_ticket.user_repository'
+            - '@security.authorization_checker'
 
     hackzilla_ticket.user_repository:
         class: Doctrine\ORM\EntityRepository

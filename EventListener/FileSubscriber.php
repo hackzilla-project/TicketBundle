@@ -30,6 +30,10 @@ class FileSubscriber implements EventSubscriberInterface
     {
         /** @var MessageAttachmentInterface $object */
         $object = $event->getObject();
+        // Ignore any entity lifecycle events not relating to this bundles entities.
+        if (!($object instanceof MessageAttachmentInterface)) {
+            return;
+        }
         $file = $object->getAttachmentFile();
         $object->setAttachmentSize($file->getSize());
         $object->setAttachmentMimeType($file->getMimeType());
