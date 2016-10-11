@@ -43,7 +43,7 @@
                     {# <br />{{ 'LABEL_STATUS'|trans }} <span class="label label-{{ message.status ? 'success' : 'danger' }}">{{ message.statusString|trans }}</span> #}
 
                     <span class="pull-right">
-                {% if message.userObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span
+                {% if message.userObject != ticket.userCreatedObject %}<span
                         class="label label-danger">{{ 'LABEL_ADMIN'|trans }}</span> {% endif %}
                         <small><i>{{ message.createdAt|date('LABEL_DATE_TIME_FORMAT'|trans) }}</i></small>
             </span>
