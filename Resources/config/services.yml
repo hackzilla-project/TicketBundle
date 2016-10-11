@@ -6,12 +6,6 @@ services:
         tags:
             - { name: doctrine.event_listener, event: postLoad }
 
-    hackzilla_ticket_user_extension:
-        class: Hackzilla\Bundle\TicketBundle\TwigExtension\UserExtension
-        arguments: ['@hackzilla_ticket.user_manager']
-        tags:
-            - { name: twig.extension }
-
     hackzilla_ticket.user_manager:
         class: Hackzilla\Bundle\TicketBundle\Manager\UserManager
         arguments:
