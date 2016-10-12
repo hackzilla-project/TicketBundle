@@ -15,9 +15,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TicketMessageType extends AbstractType
 {
-    private $userManager;
-    private $features;
-    private $messageClass;
+    protected $userManager;
+    protected $features;
+    protected $messageClass;
 
     public function __construct(UserManagerInterface $userManager, TicketFeatures $features, $messageClass)
     {
