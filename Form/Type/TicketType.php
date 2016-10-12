@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TicketType extends AbstractType
 {
-    private $ticketClass;
+    protected $ticketClass;
 
     public function __construct($ticketClass)
     {
