@@ -56,11 +56,11 @@ services:
             - '@hackzilla_ticket.features'
         tags:
             - { name: twig.extension }
-            
+
     hackzilla_ticket.component.twig_extension.ticket_global:
         class: Hackzilla\Bundle\TicketBundle\TwigExtension\TicketGlobalExtension
         arguments:
-            - '@service_container'
+            - '%hackzilla_ticket.templates%'
         tags:
             - { name: twig.extension }
 

@@ -2,21 +2,16 @@
 
 namespace Hackzilla\Bundle\TicketBundle\TwigExtension;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 class TicketGlobalExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected $container;
+    protected $templates = [];
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param array $templates
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct($templates)
     {
-        $this->container = $container;
+        $this->templates = $templates;
     }
 
     /**
@@ -27,12 +22,12 @@ class TicketGlobalExtension extends \Twig_Extension implements \Twig_Extension_G
         return [
             'hackzilla_ticket' => [
                 'templates' => [
-                    'index'           => $this->container->getParameter('hackzilla_ticket.templates.index'),
-                    'new'             => $this->container->getParameter('hackzilla_ticket.templates.new'),
-                    'show'            => $this->container->getParameter('hackzilla_ticket.templates.show'),
-                    'show_attachment' => $this->container->getParameter('hackzilla_ticket.templates.show_attachment'),
-                    'prototype'       => $this->container->getParameter('hackzilla_ticket.templates.prototype'),
-                    'macros'          => $this->container->getParameter('hackzilla_ticket.templates.macros'),
+                    'index'           => $this->templates['index'],
+                    'new'             => $this->templates['new'],
+                    'show'            => $this->templates['show'],
+                    'show_attachment' => $this->templates['show_attachment'],
+                    'prototype'       => $this->templates['prototype'],
+                    'macros'          => $this->templates['macros'],
                 ],
             ],
         ];
