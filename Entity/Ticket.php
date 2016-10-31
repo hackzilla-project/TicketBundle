@@ -16,7 +16,7 @@ class Ticket implements TicketInterface
      * @var int
      */
     protected $id;
-    
+
     /**
      * Get id.
      *

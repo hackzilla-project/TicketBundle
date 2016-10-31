@@ -3,7 +3,6 @@
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
@@ -22,8 +21,8 @@ class TicketManager implements TicketManagerInterface
     /**
      * TicketManager constructor.
      *
-     * @param string        $ticketClass
-     * @param string        $ticketMessageClass
+     * @param string $ticketClass
+     * @param string $ticketMessageClass
      */
     public function __construct($ticketClass, $ticketMessageClass)
     {
