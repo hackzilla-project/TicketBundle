@@ -63,6 +63,7 @@ class TicketManager implements TicketManagerInterface
      */
     public function createTicket()
     {
+        /** @var TicketInterface $ticket */
         $ticket = new $this->ticketClass();
         $ticket->setPriority(TicketMessageInterface::PRIORITY_MEDIUM);
         $ticket->setStatus(TicketMessageInterface::STATUS_OPEN);
@@ -79,6 +80,7 @@ class TicketManager implements TicketManagerInterface
      */
     public function createMessage(TicketInterface $ticket = null)
     {
+        /** @var TicketMessageInterface $ticket */
         $message = new $this->ticketMessageClass();
 
         if ($ticket) {
