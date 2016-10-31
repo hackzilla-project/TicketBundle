@@ -5,6 +5,7 @@ namespace Hackzilla\Bundle\TicketBundle\Controller;
 use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
+use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketEvents;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
@@ -75,7 +76,7 @@ class TicketController extends Controller
                 ->setUser($this->getUserManager()->getCurrentUser());
 
             $ticketManager->updateTicket($ticket, $message);
-            $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_CREATE, new TicketEvent($ticket));
+            $this->dispatchTicketEvent(TicketEvents::TICKET_CREATE, $ticket);
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
@@ -174,8 +175,7 @@ class TicketController extends Controller
         if ($form->isValid()) {
             $message->setUser($user);
             $ticketManager->updateTicket($ticket, $message);
-
-            $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_UPDATE, new TicketEvent($ticket));
+            $this->dispatchTicketEvent(TicketEvents::TICKET_UPDATE, $ticket);
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
@@ -224,12 +224,17 @@ class TicketController extends Controller
                 }
 
                 $ticketManager->deleteTicket($ticket);
-                $event = new TicketEvent($ticket);
-                $this->get('event_dispatcher')->dispatch(TicketEvents::TICKET_DELETE, $event);
+                $this->dispatchTicketEvent(TicketEvents::TICKET_DELETE, $ticket);
             }
         }
 
         return $this->redirect($this->generateUrl('hackzilla_ticket'));
+    }
+
+    private function dispatchTicketEvent($ticketEvent, TicketInterface $ticket)
+    {
+        $event = new TicketEvent($ticket);
+        $this->get('event_dispatcher')->dispatch($ticketEvent, $event);
     }
 
     /**
