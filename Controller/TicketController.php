@@ -136,11 +136,7 @@ class TicketController extends Controller
             $data['form'] = $this->createMessageForm($message)->createView();
         }
 
-        if ($currentUser && $this->getUserManager()->hasRole(
-                $currentUser,
-                TicketRole::ADMIN
-            )
-        ) {
+        if ($currentUser && $this->getUserManager()->hasRole($currentUser, TicketRole::ADMIN)) {
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
@@ -182,11 +178,7 @@ class TicketController extends Controller
 
         $data = ['ticket' => $ticket, 'form' => $form->createView()];
 
-        if ($user && $this->get('hackzilla_ticket.user_manager')->hasRole(
-                $user,
-                TicketRole::ADMIN
-            )
-        ) {
+        if ($user && $this->get('hackzilla_ticket.user_manager')->hasRole($user, TicketRole::ADMIN)) {
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
@@ -248,8 +240,7 @@ class TicketController extends Controller
     {
         return $this->createFormBuilder(['id' => $id])
             ->add('id', HiddenType::class)
-            ->getForm()
-        ;
+            ->getForm();
     }
 
     /**
@@ -262,9 +253,7 @@ class TicketController extends Controller
         $form = $this->createForm(
             TicketMessageType::class,
             $message,
-            [
-                'new_ticket' => false,
-            ]
+            ['new_ticket' => false]
         );
 
         return $form;
