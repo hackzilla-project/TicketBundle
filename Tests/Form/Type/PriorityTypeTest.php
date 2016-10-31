@@ -2,6 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
+use Hackzilla\Bundle\TicketBundle\Form\Type\PriorityType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class PriorityTypeTest extends TypeTestCase
@@ -10,7 +11,7 @@ class PriorityTypeTest extends TypeTestCase
 
     public function setUp()
     {
-        $this->object = new \Hackzilla\Bundle\TicketBundle\Form\Type\PriorityType();
+        $this->object = new PriorityType();
     }
 
     public function tearDown()
@@ -20,6 +21,6 @@ class PriorityTypeTest extends TypeTestCase
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->object));
+        $this->assertInstanceOf(PriorityType::class, $this->object);
     }
 }

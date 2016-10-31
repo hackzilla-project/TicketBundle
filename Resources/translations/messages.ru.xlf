@@ -2,205 +2,209 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ru" datatype="plaintext" original="file.ext">
     <body>
-      <trans-unit id="55d693439125751c5e0762c4ff66d20f" resname="STATUS_OPEN">
+      <trans-unit id="status_open">
         <source>STATUS_OPEN</source>
         <target>Открыто</target>
       </trans-unit>
-      <trans-unit id="ddc92f744da9975dd9267987fd651e1e" resname="STATUS_IN_PROGRESS">
+      <trans-unit id="status_in_progress">
         <source>STATUS_IN_PROGRESS</source>
         <target>В обработке</target>
       </trans-unit>
-      <trans-unit id="0422b025c6dea79e2776efecfc15351a" resname="STATUS_INFORMATION_REQUESTED">
+      <trans-unit id="status_information_requested">
         <source>STATUS_INFORMATION_REQUESTED</source>
         <target>Информация запрошена</target>
       </trans-unit>
-      <trans-unit id="0653f252fe1322e3368f963dd83eac05" resname="STATUS_ON_HOLD">
+      <trans-unit id="status_on_hold">
         <source>STATUS_ON_HOLD</source>
         <target>Заморожено</target>
       </trans-unit>
-      <trans-unit id="bae31d8b1537b695709790f7b97bb923" resname="STATUS_RESOLVED">
+      <trans-unit id="status_resolved">
         <source>STATUS_RESOLVED</source>
         <target>Выполнено</target>
       </trans-unit>
-      <trans-unit id="6dfa5b57e2c0f1301b992bb526299dce" resname="STATUS_CLOSED">
+      <trans-unit id="status_closed">
         <source>STATUS_CLOSED</source>
         <target>Закрыто</target>
       </trans-unit>
-      <trans-unit id="4a2343657e145cb3dab4f445d2c29b1f" resname="PRIORITY_LOW">
+      <trans-unit id="priority_low">
         <source>PRIORITY_LOW</source>
         <target>Низкий</target>
       </trans-unit>
-      <trans-unit id="7e5ab414d2d201947566a9c574a7b85f" resname="PRIORITY_MEDIUM">
+      <trans-unit id="priority_medium">
         <source>PRIORITY_MEDIUM</source>
         <target>Средний</target>
       </trans-unit>
-      <trans-unit id="47a10a0fba7f10a751e6ea38f3d6a1e3" resname="PRIORITY_HIGH">
+      <trans-unit id="priority_high">
         <source>PRIORITY_HIGH</source>
         <target>Высокий</target>
       </trans-unit>
-      <trans-unit id="7b8ea8ba0daa781605be2aae047212bf" resname="STATUS_INVALID">
+      <trans-unit id="status_invalid">
         <source>STATUS_INVALID</source>
         <target>Неверный статус</target>
       </trans-unit>
-      <trans-unit id="54cce79f32190db62f730e499ff99aac" resname="PRIORITY_INVALID">
+      <trans-unit id="priority_invalid">
         <source>PRIORITY_INVALID</source>
         <target>Неверный приоритет</target>
       </trans-unit>
-      <trans-unit id="14aa51c7e13f6b564d03fbf138d23563" resname="HEADING_SUBJECT">
+      <trans-unit id="heading_subject">
         <source>HEADING_SUBJECT</source>
         <target>Тема</target>
       </trans-unit>
-      <trans-unit id="5f12d5713b9cd128fb2689d78aef8b6e" resname="HEADING_STATUS">
+      <trans-unit id="heading_status">
         <source>HEADING_STATUS</source>
         <target>Статус</target>
       </trans-unit>
-      <trans-unit id="1700a718a761d29430e8f7a6434323ce" resname="HEADING_PRIORITY">
+      <trans-unit id="heading_priority">
         <source>HEADING_PRIORITY</source>
         <target>Приоритет</target>
       </trans-unit>
-      <trans-unit id="1ba15150a9320014e140733709fdf6de" resname="HEADING_MODIFIED">
+      <trans-unit id="heading_modified">
         <source>HEADING_MODIFIED</source>
         <target>Изменено</target>
       </trans-unit>
-      <trans-unit id="a2043c0c30b5c9d77c57f00051e59171" resname="HEADING_CREATED">
+      <trans-unit id="heading_created">
         <source>HEADING_CREATED</source>
         <target>Создано</target>
       </trans-unit>
-      <trans-unit id="a7c0e6f6e18e79046800cd265af911ed" resname="HEADING_TICKET_LIST">
+      <trans-unit id="heading_ticket_list">
         <source>HEADING_TICKET_LIST</source>
         <target>Список обращений</target>
       </trans-unit>
-      <trans-unit id="f934eb496c1ab70487444199974cc088" resname="HEADING_TICKET">
+      <trans-unit id="heading_ticket">
         <source>HEADING_TICKET</source>
         <target>Ticket</target>
       </trans-unit>
-      <trans-unit id="a01054829a6ee5e75790d88f8324cd4b" resname="HEADING_NEW_TICKET">
+      <trans-unit id="heading_new_ticket">
         <source>HEADING_NEW_TICKET</source>
         <target>Новое обращение</target>
       </trans-unit>
-      <trans-unit id="d00dfa73eeadb07d69ebcd13d2047034" resname="HEADING_TICKET_ID">
+      <trans-unit id="heading_ticket_id">
         <source>HEADING_TICKET_ID</source>
         <target>Обращение #%id%</target>
       </trans-unit>
-      <trans-unit id="3c84df876cb8126d6993c81dcce370b0" resname="HEADING_TICKET_THREAD">
+      <trans-unit id="heading_ticket_thread">
         <source>HEADING_TICKET_THREAD</source>
         <target>Сообщения</target>
       </trans-unit>
-      <trans-unit id="71b3e22650603379258cbce8ff95b432" resname="HEADING_LAST_MESSAGE_BY">
+      <trans-unit id="heading_last_message_by">
         <source>HEADING_LAST_MESSAGE_BY</source>
         <target>Последнее сообщение от </target>
       </trans-unit>
-      <trans-unit id="eacb4eec2b2bd482a058630d62505cf1" resname="HEADING_LAST_MODIFIED">
+      <trans-unit id="heading_last_modified">
         <source>HEADING_LAST_MODIFIED</source>
         <target>Последнее изменение</target>
       </trans-unit>
-      <trans-unit id="4ff402f1bafaefb064670c8482584274" resname="HEADING_AUTHOR">
+      <trans-unit id="heading_author">
         <source>HEADING_AUTHOR</source>
         <target>Автор</target>
       </trans-unit>
-      <trans-unit id="a2e61b4c70aee3661cccae14e0fbd1ad" resname="BUTTON_DELETE">
+      <trans-unit id="button_delete">
         <source>BUTTON_DELETE</source>
         <target>Удалить</target>
       </trans-unit>
-      <trans-unit id="d1a56130a3f3ba2c4867ffc1c3433a82" resname="BUTTON_BACK_TO_LIST">
+      <trans-unit id="button_back_to_list">
         <source>BUTTON_BACK_TO_LIST</source>
         <target>Обратно к списку</target>
       </trans-unit>
-      <trans-unit id="bf534b027e677eb70bfd14ec738fcf62" resname="BUTTON_UPDATE">
+      <trans-unit id="button_update">
         <source>BUTTON_UPDATE</source>
         <target>Обновить</target>
       </trans-unit>
-      <trans-unit id="ab8a2a298b2a4a1768fbd5a2d2b0af75" resname="BUTTON_CREATE">
+      <trans-unit id="button_create">
         <source>BUTTON_CREATE</source>
         <target>Создать</target>
       </trans-unit>
-      <trans-unit id="87c7ddf65ce68390b659bd7c978ec589" resname="BUTTON_NEW">
+      <trans-unit id="button_new">
         <source>BUTTON_NEW</source>
         <target>Новое обращение</target>
       </trans-unit>
-      <trans-unit id="3ed2efce4546a1375d679b794ba258e8" resname="BUTTON_TOGGLE_STATE">
+      <trans-unit id="button_toggle_state">
         <source>BUTTON_TOGGLE_STATE</source>
         <target>Показать обращения со статусом %state%</target>
       </trans-unit>
-      <trans-unit id="eb96e68446f7f0fc2141ff39e5658a4e" resname="LABEL_AUTHOR">
+      <trans-unit id="label_author">
         <source>LABEL_AUTHOR</source>
         <target>Автор</target>
       </trans-unit>
-      <trans-unit id="cabe6a6da9275d1eff8036b8d06e4faf" resname="LABEL_DATE">
+      <trans-unit id="label_date">
         <source>LABEL_DATE</source>
         <target>Дата</target>
       </trans-unit>
-      <trans-unit id="6cb763454eaeba42fe8fec6a3c5310f9" resname="LABEL_PRIORITY">
+      <trans-unit id="label_priority">
         <source>LABEL_PRIORITY</source>
         <target>Приоритет</target>
       </trans-unit>
-      <trans-unit id="a31dbacad3f74c2842802c2a1b16f8ef" resname="LABEL_STATUS">
+      <trans-unit id="label_status">
         <source>LABEL_STATUS</source>
         <target>Статус</target>
       </trans-unit>
-      <trans-unit id="22f3b4a31e19cd0405942414e37c6d12" resname="LABEL_MESSAGE">
+      <trans-unit id="label_message">
         <source>LABEL_MESSAGE</source>
         <target>Сообщение</target>
       </trans-unit>
-      <trans-unit id="cce1d6e9a3f1ff451b6b012da1b2b7d6" resname="LABEL_CREATED">
+      <trans-unit id="label_created">
         <source>LABEL_CREATED</source>
         <target>Создано</target>
       </trans-unit>
-      <trans-unit id="af51208ced696e63788863f5eb6ba3b4" resname="LABEL_CREATED_BY">
+      <trans-unit id="label_created_by">
         <source>LABEL_CREATED_BY</source>
         <target>Создано </target>
       </trans-unit>
-      <trans-unit id="8a0a84f5fe71ec85a729831cef25c720" resname="LABEL_ADMIN">
+      <trans-unit id="label_admin">
         <source>LABEL_ADMIN</source>
         <target>Администратор</target>
       </trans-unit>
-      <trans-unit id="e87f58eafd25b7770e8db37d717ca0e9" resname="LABEL_MARK_SOLVED">
+      <trans-unit id="label_mark_solved">
         <source>LABEL_MARK_SOLVED</source>
         <target>Пометить как "решено"</target>
       </trans-unit>
-      <trans-unit id="9e85864914543e3cf111c762df6216dd" resname="LABEL_ENTER_DETAILS">
+      <trans-unit id="label_enter_details">
         <source>LABEL_ENTER_DETAILS</source>
         <target>Детали</target>
       </trans-unit>
-      <trans-unit id="c59ba4f7eebf4b35e35eb89f1a78b9c1" resname="LABEL_ENTER_SUBJECT">
+      <trans-unit id="label_enter_subject">
         <source>LABEL_ENTER_SUBJECT</source>
         <target>Тема обращения</target>
       </trans-unit>
-      <trans-unit id="30d5f8766cf2673795d7694158bd749d" resname="LABEL_SUBJECT">
+      <trans-unit id="label_subject">
         <source>LABEL_SUBJECT</source>
         <target>Тема</target>
       </trans-unit>
-      <trans-unit id="5eb0466a9a70eb1ddb038707b585b2e3" resname="LABEL_DATE_FORMAT">
+      <trans-unit id="label_date_format">
         <source>LABEL_DATE_FORMAT</source>
         <target>Y/m/d</target>
       </trans-unit>
-      <trans-unit id="7b8bbf71a6c417647d537f436e801a87" resname="LABEL_DATE_TIME_FORMAT">
+      <trans-unit id="label_date_time_format">
         <source>LABEL_DATE_TIME_FORMAT</source>
         <target>Y/m/d H:i:s</target>
       </trans-unit>
-      <trans-unit id="b434b3fd94b9bc3ecd06fd063f0fa84d" resname="MESSAGE_NO_TICKETS">
+      <trans-unit id="message_no_tickets">
         <source>MESSAGE_NO_TICKETS</source>
         <target>Нет обращений</target>
       </trans-unit>
-      <trans-unit id="a88dd959f1c132b44849c2267af293c6" resname="MESSAGE_EMPTY">
+      <trans-unit id="message_empty">
         <source>MESSAGE_EMPTY</source>
         <target>-- Пустое сообщение --</target>
       </trans-unit>
-      <trans-unit id="f1e1bf23a2f154b1693ae9fb397ac9d2" resname="MESSAGE_TICKET_OPENED">
+      <trans-unit id="message_ticket_opened">
         <source>MESSAGE_TICKET_OPENED</source>
         <target>Обращение открыто с приоритетом: %priority%.</target>
       </trans-unit>
-      <trans-unit id="19b20742fdc39bdf3a39b6424a95cf31" resname="MESSAGE_STATUS_CHANGED">
+      <trans-unit id="message_status_changed">
         <source>MESSAGE_STATUS_CHANGED</source>
         <target>Статус был изменен на %status%.</target>
       </trans-unit>
-      <trans-unit id="9578eff95562cd6aacd798508c80a596" resname="MESSAGE_PRIORITY_CHANGED">
+      <trans-unit id="message_priority_changed">
         <source>MESSAGE_PRIORITY_CHANGED</source>
         <target>Приоритет был изменен на %priority%.</target>
       </trans-unit>
-      <trans-unit id="122955b5ac8c53c37ad1a7a4d04035ba" resname="ERROR_FIND_TICKET_ENTITY">
+      <trans-unit id="error_find_ticket_entity">
         <source>ERROR_FIND_TICKET_ENTITY</source>
         <target>Не вышло найти обращение.</target>
+      </trans-unit>
+      <trans-unit id="label_ticket_attachment">
+        <source>LABEL_ATTACHMENT</source>
+        <target>прикрепление</target>
       </trans-unit>
     </body>
   </file>

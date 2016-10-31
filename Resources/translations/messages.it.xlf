@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="it" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="status_open">
+        <source>STATUS_OPEN</source>
+        <target>aperto</target>
+      </trans-unit>
+      <trans-unit id="status_in_progress">
+        <source>STATUS_IN_PROGRESS</source>
+        <target>in avanzamento</target>
+      </trans-unit>
+      <trans-unit id="status_information_requested">
+        <source>STATUS_INFORMATION_REQUESTED</source>
+        <target>richieste informazioni</target>
+      </trans-unit>
+      <trans-unit id="status_on_hold">
+        <source>STATUS_ON_HOLD</source>
+        <target>in attesa</target>
+      </trans-unit>
+      <trans-unit id="status_resolved">
+        <source>STATUS_RESOLVED</source>
+        <target>risolto</target>
+      </trans-unit>
+      <trans-unit id="status_closed">
+        <source>STATUS_CLOSED</source>
+        <target>chiuso</target>
+      </trans-unit>
+      <trans-unit id="priority_low">
+        <source>PRIORITY_LOW</source>
+        <target>bassa</target>
+      </trans-unit>
+      <trans-unit id="priority_medium">
+        <source>PRIORITY_MEDIUM</source>
+        <target>media</target>
+      </trans-unit>
+      <trans-unit id="priority_high">
+        <source>PRIORITY_HIGH</source>
+        <target>alta</target>
+      </trans-unit>
+      <trans-unit id="status_invalid">
+        <source>STATUS_INVALID</source>
+        <target>invalido</target>
+      </trans-unit>
+      <trans-unit id="priority_invalid">
+        <source>PRIORITY_INVALID</source>
+        <target>invalida</target>
+      </trans-unit>
+      <trans-unit id="heading_subject">
+        <source>HEADING_SUBJECT</source>
+        <target>Oggetto</target>
+      </trans-unit>
+      <trans-unit id="heading_status">
+        <source>HEADING_STATUS</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="heading_priority">
+        <source>HEADING_PRIORITY</source>
+        <target>Priorità</target>
+      </trans-unit>
+      <trans-unit id="heading_modified">
+        <source>HEADING_MODIFIED</source>
+        <target>Modificato</target>
+      </trans-unit>
+      <trans-unit id="heading_created">
+        <source>HEADING_CREATED</source>
+        <target>Creato</target>
+      </trans-unit>
+      <trans-unit id="heading_ticket_list">
+        <source>HEADING_TICKET_LIST</source>
+        <target>Lista Ticket</target>
+      </trans-unit>
+      <trans-unit id="heading_ticket">
+        <source>HEADING_TICKET</source>
+        <target>Ticket</target>
+      </trans-unit>
+      <trans-unit id="heading_new_ticket">
+        <source>HEADING_NEW_TICKET</source>
+        <target>Nuovo Ticket</target>
+      </trans-unit>
+      <trans-unit id="heading_ticket_id">
+        <source>HEADING_TICKET_ID</source>
+        <target>Ticket #%id%</target>
+      </trans-unit>
+      <trans-unit id="heading_ticket_thread">
+        <source>HEADING_TICKET_THREAD</source>
+        <target>Discussione del Ticket</target>
+      </trans-unit>
+      <trans-unit id="heading_last_message_by">
+        <source>HEADING_LAST_MESSAGE_BY</source>
+        <target>Ultimo Messaggio Di</target>
+      </trans-unit>
+      <trans-unit id="heading_last_modified">
+        <source>HEADING_LAST_MODIFIED</source>
+        <target>Ultima Modifica</target>
+      </trans-unit>
+      <trans-unit id="heading_author">
+        <source>HEADING_AUTHOR</source>
+        <target>Autore</target>
+      </trans-unit>
+      <trans-unit id="button_delete">
+        <source>BUTTON_DELETE</source>
+        <target>Elimina</target>
+      </trans-unit>
+      <trans-unit id="button_back_to_list">
+        <source>BUTTON_BACK_TO_LIST</source>
+        <target>Torna alla lista</target>
+      </trans-unit>
+      <trans-unit id="button_update">
+        <source>BUTTON_UPDATE</source>
+        <target>Aggiorna</target>
+      </trans-unit>
+      <trans-unit id="button_create">
+        <source>BUTTON_CREATE</source>
+        <target>Crea</target>
+      </trans-unit>
+      <trans-unit id="button_new">
+        <source>BUTTON_NEW</source>
+        <target>Nuovo Ticket</target>
+      </trans-unit>
+      <trans-unit id="button_toggle_state">
+        <source>BUTTON_TOGGLE_STATE</source>
+        <target>Vedi %state% ticket</target>
+      </trans-unit>
+      <trans-unit id="label_author">
+        <source>LABEL_AUTHOR</source>
+        <target>Autore</target>
+      </trans-unit>
+      <trans-unit id="label_date">
+        <source>LABEL_DATE</source>
+        <target>Data</target>
+      </trans-unit>
+      <trans-unit id="label_priority">
+        <source>LABEL_PRIORITY</source>
+        <target>Priorità</target>
+      </trans-unit>
+      <trans-unit id="label_status">
+        <source>LABEL_STATUS</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="label_message">
+        <source>LABEL_MESSAGE</source>
+        <target>Messaggio</target>
+      </trans-unit>
+      <trans-unit id="label_created">
+        <source>LABEL_CREATED</source>
+        <target>Creato</target>
+      </trans-unit>
+      <trans-unit id="label_created_by">
+        <source>LABEL_CREATED_BY</source>
+        <target>Creato da</target>
+      </trans-unit>
+      <trans-unit id="label_admin">
+        <source>LABEL_ADMIN</source>
+        <target>Amministratore</target>
+      </trans-unit>
+      <trans-unit id="label_mark_solved">
+        <source>LABEL_MARK_SOLVED</source>
+        <target>Segna come risolto</target>
+      </trans-unit>
+      <trans-unit id="label_enter_details">
+        <source>LABEL_ENTER_DETAILS</source>
+        <target>Inserisci i dettagli</target>
+      </trans-unit>
+      <trans-unit id="label_enter_subject">
+        <source>LABEL_ENTER_SUBJECT</source>
+        <target>Inserisci l'oggetto</target>
+      </trans-unit>
+      <trans-unit id="label_subject">
+        <source>LABEL_SUBJECT</source>
+        <target>Oggetto</target>
+      </trans-unit>
+      <trans-unit id="label_date_format">
+        <source>LABEL_DATE_FORMAT</source>
+        <target>d/m/Y</target>
+      </trans-unit>
+      <trans-unit id="label_date_time_format">
+        <source>LABEL_DATE_TIME_FORMAT</source>
+        <target>d/m/Y H:i:s</target>
+      </trans-unit>
+      <trans-unit id="message_no_tickets">
+        <source>MESSAGE_NO_TICKETS</source>
+        <target>Nessun ticket trovato</target>
+      </trans-unit>
+      <trans-unit id="message_empty">
+        <source>MESSAGE_EMPTY</source>
+        <target>-- Il messaggio è vuoto --</target>
+      </trans-unit>
+      <trans-unit id="message_ticket_opened">
+        <source>MESSAGE_TICKET_OPENED</source>
+        <target>Ticket aperto con priorità: %priority%.</target>
+      </trans-unit>
+      <trans-unit id="message_status_changed">
+        <source>MESSAGE_STATUS_CHANGED</source>
+        <target>Lo status è stato cambiato in %status%.</target>
+      </trans-unit>
+      <trans-unit id="message_priority_changed">
+        <source>MESSAGE_PRIORITY_CHANGED</source>
+        <target>La priority è stata cambiata in %priority%.</target>
+      </trans-unit>
+      <trans-unit id="error_find_ticket_entity">
+        <source>ERROR_FIND_TICKET_ENTITY</source>
+        <target>Impossible trovare il ticket.</target>
+      </trans-unit>
+      <trans-unit id="label_ticket_attachment">
+        <source>LABEL_ATTACHMENT</source>
+        <target>Allegato</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

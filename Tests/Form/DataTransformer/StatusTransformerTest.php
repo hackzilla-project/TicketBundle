@@ -3,6 +3,7 @@
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\DataTransformer;
 
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class StatusTransformerTest extends WebTestCase
@@ -11,7 +12,7 @@ class StatusTransformerTest extends WebTestCase
 
     public function setUp()
     {
-        $this->object = new \Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer();
+        $this->object = new StatusTransformer();
     }
 
     public function tearDown()
@@ -21,7 +22,7 @@ class StatusTransformerTest extends WebTestCase
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->object));
+        $this->assertInstanceOf(StatusTransformer::class, $this->object);
     }
 
     public function testTransform()

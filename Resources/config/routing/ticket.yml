@@ -3,7 +3,7 @@ hackzilla_ticket:
     defaults: { _controller: "HackzillaTicketBundle:Ticket:index" }
 
 hackzilla_ticket_show:
-    path:  /{id}/show
+    path:  /{ticketId}/show
     defaults: { _controller: "HackzillaTicketBundle:Ticket:show" }
 
 hackzilla_ticket_new:
@@ -16,10 +16,14 @@ hackzilla_ticket_create:
     methods: post
 
 hackzilla_ticket_delete:
-    path:  /{id}/delete
+    path:  /{ticketId}/delete
     defaults: { _controller: "HackzillaTicketBundle:Ticket:delete" }
     methods: post|delete
 
 hackzilla_ticket_reply:
-    path:  /{id}/reply
+    path:  /{ticketId}/reply
     defaults: { _controller: "HackzillaTicketBundle:Ticket:reply" }
+
+hackzilla_ticket_attachment:
+    path:  /attachment/{ticketMessageId}/download
+    defaults: { _controller: "HackzillaTicketBundle:TicketAttachment:download" }

@@ -28,6 +28,15 @@ class HackzillaTicketExtension extends Extension
         $container->setParameter('hackzilla_ticket.model.user.class', $config['user_class']);
         $container->setParameter('hackzilla_ticket.model.ticket.class', $config['ticket_class']);
         $container->setParameter('hackzilla_ticket.model.message.class', $config['message_class']);
+
+        $container->setParameter('hackzilla_ticket.features', $config['features']);
+        
+        $container->setParameter('hackzilla_ticket.templates.index', $config['templates']['index']);
+        $container->setParameter('hackzilla_ticket.templates.new', $config['templates']['new']);
+        $container->setParameter('hackzilla_ticket.templates.prototype', $config['templates']['prototype']);
+        $container->setParameter('hackzilla_ticket.templates.show', $config['templates']['show']);
+        $container->setParameter('hackzilla_ticket.templates.show_attachment', $config['templates']['show_attachment']);
+        $container->setParameter('hackzilla_ticket.templates.macros', $config['templates']['macros']);
     }
 
     public static function bundleDirectory()

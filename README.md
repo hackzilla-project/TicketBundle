@@ -13,9 +13,12 @@ Languages: English, French, Russian, German and Spanish.
 
 * PHP >= 5.6
 * Symfony ~2.8|~3.0
-* FOSUserBundle
 * Knp Paginator
 * Bootstrap v3 (optional) see: http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme
+
+## Optional Requirements
+
+* FOSUserBundle
 
 
 ## Version Matrix
@@ -39,61 +42,34 @@ See [Ticket Bundle Demo App](https://github.com/hackzilla/TicketBundleDemoApp) f
 * [Generic Installation](Resources/doc/setup/other.md)
 
 
-## Events
 
-TicketBundle show fires events for creating, updating, and deleting of tickets.
+## Optional Features
 
-* hackzilla.ticket.create
-* hackzilla.ticket.update
-* hackzilla.ticket.delete
+These optional features that can be turned on or off.
 
-See for example of how to create listener: http://symfony.com/doc/current/cookbook/service_container/event_listener.html
+### Features
 
+* [Attachments](Resources/doc/setup/feature/attachments.md)
+* [Custom Entities](Resources/doc/setup/feature/custom-entities.md)
+* [Events](Resources/doc/setup/feature/events.md)
 
-Add your user, ticket and ticket message entities into your config.
+## Custom Templates (Optional)
 
-```yaml
+```
+config.yml
+
 hackzilla_ticket:
-    user_class:             AppBundle\Entity\User
-    ticket_class:           AppBundle\Entity\Ticket
-    message_class:          AppBundle\Entity\Message
+    templates: 
+        index: 'YOURTicketBundle:Ticket:index.html.twig'
+        new: 'YOURTicketBundle:Ticket:new.html.twig'
+        prototype: 'YOURTicketBundle:Ticket:prototype.html.twig'
+        show: 'YOURTicketBundle:Ticket:show.html.twig'
+        show_attachment: 'YOURTicketBundle:Ticket:show_attachment.html.twig'
 ```
 
-Your entities  needs to implement:
+## Migrate a Previous Version
 
-| Entity | Interface |
-|--------|-------|
-| User | ```Hackzilla\Bundle\TicketBundle\Model\UserInterface``` |
-| Ticket | ```Hackzilla\Bundle\TicketBundle\Model\MessageInterface``` |
-| Message | ```Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface``` |
-
-## Migration from v2 to v3
-
-Ticket and TicketMessage entities still exist and the config will default to them if not overridden.
-
-```yaml
-hackzilla_ticket:
-    user_class:             AppBundle\Entity\User
-    ticket_class:           Hackzilla\Bundle\TicketBundle\Entity\Ticket
-    message_class:          Hackzilla\Bundle\TicketBundle\Entity\TicketMessage
-```
-
-Any reference to TicketMessage constants will need to use TicketMessageInterface.
-
-## Migrating from v1 to v2
-
-Add your user class into your config.
-
-```yaml
-hackzilla_ticket:
-    user_class:             AppBundle\Entity\User
-```
-
-```Hackzilla\Bundle\TicketBundle\User\UserInterface``` has been replaced with ```Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface```
-
-Your user class needs to implement ```Hackzilla\Bundle\TicketBundle\Model\UserInterface```
-
-Roles are now checked against the User
+* [Information moved](Resources/doc/migrate/index.md)
 
 
 ## Pull Requests

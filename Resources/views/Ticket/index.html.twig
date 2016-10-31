@@ -1,5 +1,5 @@
 {% extends 'HackzillaTicketBundle::layout.html.twig' %}
-{% import 'HackzillaTicketBundle:Macros:macros.html.twig' as macros %}
+{% import hackzilla_ticket.templates.macros as macros %}
 
 {% block hackzilla_ticket_content -%}
     <h1>{{ 'HEADING_TICKET_LIST'|trans }}</h1>
@@ -51,8 +51,8 @@
         <tbody>
         {% for entity in pagination %}
             <tr>
-                <td><a href="{{ path('hackzilla_ticket_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td><a href="{{ path('hackzilla_ticket_show', { 'id': entity.id }) }}">{{ entity.subject }}</a></td>
+                <td><a href="{{ path('hackzilla_ticket_show', { 'ticketId': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('hackzilla_ticket_show', { 'ticketId': entity.id }) }}">{{ entity.subject }}</a></td>
                 <td>{{ entity.userCreatedObject }}</td>
                 <td>{{ macros.status_btn(entity.status, entity.statusString|trans, true) }}</td>
                 <td>{{ macros.priority_btn(entity.priority, entity.priorityString|trans, true) }}</td>

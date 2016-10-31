@@ -9,14 +9,19 @@
                 {{ form_label(form.subject, '', { 'label_attr': {'class': 'col-lg-2 col-md-2 col-sm-2 control-label'} }) }}
                 <div class="col-lg-8 col-md-8 col-sm-8">
                     {{ form_widget(form.subject, { 'attr': {'class': 'form-control', 'placeholder': 'LABEL_ENTER_SUBJECT' } }) }}
+                    {{ form_errors(form.subject) }}
                 </div>
             </div>
 
-            {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form.messages.vars.prototype} %}
+            {% if form.messages|length == 0 %}
+                {% include hackzilla_ticket.templates.prototype with {'form': form.messages.vars.prototype} %}
+            {% else %}
+                {% include hackzilla_ticket.templates.prototype with {'form': form.messages.__name__} %}
+            {% endif %}
 
             {{ form_rest(form) }}
 
-            <div class="form-group">
+            <div class="form-group row">
                 <div class="col-lg-offset-2 col-lg-10 col-md-offset-2 col-md-10 col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-primary">{{ 'BUTTON_CREATE'|trans }}</button>
 

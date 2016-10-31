@@ -2,6 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\DependencyInjection;
 
+use Hackzilla\Bundle\TicketBundle\DependencyInjection\HackzillaTicketExtension;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class HackzillaTicketExtensionTest extends WebTestCase
@@ -10,7 +11,7 @@ class HackzillaTicketExtensionTest extends WebTestCase
 
     public function setUp()
     {
-        $this->object = new \Hackzilla\Bundle\TicketBundle\DependencyInjection\HackzillaTicketExtension();
+        $this->object = new HackzillaTicketExtension();
     }
 
     public function tearDown()
@@ -20,6 +21,6 @@ class HackzillaTicketExtensionTest extends WebTestCase
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->object));
+        $this->assertInstanceOf(HackzillaTicketExtension::class, $this->object);
     }
 }

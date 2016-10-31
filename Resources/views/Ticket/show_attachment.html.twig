@@ -1,0 +1,8 @@
+{% if message.attachmentName %}
+<br>
+<div class="ticket_attachment">
+    <span class="glyphicon glyphicon-paperclip"></span>
+    <a href="{{ path('hackzilla_ticket_attachment', {ticketMessageId: message.id}) }}">{{ message.attachmentName }}</a>
+    {% if message.attachmentSize is not null %}{{ macros.bytesToSize(message.attachmentSize) }}{% endif %}
+</div>
+{% endif %}

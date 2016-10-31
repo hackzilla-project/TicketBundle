@@ -3,31 +3,58 @@
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class TicketManager implements TicketManagerInterface
 {
+    private $translator;
     private $objectManager;
-    private $repository;
+    private $ticketRepository;
+    private $messageRepository;
     private $ticketClass;
     private $ticketMessageClass;
 
     /**
      * TicketManager constructor.
      *
-     * @param ObjectManager $om
      * @param string        $ticketClass
      * @param string        $ticketMessageClass
      */
-    public function __construct(ObjectManager $om, $ticketClass, $ticketMessageClass)
+    public function __construct($ticketClass, $ticketMessageClass)
     {
-        $this->objectManager = $om;
-        $this->repository = $om->getRepository($ticketClass);
         $this->ticketClass = $ticketClass;
         $this->ticketMessageClass = $ticketMessageClass;
+    }
+
+    /**
+     * @param ObjectManager $om
+     *
+     * @return $this
+     */
+    public function setEntityManager(ObjectManager $om)
+    {
+        $this->objectManager = $om;
+        $this->ticketRepository = $om->getRepository($this->ticketClass);
+        $this->messageRepository = $om->getRepository($this->ticketMessageClass);
+
+        return $this;
+    }
+
+    /**
+     * @param TranslatorInterface $translator
+     *
+     * @return $this
+     */
+    public function setTranslator(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+
+        return $this;
     }
 
     /**
@@ -37,17 +64,33 @@ class TicketManager implements TicketManagerInterface
      */
     public function createTicket()
     {
-        return new $this->ticketClass();
+        $ticket = new $this->ticketClass();
+        $ticket->setPriority(TicketMessageInterface::PRIORITY_MEDIUM);
+        $ticket->setStatus(TicketMessageInterface::STATUS_OPEN);
+
+        return $ticket;
     }
 
     /**
      * Create a new instance of TicketMessage Entity.
      *
+     * @param TicketInterface $ticket
+     *
      * @return TicketMessageInterface
      */
-    public function createMessage()
+    public function createMessage(TicketInterface $ticket = null)
     {
-        return new $this->ticketMessageClass();
+        $message = new $this->ticketMessageClass();
+
+        if ($ticket) {
+            $message->setPriority($ticket->getPriority());
+            $message->setStatus($ticket->getStatus());
+            $message->setTicket($ticket);
+        } else {
+            $message->setStatus(TicketMessage::STATUS_OPEN);
+        }
+
+        return $message;
     }
 
     /**
@@ -61,10 +104,11 @@ class TicketManager implements TicketManagerInterface
      */
     public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null)
     {
-        if (!\is_null($ticket)) {
+        if (is_null($ticket->getId())) {
             $this->objectManager->persist($ticket);
         }
         if (!\is_null($message)) {
+            $message->setTicket($ticket);
             $this->objectManager->persist($message);
         }
         $this->objectManager->flush();
@@ -90,7 +134,31 @@ class TicketManager implements TicketManagerInterface
      */
     public function findTickets()
     {
-        return $this->repository->findAll();
+        return $this->ticketRepository->findAll();
+    }
+
+    /**
+     * Find ticket in the database.
+     *
+     * @param int $ticketId
+     *
+     * @return TicketInterface
+     */
+    public function getTicketById($ticketId)
+    {
+        return $this->ticketRepository->find($ticketId);
+    }
+
+    /**
+     * Find message in the database.
+     *
+     * @param int $ticketMessageId
+     *
+     * @return TicketMessageInterface
+     */
+    public function getMessageById($ticketMessageId)
+    {
+        return $this->messageRepository->find($ticketMessageId);
     }
 
     /**
@@ -102,7 +170,7 @@ class TicketManager implements TicketManagerInterface
      */
     public function findTicketsBy(array $criteria)
     {
-        return $this->repository->findBy($criteria);
+        return $this->ticketRepository->findBy($criteria);
     }
 
     /**
@@ -114,7 +182,7 @@ class TicketManager implements TicketManagerInterface
      */
     public function getTicketList(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
     {
-        $query = $this->repository->createQueryBuilder('t')
+        $query = $this->ticketRepository->createQueryBuilder('t')
 //            ->select($this->ticketClass.' t')
             ->orderBy('t.lastMessage', 'DESC');
 
@@ -166,7 +234,7 @@ class TicketManager implements TicketManagerInterface
         $closeBeforeDate = new \DateTime();
         $closeBeforeDate->sub(new \DateInterval('P'.$days.'D'));
 
-        $query = $this->repository->createQueryBuilder('t')
+        $query = $this->ticketRepository->createQueryBuilder('t')
 //            ->select($this->ticketClass.' t')
             ->where('t.status = :status')
             ->andWhere('t.lastMessage < :closeBeforeDate')
@@ -179,12 +247,11 @@ class TicketManager implements TicketManagerInterface
     /**
      * Lookup status code.
      *
-     * @param object $translator
      * @param string $statusStr
      *
      * @return int
      */
-    public function getTicketStatus($translator, $statusStr)
+    public function getTicketStatus($statusStr)
     {
         static $statuses = false;
 
@@ -192,7 +259,7 @@ class TicketManager implements TicketManagerInterface
             $statuses = [];
 
             foreach (TicketMessageInterface::STATUSES as $id => $value) {
-                $statuses[$id] = $translator->trans($value);
+                $statuses[$id] = $this->translator->trans($value);
             }
         }
 
@@ -202,12 +269,11 @@ class TicketManager implements TicketManagerInterface
     /**
      * Lookup priority code.
      *
-     * @param object $translator
      * @param string $priorityStr
      *
      * @return int
      */
-    public function getTicketPriority($translator, $priorityStr)
+    public function getTicketPriority($priorityStr)
     {
         static $priorities = false;
 
@@ -215,7 +281,7 @@ class TicketManager implements TicketManagerInterface
             $priorities = [];
 
             foreach (TicketMessageInterface::PRIORITIES as $id => $value) {
-                $priorities[$id] = $translator->trans($value);
+                $priorities[$id] = $this->translator->trans($value);
             }
         }
 

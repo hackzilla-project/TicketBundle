@@ -43,13 +43,16 @@
                     {# <br />{{ 'LABEL_STATUS'|trans }} <span class="label label-{{ message.status ? 'success' : 'danger' }}">{{ message.statusString|trans }}</span> #}
 
                     <span class="pull-right">
-                {% if message.userObject|isTicketAdmin('ROLE_TICKET_ADMIN') %}<span
+                {% if message.userObject != ticket.userCreatedObject %}<span
                         class="label label-danger">{{ 'LABEL_ADMIN'|trans }}</span> {% endif %}
                         <small><i>{{ message.createdAt|date('LABEL_DATE_TIME_FORMAT'|trans) }}</i></small>
             </span>
                 </div>
                 <div class="panel-body">
                     {{ message.message|nl2br }}
+                    {% if(hasTicketFeature('attachment')) %}
+                        {{ include('@HackzillaTicket/Ticket/show_attachment.html.twig', {'message': message}) }}
+                    {% endif %}
                 </div>
             </div>
         {% endif %}
@@ -58,12 +61,12 @@
         {% set previousPriority = message.priority %}
     {% endfor %}
 
-    <hr/>
+    <hr />
 
     {% if form is defined %}
         <div class="well well-sm">
-            {{ form_start(form, {'method': 'POST', 'action': path('hackzilla_ticket_reply', {'id': ticket.id})}) }}
-            {% include 'HackzillaTicketBundle:Ticket:prototype.html.twig' with {'form': form} %}
+            {{ form_start(form, {'method': 'POST', 'action': path('hackzilla_ticket_reply', {'ticketId': ticket.id})}) }}
+            {% include hackzilla_ticket.templates.prototype with {'form': form} %}
 
             {{ form_rest(form) }}
 
@@ -75,7 +78,7 @@
     {% endif %}
 
     {% if delete_form is defined %}
-        {{ form_start(delete_form, {'method': 'POST', 'action': path('hackzilla_ticket_delete', {'id': ticket.id}), 'attr': {'class': 'text-right'}}) }}
+        {{ form_start(delete_form, {'method': 'POST', 'action': path('hackzilla_ticket_delete', {'ticketId': ticket.id}), 'attr': {'class': 'text-right'}}) }}
         <input type="hidden" name="_method" value="DELETE"/>
         {{ form_widget(delete_form) }}
 

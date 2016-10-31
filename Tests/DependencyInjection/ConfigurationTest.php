@@ -2,6 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\DependencyInjection;
 
+use Hackzilla\Bundle\TicketBundle\DependencyInjection\Configuration;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ConfigurationTest extends WebTestCase
@@ -10,7 +11,7 @@ class ConfigurationTest extends WebTestCase
 
     public function setUp()
     {
-        $this->object = new \Hackzilla\Bundle\TicketBundle\DependencyInjection\Configuration();
+        $this->object = new Configuration();
     }
 
     public function tearDown()
@@ -20,6 +21,6 @@ class ConfigurationTest extends WebTestCase
 
     public function testObjectCreated()
     {
-        $this->assertTrue(\is_object($this->object));
+        $this->assertInstanceOf(Configuration::class, $this->object);
     }
 }

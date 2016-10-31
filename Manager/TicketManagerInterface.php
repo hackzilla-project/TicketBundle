@@ -2,17 +2,28 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 interface TicketManagerInterface
 {
+    public function setEntityManager(ObjectManager $om);
+
+    public function setTranslator(TranslatorInterface $translator);
+
     public function createTicket();
 
-    public function createMessage();
+    public function createMessage(TicketInterface $ticket = null);
 
-    public function updateTicket(TicketInterface $ticket);
+    public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null);
 
     public function deleteTicket(TicketInterface $ticket);
+
+    public function getTicketById($ticketId);
+
+    public function getMessageById($ticketMessageId);
 
     public function findTickets();
 
@@ -37,20 +48,18 @@ interface TicketManagerInterface
     /**
      * Lookup status code.
      *
-     * @param object $translator
      * @param string $statusStr
      *
      * @return int
      */
-    public function getTicketStatus($translator, $statusStr);
+    public function getTicketStatus($statusStr);
 
     /**
      * Lookup priority code.
      *
-     * @param object $translator
      * @param string $priorityStr
      *
      * @return int
      */
-    public function getTicketPriority($translator, $priorityStr);
+    public function getTicketPriority($priorityStr);
 }
