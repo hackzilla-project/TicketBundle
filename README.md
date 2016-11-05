@@ -1,7 +1,5 @@
 # Ticketing Bundle v3
 
-Currently v3 is a work in progress, please use v2.
-
 Simple multilingual ticketing bundle to add to any project.
 Languages: English, French, Russian, German and Spanish.
 
