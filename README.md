@@ -51,6 +51,11 @@ These optional features that can be turned on or off.
 * [Custom Entities](Resources/doc/setup/feature/custom-entities.md)
 * [Events](Resources/doc/setup/feature/events.md)
 
+# 3rd Party Extensions
+
+# [Email Notification](https://github.com/flodaq/TicketNotificationBundle)
+
+
 ## Custom Templates (Optional)
 
 ```
