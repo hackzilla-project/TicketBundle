@@ -20,7 +20,7 @@ class StatusType extends AbstractType
             ]
         );
 
-        if (substr(\Symfony\Component\HttpKernel\Kernel::VERSION, 0, 2) === '2.') {
+        if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION === 2) {
             $resolver->setDefaults(
                 [
                     'choices_as_values' => true,
