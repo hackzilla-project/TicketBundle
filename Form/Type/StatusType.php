@@ -16,10 +16,17 @@ class StatusType extends AbstractType
 
         $resolver->setDefaults(
             [
-                'choices_as_values' => true,
                 'choices'           => array_flip($choices),
             ]
         );
+
+        if (substr(\Symfony\Component\HttpKernel\Kernel::VERSION, 0, 2) === '2.') {
+            $resolver->setDefaults(
+                [
+                    'choices_as_values' => true,
+                ]
+            );
+        }
     }
 
     public function getParent()
