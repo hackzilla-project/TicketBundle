@@ -75,7 +75,6 @@ class TicketController extends Controller
                 ->setUser($this->getUserManager()->getCurrentUser());
 
             $ticketManager->updateTicket($ticket, $message);
-            $this->dispatchTicketEvent(TicketEvents::TICKET_CREATE, $ticket);
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
@@ -170,7 +169,6 @@ class TicketController extends Controller
         if ($form->isValid()) {
             $message->setUser($user);
             $ticketManager->updateTicket($ticket, $message);
-            $this->dispatchTicketEvent(TicketEvents::TICKET_UPDATE, $ticket);
 
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
@@ -215,17 +213,10 @@ class TicketController extends Controller
                 }
 
                 $ticketManager->deleteTicket($ticket);
-                $this->dispatchTicketEvent(TicketEvents::TICKET_DELETE, $ticket);
             }
         }
 
         return $this->redirect($this->generateUrl('hackzilla_ticket'));
-    }
-
-    private function dispatchTicketEvent($ticketEvent, TicketInterface $ticket)
-    {
-        $event = new TicketEvent($ticket);
-        $this->get('event_dispatcher')->dispatch($ticketEvent, $event);
     }
 
     /**
