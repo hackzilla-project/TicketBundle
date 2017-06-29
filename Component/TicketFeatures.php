@@ -12,11 +12,15 @@ class TicketFeatures extends \Hackzilla\TicketMessage\Component\TicketFeatures
      */
     public function __construct(array $features, $messageClass)
     {
-        if (!empty($features['attachment']) && !is_a($messageClass, MessageAttachmentInterface::class, true)
-        ) {
-            $features['attachment'] = false;
-        }
-
         parent::__construct($features);
+        $attachmentFeature = \Hackzilla\TicketMessage\Component\TicketFeatures::TICKET_ATTACHMENT;
+
+        if (
+            is_a($messageClass, MessageAttachmentInterface::class, true) === false
+            &&
+            $this->hasFeature($attachmentFeature) === true
+        ) {
+            $this->unsetFeature($attachmentFeature);
+        }
     }
 }
