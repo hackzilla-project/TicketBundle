@@ -28,14 +28,12 @@ class TicketController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $userManager = $this->getUserManager();
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
         $ticketState = $request->get('state', $this->get('translator')->trans('STATUS_OPEN'));
         $ticketPriority = $request->get('priority', null);
 
         $query = $ticketManager->getTicketList(
-            $userManager,
             $ticketManager->getTicketStatus($ticketState),
             $ticketManager->getTicketPriority($ticketPriority)
         );
