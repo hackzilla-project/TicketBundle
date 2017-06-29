@@ -5,7 +5,6 @@ namespace Hackzilla\Bundle\TicketBundle\Manager\StorageManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Hackzilla\TicketMessage\Manager\StorageManagerInterface;
-use Hackzilla\TicketMessage\Manager\TicketInterface;
 use Hackzilla\TicketMessage\Manager\UserManagerInterface;
 use Hackzilla\TicketMessage\Model\TicketMessageInterface;
 
@@ -16,10 +15,10 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
     private $messageRepository;
 
     /**
-     * @param ObjectManager $om
+     * @param ObjectManager        $om
      * @param UserManagerInterface $userManager
-     * @param string $ticketClass
-     * @param string $ticketMessageClass
+     * @param string               $ticketClass
+     * @param string               $ticketMessageClass
      *
      * @return $this
      */
@@ -59,7 +58,7 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function findTicketsBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
@@ -67,7 +66,7 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTicketList($ticketStatus, $ticketPriority = null)
     {
@@ -114,7 +113,7 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getResolvedTicketOlderThan($days)
     {
