@@ -63,7 +63,7 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
      */
     public function findTicketsBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        // TODO: Implement findTicketsBy() method.
+        return $this->ticketRepository->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
