@@ -1,15 +1,16 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Manager;
+namespace Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 
 use Doctrine\ORM\EntityRepository;
-use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
-use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
+use Hackzilla\TicketMessage\Model\TicketInterface;
+use Hackzilla\TicketMessage\Model\UserInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
+use Hackzilla\TicketMessage\Manager\UserManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class UserManager implements UserManagerInterface
+class SymfonyUserManager implements UserManagerInterface
 {
     /**
      * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
@@ -85,7 +86,7 @@ class UserManager implements UserManagerInterface
     }
 
     /**
-     * @param \Hackzilla\Bundle\TicketBundle\Model\UserInterface|string $user
+     * @param UserInterface|string $user
      * @param TicketInterface                                           $ticket
      */
     public function hasPermission($user, TicketInterface $ticket)

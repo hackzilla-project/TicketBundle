@@ -6,13 +6,6 @@ services:
         tags:
             - { name: doctrine.event_listener, event: postLoad }
 
-    hackzilla_ticket.user_manager:
-        class: Hackzilla\Bundle\TicketBundle\Manager\UserManager
-        arguments:
-            - '@security.token_storage'
-            - '@hackzilla_ticket.user_repository'
-            - '@security.authorization_checker'
-
     hackzilla_ticket.user_repository:
         class: Doctrine\ORM\EntityRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
@@ -20,13 +13,15 @@ services:
             - '%hackzilla_ticket.model.user.class%'
 
     hackzilla_ticket.ticket_manager:
-        class: Hackzilla\Bundle\TicketBundle\Manager\TicketManager
+        class: Hackzilla\TicketMessage\Manager\TicketManager
         arguments:
             - '%hackzilla_ticket.model.ticket.class%'
             - '%hackzilla_ticket.model.message.class%'
         calls:
-            - [ setEntityManager, ['@doctrine.orm.entity_manager'] ]
-            - [ setTranslator, ['@translator'] ]
+            - [ setStorageManager, ['@hackzilla_ticket.storage_manager'] ]
+            - [ setEventManager, ['@hackzilla_ticket.event_manager'] ]
+            - [ setUserManager, ['@hackzilla_ticket.user_manager'] ]
+            - [ setTranslator, ['@hackzilla_ticket.translate_manager'] ]
 
     hackzilla_ticket.form.type.ticket:
         class: Hackzilla\Bundle\TicketBundle\Form\Type\TicketType
@@ -68,3 +63,48 @@ services:
         class: Hackzilla\Bundle\TicketBundle\EventListener\FileSubscriber
         tags:
             - { name: kernel.event_subscriber }
+
+### Event Managers
+
+    hackzilla_ticket.event_manager.nothing:
+        class: Hackzilla\Bundle\TicketBundle\Manager\EventManager\DoNothingEventManager
+
+    hackzilla_ticket.event_manager.symfony:
+        class: Hackzilla\Bundle\TicketBundle\Manager\EventManager\SymfonyEventManager
+        arguments:
+            - '@event_dispatcher'
+
+### Storage Managers
+
+    hackzilla_ticket.storage_manager.nothing:
+        class: Hackzilla\Bundle\TicketBundle\Manager\StorageManager\DoNothingStorageManager
+
+    hackzilla_ticket.storage_manager.doctrine_orm:
+        class: Hackzilla\Bundle\TicketBundle\Manager\StorageManager\DoctrineOrmStorageManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@hackzilla_ticket.user_manager'
+            - '%hackzilla_ticket.model.ticket.class%'
+            - '%hackzilla_ticket.model.message.class%'
+
+### User Managers
+
+    hackzilla_ticket.user_manager.nothing:
+        class: Hackzilla\Bundle\TicketBundle\Manager\UserManager\DoNothingUserManager
+
+    hackzilla_ticket.user_manager.symfony:
+        class: Hackzilla\Bundle\TicketBundle\Manager\UserManager\SymfonyUserManager
+        arguments:
+            - '@security.token_storage'
+            - '@hackzilla_ticket.user_repository'
+            - '@security.authorization_checker'
+
+### Translate Managers
+
+    hackzilla_ticket.translate_manager.nothing:
+        class: Hackzilla\Bundle\TicketBundle\Manager\TranslateManager\DoNothingTranslateManager
+
+    hackzilla_ticket.translate_manager.symfony:
+        class: Hackzilla\Bundle\TicketBundle\Manager\TranslateManager\SymfonyTranslateManager
+        arguments:
+            - '@translator'

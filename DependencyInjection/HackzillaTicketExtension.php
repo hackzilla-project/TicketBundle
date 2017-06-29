@@ -31,6 +31,12 @@ class HackzillaTicketExtension extends Extension
 
         $container->setParameter('hackzilla_ticket.features', $config['features']);
         $container->setParameter('hackzilla_ticket.templates', $config['templates']);
+
+        $container->setAlias('hackzilla_ticket.event_manager', $config['event_manager']);
+        $container->setAlias('hackzilla_ticket.storage_manager', $config['storage_manager']);
+        $container->setAlias('hackzilla_ticket.translate_manager', $config['translate_manager']);
+        $container->setAlias('hackzilla_ticket.user_manager', $config['user_manager']);
+
     }
 
     public static function bundleDirectory()
