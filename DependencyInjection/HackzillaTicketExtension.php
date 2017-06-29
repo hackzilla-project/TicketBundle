@@ -36,7 +36,6 @@ class HackzillaTicketExtension extends Extension
         $container->setAlias('hackzilla_ticket.storage_manager', $config['storage_manager']);
         $container->setAlias('hackzilla_ticket.translate_manager', $config['translate_manager']);
         $container->setAlias('hackzilla_ticket.user_manager', $config['user_manager']);
-
     }
 
     public static function bundleDirectory()

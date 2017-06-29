@@ -17,7 +17,7 @@ class SymfonyEventManager implements EventManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function handle($eventName, ...$params)
     {

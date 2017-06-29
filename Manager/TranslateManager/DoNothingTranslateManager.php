@@ -7,7 +7,7 @@ use Hackzilla\TicketMessage\Manager\TranslateManagerInterface;
 class DoNothingTranslateManager implements TranslateManagerInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function translate($string)
     {

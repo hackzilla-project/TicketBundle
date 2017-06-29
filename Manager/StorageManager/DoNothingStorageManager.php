@@ -29,7 +29,7 @@ class DoNothingStorageManager implements StorageManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function findTicketsBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
@@ -37,7 +37,7 @@ class DoNothingStorageManager implements StorageManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTicketList($ticketStatus, $ticketPriority = null)
     {
@@ -45,7 +45,7 @@ class DoNothingStorageManager implements StorageManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getResolvedTicketOlderThan($days)
     {

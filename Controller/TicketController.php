@@ -2,10 +2,8 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Controller;
 
-use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
-use Hackzilla\Bundle\TicketBundle\TicketEvents;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Hackzilla\TicketMessage\Manager\UserManagerInterface;
 use Hackzilla\TicketMessage\Model\TicketInterface;

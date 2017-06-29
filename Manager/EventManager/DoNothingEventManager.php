@@ -7,7 +7,7 @@ use Hackzilla\TicketMessage\Manager\EventManagerInterface;
 class DoNothingEventManager implements EventManagerInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function handle($event, ...$params)
     {

@@ -46,7 +46,6 @@ trait TicketTrait
      */
     protected $priority;
 
-
     /**
      * @Assert\Count(min = "1")
      * @Assert\Valid()

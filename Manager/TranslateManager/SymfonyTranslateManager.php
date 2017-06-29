@@ -18,7 +18,7 @@ class SymfonyTranslateManager implements TranslateManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function translate($string)
     {
