@@ -3,8 +3,8 @@
 namespace Hackzilla\Bundle\TicketBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\TicketMessage\Model\TicketInterface;
+use Hackzilla\TicketMessage\Model\TicketMessageInterface;
 
 class UserLoad
 {

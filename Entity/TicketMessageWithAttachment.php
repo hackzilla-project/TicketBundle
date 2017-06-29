@@ -4,8 +4,8 @@ namespace Hackzilla\Bundle\TicketBundle\Entity;
 
 use Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketFeature\MessageAttachmentTrait;
 use Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketMessageTrait;
-use Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\TicketMessage\Model\TicketFeature\MessageAttachmentInterface;
+use Hackzilla\TicketMessage\Model\TicketMessageInterface;
 
 /**
  * Ticket Message.

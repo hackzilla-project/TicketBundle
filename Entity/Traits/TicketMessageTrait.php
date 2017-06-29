@@ -2,9 +2,9 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Entity\Traits;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
+use Hackzilla\TicketMessage\Model\TicketInterface;
+use Hackzilla\TicketMessage\Model\TicketMessageInterface;
+use Hackzilla\TicketMessage\Model\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

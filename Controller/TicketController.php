@@ -5,10 +5,11 @@ namespace Hackzilla\Bundle\TicketBundle\Controller;
 use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
-use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketEvents;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
+use Hackzilla\TicketMessage\Manager\UserManagerInterface;
+use Hackzilla\TicketMessage\Model\TicketInterface;
+use Hackzilla\TicketMessage\Model\TicketMessageInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
@@ -260,7 +261,7 @@ class TicketController extends Controller
     }
 
     /**
-     * @return \Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface
+     * @return UserManagerInterface
      */
     private function getUserManager()
     {

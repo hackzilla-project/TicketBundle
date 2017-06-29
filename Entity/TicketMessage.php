@@ -3,7 +3,7 @@
 namespace Hackzilla\Bundle\TicketBundle\Entity;
 
 use Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketMessageTrait;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\TicketMessage\Model\TicketMessageInterface;
 
 /**
  * Ticket Message.

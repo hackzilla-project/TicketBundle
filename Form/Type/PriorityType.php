@@ -2,7 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\TicketMessage\Model\TicketMessageInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,7 +16,7 @@ class PriorityType extends AbstractType
 
         $resolver->setDefaults(
             [
-                'choices'           => array_flip($choices),
+                'choices' => array_flip($choices),
             ]
         );
 

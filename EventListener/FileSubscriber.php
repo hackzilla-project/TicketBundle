@@ -2,7 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\EventListener;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface;
+use Hackzilla\TicketMessage\Model\TicketFeature\MessageAttachmentInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Vich\UploaderBundle\Event as VichEvent;
 

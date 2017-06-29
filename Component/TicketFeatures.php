@@ -2,12 +2,10 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Component;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface;
+use Hackzilla\TicketMessage\Model\TicketFeature\MessageAttachmentInterface;
 
-class TicketFeatures
+class TicketFeatures extends \Hackzilla\TicketMessage\Component\TicketFeatures
 {
-    private $features;
-
     /**
      * @param array  $features
      * @param string $messageClass TicketMessage class
@@ -19,22 +17,6 @@ class TicketFeatures
             $features['attachment'] = false;
         }
 
-        $this->features = $features;
-    }
-
-    /**
-     * Check if feature exists or whether enabled.
-     *
-     * @param $feature
-     *
-     * @return bool|null
-     */
-    public function hasFeature($feature)
-    {
-        if (!isset($this->features[$feature])) {
-            return null;
-        }
-
-        return $this->features[$feature];
+        parent::__construct($features);
     }
 }
