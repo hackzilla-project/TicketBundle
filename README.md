@@ -10,23 +10,30 @@ Languages: English, French, Russian, German and Spanish.
 ## Requirements
 
 * PHP >= 5.6
-* Symfony ~2.8|~3.0
+* Symfony ~3.0
 * Knp Paginator
 * Bootstrap v3 (optional) see: http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme
 
 ## Optional Requirements
+
+### Storage
+
+* Doctrine
+
+### User Management
 
 * FOSUserBundle
 
 
 ## Version Matrix
 
-| Ticket Bundle                                                          | Symfony    | PHP   |
-| ---------------------------------------------------------------------- | ---------- | ----- |
-| [3.x](https://github.com/hackzilla/TicketBundle/tree/master) (master)  | ^2.8\|^3.0 | >=5.6 |
-| [2.x](https://github.com/hackzilla/TicketBundle/tree/2.x)              | ^2.7\|^3.0 | >=5.3 |
-| [1.x](https://github.com/hackzilla/TicketBundle/tree/1.x)              | ^2.3       | >=5.3 |
-| [0.x](https://github.com/hackzilla/TicketBundle/tree/0.9.x)            | ^2.3       | >=5.3 |
+| Ticket Bundle                                                          | Symfony    | PHP   | Supported |
+| ---------------------------------------------------------------------- | ---------- | ----- | --------- |
+| [4.x](https://github.com/hackzilla/TicketBundle/tree/master) (master)  | ^3.0       | >=5.6 | Yes   |
+| [3.x](https://github.com/hackzilla/TicketBundle/tree/3.x)           | ^2.8\|^3.0 | >=5.6 | Yes       |
+| [2.x](https://github.com/hackzilla/TicketBundle/tree/2.x)              | ^2.7\|^3.0 | >=5.3 | No        |
+| [1.x](https://github.com/hackzilla/TicketBundle/tree/1.x)              | ^2.3       | >=5.3 | No        |
+| [0.x](https://github.com/hackzilla/TicketBundle/tree/0.9.x)            | ^2.3       | >=5.3 | No        |
 
 
 ## Demo
