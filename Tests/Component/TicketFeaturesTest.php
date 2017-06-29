@@ -3,8 +3,8 @@
 namespace Hackzilla\Bundle\TicketBundle\Tests\Extension;
 
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment;
+use Hackzilla\TicketMessage\Entity\TicketMessage;
+use Hackzilla\TicketMessage\Entity\TicketMessageWithAttachment;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TicketFeaturesTest extends WebTestCase
@@ -48,8 +48,8 @@ class TicketFeaturesTest extends WebTestCase
     {
         return [
             [[], TicketMessage::class, null],
-            [['attachment' => true], TicketMessage::class, false],
-            [['attachment' => true], TicketMessageWithAttachment::class, true],
+            [['attachment'], TicketMessage::class, false],
+            [['attachment'], TicketMessageWithAttachment::class, true],
         ];
     }
 }
