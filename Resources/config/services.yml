@@ -21,7 +21,7 @@ services:
             - [ setStorageManager, ['@hackzilla_ticket.storage_manager'] ]
             - [ setEventManager, ['@hackzilla_ticket.event_manager'] ]
             - [ setUserManager, ['@hackzilla_ticket.user_manager'] ]
-            - [ setTranslator, ['@hackzilla_ticket.translate_manager'] ]
+            - [ setTranslateManager, ['@hackzilla_ticket.translate_manager'] ]
 
     hackzilla_ticket.form.type.ticket:
         class: Hackzilla\Bundle\TicketBundle\Form\Type\TicketType
