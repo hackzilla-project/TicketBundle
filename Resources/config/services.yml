@@ -9,12 +9,6 @@ services:
         tags:
             - { name: doctrine.event_listener, event: postLoad }
 
-    hackzilla_ticket.user_repository:
-        class: Doctrine\ORM\EntityRepository
-        factory: ['@doctrine.orm.default_entity_manager', getRepository]
-        arguments:
-            - '%hackzilla_ticket.model.user.class%'
-
     hackzilla_ticket.ticket_manager:
         class: Hackzilla\TicketMessage\Manager\TicketManager
         arguments:
