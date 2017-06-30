@@ -1,3 +1,6 @@
+parameters:
+    hackzilla_ticket_role: ROLE_TICKET_ADMIN
+
 services:
     hackzilla_ticket.listener:
         class: Hackzilla\Bundle\TicketBundle\EventListener\UserLoad
@@ -96,8 +99,8 @@ services:
         class: Hackzilla\Bundle\TicketBundle\Manager\UserManager\SymfonyUserManager
         arguments:
             - '@security.token_storage'
-            - '@hackzilla_ticket.user_repository'
             - '@security.authorization_checker'
+            - '%hackzilla_ticket_role%'
 
 ### Translate Managers
 

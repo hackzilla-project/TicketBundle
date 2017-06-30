@@ -97,7 +97,7 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
         $user = $this->userManager ? $this->userManager->getCurrentUser() : null;
 
         if (\is_object($user)) {
-            if (!$this->userManager->hasRole($user, TicketRole::ADMIN)) {
+            if (!$this->userManager->hasRole($user)) {
                 $query
                     ->andWhere('t.userCreated = :userId')
                     ->setParameter('userId', $user->getId());

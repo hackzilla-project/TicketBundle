@@ -132,7 +132,7 @@ class TicketController extends Controller
             $data['form'] = $this->createMessageForm($message)->createView();
         }
 
-        if ($currentUser && $this->getUserManager()->hasRole($currentUser, TicketRole::ADMIN)) {
+        if ($currentUser && $this->getUserManager()->hasRole($currentUser)) {
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
@@ -173,7 +173,7 @@ class TicketController extends Controller
 
         $data = ['ticket' => $ticket, 'form' => $form->createView()];
 
-        if ($user && $this->get('hackzilla_ticket.user_manager')->hasRole($user, TicketRole::ADMIN)) {
+        if ($user && $this->get('hackzilla_ticket.user_manager')->hasRole($user)) {
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
@@ -193,7 +193,7 @@ class TicketController extends Controller
         $userManager = $this->getUserManager();
         $user = $userManager->getCurrentUser();
 
-        if (!\is_object($user) || !$userManager->hasRole($user, TicketRole::ADMIN)) {
+        if (!\is_object($user) || !$userManager->hasRole($user)) {
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
         }
 
