@@ -39,7 +39,7 @@
     "require-dev": {
         "symfony/form": "^2.8 || ^3.0",
         "symfony/phpunit-bridge": "^2.8 || ^3.0",
-        "phpunit/phpunit": "^5.4",
+        "phpunit/phpunit": "^5.4 || ^6.1",
         "doctrine/orm": "^2.4.8",
         "doctrine/doctrine-bundle": "~1.4",
         "sllh/php-cs-fixer-styleci-bridge": "^1.5"
