@@ -2,8 +2,6 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 
-use Doctrine\ORM\EntityRepository;
-use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Hackzilla\TicketMessage\Manager\UserManagerInterface;
 use Hackzilla\TicketMessage\Model\TicketInterface;
 use Hackzilla\TicketMessage\Model\UserInterface;
@@ -23,23 +21,28 @@ class SymfonyUserManager implements UserManagerInterface
     private $authorizationChecker;
 
     /**
-     * @var \Doctrine\ORM\EntityRepository
+     * @var string
      */
-    private $userRepository;
+    private $userRole;
 
     /**
      * @param TokenStorage                  $tokenStorage
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param EntityRepository              $userRepository
+     * @param string                        $userRole
      */
     public function __construct(
         TokenStorage $tokenStorage,
-        EntityRepository $userRepository,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        $userRole
     ) {
         $this->tokenStorage = $tokenStorage;
-        $this->userRepository = $userRepository;
         $this->authorizationChecker = $authorizationChecker;
+
+        if (!is_string($userRole) && substr($userRole, 0, 5) !== 'ROLE_') {
+            throw new \InvalidArgumentException('User role needs to start with ROLE_');
+        }
+
+        $this->userRole = $userRole;
     }
 
     /**
@@ -57,32 +60,15 @@ class SymfonyUserManager implements UserManagerInterface
     }
 
     /**
-     * @param int $userId
-     *
-     * @return UserInterface|null
-     */
-    public function getUserById($userId)
-    {
-        if (!$userId) {
-            return;
-        }
-
-        $user = $this->userRepository->find($userId);
-
-        return $user;
-    }
-
-    /**
      * Current user has permission.
      *
      * @param UserInterface $user
-     * @param string        $role
      *
      * @return bool
      */
-    public function hasRole(UserInterface $user, $role)
+    public function hasRole(UserInterface $user)
     {
-        return $this->authorizationChecker->isGranted($role);
+        return $this->authorizationChecker->isGranted($this->userRole);
     }
 
     /**
@@ -93,7 +79,7 @@ class SymfonyUserManager implements UserManagerInterface
     {
         if (!\is_object($user) || (!$this->hasRole(
                     $user,
-                    TicketRole::ADMIN
+                    $this->userRole
                 ) && $ticket->getUserCreated() != $user->getId())
         ) {
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);

@@ -16,24 +16,13 @@ class DoNothingUserManager implements UserInterface
     }
 
     /**
-     * @param int $userId
-     *
-     * @return UserInterface|null
-     */
-    public function getUserById($userId)
-    {
-        return;
-    }
-
-    /**
      * Current user has permission.
      *
      * @param UserInterface $user
-     * @param string        $role
      *
      * @return bool
      */
-    public function hasRole(UserInterface $user, $role)
+    public function hasRole(UserInterface $user)
     {
         return false;
     }
