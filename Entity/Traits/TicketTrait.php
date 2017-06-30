@@ -2,10 +2,8 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Entity\Traits;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Hackzilla\TicketMessage\Model\TicketMessageInterface;
 use Hackzilla\TicketMessage\Model\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Ticket Trait.
@@ -47,10 +45,7 @@ trait TicketTrait
     protected $priority;
 
     /**
-     * @Assert\Count(min = "1")
-     * @Assert\Valid()
-     *
-     * @var ArrayCollection
+     * @var TicketMessageInterface[]
      */
     protected $messages;
 
@@ -360,7 +355,7 @@ trait TicketTrait
     /**
      * Get messages.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return TicketMessageInterface[]
      */
     public function getMessages()
     {
