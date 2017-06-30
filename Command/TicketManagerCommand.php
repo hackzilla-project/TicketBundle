@@ -44,8 +44,7 @@ class TicketManagerCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $userManager = $this->getContainer()->get('fos_user.user_manager');
-
+        $userManager = $this->getContainer()->get('hackzilla_ticket.user_manager');
         $ticketManager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
 
         $ticket = $ticketManager->createTicket()

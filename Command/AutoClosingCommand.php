@@ -40,8 +40,7 @@ class AutoClosingCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $ticket_manager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
-        $userManager = $this->getContainer()->get('fos_user.user_manager');
-        $ticketRepository = $this->getContainer()->get('doctrine')->getRepository('HackzillaTicketBundle:Ticket');
+        $userManager = $this->getContainer()->get('hackzilla_ticket.user_manager');
 
         $locale = $this->getContainer()->getParameter('locale') ? $this->getContainer()->getParameter('locale') : 'en';
         $translator = $this->getContainer()->get('translator');
@@ -49,7 +48,7 @@ class AutoClosingCommand extends ContainerAwareCommand
 
         $username = $input->getArgument('username');
 
-        $resolved_tickets = $ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));
+        $resolved_tickets = $ticket_manager->getResolvedTicketOlderThan($input->getOption('age'));
 
         foreach ($resolved_tickets as $ticket) {
             $message = $ticket_manager->createMessage()
