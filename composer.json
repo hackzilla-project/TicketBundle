@@ -34,6 +34,7 @@
     "suggest": {
         "doctrine/orm": "For using Doctrine ORM for ticket storage",
         "doctrine/doctrine-bundle": "For using Doctrine ORM/ODM for ticket storage",
+        "doctrine/mongodb-odm-bundle": "For using Mongodb ODM for ticket storage",
         "vich/uploader-bundle": "Allow attaching files to ticket messages"
     },
     "require-dev": {
