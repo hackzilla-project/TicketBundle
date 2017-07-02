@@ -1,31 +1,41 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Entity\Traits;
+namespace AppBundle\Entity;
 
 use Hackzilla\TicketMessage\Model\TicketInterface;
 use Hackzilla\TicketMessage\Model\TicketMessageInterface;
-use Hackzilla\TicketMessage\Model\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Ticket Message Trait.
+ * Ticket.
  */
-trait TicketMessageTrait
+class Ticket implements TicketInterface
 {
-    protected $ticket;
+    /**
+     * @var int
+     */
+    protected $id;
 
     /**
      * @var int
      */
-    protected $user;
-    protected $userObject;
+    protected $userCreated;
+    protected $userCreatedObject;
+
+    /**
+     * @var int
+     */
+    protected $lastUser;
+    protected $lastUserObject;
+
+    /**
+     * @var \DateTime
+     */
+    protected $lastMessage;
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
      */
-    protected $message;
+    protected $subject;
 
     /**
      * @var int
@@ -38,6 +48,11 @@ trait TicketMessageTrait
     protected $priority;
 
     /**
+     * @var TicketMessageInterface[]
+     */
+    protected $messages;
+
+    /**
      * @var \DateTime
      */
     protected $createdAt;
@@ -45,6 +60,17 @@ trait TicketMessageTrait
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
+        $this->messages = [];
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -96,7 +122,7 @@ trait TicketMessageTrait
      */
     public function getStatusString()
     {
-        if (!empty(TicketMessageInterface::STATUSES[$this->status])) {
+        if (array_key_exists($this->status, TicketMessageInterface::STATUSES)) {
             return TicketMessageInterface::STATUSES[$this->status];
         }
 
@@ -152,7 +178,7 @@ trait TicketMessageTrait
      */
     public function getPriorityString()
     {
-        if (!empty(TicketMessageInterface::PRIORITIES[$this->priority])) {
+        if (array_key_exists($this->priority, TicketMessageInterface::PRIORITIES)) {
             return TicketMessageInterface::PRIORITIES[$this->priority];
         }
 
@@ -160,67 +186,107 @@ trait TicketMessageTrait
     }
 
     /**
-     * Set user.
+     * Set userCreated.
      *
-     * @param int|UserInterface $user
+     * @param int|object $userCreated
      *
      * @return $this
      */
-    public function setUser($user)
+    public function setUserCreated($userCreated)
     {
-        if (\is_object($user)) {
-            $this->userObject = $user;
-            $this->user = $user->getId();
+        if (\is_object($userCreated)) {
+            $this->userCreatedObject = $userCreated;
+            $this->userCreated = $userCreated->getId();
         } else {
-            $this->userObject = null;
-            $this->user = $user;
+            $this->userCreatedObject = null;
+            $this->userCreated = $userCreated;
         }
 
         return $this;
     }
 
     /**
-     * Get user.
+     * Get userCreated.
      *
      * @return int
      */
-    public function getUser()
+    public function getUserCreated()
     {
-        return $this->user;
+        return $this->userCreated;
     }
 
     /**
-     * Get user object.
+     * Get userCreated object.
      *
-     * @return UserInterface
+     * @return object
      */
-    public function getUserObject()
+    public function getUserCreatedObject()
     {
-        return $this->userObject;
+        return $this->userCreatedObject;
     }
 
     /**
-     * Set message.
+     * Set lastUser.
      *
-     * @param string $message
+     * @param int|object $lastUser
      *
      * @return $this
      */
-    public function setMessage($message)
+    public function setLastUser($lastUser)
     {
-        $this->message = $message;
+        if (\is_object($lastUser)) {
+            $this->lastUserObject = $lastUser;
+            $this->lastUser = $lastUser->getId();
+        } else {
+            $this->lastUserObject = null;
+            $this->lastUser = $lastUser;
+        }
 
         return $this;
     }
 
     /**
-     * Get message.
+     * Get lastUser.
      *
-     * @return string
+     * @return int
      */
-    public function getMessage()
+    public function getLastUser()
     {
-        return $this->message;
+        return $this->lastUser;
+    }
+
+    /**
+     * Get lastUser object.
+     *
+     * @return UserInterface
+     */
+    public function getLastUserObject()
+    {
+        return $this->lastUserObject;
+    }
+
+    /**
+     * Set lastMessage.
+     *
+     * @param \DateTime $lastMessage
+     *
+     * @return $this
+     */
+    public function setLastMessage($lastMessage)
+    {
+        $this->lastMessage = $lastMessage;
+
+        return $this;
+    }
+
+    /**
+     * Get lastMessage.
+     *
+     * @return \DateTime
+     */
+    public function getLastMessage()
+    {
+        return $this->lastMessage;
     }
 
     /**
@@ -230,7 +296,7 @@ trait TicketMessageTrait
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -248,48 +314,50 @@ trait TicketMessageTrait
     }
 
     /**
-     * Set ticket.
+     * Set subject.
      *
-     * @param TicketInterface $ticket
+     * @param string $subject
      *
      * @return $this
      */
-    public function setTicket(TicketInterface $ticket = null)
+    public function setSubject($subject)
     {
-        $this->ticket = $ticket;
-
-        if (\is_null($this->getUserObject())) {
-            $user = $this->getUser();
-        } else {
-            $user = $this->getUserObject();
-        }
-
-        // if null, then new ticket
-        if (\is_null($ticket->getUserCreated())) {
-            $ticket->setUserCreated($user);
-        }
-
-        $ticket->setLastUser($user);
-        $ticket->setLastMessage($this->getCreatedAt());
-        $ticket->setPriority($this->getPriority());
-
-        // if ticket not closed, then it'll be set to null
-        if (\is_null($this->getStatus())) {
-            $this->setStatus($ticket->getStatus());
-        } else {
-            $ticket->setStatus($this->getStatus());
-        }
+        $this->subject = $subject;
 
         return $this;
     }
 
     /**
-     * Get ticket.
+     * Get subject.
      *
-     * @return TicketInterface
+     * @return string
      */
-    public function getTicket()
+    public function getSubject()
     {
-        return $this->ticket;
+        return $this->subject;
+    }
+
+    /**
+     * Add message.
+     *
+     * @param TicketMessageInterface $message
+     *
+     * @return $this
+     */
+    public function addMessage(TicketMessageInterface $message)
+    {
+        $this->messages[] = $message;
+
+        return $this;
+    }
+
+    /**
+     * Get messages.
+     *
+     * @return TicketMessageInterface[]
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }

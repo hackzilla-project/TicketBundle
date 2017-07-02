@@ -1,63 +1,96 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Entity\Traits;
+namespace AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Hackzilla\TicketMessage\Model\TicketInterface;
 use Hackzilla\TicketMessage\Model\TicketMessageInterface;
-use Hackzilla\TicketMessage\Model\UserInterface;
 
 /**
- * Ticket Trait.
+ * Ticket.
+ *
+ * @ORM\Table(name="ticket")
+ * @ORM\Entity)
  */
-trait TicketTrait
+class Ticket implements TicketInterface
 {
     /**
      * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="user_created_id", type="integer")
      */
     protected $userCreated;
     protected $userCreatedObject;
 
     /**
      * @var int
+     *
+     * @ORM\Column(name="last_user_id", type="integer")
      */
     protected $lastUser;
     protected $lastUserObject;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="last_message", type="datetime")
      */
     protected $lastMessage;
 
     /**
-     * @Assert\NotBlank()
-     *
-     * @var string
+     * @ORM\Column(name="subject", type="string", length=255)
      */
     protected $subject;
 
     /**
      * @var int
+     *
+     * @ORM\Column(name="status", type="smallint")
      */
     protected $status;
 
     /**
      * @var int
+     *
+     * @ORM\Column(name="priority", type="smallint")
      */
     protected $priority;
 
     /**
-     * @var TicketMessageInterface[]
+     * @ORM\OneToMany(targetEntity="TicketMessage",  mappedBy="ticket")
      */
     protected $messages;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
      */
     protected $createdAt;
 
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
-        $this->messages = new ArrayCollection();
+        $this->messages = [];
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -83,7 +116,7 @@ trait TicketTrait
      */
     public function setStatusString($status)
     {
-        $status = \array_search(\strtolower($status), TicketMessageInterface::STATUSES);
+        $status = \array_search(\strtolower($status), TicketMessageInterface::$statuses);
 
         if ($status > 0) {
             $this->setStatus($status);
@@ -109,7 +142,7 @@ trait TicketTrait
      */
     public function getStatusString()
     {
-        if (array_key_exists($this->status, TicketMessageInterface::STATUSES)) {
+        if (isset(TicketMessageInterface::STATUSES[$this->status])) {
             return TicketMessageInterface::STATUSES[$this->status];
         }
 
@@ -120,8 +153,6 @@ trait TicketTrait
      * Set priority.
      *
      * @param int $priority
-     *
-     * @return $this
      */
     public function setPriority($priority)
     {
@@ -134,8 +165,6 @@ trait TicketTrait
      * Set priority string.
      *
      * @param string $priority
-     *
-     * @return $this
      */
     public function setPriorityString($priority)
     {
@@ -165,7 +194,7 @@ trait TicketTrait
      */
     public function getPriorityString()
     {
-        if (array_key_exists($this->priority, TicketMessageInterface::PRIORITIES)) {
+        if (isset(TicketMessageInterface::PRIORITIES[$this->priority])) {
             return TicketMessageInterface::PRIORITIES[$this->priority];
         }
 
@@ -177,7 +206,7 @@ trait TicketTrait
      *
      * @param int|object $userCreated
      *
-     * @return $this
+     * @return Ticket
      */
     public function setUserCreated($userCreated)
     {
@@ -217,7 +246,7 @@ trait TicketTrait
      *
      * @param int|object $lastUser
      *
-     * @return $this
+     * @return Ticket
      */
     public function setLastUser($lastUser)
     {
@@ -245,7 +274,7 @@ trait TicketTrait
     /**
      * Get lastUser object.
      *
-     * @return UserInterface
+     * @return object
      */
     public function getLastUserObject()
     {
@@ -257,7 +286,7 @@ trait TicketTrait
      *
      * @param \DateTime $lastMessage
      *
-     * @return $this
+     * @return Ticket
      */
     public function setLastMessage($lastMessage)
     {
@@ -281,9 +310,9 @@ trait TicketTrait
      *
      * @param \DateTime $createdAt
      *
-     * @return $this
+     * @return Ticket
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -305,7 +334,7 @@ trait TicketTrait
      *
      * @param string $subject
      *
-     * @return $this
+     * @return Ticket
      */
     public function setSubject($subject)
     {
@@ -325,29 +354,15 @@ trait TicketTrait
     }
 
     /**
-     * Add message.
+     * Add messages.
      *
-     * @param TicketMessageInterface $message
+     * @param TicketMessageInterface $messages
      *
-     * @return $this
+     * @return Ticket
      */
-    public function addMessage(TicketMessageInterface $message)
+    public function addMessage(TicketMessageInterface $messages)
     {
-        $this->messages[] = $message;
-
-        return $this;
-    }
-
-    /**
-     * Remove message.
-     *
-     * @param TicketMessageInterface $message
-     *
-     * @return $this
-     */
-    public function removeMessage(TicketMessageInterface $message)
-    {
-        $this->messages->removeElement($message);
+        $this->messages[] = $messages;
 
         return $this;
     }
