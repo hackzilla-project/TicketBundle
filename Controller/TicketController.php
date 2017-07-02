@@ -170,7 +170,7 @@ class TicketController extends Controller
 
         $data = ['ticket' => $ticket, 'form' => $form->createView()];
 
-        if ($user && $this->get('hackzilla_ticket.user_manager')->hasRole($user)) {
+        if ($user && $this->getUserManager()->hasRole($user)) {
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
