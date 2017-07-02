@@ -1,6 +1,3 @@
-parameters:
-    hackzilla_ticket_role: ROLE_TICKET_ADMIN
-
 services:
     hackzilla_ticket.listener:
         class: Hackzilla\Bundle\TicketBundle\EventListener\UserLoad
@@ -94,7 +91,7 @@ services:
         arguments:
             - '@security.token_storage'
             - '@security.authorization_checker'
-            - '%hackzilla_ticket_role%'
+            - '%hackzilla_ticket.admin_role%'
 
 ### Translate Managers
 
