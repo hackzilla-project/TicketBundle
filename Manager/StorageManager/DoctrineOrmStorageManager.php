@@ -7,6 +7,8 @@ use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Hackzilla\TicketMessage\Manager\StorageManagerInterface;
 use Hackzilla\TicketMessage\Manager\UserManagerInterface;
 use Hackzilla\TicketMessage\Model\TicketMessageInterface;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
 class DoctrineOrmStorageManager implements StorageManagerInterface
 {
@@ -109,7 +111,7 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
                 ->setParameter('userId', 0);
         }
 
-        return $query;
+        return new Pagerfanta(new DoctrineORMAdapter($query));
     }
 
     /**

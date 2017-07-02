@@ -3,6 +3,8 @@
 namespace Hackzilla\Bundle\TicketBundle\Manager\StorageManager;
 
 use Hackzilla\TicketMessage\Manager\StorageManagerInterface;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 
 class DoNothingStorageManager implements StorageManagerInterface
 {
@@ -39,9 +41,9 @@ class DoNothingStorageManager implements StorageManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function getTicketList($ticketStatus, $ticketPriority = null)
+    public function getTicketList($ticketStatus, $ticketPriority = null, array $orderBy = null)
     {
-        return [];
+        return new Pagerfanta(new ArrayAdapter([]));
     }
 
     /**
