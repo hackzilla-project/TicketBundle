@@ -66,7 +66,7 @@ class TicketMessage implements TicketMessageInterface, MessageAttachmentInterfac
      *
      * @var File
      *
-     * @Vich\UploadableField(mapping="ticket_message_attachment", fileNameProperty="attachmentName")
+     * @Vich\UploadableField(mapping="ticket_message_attachment", fileNameProperty="attachmentName", size="attachmentSize")
      */
     protected $attachmentFile;
 
