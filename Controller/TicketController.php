@@ -33,9 +33,16 @@ class TicketController extends Controller
 
         $paginationConfig = $this->getParameter('hackzilla_ticket.pagination');
 
+        $orderBy = null;
+
+        if ($request->query->get($paginationConfig['sort_field_name'])) {
+            $orderBy = [$request->query->get($paginationConfig['sort_field_name']) => $request->query->get($paginationConfig['sort_direction_name'])];
+        }
+
         $pagination = $ticketManager->getTicketList(
             $ticketManager->getTicketStatus($ticketState),
-            $ticketManager->getTicketPriority($ticketPriority)
+            $ticketManager->getTicketPriority($ticketPriority),
+            $orderBy
         );
 
         $pagination->setCurrentPage($request->query->get($paginationConfig['page_name'], 1));

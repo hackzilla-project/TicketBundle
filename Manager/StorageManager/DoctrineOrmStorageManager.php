@@ -12,6 +12,9 @@ use Pagerfanta\Pagerfanta;
 
 class DoctrineOrmStorageManager implements StorageManagerInterface
 {
+    /** @var string */
+    private $ticketClass;
+
     private $objectManager;
     private $ticketRepository;
     private $messageRepository;
@@ -26,6 +29,8 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
      */
     public function __construct(ObjectManager $om, UserManagerInterface $userManager, $ticketClass, $ticketMessageClass)
     {
+        $this->ticketClass = $ticketClass;
+
         $this->objectManager = $om;
         $this->userManager = $userManager;
         $this->ticketRepository = $om->getRepository($ticketClass);
@@ -70,11 +75,23 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function getTicketList($ticketStatus, $ticketPriority = null)
+    public function getTicketList($ticketStatus, $ticketPriority = null, array $orderBy = null)
     {
         $query = $this->ticketRepository->createQueryBuilder('t')
-//            ->select($this->ticketClass.' t')
-            ->orderBy('t.lastMessage', 'DESC');
+            ->select('t')
+        ;
+
+        if (is_array($orderBy)) {
+            foreach ($orderBy as $field => $direction) {
+                if (!$direction) {
+                    continue;
+                }
+
+                $query->addOrderBy('t.' . $field, strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC');
+            }
+        } else {
+            $query->addOrderBy('t.lastMessage', 'DESC');
+        }
 
         switch ($ticketStatus) {
             case TicketMessageInterface::STATUS_CLOSED:
