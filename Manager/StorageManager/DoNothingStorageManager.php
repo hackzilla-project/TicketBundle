@@ -53,4 +53,12 @@ class DoNothingStorageManager implements StorageManagerInterface
     {
         return [];
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSortableFields()
+    {
+        return [];
+    }
 }

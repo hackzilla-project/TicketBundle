@@ -131,4 +131,20 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
 
         return $query->getQuery()->getResult();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSortableFields()
+    {
+        return [
+            'id',
+            'subject',
+            'status',
+            'priority',
+            'userCreated',
+            'createdAt',
+            'lastMessage',
+        ];
+    }
 }
