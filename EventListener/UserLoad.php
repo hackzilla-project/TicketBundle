@@ -8,11 +8,11 @@ use Hackzilla\TicketMessage\Model\TicketMessageInterface;
 
 class UserLoad
 {
-    protected $userRepository;
+    protected $userClass;
 
-    public function __construct($userRepository)
+    public function __construct($userClass)
     {
-        $this->userRepository = $userRepository;
+        $this->userClass = $userClass;
     }
 
     public function getSubscribedEvents()
@@ -31,7 +31,7 @@ class UserLoad
             return;
         }
 
-        $userRepository = $args->getEntityManager()->getRepository($this->userRepository);
+        $userRepository = $args->getEntityManager()->getRepository($this->userClass);
 
         if ($entity instanceof TicketInterface) {
             if (\is_null($entity->getUserCreatedObject())) {
