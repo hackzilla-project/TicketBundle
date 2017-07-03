@@ -31,13 +31,15 @@ class TicketController extends Controller
         $ticketState = $request->get('state', $this->get('translator')->trans('STATUS_OPEN'));
         $ticketPriority = $request->get('priority', null);
 
+        $paginationConfig = $this->getParameter('hackzilla_ticket.pagination');
+
         $pagination = $ticketManager->getTicketList(
             $ticketManager->getTicketStatus($ticketState),
             $ticketManager->getTicketPriority($ticketPriority)
         );
 
-        $pagination->setCurrentPage($request->query->get('page', 1));
-        $pagination->setMaxPerPage(10);
+        $pagination->setCurrentPage($request->query->get($paginationConfig['page_name'], 1));
+        $pagination->setMaxPerPage($paginationConfig['items_per_page']);
 
         return $this->render(
             $this->container->getParameter('hackzilla_ticket.templates')['index'],

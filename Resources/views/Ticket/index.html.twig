@@ -39,13 +39,13 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th class="col-xs-1">{{ knp_pagination_sortable(pagination, 'HEADING_TICKET'|trans, 't.id') }}</th>
-            <th{% if pagination.isSorted('t.subject') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_SUBJECT'|trans, 't.subject') }}</th>
-            <th{% if pagination.isSorted('t.userCreated') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_AUTHOR'|trans, 't.userCreated') }}</th>
-            <th{% if pagination.isSorted('t.status') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_STATUS'|trans, 't.status') }}</th>
-            <th{% if pagination.isSorted('t.priority') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_PRIORITY'|trans, 't.priority') }}</th>
-            <th{% if pagination.isSorted('t.modified') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_MODIFIED'|trans, 't.lastMessage') }}</th>
-            <th{% if pagination.isSorted('t.created') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_CREATED'|trans, 't.createdAt') }}</th>
+            <th class="col-xs-1">{{ sortable('HEADING_TICKET'|trans, 't.id') }}</th>
+            <th{% if isSortable('subject') %} class="sorted"{% endif %}>{{ sortable('HEADING_SUBJECT'|trans, 'subject') }}</th>
+            <th{% if isSortable('userCreated') %} class="sorted"{% endif %}>{{ sortable('HEADING_AUTHOR'|trans, 'userCreated') }}</th>
+            <th{% if isSortable('status') %} class="sorted"{% endif %}>{{ sortable('HEADING_STATUS'|trans, 'status') }}</th>
+            <th{% if isSortable('priority') %} class="sorted"{% endif %}>{{ sortable('HEADING_PRIORITY'|trans, 'priority') }}</th>
+            <th{% if isSortable('modified') %} class="sorted"{% endif %}>{{ sortable('HEADING_MODIFIED'|trans, 'lastMessage') }}</th>
+            <th{% if isSortable('created') %} class="sorted"{% endif %}>{{ sortable('HEADING_CREATED'|trans, 'createdAt') }}</th>
         </tr>
         </thead>
         <tbody>

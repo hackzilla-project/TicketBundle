@@ -53,6 +53,16 @@ services:
         tags:
             - { name: twig.extension }
 
+    hackzilla_ticket.component.twig_extension.ticket_pagination:
+        class: Hackzilla\Bundle\TicketBundle\TwigExtension\TicketPaginationExtension
+        arguments:
+            - '@request_stack'
+            - '@router'
+            - '@hackzilla_ticket.storage_manager'
+            - '%hackzilla_ticket.pagination%'
+        tags:
+            - { name: twig.extension }
+
     hackzilla_ticket.file_upload_subscriber:
         class: Hackzilla\Bundle\TicketBundle\EventListener\FileSubscriber
         tags:
