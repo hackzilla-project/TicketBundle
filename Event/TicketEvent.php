@@ -2,11 +2,10 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Event;
 
-use Hackzilla\TicketMessage\Event\TicketEventInterface;
 use Hackzilla\TicketMessage\Model\TicketInterface;
 use Symfony\Component\EventDispatcher\Event;
 
-class TicketEvent extends Event implements TicketEventInterface
+class TicketEvent extends Event
 {
     protected $ticket;
 
