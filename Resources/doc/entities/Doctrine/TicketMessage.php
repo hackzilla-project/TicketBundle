@@ -47,14 +47,14 @@ class TicketMessage implements TicketMessageInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="ticket_status", type="smallint")
+     * @ORM\Column(name="status", type="smallint")
      */
     protected $status;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="ticket_priority", type="smallint")
+     * @ORM\Column(name="priority", type="smallint")
      */
     protected $priority;
 
