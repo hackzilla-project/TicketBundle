@@ -13,11 +13,7 @@
                 </div>
             </div>
 
-            {% if form.messages|length == 0 %}
-                {% include hackzilla_ticket.templates.prototype with {'form': form.messages.vars.prototype} %}
-            {% else %}
-                {% include hackzilla_ticket.templates.prototype with {'form': form.messages.__name__} %}
-            {% endif %}
+            {% include hackzilla_ticket.templates.prototype with {'form': form.message} %}
 
             {{ form_rest(form) }}
 

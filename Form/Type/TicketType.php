@@ -2,6 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
+use Hackzilla\Bundle\TicketBundle\Model\NewTicket;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,15 +33,11 @@ class TicketType extends AbstractType
                 ]
             )
             ->add(
-                'messages',
-                CollectionType::class,
+                'message',
+                TicketMessageType::class,
                 [
-                    'entry_type'    => TicketMessageType::class,
-                    'entry_options' => [
-                        'new_ticket' => true,
-                    ],
+                    'new_ticket' => true,
                     'label'         => false,
-                    'allow_add'     => true,
                 ]
             );
     }
@@ -49,7 +46,7 @@ class TicketType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => $this->ticketClass,
+                'data_class' => NewTicket::class,
             ]
         );
     }

@@ -69,14 +69,25 @@ class TicketController extends Controller
     {
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
-        $ticket = $ticketManager->createTicket();
-        $form = $this->createForm(TicketType::class, $ticket);
+        $form = $this->createForm(TicketType::class);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $message = $ticket->getMessages()->current();
-            $message->setStatus(TicketMessageInterface::STATUS_OPEN)
-                ->setUser($this->getUserManager()->getCurrentUser());
+            $ticket = $ticketManager->createTicket();
+            $data = $form->getData();
+
+            $ticket
+                ->setSubject($data->getSubject())
+                ->setUserCreated($this->getUserManager()->getCurrentUser())
+                ->setLastUser($this->getUserManager()->getCurrentUser())
+            ;
+            $message = $data->getMessage()
+                ->setTicket($ticket)
+                ->setStatus(TicketMessageInterface::STATUS_OPEN)
+                ->setUser($this->getUserManager()->getCurrentUser())
+            ;
+
+            $ticket->setLastMessage($message->getCreatedAt());
 
             $ticketManager->updateTicket($ticket, $message);
 
@@ -98,14 +109,12 @@ class TicketController extends Controller
     public function newAction()
     {
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-        $entity = $ticketManager->createTicket();
 
-        $form = $this->createForm(TicketType::class, $entity);
+        $form = $this->createForm(TicketType::class);
 
         return $this->render(
             $this->container->getParameter('hackzilla_ticket.templates')['new'],
             [
-                'entity' => $entity,
                 'form'   => $form->createView(),
             ]
         );
