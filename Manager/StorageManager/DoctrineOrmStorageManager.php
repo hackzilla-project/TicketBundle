@@ -140,7 +140,6 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
         $closeBeforeDate->sub(new \DateInterval('P'.$days.'D'));
 
         $query = $this->ticketRepository->createQueryBuilder('t')
-//            ->select($this->ticketClass.' t')
             ->where('t.status = :status')
             ->andWhere('t.lastMessage < :closeBeforeDate')
             ->setParameter('status', TicketMessageInterface::STATUS_RESOLVED)
