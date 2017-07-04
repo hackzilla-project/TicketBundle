@@ -85,7 +85,15 @@ services:
     hackzilla_ticket.storage_manager.doctrine_orm:
         class: Hackzilla\Bundle\TicketBundle\Manager\StorageManager\DoctrineOrmStorageManager
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@?doctrine.orm.entity_manager'
+            - '@hackzilla_ticket.user_manager'
+            - '%hackzilla_ticket.model.ticket.class%'
+            - '%hackzilla_ticket.model.message.class%'
+
+    hackzilla_ticket.storage_manager.mongodb:
+        class: Hackzilla\Bundle\TicketBundle\Manager\StorageManager\MongoDBStorageManager
+        arguments:
+            - '@?doctrine.odm.mongodb.document_manager'
             - '@hackzilla_ticket.user_manager'
             - '%hackzilla_ticket.model.ticket.class%'
             - '%hackzilla_ticket.model.message.class%'
@@ -98,7 +106,7 @@ services:
     hackzilla_ticket.user_manager.symfony:
         class: Hackzilla\Bundle\TicketBundle\Manager\UserManager\SymfonyUserManager
         arguments:
-            - '@security.token_storage'
+            - '@?security.token_storage'
             - '@security.authorization_checker'
             - '%hackzilla_ticket.admin_role%'
 
