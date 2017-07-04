@@ -2,10 +2,10 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 
+use Hackzilla\TicketMessage\Manager\UserManagerInterface;
 use Hackzilla\TicketMessage\Model\TicketInterface;
-use Hackzilla\TicketMessage\Model\UserInterface;
 
-class DoNothingUserManager implements UserInterface
+class DoNothingUserManager implements UserManagerInterface
 {
     /**
      * @return int|UserInterface
