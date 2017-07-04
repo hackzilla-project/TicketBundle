@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Hackzilla\TicketMessage\Model\TicketFeature\MessageAttachmentInterface;
 use Hackzilla\TicketMessage\Model\TicketInterface;
 use Hackzilla\TicketMessage\Model\TicketMessageInterface;
+use Hackzilla\TicketMessage\Model\UserInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -153,13 +154,21 @@ class TicketMessage implements TicketMessageInterface, MessageAttachmentInterfac
     }
 
     /**
-     * @param int $user
+     * Set user.
+     *
+     * @param int|UserInterface $user
      *
      * @return $this
      */
     public function setUser($user)
     {
-        $this->user = $user;
+        if (\is_object($user)) {
+            $this->userObject = $user;
+            $this->user = $user->getId();
+        } else {
+            $this->userObject = null;
+            $this->user = $user;
+        }
 
         return $this;
     }

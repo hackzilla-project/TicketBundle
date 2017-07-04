@@ -120,13 +120,21 @@ class TicketMessage implements TicketMessageInterface
     }
 
     /**
-     * @param int $user
+     * Set user.
+     *
+     * @param int|UserInterface $user
      *
      * @return $this
      */
     public function setUser($user)
     {
-        $this->user = $user;
+        if (\is_object($user)) {
+            $this->userObject = $user;
+            $this->user = $user->getId();
+        } else {
+            $this->userObject = null;
+            $this->user = $user;
+        }
 
         return $this;
     }
