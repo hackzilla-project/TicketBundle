@@ -2,9 +2,9 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
-use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
+use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures as BundleTicketFeatures;
+use Hackzilla\TicketMessage\Component\TicketFeatures as LibraryTicketFeatures;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
-use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Hackzilla\TicketMessage\Manager\UserManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -19,7 +19,7 @@ class TicketMessageType extends AbstractType
     protected $features;
     protected $messageClass;
 
-    public function __construct(UserManagerInterface $userManager, TicketFeatures $features, $messageClass)
+    public function __construct(UserManagerInterface $userManager, BundleTicketFeatures $features, $messageClass)
     {
         $this->userManager = $userManager;
         $this->features = $features;
@@ -50,7 +50,7 @@ class TicketMessageType extends AbstractType
             )
         ;
 
-        if ($this->features->hasFeature('attachment')) {
+        if ($this->features->hasFeature(LibraryTicketFeatures::TICKET_ATTACHMENT)) {
             $builder
                 ->add(
                     'attachmentFile',
