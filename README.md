@@ -30,7 +30,7 @@ Languages: English, French, Russian, German and Spanish.
 | Ticket Bundle                                                          | Symfony    | PHP   | Supported |
 | ---------------------------------------------------------------------- | ---------- | ----- | --------- |
 | [4.x](https://github.com/hackzilla/TicketBundle/tree/master) (master)  | ^3.0       | >=5.6 | Alpha     |
-| [3.x](https://github.com/hackzilla/TicketBundle/tree/3.x)              | ^2.8\|^3.0 | >=5.6 | Yes       |
+| [3.x](https://github.com/hackzilla/TicketBundle/tree/3.x)              | ^2.8\|^3.0 | >=5.6 | Bug Fixes |
 | [2.x](https://github.com/hackzilla/TicketBundle/tree/2.x)              | ^2.7\|^3.0 | >=5.3 | No        |
 | [1.x](https://github.com/hackzilla/TicketBundle/tree/1.x)              | ^2.3       | >=5.3 | No        |
 | [0.x](https://github.com/hackzilla/TicketBundle/tree/0.9.x)            | ^2.3       | >=5.3 | No        |
