@@ -12,26 +12,61 @@ class MongoDBStorageManager implements StorageManagerInterface
     /** @var string */
     private $ticketClass;
 
+    /** @var string */
+    private $ticketMessageClass;
+
+    /** @var string */
+    private $userClass;
+
     private $documentManager;
     private $ticketRepository;
     private $messageRepository;
+    private $userRepository;
 
     /**
-     * @param DocumentManager      $om
-     * @param UserManagerInterface $userManager
      * @param string               $ticketClass
      * @param string               $ticketMessageClass
+     * @param string               $userClass
      *
      * @return $this
      */
-    public function __construct(DocumentManager $dm, UserManagerInterface $userManager, $ticketClass, $ticketMessageClass)
+    public function __construct(
+        $ticketClass,
+        $ticketMessageClass,
+        $userClass
+    )
     {
         $this->ticketClass = $ticketClass;
+        $this->ticketMessageClass = $ticketMessageClass;
+        $this->userClass = $userClass;
 
+        return $this;
+    }
+
+    /**
+     * @param DocumentManager $dm
+     *
+     * @return $this
+     */
+    public function setDocumentManager(DocumentManager $dm)
+    {
         $this->documentManager = $dm;
+
+        $this->ticketRepository = $dm->getRepository($this->ticketClass);
+        $this->messageRepository = $dm->getRepository($this->ticketMessageClass);
+        $this->userRepository = $dm->getRepository($this->userClass);
+
+        return $this;
+    }
+
+    /**
+     * @param UserManagerInterface $userManager
+     *
+     * @return $this
+     */
+    public function setUserManager(UserManagerInterface $userManager)
+    {
         $this->userManager = $userManager;
-        $this->ticketRepository = $dm->getRepository($ticketClass);
-        $this->messageRepository = $dm->getRepository($ticketMessageClass);
 
         return $this;
     }
@@ -143,6 +178,16 @@ class MongoDBStorageManager implements StorageManagerInterface
             ->setParameter('closeBeforeDate', $closeBeforeDate);
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUser($username)
+    {
+        return $this->userRepository->findOneBy([
+            'username' => $username,
+        ]);
     }
 
     /**

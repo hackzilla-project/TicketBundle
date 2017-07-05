@@ -7,6 +7,7 @@ use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Hackzilla\TicketMessage\Manager\StorageManagerInterface;
 use Hackzilla\TicketMessage\Manager\UserManagerInterface;
 use Hackzilla\TicketMessage\Model\TicketMessageInterface;
+use Hackzilla\TicketMessage\Model\UserInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
@@ -15,26 +16,62 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
     /** @var string */
     private $ticketClass;
 
+    /** @var string */
+    private $ticketMessageClass;
+
+    /** @var string */
+    private $userClass;
+
     private $objectManager;
     private $ticketRepository;
     private $messageRepository;
+    private $userRepository;
 
     /**
      * @param ObjectManager        $om
      * @param UserManagerInterface $userManager
      * @param string               $ticketClass
      * @param string               $ticketMessageClass
+     * @param string               $userClass
      *
      * @return $this
      */
-    public function __construct(ObjectManager $om, UserManagerInterface $userManager, $ticketClass, $ticketMessageClass)
-    {
+    public function __construct(
+        $ticketClass,
+        $ticketMessageClass,
+        $userClass
+    ) {
         $this->ticketClass = $ticketClass;
+        $this->ticketMessageClass = $ticketMessageClass;
+        $this->userClass = $userClass;
 
+        return $this;
+    }
+
+    /**
+     * @param ObjectManager $om
+     *
+     * @return $this
+     */
+    public function setEntityManager(ObjectManager $om)
+    {
         $this->objectManager = $om;
+
+        $this->ticketRepository = $om->getRepository($this->ticketClass);
+        $this->messageRepository = $om->getRepository($this->ticketMessageClass);
+        $this->userRepository = $om->getRepository($this->userClass);
+
+        return $this;
+    }
+
+    /**
+     * @param UserManagerInterface $userManager
+     *
+     * @return $this
+     */
+    public function setUserManager(UserManagerInterface $userManager)
+    {
         $this->userManager = $userManager;
-        $this->ticketRepository = $om->getRepository($ticketClass);
-        $this->messageRepository = $om->getRepository($ticketMessageClass);
 
         return $this;
     }
@@ -146,6 +183,16 @@ class DoctrineOrmStorageManager implements StorageManagerInterface
             ->setParameter('closeBeforeDate', $closeBeforeDate);
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUser($username)
+    {
+        return $this->userRepository->findOneBy([
+            'username' => $username,
+        ]);
     }
 
     /**

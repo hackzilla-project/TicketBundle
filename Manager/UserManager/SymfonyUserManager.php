@@ -2,6 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 
+use Hackzilla\TicketMessage\Manager\StorageManagerInterface;
 use Hackzilla\TicketMessage\Manager\UserManagerInterface;
 use Hackzilla\TicketMessage\Model\TicketInterface;
 use Hackzilla\TicketMessage\Model\UserInterface;
@@ -10,6 +11,11 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SymfonyUserManager implements UserManagerInterface
 {
+    /**
+     * @var StorageManagerInterface
+     */
+    private $storageManger;
+
     /**
      * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
      */
@@ -26,6 +32,7 @@ class SymfonyUserManager implements UserManagerInterface
     private $userRole;
 
     /**
+     * @param StorageManagerInterface       $storageManager
      * @param TokenStorage                  $tokenStorage
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param string                        $userRole
@@ -43,6 +50,30 @@ class SymfonyUserManager implements UserManagerInterface
         }
 
         $this->userRole = $userRole;
+    }
+
+    /**
+     * @param StorageManagerInterface $storageManager
+     *
+     * @return $this
+     */
+    public function setStorageManager(StorageManagerInterface $storageManager)
+    {
+        $this->storageManger = $storageManager;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUser($username)
+    {
+        if (!$this->storageManger) {
+            return null;
+        }
+
+        $this->storageManger->getUser($username);
     }
 
     /**

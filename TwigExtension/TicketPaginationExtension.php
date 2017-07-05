@@ -29,12 +29,10 @@ class TicketPaginationExtension extends \Twig_Extension
     public function __construct(
         RequestStack $requestStack,
         UrlGeneratorInterface $router,
-        StorageManagerInterface $storageManager,
         array $config
     ) {
         $this->requestStack = $requestStack;
         $this->router = $router;
-        $this->storageManager = $storageManager;
         $this->config = $config;
     }
 
@@ -44,6 +42,18 @@ class TicketPaginationExtension extends \Twig_Extension
             new \Twig_SimpleFunction('isSortable', [$this, 'isSortable']),
             new \Twig_SimpleFunction('sortable', [$this, 'sortable'], ['is_safe' => ['html']]),
         ];
+    }
+
+    /**
+     * @param StorageManagerInterface $storageManager
+     *
+     * @return $this
+     */
+    public function setStorageManager(StorageManagerInterface $storageManager)
+    {
+        $this->storageManager = $storageManager;
+
+        return $this;
     }
 
     /**
