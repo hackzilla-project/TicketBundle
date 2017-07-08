@@ -30,6 +30,7 @@ class HackzillaTicketExtension extends Extension
         $container->setParameter('hackzilla_ticket.model.ticket.class', $config['ticket_class']);
         $container->setParameter('hackzilla_ticket.model.message.class', $config['message_class']);
 
+        $container->setParameter('hackzilla_ticket.default_username', $config['default_username']);
         $container->setParameter('hackzilla_ticket.features', $config['features']);
         $container->setParameter('hackzilla_ticket.pagination', $config['pagination']);
         $container->setParameter('hackzilla_ticket.templates', $config['templates']);

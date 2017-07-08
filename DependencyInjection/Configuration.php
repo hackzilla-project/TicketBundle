@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('admin_role')->cannotBeEmpty()->defaultValue('ROLE_TICKET_ADMIN')->end()
                 ->scalarNode('user_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('default_username')->isRequired()->defaultValue('system')->end()
                 ->scalarNode('ticket_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('message_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('event_manager')->cannotBeEmpty()->defaultValue('hackzilla_ticket.event_manager.symfony')->end()

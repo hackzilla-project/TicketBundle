@@ -50,11 +50,18 @@ class TicketManagerCommand extends ContainerAwareCommand
         $ticket = $ticketManager->createTicket()
             ->setSubject($input->getArgument('subject'));
 
+        $defaultUsername = $this->getContainer()->getParameter('hackzilla_ticket.default_username');
+        $defaultUser = $userManager->getUser($defaultUsername);
+
+        if (!$defaultUser) {
+            $output->writeln(sprintf('Could not find user (%s)', $defaultUsername));
+        }
+
         $message = $ticketManager->createMessage()
             ->setMessage($input->getArgument('message'))
             ->setStatus(TicketMessage::STATUS_OPEN)
             ->setPriority($input->getOption('priority'))
-            ->setUser($userManager->findUserByUsername('system'));
+            ->setUser($defaultUser);
 
         $ticketManager->updateTicket($ticket, $message);
 
