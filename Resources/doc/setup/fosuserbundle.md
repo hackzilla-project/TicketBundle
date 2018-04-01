@@ -2,22 +2,18 @@
 
 ## Step 1: Installation
 
-Add HackzillaTicketBundle in your composer.json:
+Add HackzillaTicketBundle to your requirements:
 
-```json
-{
-    "require": {
-        "hackzilla/ticket-bundle": "~2.0@dev",
-        "friendsofsymfony/user-bundle": "~2.0@dev",
-    }
-}
+```bash
+composer require hackzilla/ticket-bundle:^2.0@dev
+composer require friendsofsymfony/user-bundle:^2.0
 ```
 
-Specify your user class in your config, this will be exactly the same as user_class in FOSUserBundle.
+Specify your user class in your config, this will be exactly the same as `user_class` in FOSUserBundle.
 
 ```yaml
 hackzilla_ticket:
-    user_class:             AppBundle\Entity\User
+    user_class: AppBundle\Entity\User
 ```
 
 Your user class needs to implement ```Hackzilla\Bundle\TicketBundle\Model\UserInterface```
@@ -36,29 +32,29 @@ class User extends BaseUser implements \Hackzilla\Bundle\TicketBundle\Model\User
 }
 ```
 
-Follow [FOSUserBundle guide](https://github.com/FriendsOfSymfony/FOSUserBundle)
-
-
-Install Composer
-
-```
-curl -sS https://getcomposer.org/installer | php
-mv composer.phar /usr/local/bin/composer
-```
-
-Now tell composer to download the library by running the command:
-
-``` bash
-$ composer update hackzilla/ticket-bundle
-```
-
-Composer will install the bundle into your project's `vendor/hackzilla` directory.
+Follow [FOSUserBundle guide][1]
 
 ## Step 2: Enable the bundle
 
 Enable the bundle in the kernel:
 
-``` php
+```php
+<?php
+// config/bundles.php
+
+return [
+    FOS\UserBundle\FOSUserBundle::class => ['all' => true],
+    Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
+    Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
+    Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle::class => ['all' => true],
+    // ...
+    // Your application bundles
+];
+```
+
+Or if you are not using Flex:
+
+```php
 <?php
 // app/AppKernel.php
 
@@ -78,25 +74,27 @@ public function registerBundles()
 
 ## Step 3: Import the routing
 
-``` yml
+```yaml
 hackzilla_ticket:
     resource: "@HackzillaTicketBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix: /
 ```
 
 or
 
-``` yml
+```yaml
 hackzilla_ticket:
     resource: "@HackzillaTicketBundle/Resources/config/routing/ticket.yml"
-    prefix:   /ticket
+    prefix: /ticket
 ```
 
 ## Step 4: Roles
 
 All users can create tickets, even anonymous users.
-You can assign ROLE_TICKET_ADMIN to any user you want to be able to administer the ticketing system.
+You can assign "ROLE_TICKET_ADMIN" to any user you want to be able to administer the ticketing system.
 
 ## Step 5: Create tables
 
 ```bin/console doctrine:schema:update --force```
+
+[1]: https://github.com/FriendsOfSymfony/FOSUserBundle
