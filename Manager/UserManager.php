@@ -2,38 +2,39 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class UserManager implements UserManagerInterface
 {
     /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
+     * @var TokenStorageInterface
      */
     private $tokenStorage;
 
     /**
-     * @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+     * @var AuthorizationCheckerInterface
      */
     private $authorizationChecker;
 
     /**
-     * @var \Doctrine\ORM\EntityRepository
+     * @var ObjectRepository
      */
     private $userRepository;
 
     /**
-     * @param TokenStorage                  $tokenStorage
+     * @param TokenStorageInterface         $tokenStorage
+     * @param ObjectRepository              $userRepository
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param EntityRepository              $userRepository
      */
     public function __construct(
-        TokenStorage $tokenStorage,
-        EntityRepository $userRepository,
+        TokenStorageInterface $tokenStorage,
+        ObjectRepository $userRepository,
         AuthorizationCheckerInterface $authorizationChecker
     ) {
         $this->tokenStorage = $tokenStorage;
@@ -66,9 +67,7 @@ class UserManager implements UserManagerInterface
             return;
         }
 
-        $user = $this->userRepository->find($userId);
-
-        return $user;
+        return $this->userRepository->find($userId);
     }
 
     /**
@@ -85,8 +84,8 @@ class UserManager implements UserManagerInterface
     }
 
     /**
-     * @param \Hackzilla\Bundle\TicketBundle\Model\UserInterface|string $user
-     * @param TicketInterface                                           $ticket
+     * @param UserInterface|string $user
+     * @param TicketInterface      $ticket
      */
     public function hasPermission($user, TicketInterface $ticket)
     {
@@ -95,7 +94,7 @@ class UserManager implements UserManagerInterface
                     TicketRole::ADMIN
                 ) && $ticket->getUserCreated() != $user->getId())
         ) {
-            throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
+            throw new AccessDeniedHttpException();
         }
     }
 }
