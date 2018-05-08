@@ -27,6 +27,8 @@ matrix:
       env: SYMFONY_VERSION="3.1.*"
     - php: 5.6
       env: SYMFONY_VERSION="3.2.*@dev"
+    - php: 5.6
+      env: INSTALL_VICH_UPLOADER_BUNDLE=true
   allow_failures:
     - php: nightly
     - php: hhvm
@@ -42,7 +44,8 @@ before_script:
   - if [[ $TRAVIS_PHP_VERSION != hhvm && -f xdebug.ini ]]; then phpenv config-rm xdebug.ini; fi
   - if [ "$GITHUB_OAUTH_TOKEN" != "" ]; then echo -e $GITHUB_OAUTH_TOKEN && composer config -g github-oauth.github.com $GITHUB_OAUTH_TOKEN; fi;
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
+  - if [ -n $INSTALL_VICH_UPLOADER_BUNDLE ]; then composer require "vich/uploader-bundle" --no-update; fi;
   - composer update --prefer-dist --no-interaction $COMPOSER_FLAGS
 
 script:
-  - make test
+  - if [[ -n $INSTALL_VICH_UPLOADER_BUNDLE ]]; then make test_with_vichuploaderbundle; else make test; fi;

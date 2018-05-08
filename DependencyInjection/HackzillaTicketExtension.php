@@ -31,6 +31,12 @@ class HackzillaTicketExtension extends Extension
 
         $container->setParameter('hackzilla_ticket.features', $config['features']);
         $container->setParameter('hackzilla_ticket.templates', $config['templates']);
+
+        $bundles = $container->getParameter('kernel.bundles');
+        // Remove "file_upload_subscriber" definition if VichUploaderBundle is not registered
+        if (!isset($bundles['VichUploaderBundle'])) {
+            $container->removeDefinition('hackzilla_ticket.file_upload_subscriber');
+        }
     }
 
     public static function bundleDirectory()
