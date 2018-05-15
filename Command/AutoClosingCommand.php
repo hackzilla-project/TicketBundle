@@ -39,11 +39,11 @@ class AutoClosingCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $ticket_manager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
-        $userManager = $this->getContainer()->get('fos_user.user_manager');
+        $ticket_manager   = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
+        $userManager      = $this->getContainer()->get('fos_user.user_manager');
         $ticketRepository = $this->getContainer()->get('doctrine')->getRepository('HackzillaTicketBundle:Ticket');
 
-        $locale = $this->getContainer()->getParameter('locale') ? $this->getContainer()->getParameter('locale') : 'en';
+        $locale     = $this->getContainer()->getParameter('locale') ? $this->getContainer()->getParameter('locale') : 'en';
         $translator = $this->getContainer()->get('translator');
         $translator->setLocale($locale);
 

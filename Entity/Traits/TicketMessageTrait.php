@@ -18,6 +18,7 @@ trait TicketMessageTrait
      * @var int
      */
     protected $user;
+
     protected $userObject;
 
     /**
@@ -170,10 +171,10 @@ trait TicketMessageTrait
     {
         if (\is_object($user)) {
             $this->userObject = $user;
-            $this->user = $user->getId();
+            $this->user       = $user->getId();
         } else {
             $this->userObject = null;
-            $this->user = $user;
+            $this->user       = $user;
         }
 
         return $this;

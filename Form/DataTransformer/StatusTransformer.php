@@ -16,7 +16,7 @@ class StatusTransformer implements DataTransformerInterface
      */
     public function transform($number)
     {
-        if ($number == TicketMessage::STATUS_CLOSED) {
+        if (TicketMessage::STATUS_CLOSED == $number) {
             return 1;
         }
 
@@ -32,7 +32,7 @@ class StatusTransformer implements DataTransformerInterface
      */
     public function reverseTransform($number)
     {
-        if ($number == 1) {
+        if (1 == $number) {
             return TicketMessage::STATUS_CLOSED;
         }
 

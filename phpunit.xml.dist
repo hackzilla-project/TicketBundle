@@ -11,7 +11,9 @@
          syntaxCheck="false"
          bootstrap="Tests/bootstrap.php"
 >
-
+    <php>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
+    </php>
     <testsuites>
         <testsuite name="HackzillaTicketBundle test suite">
             <directory suffix="Test.php">./Tests</directory>

@@ -37,8 +37,8 @@ class UserManager implements UserManagerInterface
         ObjectRepository $userRepository,
         AuthorizationCheckerInterface $authorizationChecker
     ) {
-        $this->tokenStorage = $tokenStorage;
-        $this->userRepository = $userRepository;
+        $this->tokenStorage         = $tokenStorage;
+        $this->userRepository       = $userRepository;
         $this->authorizationChecker = $authorizationChecker;
     }
 
@@ -49,7 +49,7 @@ class UserManager implements UserManagerInterface
     {
         $user = $this->tokenStorage->getToken()->getUser();
 
-        if ($user === 'anon.') {
+        if ('anon.' === $user) {
             $user = 0;
         }
 

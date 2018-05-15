@@ -16,12 +16,14 @@ trait TicketTrait
      * @var int
      */
     protected $userCreated;
+
     protected $userCreatedObject;
 
     /**
      * @var int
      */
     protected $lastUser;
+
     protected $lastUserObject;
 
     /**
@@ -45,7 +47,6 @@ trait TicketTrait
      * @var int
      */
     protected $priority;
-
 
     /**
      * @Assert\Count(min = "1")
@@ -189,10 +190,10 @@ trait TicketTrait
     {
         if (\is_object($userCreated)) {
             $this->userCreatedObject = $userCreated;
-            $this->userCreated = $userCreated->getId();
+            $this->userCreated       = $userCreated->getId();
         } else {
             $this->userCreatedObject = null;
-            $this->userCreated = $userCreated;
+            $this->userCreated       = $userCreated;
         }
 
         return $this;
@@ -229,10 +230,10 @@ trait TicketTrait
     {
         if (\is_object($lastUser)) {
             $this->lastUserObject = $lastUser;
-            $this->lastUser = $lastUser->getId();
+            $this->lastUser       = $lastUser->getId();
         } else {
             $this->lastUserObject = null;
-            $this->lastUser = $lastUser;
+            $this->lastUser       = $lastUser;
         }
 
         return $this;

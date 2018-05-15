@@ -12,6 +12,7 @@ services:
             - '@security.token_storage'
             - '@hackzilla_ticket.user_repository'
             - '@security.authorization_checker'
+        public: true
 
     hackzilla_ticket.user_repository:
         class: Doctrine\ORM\EntityRepository
@@ -27,6 +28,7 @@ services:
         calls:
             - [ setEntityManager, ['@doctrine.orm.entity_manager'] ]
             - [ setTranslator, ['@translator'] ]
+        public: true
 
     hackzilla_ticket.form.type.ticket:
         class: Hackzilla\Bundle\TicketBundle\Form\Type\TicketType
