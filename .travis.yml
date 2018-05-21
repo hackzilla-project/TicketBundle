@@ -20,19 +20,21 @@ matrix:
     - php: 5.6
       env: COMPOSER_FLAGS="--prefer-lowest"
     - php: 5.6
-      env: SYMFONY_VERSION=2.8.*
+      env: SYMFONY_VERSION="~2.8.0"
     - php: 5.6
-      env: SYMFONY_VERSION=3.0.*
+      env: SYMFONY_VERSION="~3.0.0"
     - php: 5.6
-      env: SYMFONY_VERSION="3.1.*"
+      env: SYMFONY_VERSION="~3.1.0"
     - php: 5.6
-      env: SYMFONY_VERSION="3.2.*@dev"
+      env: SYMFONY_VERSION="~3.2.0"
     - php: 5.6
       env: INSTALL_VICH_UPLOADER_BUNDLE=true
+    - php: 7.2
+      env: SYMFONY_VERSION="^4.1@dev"
   allow_failures:
     - php: nightly
     - php: hhvm
-    - env: SYMFONY_VERSION="3.2.*@dev"
+    - env: SYMFONY_VERSION="^4.1@dev"
 
 sudo: false
 

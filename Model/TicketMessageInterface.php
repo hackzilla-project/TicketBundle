@@ -146,13 +146,19 @@ interface TicketMessageInterface
      */
     public function getTicket();
 
-    const STATUS_INVALID = 0;
-    const STATUS_OPEN = 10;
-    const STATUS_IN_PROGRESS = 11;
+    const STATUS_INVALID               = 0;
+
+    const STATUS_OPEN                  = 10;
+
+    const STATUS_IN_PROGRESS           = 11;
+
     const STATUS_INFORMATION_REQUESTED = 12;
-    const STATUS_ON_HOLD = 13;
-    const STATUS_RESOLVED = 14;
-    const STATUS_CLOSED = 15;
+
+    const STATUS_ON_HOLD               = 13;
+
+    const STATUS_RESOLVED              = 14;
+
+    const STATUS_CLOSED                = 15;
 
     const STATUSES = [
         self::STATUS_INVALID               => 'STATUS_INVALID',
@@ -165,9 +171,12 @@ interface TicketMessageInterface
     ];
 
     const PRIORITY_INVALID = 0;
-    const PRIORITY_LOW = 20;
-    const PRIORITY_MEDIUM = 21;
-    const PRIORITY_HIGH = 22;
+
+    const PRIORITY_LOW     = 20;
+
+    const PRIORITY_MEDIUM  = 21;
+
+    const PRIORITY_HIGH    = 22;
 
     const PRIORITIES = [
         self::PRIORITY_INVALID => 'PRIORITY_INVALID',

@@ -6,8 +6,8 @@ use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle;
 use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
-use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
@@ -64,7 +64,13 @@ class TestKernel extends Kernel
     {
         // FrameworkBundle config
         $c->loadFromExtension('framework', [
-            'secret' => 'MySecretKey',
+            'secret'         => 'MySecretKey',
+            'default_locale' => 'en',
+            'translator'     => [
+                'fallbacks' => [
+                    'en',
+                ],
+            ],
         ]);
 
         // SecurityBundle config
@@ -101,6 +107,13 @@ class TestKernel extends Kernel
         ]);
 
         if ($this->useVichUploaderBundle) {
+            // FrameworkBundle config
+            // "framework.form" is required since "vich_uploader.namer_directory_property"
+            // service uses "form.property_accessor" service.
+            $c->loadFromExtension('framework', [
+                'form' => null,
+            ]);
+
             // VichUploaderBundle config
             $c->loadFromExtension('vich_uploader', [
                 'db_driver' => 'orm',

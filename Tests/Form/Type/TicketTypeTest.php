@@ -24,7 +24,7 @@ class TicketTypeTest extends TypeTestCase
 
     protected function getExtensions()
     {
-        $ticketType = new TicketType(Ticket::class);
+        $ticketType        = new TicketType(Ticket::class);
         $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''), TicketMessage::class);
 
         return [
@@ -54,7 +54,7 @@ class TicketTypeTest extends TypeTestCase
         $formEntity->setCreatedAt($data->getCreatedAt());
         $this->assertEquals($data, $formEntity);
 
-        $view = $form->createView();
+        $view     = $form->createView();
         $children = $view->children;
 
         foreach (array_keys($formData) as $key) {

@@ -27,10 +27,10 @@ class TicketController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $userManager = $this->getUserManager();
+        $userManager   = $this->getUserManager();
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
-        $ticketState = $request->get('state', $this->get('translator')->trans('STATUS_OPEN'));
+        $ticketState    = $request->get('state', $this->get('translator')->trans('STATUS_OPEN'));
         $ticketPriority = $request->get('priority', null);
 
         $query = $ticketManager->getTicketList(
@@ -67,7 +67,7 @@ class TicketController extends Controller
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
         $ticket = $ticketManager->createTicket();
-        $form = $this->createForm(TicketType::class, $ticket);
+        $form   = $this->createForm(TicketType::class, $ticket);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -96,7 +96,7 @@ class TicketController extends Controller
     public function newAction()
     {
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-        $entity = $ticketManager->createTicket();
+        $entity        = $ticketManager->createTicket();
 
         $form = $this->createForm(TicketType::class, $entity);
 
@@ -119,7 +119,7 @@ class TicketController extends Controller
     public function showAction($ticketId)
     {
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-        $ticket = $ticketManager->getTicketById($ticketId);
+        $ticket        = $ticketManager->getTicketById($ticketId);
 
         if (!$ticket) {
             return $this->redirect($this->generateUrl('hackzilla_ticket'));
@@ -154,7 +154,7 @@ class TicketController extends Controller
     public function replyAction(Request $request, $ticketId)
     {
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-        $ticket = $ticketManager->getTicketById($ticketId);
+        $ticket        = $ticketManager->getTicketById($ticketId);
 
         if (!$ticket) {
             throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
@@ -196,7 +196,7 @@ class TicketController extends Controller
     public function deleteAction(Request $request, $ticketId)
     {
         $userManager = $this->getUserManager();
-        $user = $userManager->getCurrentUser();
+        $user        = $userManager->getCurrentUser();
 
         if (!\is_object($user) || !$userManager->hasRole($user, TicketRole::ADMIN)) {
             throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
@@ -209,7 +209,7 @@ class TicketController extends Controller
 
             if ($form->isValid()) {
                 $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
-                $ticket = $ticketManager->getTicketById($ticketId);
+                $ticket        = $ticketManager->getTicketById($ticketId);
 
                 if (!$ticket) {
                     throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));

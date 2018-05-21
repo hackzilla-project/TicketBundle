@@ -14,15 +14,17 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 class UserManagerTest extends WebTestCase
 {
     private $object;
+
     private $tokenStorage;
+
     private $authorizationChecker;
 
     public function setUp()
     {
-        $this->tokenStorage = new TokenStorage();
+        $this->tokenStorage            = new TokenStorage();
         $authenticationProviderManager = new AuthenticationProviderManager([new AnonymousAuthenticationProvider('secret')]);
-        $accessDecisionManager = new AccessDecisionManager();
-        $this->authorizationChecker = new AuthorizationChecker($this->tokenStorage, $authenticationProviderManager, $accessDecisionManager);
+        $accessDecisionManager         = new AccessDecisionManager();
+        $this->authorizationChecker    = new AuthorizationChecker($this->tokenStorage, $authenticationProviderManager, $accessDecisionManager);
 
         $this->object = new UserManager(
             $this->tokenStorage,

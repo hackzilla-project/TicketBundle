@@ -12,10 +12,15 @@ use Symfony\Component\Translation\TranslatorInterface;
 class TicketManager implements TicketManagerInterface
 {
     private $translator;
+
     private $objectManager;
+
     private $ticketRepository;
+
     private $messageRepository;
+
     private $ticketClass;
+
     private $ticketMessageClass;
 
     /**
@@ -26,7 +31,7 @@ class TicketManager implements TicketManagerInterface
      */
     public function __construct($ticketClass, $ticketMessageClass)
     {
-        $this->ticketClass = $ticketClass;
+        $this->ticketClass        = $ticketClass;
         $this->ticketMessageClass = $ticketMessageClass;
     }
 
@@ -37,8 +42,8 @@ class TicketManager implements TicketManagerInterface
      */
     public function setEntityManager(ObjectManager $om)
     {
-        $this->objectManager = $om;
-        $this->ticketRepository = $om->getRepository($this->ticketClass);
+        $this->objectManager     = $om;
+        $this->ticketRepository  = $om->getRepository($this->ticketClass);
         $this->messageRepository = $om->getRepository($this->ticketMessageClass);
 
         return $this;
@@ -192,6 +197,7 @@ class TicketManager implements TicketManagerInterface
                 $query
                     ->andWhere('t.status = :status')
                     ->setParameter('status', TicketMessageInterface::STATUS_CLOSED);
+
                 break;
 
             case TicketMessage::STATUS_OPEN:
@@ -256,7 +262,7 @@ class TicketManager implements TicketManagerInterface
     {
         static $statuses = false;
 
-        if ($statuses === false) {
+        if (false === $statuses) {
             $statuses = [];
 
             foreach (TicketMessageInterface::STATUSES as $id => $value) {
@@ -278,7 +284,7 @@ class TicketManager implements TicketManagerInterface
     {
         static $priorities = false;
 
-        if ($priorities === false) {
+        if (false === $priorities) {
             $priorities = [];
 
             foreach (TicketMessageInterface::PRIORITIES as $id => $value) {

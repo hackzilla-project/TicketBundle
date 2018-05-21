@@ -60,7 +60,7 @@ class TicketMessageTypeTest extends TypeTestCase
         $formEntity->setCreatedAt($data->getCreatedAt());
         $this->assertEquals($data, $formEntity);
 
-        $view = $form->createView();
+        $view     = $form->createView();
         $children = $view->children;
 
         foreach (array_keys($formData) as $key) {

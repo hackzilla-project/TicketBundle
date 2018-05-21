@@ -16,25 +16,25 @@ class DoctrineOrmMappingsPass extends \Doctrine\Bundle\DoctrineBundle\Dependency
     public function process(ContainerBuilder $container)
     {
         $bundleDirectory = HackzillaTicketExtension::bundleDirectory();
-        $namespaces = [];
+        $namespaces      = [];
 
         if (
-            $container->getParameter('hackzilla_ticket.model.ticket.class') === 'Hackzilla\Bundle\TicketBundle\Entity\TicketWithAttachment'
+            'Hackzilla\Bundle\TicketBundle\Entity\TicketWithAttachment' === $container->getParameter('hackzilla_ticket.model.ticket.class')
             ||
-            $container->getParameter('hackzilla_ticket.model.message.class') === 'Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment'
+            'Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment' === $container->getParameter('hackzilla_ticket.model.message.class')
         ) {
             $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/attachment')] = 'Hackzilla\Bundle\TicketBundle\Entity';
         } elseif (
-            $container->getParameter('hackzilla_ticket.model.ticket.class') === 'Hackzilla\Bundle\TicketBundle\Entity\Ticket'
+            'Hackzilla\Bundle\TicketBundle\Entity\Ticket' === $container->getParameter('hackzilla_ticket.model.ticket.class')
             ||
-            $container->getParameter('hackzilla_ticket.model.message.class') === 'Hackzilla\Bundle\TicketBundle\Entity\TicketMessage'
+            'Hackzilla\Bundle\TicketBundle\Entity\TicketMessage' === $container->getParameter('hackzilla_ticket.model.message.class')
         ) {
             $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/plain')] = 'Hackzilla\Bundle\TicketBundle\Entity';
         }
 
-        $arguments = [$namespaces, '.orm.xml'];
-        $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
-        $this->driver = new Definition('Doctrine\ORM\Mapping\Driver\XmlDriver', [$locator]);
+        $arguments        = [$namespaces, '.orm.xml'];
+        $locator          = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
+        $this->driver     = new Definition('Doctrine\ORM\Mapping\Driver\XmlDriver', [$locator]);
         $this->namespaces = $namespaces;
 
         parent::process($container);
