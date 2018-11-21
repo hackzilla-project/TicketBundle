@@ -266,7 +266,7 @@ class TicketManager implements TicketManagerInterface
             $statuses = [];
 
             foreach (TicketMessageInterface::STATUSES as $id => $value) {
-                $statuses[$id] = $this->translator->trans($value);
+                $statuses[$id] = $this->translator->trans($value, [], 'HackzillaTicketBundle');
             }
         }
 
@@ -288,7 +288,7 @@ class TicketManager implements TicketManagerInterface
             $priorities = [];
 
             foreach (TicketMessageInterface::PRIORITIES as $id => $value) {
-                $priorities[$id] = $this->translator->trans($value);
+                $priorities[$id] = $this->translator->trans($value, [], 'HackzillaTicketBundle');
             }
         }
 

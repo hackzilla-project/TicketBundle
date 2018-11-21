@@ -25,25 +25,25 @@
 {% macro status_alert(status, text) %}
     {% spaceless %}
         {% if status == 10 %}
-            <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}
+            <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, 'HackzillaTicketBundle') }}
             </div>
         {% elseif status == 11 %}
             <div class="alert alert-info" role="alert"><span
-                        class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}
+                        class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, 'HackzillaTicketBundle') }}
             </div>
         {% elseif status == 12 %}
             <div class="alert alert-info" role="alert"><span
-                        class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}
+                        class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, 'HackzillaTicketBundle') }}
             </div>
         {% elseif status == 13 %}
             <div class="alert alert-info" role="alert"><span
-                        class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}
+                        class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, 'HackzillaTicketBundle') }}
             </div>
         {% elseif status == 14 %}
-            <div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}
+            <div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, 'HackzillaTicketBundle') }}
             </div>
         {% elseif status == 15 %}
-            <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-folder-close"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }) }}
+            <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-folder-close"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, 'HackzillaTicketBundle') }}
             </div>
         {% endif %}
     {% endspaceless %}
@@ -67,14 +67,14 @@
     {% spaceless %}
         {% if priority <= 20 %}
             <div class="alert alert-info"
-                 role="alert">{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }) }}</div>
+                 role="alert">{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }, 'HackzillaTicketBundle') }}</div>
         {% elseif priority == 21 %}
             <div class="alert alert-warning" role="alert"><span
-                        class="glyphicon glyphicon-asterisk"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }) }}
+                        class="glyphicon glyphicon-asterisk"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }, 'HackzillaTicketBundle') }}
             </div>
         {% else %}
             <div class="alert alert-danger" role="alert"><span
-                        class="glyphicon glyphicon-star"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }) }}
+                        class="glyphicon glyphicon-star"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }, 'HackzillaTicketBundle') }}
             </div>
         {% endif %}
     {% endspaceless %}
