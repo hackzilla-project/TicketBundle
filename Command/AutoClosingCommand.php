@@ -54,7 +54,7 @@ class AutoClosingCommand extends ContainerAwareCommand
         foreach ($resolved_tickets as $ticket) {
             $message = $ticket_manager->createMessage()
                 ->setMessage(
-                    $translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $translator->trans('STATUS_CLOSED')])
+                    $translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $translator->trans('STATUS_CLOSED', [], 'HackzillaTicketBundle')], 'HackzillaTicketBundle')
                 )
                 ->setStatus(TicketMessage::STATUS_CLOSED)
                 ->setPriority($ticket->getPriority())
