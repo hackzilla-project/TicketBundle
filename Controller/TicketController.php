@@ -33,7 +33,7 @@ class TicketController extends Controller
         $ticketState    = $request->get('state', $this->get('translator')->trans('STATUS_OPEN', [], 'HackzillaTicketBundle'));
         $ticketPriority = $request->get('priority', null);
 
-        $query = $ticketManager->getTicketList(
+        $query = $ticketManager->getTicketListQuery(
             $userManager,
             $ticketManager->getTicketStatus($ticketState),
             $ticketManager->getTicketPriority($ticketPriority)
