@@ -29,7 +29,6 @@
         "doctrine/doctrine-bundle": "^1.4",
         "doctrine/orm": "^2.4.8",
         "knplabs/knp-paginator-bundle": "^2.3",
-        "sensio/framework-extra-bundle": "^3.0.2 || ^4.0",
         "symfony/config": "^2.8 || ^3.0 || ^4.0",
         "symfony/console": "^2.8 || ^3.0 || ^4.0",
         "symfony/dependency-injection": "^2.8 || ^3.0 || ^4.0",
@@ -40,6 +39,7 @@
         "symfony/http-kernel": "^2.8 || ^3.0 || ^4.0",
         "symfony/options-resolver": "^2.8 || ^3.0 || ^4.0",
         "symfony/security-bundle": "^2.8 || ^3.0 || ^4.0",
+        "symfony/translation": "^2.8 || ^3.0 || ^4.0",
         "symfony/validator": "^2.8 || ^3.0 || ^4.0",
         "symfony/yaml": "^2.8 || ^3.0 || ^4.0"
     },
@@ -53,6 +53,7 @@
         "phpunit/phpunit": "<5.4.3"
     },
     "suggest": {
+        "friendsofsymfony/user-bundle": "In order to ease user management",
         "vich/uploader-bundle": "Allow attaching files to ticket messages"
     },
     "autoload": {
