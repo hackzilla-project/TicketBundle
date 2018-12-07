@@ -68,9 +68,6 @@ class TestKernel extends Kernel
         $c->loadFromExtension('framework', [
             'secret'         => 'MySecretKey',
             'default_locale' => 'en',
-            'validation' => [
-                'enable_annotations' => true,
-            ],
             'translator'     => [
                 'fallbacks' => [
                     'en',
