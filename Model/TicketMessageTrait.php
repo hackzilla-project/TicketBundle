@@ -1,10 +1,7 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Model\TicketFeature;
+namespace Hackzilla\Bundle\TicketBundle\Model;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

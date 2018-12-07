@@ -2,8 +2,6 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketFeature\TicketTrait;
-
 /**
  * Ticket.
  */
