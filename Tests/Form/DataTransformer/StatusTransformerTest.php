@@ -2,7 +2,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\DataTransformer;
 
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

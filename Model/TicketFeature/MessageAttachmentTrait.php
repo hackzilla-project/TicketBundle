@@ -1,6 +1,6 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketFeature;
+namespace Hackzilla\Bundle\TicketBundle\Model\TicketFeature;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;

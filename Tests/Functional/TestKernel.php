@@ -4,7 +4,9 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle;
-use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
@@ -98,12 +100,23 @@ class TestKernel extends Kernel
             ],
             'orm' => [
                 'default_entity_manager' => 'default',
+                'mappings' => [
+                    'HackzillaTicketBundle' => [
+                        'type' => 'annotation',
+                        'dir' => __DIR__.'/../Fixtures/Entity',
+                        'is_bundle' => false,
+                        'prefix' => 'Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity',
+                        'alias' => 'HackzillaTicketBundle',
+                    ],
+                ],
             ],
         ]);
 
         // HackzillaBundle config
         $c->loadFromExtension('hackzilla_ticket', [
             'user_class' => User::class,
+            'ticket_class' => Ticket::class,
+            'message_class' => TicketMessage::class,
         ]);
 
         if ($this->useVichUploaderBundle) {

@@ -3,8 +3,8 @@
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
-use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
@@ -41,7 +41,7 @@ class TicketTypeTest extends TypeTestCase
     {
         $formData = [];
 
-        $data = new \Hackzilla\Bundle\TicketBundle\Entity\Ticket();
+        $data = new Ticket();
 
         $form = $this->factory->create(TicketType::class);
 

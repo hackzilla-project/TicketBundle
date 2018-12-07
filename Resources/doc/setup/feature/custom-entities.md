@@ -32,9 +32,9 @@ The only thing missing form the traits are the primary id.  This will allow you 
 
 | Entity          | Trait                                                                             |
 | --------------- | --------------------------------------------------------------------------------- |
-| Ticket          | Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketTrait                           |
-| Ticket Message  | Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketMessageTrait                    |
-| Ticket Message  | Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketFeature\MessageAttachmentTrait  |
+| Ticket          | Hackzilla\Bundle\TicketBundle\Model\Traits\TicketTrait                           |
+| Ticket Message  | Hackzilla\Bundle\TicketBundle\Model\Traits\TicketMessageTrait                    |
+| Ticket Message  | Hackzilla\Bundle\TicketBundle\Model\Traits\TicketFeature\MessageAttachmentTrait  |
 
 At the moment they only support xml configuration.  Use the [TicketBundle xml](Resources/config/doctrine/model) as a basis and copy it into your bundle.
 

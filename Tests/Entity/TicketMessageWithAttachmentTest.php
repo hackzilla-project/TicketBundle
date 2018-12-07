@@ -2,7 +2,8 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Entity;
 
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TicketMessageWithAttachmentTest extends WebTestCase
@@ -21,6 +22,6 @@ class TicketMessageWithAttachmentTest extends WebTestCase
 
     public function testObjectCreated()
     {
-        $this->assertInstanceOf(TicketMessageWithAttachment::class, $this->object);
+        $this->assertInstanceOf(TicketMessageInterface::class, $this->object);
     }
 }

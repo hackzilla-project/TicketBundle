@@ -2,10 +2,10 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
-use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
-use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Vich\UploaderBundle\Event\Events;
 
 /**

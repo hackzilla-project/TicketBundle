@@ -1,14 +1,13 @@
 <?php
 
-namespace Hackzilla\Bundle\TicketBundle\Entity;
+namespace Hackzilla\Bundle\TicketBundle\Model;
 
-use Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketMessageTrait;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketFeature\TicketMessageTrait;
 
 /**
  * Ticket Message.
  */
-class TicketMessage implements TicketMessageInterface
+abstract class TicketMessage implements TicketMessageInterface
 {
     use TicketMessageTrait;
 

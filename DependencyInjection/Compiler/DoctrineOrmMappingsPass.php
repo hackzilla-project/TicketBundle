@@ -19,17 +19,17 @@ class DoctrineOrmMappingsPass extends \Doctrine\Bundle\DoctrineBundle\Dependency
         $namespaces      = [];
 
         if (
-            'Hackzilla\Bundle\TicketBundle\Entity\TicketWithAttachment' === $container->getParameter('hackzilla_ticket.model.ticket.class')
+            'Hackzilla\Bundle\TicketBundle\Model\TicketWithAttachment' === $container->getParameter('hackzilla_ticket.model.ticket.class')
             ||
-            'Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment' === $container->getParameter('hackzilla_ticket.model.message.class')
+            'Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment' === $container->getParameter('hackzilla_ticket.model.message.class')
         ) {
-            $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/attachment')] = 'Hackzilla\Bundle\TicketBundle\Entity';
+            $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/attachment')] = 'Hackzilla\Bundle\TicketBundle\Model';
         } elseif (
-            'Hackzilla\Bundle\TicketBundle\Entity\Ticket' === $container->getParameter('hackzilla_ticket.model.ticket.class')
+            'Hackzilla\Bundle\TicketBundle\Model\Ticket' === $container->getParameter('hackzilla_ticket.model.ticket.class')
             ||
-            'Hackzilla\Bundle\TicketBundle\Entity\TicketMessage' === $container->getParameter('hackzilla_ticket.model.message.class')
+            'Hackzilla\Bundle\TicketBundle\Model\TicketMessage' === $container->getParameter('hackzilla_ticket.model.message.class')
         ) {
-            $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/plain')] = 'Hackzilla\Bundle\TicketBundle\Entity';
+            $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/plain')] = 'Hackzilla\Bundle\TicketBundle\Model';
         }
 
         $arguments        = [$namespaces, '.orm.xml'];
