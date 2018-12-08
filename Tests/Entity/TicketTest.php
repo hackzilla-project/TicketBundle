@@ -11,8 +11,10 @@ class TicketTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
+        parent::setUp();
+
         $this->object = new Ticket();
     }
 

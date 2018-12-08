@@ -5,8 +5,9 @@ namespace Hackzilla\Bundle\TicketBundle\Model;
 /**
  * Ticket Message.
  */
-abstract class TicketMessageWithAttachment extends TicketMessage implements MessageAttachmentInterface
+abstract class TicketMessageWithAttachment implements TicketMessageInterface, MessageAttachmentInterface
 {
+    use TicketMessageTrait;
     use MessageAttachmentTrait;
 
     /**

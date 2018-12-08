@@ -73,6 +73,9 @@ class TestKernel extends Kernel
                     'en',
                 ],
             ],
+            'validation' => [
+                'enabled' => true,
+            ],
         ]);
 
         // SecurityBundle config

@@ -10,7 +10,7 @@ class TicketFeaturesTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->object = new TicketFeatureExtension(new TicketFeatures([], ''));
     }

@@ -8,6 +8,5 @@
     <field name="status" type="smallint" column="status" precision="0" scale="0" nullable="false"/>
     <field name="priority" type="smallint" column="priority" precision="0" scale="0" nullable="false"/>
     <field name="createdAt" type="datetime" column="created_at" precision="0" scale="0" nullable="false"/>
-    <one-to-many field="messages" target-entity="Hackzilla\Bundle\TicketBundle\Model\TicketMessage" mapped-by="ticket" fetch="LAZY"/>
   </mapped-superclass>
 </doctrine-mapping>

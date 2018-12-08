@@ -2,8 +2,6 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * Ticket Message Trait.
  */
@@ -20,8 +18,6 @@ trait TicketMessageTrait
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
      */
     protected $message;
 

@@ -17,7 +17,7 @@ class TicketTypeTest extends TypeTestCase
 
     protected function setUp()
     {
-        $this->user = $this->getMockBuilder(UserManagerInterface::class)->getMock();
+        $this->user = $this->createMock(UserManagerInterface::class);
 
         parent::setUp();
     }

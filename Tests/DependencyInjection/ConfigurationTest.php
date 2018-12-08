@@ -9,7 +9,7 @@ class ConfigurationTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->object = new Configuration();
     }

@@ -3,6 +3,8 @@
 namespace Hackzilla\Bundle\TicketBundle\DependencyInjection\Compiler;
 
 use Hackzilla\Bundle\TicketBundle\DependencyInjection\HackzillaTicketExtension;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment;
+use Hackzilla\Bundle\TicketBundle\Model\TicketWithAttachment;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -18,17 +20,11 @@ class DoctrineOrmMappingsPass extends \Doctrine\Bundle\DoctrineBundle\Dependency
         $bundleDirectory = HackzillaTicketExtension::bundleDirectory();
         $namespaces      = [];
 
-        if (
-            'Hackzilla\Bundle\TicketBundle\Model\TicketWithAttachment' === $container->getParameter('hackzilla_ticket.model.ticket.class')
-            ||
-            'Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment' === $container->getParameter('hackzilla_ticket.model.message.class')
+        if (is_subclass_of(TicketWithAttachment::class, $container->getParameter('hackzilla_ticket.model.ticket.class'))
+            || is_subclass_of(TicketMessageWithAttachment::class, $container->getParameter('hackzilla_ticket.model.message.class'))
         ) {
             $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/attachment')] = 'Hackzilla\Bundle\TicketBundle\Model';
-        } elseif (
-            'Hackzilla\Bundle\TicketBundle\Model\Ticket' === $container->getParameter('hackzilla_ticket.model.ticket.class')
-            ||
-            'Hackzilla\Bundle\TicketBundle\Model\TicketMessage' === $container->getParameter('hackzilla_ticket.model.message.class')
-        ) {
+        } else {
             $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/plain')] = 'Hackzilla\Bundle\TicketBundle\Model';
         }
 

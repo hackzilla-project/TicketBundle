@@ -46,6 +46,13 @@ class FunctionalTest extends WebTestCase
         $this->assertInstanceOf(TicketManagerInterface::class, static::$kernel->getContainer()->get('hackzilla_ticket.ticket_manager'));
     }
 
+    public function testValidation()
+    {
+        $validator = static::$kernel->getContainer()->get('validator');
+        $violations = $validator->validate(new Ticket());
+        $this->assertNotEmpty($violations);
+    }
+
     /**
      * @group vichuploaderbundle
      */
