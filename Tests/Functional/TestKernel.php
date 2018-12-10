@@ -98,18 +98,19 @@ class TestKernel extends Kernel
                 'connections' => [
                     'default' => [
                         'driver' => 'pdo_sqlite',
+                        'memory' => true,
                     ],
                 ],
             ],
             'orm' => [
                 'default_entity_manager' => 'default',
-                'mappings' => [
-                    'HackzillaTicketBundle' => [
-                        'type' => 'annotation',
-                        'dir' => __DIR__.'/../Fixtures/Entity',
+                'mappings'               => [
+                    'TestBundle' => [
+                        'type'      => 'annotation',
+                        'dir'       => __DIR__.'/../Fixtures/Entity',
                         'is_bundle' => false,
-                        'prefix' => 'Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity',
-                        'alias' => 'HackzillaTicketBundle',
+                        'prefix'    => 'Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity',
+                        'alias'     => 'TestBundle',
                     ],
                 ],
             ],
@@ -117,8 +118,8 @@ class TestKernel extends Kernel
 
         // HackzillaBundle config
         $c->loadFromExtension('hackzilla_ticket', [
-            'user_class' => User::class,
-            'ticket_class' => Ticket::class,
+            'user_class'    => User::class,
+            'ticket_class'  => Ticket::class,
             'message_class' => TicketMessage::class,
         ]);
 

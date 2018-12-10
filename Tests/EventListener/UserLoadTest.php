@@ -25,7 +25,7 @@ class UserLoadTest extends WebTestCase
             ->getMock();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

@@ -14,7 +14,7 @@ class StatusTypeTest extends TypeTestCase
         $this->object = new StatusType();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

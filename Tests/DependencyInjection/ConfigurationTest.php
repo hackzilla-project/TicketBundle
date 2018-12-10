@@ -14,7 +14,7 @@ class ConfigurationTest extends WebTestCase
         $this->object = new Configuration();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

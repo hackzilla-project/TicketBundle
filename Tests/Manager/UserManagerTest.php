@@ -43,7 +43,7 @@ class UserManagerTest extends WebTestCase
         return $userRepository;
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

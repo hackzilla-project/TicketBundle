@@ -14,7 +14,7 @@ class PriorityTypeTest extends TypeTestCase
         $this->object = new PriorityType();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

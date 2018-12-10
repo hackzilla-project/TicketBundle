@@ -15,7 +15,7 @@ class TicketMessageTest extends WebTestCase
         $this->object = new TicketMessage();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

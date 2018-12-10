@@ -15,7 +15,7 @@ class TicketMessageWithAttachmentTest extends WebTestCase
         $this->object = new TicketMessageWithAttachment();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

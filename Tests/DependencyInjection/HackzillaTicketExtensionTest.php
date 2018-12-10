@@ -14,7 +14,7 @@ class HackzillaTicketExtensionTest extends WebTestCase
         $this->object = new HackzillaTicketExtension();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

@@ -15,7 +15,7 @@ class TicketFeaturesTest extends WebTestCase
         $this->object = new TicketFeatureExtension(new TicketFeatures([], ''));
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

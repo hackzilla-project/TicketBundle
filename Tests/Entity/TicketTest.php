@@ -2,9 +2,9 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Entity;
 
-use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TicketTest extends WebTestCase
@@ -18,7 +18,7 @@ class TicketTest extends WebTestCase
         $this->object = new Ticket();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

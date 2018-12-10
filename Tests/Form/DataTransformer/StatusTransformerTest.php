@@ -2,8 +2,8 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\DataTransformer;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessage;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class StatusTransformerTest extends WebTestCase
@@ -15,7 +15,7 @@ class StatusTransformerTest extends WebTestCase
         $this->object = new StatusTransformer();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }
