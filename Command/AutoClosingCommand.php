@@ -11,13 +11,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AutoClosingCommand extends ContainerAwareCommand
 {
+    protected static $defaultName = 'ticket:autoclosing';
+
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
         $this
-            ->setName('ticket:autoclosing')
+            ->setName(static::$defaultName) // BC for symfony/console < 3.4.0
             ->setDescription('Automatically close resolved tickets still opened')
             ->addArgument(
                 'username',
