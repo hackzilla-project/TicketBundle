@@ -11,13 +11,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TicketManagerCommand extends ContainerAwareCommand
 {
+    protected static $defaultName = 'ticket:create';
+
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
         $this
-            ->setName('ticket:create')
+            ->setName(static::$defaultName) // BC for symfony/console < 3.4.0
             ->setDescription('Create a new Ticket')
             ->addArgument(
                 'subject',
