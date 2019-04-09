@@ -6,6 +6,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - 7.3
   - nightly
   - hhvm
 
@@ -31,11 +32,12 @@ matrix:
     - php: 5.6
       env: INSTALL_VICH_UPLOADER_BUNDLE=true SYMFONY_PHPUNIT_VERSION="5.7.27"
     - php: 7.2
-      env: SYMFONY_VERSION="^4.2@dev" SYMFONY_PHPUNIT_VERSION="7.4.4"
+    - php: 7.3
+      env: SYMFONY_VERSION="^4.3@dev" SYMFONY_PHPUNIT_VERSION="7.4.4"
   allow_failures:
     - php: nightly
     - php: hhvm
-    - env: SYMFONY_VERSION="^4.2@dev" SYMFONY_PHPUNIT_VERSION="7.4.4"
+    - env: SYMFONY_VERSION="^4.3@dev" SYMFONY_PHPUNIT_VERSION="7.4.4"
 
 sudo: false
 
