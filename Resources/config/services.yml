@@ -82,7 +82,7 @@ services:
         arguments:
             - '@hackzilla_ticket.ticket_manager'
             - '@hackzilla_ticket.user_manager'
-            - '@doctrine'
+            - '@doctrine.orm.entity_manager'
             - '@translator'
             # BC: Replace 5th argument with "@parameter_bag" after bumping "symfony/dependency-injection" to "^4.1"
             - '@service_container'
