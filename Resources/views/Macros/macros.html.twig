@@ -1,5 +1,5 @@
 {% macro status_btn(status, text, small = false) %}
-    {% spaceless %}
+    {% apply spaceless %}
         {% if status == 10 %}
             <button class="btn btn-warning {{ small ? 'btn-xs' : '' }} disabled active"><span
                         class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ text|upper }}</button>
@@ -19,11 +19,11 @@
             <button class="btn btn-danger {{ small ? 'btn-xs' : '' }} disabled active"><span
                         class="glyphicon glyphicon-folder-close"></span>&nbsp;&nbsp;{{ text|upper }}</button>
         {% endif %}
-    {% endspaceless %}
+    {% endapply %}
 {% endmacro %}
 
 {% macro status_alert(status, text) %}
-    {% spaceless %}
+    {% apply spaceless %}
         {% if status == 10 %}
             <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, 'HackzillaTicketBundle') }}
             </div>
@@ -46,11 +46,11 @@
             <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-folder-close"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, 'HackzillaTicketBundle') }}
             </div>
         {% endif %}
-    {% endspaceless %}
+    {% endapply %}
 {% endmacro %}
 
 {% macro priority_btn(priority, text, small = false) %}
-    {% spaceless %}
+    {% apply spaceless %}
         {% if priority <= 20 %}
             <button class="btn btn-info {{ small ? 'btn-xs' : '' }} disabled active">{{ text|upper }}</button>
         {% elseif priority == 21 %}
@@ -60,11 +60,11 @@
             <button class="btn btn-danger {{ small ? 'btn-xs' : '' }} disabled active"><span
                         class="glyphicon glyphicon-asterisk"></span>&nbsp;&nbsp;{{ text|upper }}</button>
         {% endif %}
-    {% endspaceless %}
+    {% endapply %}
 {% endmacro %}
 
 {% macro priority_alert(priority, text) %}
-    {% spaceless %}
+    {% apply spaceless %}
         {% if priority <= 20 %}
             <div class="alert alert-info"
                  role="alert">{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }, 'HackzillaTicketBundle') }}</div>
@@ -77,12 +77,12 @@
                         class="glyphicon glyphicon-star"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }, 'HackzillaTicketBundle') }}
             </div>
         {% endif %}
-    {% endspaceless %}
+    {% endapply %}
 {% endmacro %}
 
 {# Source: http://stackoverflow.com/a/15303004/157656 #}
 {% macro bytesToSize(bytes) %}
-    {% spaceless %}
+    {% apply spaceless %}
         {% set kilobyte = 1024 %}
         {% set megabyte = kilobyte * 1024 %}
         {% set gigabyte = megabyte * 1024 %}
@@ -99,5 +99,5 @@
         {% else %}
             {{ (bytes / terabyte)|number_format(2, '.') ~ ' TB' }}
         {% endif %}
-    {% endspaceless %}
+    {% endapply %}
 {% endmacro %}
