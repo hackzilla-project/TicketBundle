@@ -59,6 +59,12 @@
     "autoload": {
         "psr-4": {
             "Hackzilla\\Bundle\\TicketBundle\\": ""
+        },
+        "exclude-from-classmap": ["Tests/"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Hackzilla\\Bundle\\TicketBundle\\Tests\\": "Tests/"
         }
     },
     "config": {
