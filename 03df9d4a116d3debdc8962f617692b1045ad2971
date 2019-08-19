@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by masonen at 2019-06-05 15:22
+
+changed it in another way. index.html.twig imports macros in the same way. If you do it that way macros could possibly be overidden without needing to override show_attachment.html.twig
+
+---------------------------------------------------------------------------
+
+by masonen at 2019-06-20 15:25
+
+@phansys what do you think
+
+---------------------------------------------------------------------------
+
+by phansys at 2019-06-25 23:28
+
+I'm not checked the proposed solution yet @masonen. Sorry for the delay, I'll try to give it a chance ASAP.
+Thank you in advance.
