@@ -3,8 +3,10 @@
 namespace Hackzilla\Bundle\TicketBundle\TwigExtension;
 
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class TicketFeatureExtension extends \Twig_Extension
+class TicketFeatureExtension extends AbstractExtension
 {
     private $ticketFeatures;
 
@@ -19,7 +21,7 @@ class TicketFeatureExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('hasTicketFeature', [$this, 'hasFeature']),
+            new TwigFunction('hasTicketFeature', [$this, 'hasFeature']),
         ];
     }
 
