@@ -1,4 +1,4 @@
-{% extends 'HackzillaTicketBundle::layout.html.twig' %}
+{% extends '@HackzillaTicket/layout.html.twig' %}
 
 {% block hackzilla_ticket_content -%}
     <h1>{{ 'HEADING_NEW_TICKET'|trans({}, 'HackzillaTicketBundle') }}</h1>
@@ -14,9 +14,9 @@
             </div>
 
             {% if form.messages|length == 0 %}
-                {% include hackzilla_ticket.templates.prototype with {'form': form.messages.vars.prototype} %}
+                {% include 'hackzilla_ticket.templates.prototype' with {'form': form.messages.vars.prototype} %}
             {% else %}
-                {% include hackzilla_ticket.templates.prototype with {'form': form.messages.__name__} %}
+                {% include 'hackzilla_ticket.templates.prototype' with {'form': form.messages.__name__} %}
             {% endif %}
 
             {{ form_rest(form) }}
