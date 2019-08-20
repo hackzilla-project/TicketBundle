@@ -5,9 +5,11 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle;
 use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
+use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
+use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
@@ -39,6 +41,8 @@ class TestKernel extends Kernel
             new FrameworkBundle(),
             new SecurityBundle(),
             new DoctrineBundle(),
+            new KnpPaginatorBundle(),
+            new TwigBundle(),
             new HackzillaTicketBundle(),
             new TestBundle(),
         ];
