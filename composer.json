@@ -40,9 +40,9 @@
         "symfony/options-resolver": "^2.8 || ^3.0 || ^4.0",
         "symfony/security-bundle": "^2.8 || ^3.0 || ^4.0",
         "symfony/translation": "^2.8 || ^3.0 || ^4.0",
+        "symfony/twig-bundle": "^2.8 || ^3.0 || ^4.0",
         "symfony/validator": "^2.8 || ^3.0 || ^4.0",
-        "symfony/yaml": "^2.8 || ^3.0 || ^4.0",
-        "twig/twig": "^1.34 || ^2.0"
+        "symfony/yaml": "^2.8 || ^3.0 || ^4.0"
     },
     "require-dev": {
         "ext-pdo_sqlite": "*",
@@ -51,7 +51,8 @@
         "symfony/security": "^2.8 || ^3.0 || ^4.0"
     },
     "conflict": {
-        "phpunit/phpunit": "<5.4.3"
+        "phpunit/phpunit": "<5.4.3",
+        "twig/twig": "<1.34"
     },
     "suggest": {
         "friendsofsymfony/user-bundle": "In order to ease user management",
