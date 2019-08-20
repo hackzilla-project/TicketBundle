@@ -11,7 +11,7 @@
          bootstrap="Tests/bootstrap.php"
 >
     <php>
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[direct]=1" />
     </php>
     <testsuites>
         <testsuite name="HackzillaTicketBundle test suite">

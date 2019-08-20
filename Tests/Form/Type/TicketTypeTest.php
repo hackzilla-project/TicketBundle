@@ -17,7 +17,7 @@ class TicketTypeTest extends TypeTestCase
 
     protected function setUp()
     {
-        $this->user = $this->getMockBuilder(UserManagerInterface::class)->getMock();
+        $this->user = $this->createMock(UserManagerInterface::class);
 
         parent::setUp();
     }
@@ -41,7 +41,7 @@ class TicketTypeTest extends TypeTestCase
     {
         $formData = [];
 
-        $data = new \Hackzilla\Bundle\TicketBundle\Entity\Ticket();
+        $data = new Ticket();
 
         $form = $this->factory->create(TicketType::class);
 
