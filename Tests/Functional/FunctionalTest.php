@@ -6,6 +6,7 @@ use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
+use Twig\Template;
 use Vich\UploaderBundle\Event\Events;
 
 /**
@@ -55,5 +56,12 @@ class FunctionalTest extends WebTestCase
         $listeners       = $eventDispatcher->getListeners();
 
         $this->assertArrayHasKey(Events::POST_UPLOAD, $listeners);
+    }
+
+    public function testTemplateLoad()
+    {
+        $twig = static::$kernel->getContainer()->get('twig');
+
+        $this->assertInstanceOf(Template::class, $twig->loadTemplate('@HackzillaTicket/Ticket/index.html.twig'));
     }
 }
