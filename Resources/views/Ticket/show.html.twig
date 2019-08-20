@@ -1,5 +1,5 @@
-{% extends 'HackzillaTicketBundle::layout.html.twig' %}
-{% import 'HackzillaTicketBundle:Macros:macros.html.twig' as macros %}
+{% extends '@HackzillaTicket/layout.html.twig' %}
+{% import '@HackzillaTicket/Macros/macros.html.twig' as macros %}
 
 {% block hackzilla_ticket_content -%}
 
@@ -66,7 +66,7 @@
     {% if form is defined %}
         <div class="well well-sm">
             {{ form_start(form, {'method': 'POST', 'action': path('hackzilla_ticket_reply', {'ticketId': ticket.id})}) }}
-            {% include hackzilla_ticket.templates.prototype with {'form': form} %}
+            {% include 'hackzilla_ticket.templates.prototype' with {'form': form} %}
 
             {{ form_rest(form) }}
 

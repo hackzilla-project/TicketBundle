@@ -1,5 +1,5 @@
-{% extends 'HackzillaTicketBundle::layout.html.twig' %}
-{% import hackzilla_ticket.templates.macros as macros %}
+{% extends '@HackzillaTicket/layout.html.twig' %}
+{% import 'hackzilla_ticket.templates.macros' as macros %}
 
 {% block hackzilla_ticket_content -%}
     <h1>{{ 'HEADING_TICKET_LIST'|trans({}, 'HackzillaTicketBundle') }}</h1>
@@ -67,7 +67,7 @@
         </tbody>
     </table>
     <div class="navigation text-right">
-        {{ knp_pagination_render(pagination, 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig') }}
+        {{ knp_pagination_render(pagination, '@KnpPaginator/Pagination/twitter_bootstrap_v3_pagination.html.twig') }}
     </div>
 
 {% endblock %}
