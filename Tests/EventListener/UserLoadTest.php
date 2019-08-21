@@ -19,10 +19,7 @@ class UserLoadTest extends WebTestCase
 
     public function getUserManagerMock()
     {
-        return $this
-            ->getMockBuilder(UserManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(UserManager::class);
     }
 
     public function tearDown()

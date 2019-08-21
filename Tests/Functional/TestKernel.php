@@ -78,6 +78,11 @@ class TestKernel extends Kernel
         ]);
 
         // SecurityBundle config
+        $mainFirewallConfig = ['anonymous' => null];
+        // "logout_on_user_change" configuration was marked as mandatory since version 3.4 and deprecated as of 4.1.
+        if (version_compare(self::VERSION, '3.4', '>=') && version_compare(self::VERSION, '4.1', '<')) {
+            $mainFirewallConfig['logout_on_user_change'] = true;
+        }
         $c->loadFromExtension('security', [
             'providers' => [
                 'in_memory' => [
@@ -85,9 +90,7 @@ class TestKernel extends Kernel
                 ],
             ],
             'firewalls' => [
-                'main' => [
-                    'anonymous' => null,
-                ],
+                'main' => $mainFirewallConfig,
             ],
         ]);
 
@@ -104,6 +107,17 @@ class TestKernel extends Kernel
                 'default_entity_manager' => 'default',
             ],
         ]);
+
+        // TwigBundle config
+        $twigConfig = [
+            'strict_variables' => '%kernel.debug%',
+            'autoescape'       => 'name',
+        ];
+        // "default_path" configuration is available since version 3.4.
+        if (version_compare(self::VERSION, '3.4', '>=')) {
+            $twigConfig['default_path'] = __DIR__.'/Resources/views';
+        }
+        $c->loadFromExtension('twig', $twigConfig);
 
         // HackzillaBundle config
         $c->loadFromExtension('hackzilla_ticket', [

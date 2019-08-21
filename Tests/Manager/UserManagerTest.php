@@ -35,12 +35,7 @@ class UserManagerTest extends WebTestCase
 
     private function getMockUserRepository()
     {
-        $userRepository = $this
-            ->getMockBuilder(EntityRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        return $userRepository;
+        return $this->createMock(EntityRepository::class);
     }
 
     public function tearDown()
