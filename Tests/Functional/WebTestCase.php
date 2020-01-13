@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
  */
 class WebTestCase extends BaseWebTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

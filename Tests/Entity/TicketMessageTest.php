@@ -9,12 +9,12 @@ class TicketMessageTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->object = new TicketMessage();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->object);
     }

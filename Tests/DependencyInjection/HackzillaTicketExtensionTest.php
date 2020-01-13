@@ -9,12 +9,12 @@ class HackzillaTicketExtensionTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->object = new HackzillaTicketExtension();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->object);
     }
