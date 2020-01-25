@@ -2,6 +2,7 @@
 
 Simple ticketing bundle for any project.
 Available translations for:
+ * Dutch
  * English
  * French
  * German
