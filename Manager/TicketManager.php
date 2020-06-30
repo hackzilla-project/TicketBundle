@@ -105,6 +105,8 @@ class TicketManager implements TicketManagerInterface
      *
      * @param TicketInterface        $ticket
      * @param TicketMessageInterface $message
+     *
+     * @return TicketInterface
      */
     public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null)
     {
@@ -116,12 +118,14 @@ class TicketManager implements TicketManagerInterface
             $this->objectManager->persist($message);
         }
         $this->objectManager->flush();
+
+        return $ticket;
     }
 
     /**
      * Delete a ticket from the database.
      *
-     * @param TicketInterface $ticket
+     * @param TicketInterface $ticket*
      */
     public function deleteTicket(TicketInterface $ticket)
     {
@@ -176,9 +180,13 @@ class TicketManager implements TicketManagerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param UserManagerInterface $userManager
+     * @param int                  $ticketStatus
+     * @param int                  $ticketPriority
+     *
+     * @return mixed
      */
-    public function getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
+    public function getTicketList(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
     {
         $query = $this->ticketRepository->createQueryBuilder('t')
 //            ->select($this->ticketClass.' t')

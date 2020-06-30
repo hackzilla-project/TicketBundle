@@ -33,7 +33,7 @@ class TicketController extends Controller
         $ticketState    = $request->get('state', $this->get('translator')->trans('STATUS_OPEN'));
         $ticketPriority = $request->get('priority', null);
 
-        $query = $ticketManager->getTicketListQuery(
+        $query = $ticketManager->getTicketList(
             $userManager,
             $ticketManager->getTicketStatus($ticketState),
             $ticketManager->getTicketPriority($ticketPriority)

@@ -34,9 +34,9 @@ interface TicketManagerInterface
      * @param int                  $ticketStatus
      * @param int                  $ticketPriority
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return mixed
      */
-    public function getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null);
+    public function getTicketList(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null);
 
     /**
      * @param int $days
