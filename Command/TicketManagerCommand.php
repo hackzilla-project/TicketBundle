@@ -2,39 +2,16 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
-use FOS\UserBundle\Model\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
-use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TicketManagerCommand extends Command
+class TicketManagerCommand extends ContainerAwareCommand
 {
     protected static $defaultName = 'ticket:create';
-
-    /**
-     * @var TicketManagerInterface
-     */
-    private $ticketManager;
-
-    /**
-     * @var UserManagerInterface
-     */
-    private $userManager;
-
-    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager = null)
-    {
-        if (!$userManager) {
-            throw new \InvalidArgumentException(sprintf('%s requires a user manager in order to set the user for the ticket message. Is "friendsofsymfony/user-bundle" installed and enabled in your project?', self::class));
-        }
-        parent::__construct();
-
-        $this->ticketManager = $ticketManager;
-        $this->userManager = $userManager;
-    }
 
     /**
      * {@inheritdoc}
@@ -69,16 +46,20 @@ class TicketManagerCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $ticket = $this->ticketManager->createTicket()
+        $userManager = $this->getContainer()->get('fos_user.user_manager');
+
+        $ticketManager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
+
+        $ticket = $ticketManager->createTicket()
             ->setSubject($input->getArgument('subject'));
 
-        $message = $this->ticketManager->createMessage()
+        $message = $ticketManager->createMessage()
             ->setMessage($input->getArgument('message'))
             ->setStatus(TicketMessage::STATUS_OPEN)
             ->setPriority($input->getOption('priority'))
-            ->setUser($this->userManager->findUserByUsername('system'));
+            ->setUser($userManager->findUserByUsername('system'));
 
-        $this->ticketManager->updateTicket($ticket, $message);
+        $ticketManager->updateTicket($ticket, $message);
 
         $output->writeln(
             "Ticket with subject '".$ticket->getSubject()."' has been created with ticketnumber #".$ticket->getId().''
