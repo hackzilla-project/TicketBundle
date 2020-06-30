@@ -2,4 +2,6 @@
 /Tests/Functional/cache
 /Tests/Functional/logs
 composer.lock
+phpunit.xml
 .php_cs.cache
+.phpunit.result.cache

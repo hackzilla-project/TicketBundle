@@ -144,7 +144,7 @@ class TestKernel extends Kernel
      */
     public function getCacheDir()
     {
-        return parent::getCacheDir().'/'.(int) $this->useVichUploaderBundle;
+        return $this->getBaseDir().'cache';
     }
 
     /**
@@ -152,7 +152,7 @@ class TestKernel extends Kernel
      */
     public function getLogDir()
     {
-        return parent::getLogDir().'/'.(int) $this->useVichUploaderBundle;
+        return $this->getBaseDir().'log';
     }
 
     public function serialize()
@@ -163,5 +163,10 @@ class TestKernel extends Kernel
     public function unserialize($str)
     {
         $this->__construct(unserialize($str));
+    }
+
+    private function getBaseDir()
+    {
+        return sys_get_temp_dir().'/hackzilla-ticket-bundle/var/'.(int) $this->useVichUploaderBundle.'/';
     }
 }
