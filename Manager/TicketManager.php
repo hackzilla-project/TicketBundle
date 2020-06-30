@@ -100,13 +100,7 @@ class TicketManager implements TicketManagerInterface
     }
 
     /**
-     * Update or Create a Ticket in the database
-     * Update or Create a TicketMessage in the database.
-     *
-     * @param TicketInterface        $ticket
-     * @param TicketMessageInterface $message
-     *
-     * @return TicketInterface
+     * {@inheritdoc}
      */
     public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null)
     {
@@ -119,13 +113,14 @@ class TicketManager implements TicketManagerInterface
         }
         $this->objectManager->flush();
 
+        // NEXT_MAJOR: Remove the `return` statement.
         return $ticket;
     }
 
     /**
      * Delete a ticket from the database.
      *
-     * @param TicketInterface $ticket*
+     * @param TicketInterface $ticket
      */
     public function deleteTicket(TicketInterface $ticket)
     {
@@ -180,6 +175,10 @@ class TicketManager implements TicketManagerInterface
     }
 
     /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since hackzilla/ticket-bundle 3.3, use `getTicketListQuery()` instead.
+     *
      * @param UserManagerInterface $userManager
      * @param int                  $ticketStatus
      * @param int                  $ticketPriority
@@ -188,8 +187,22 @@ class TicketManager implements TicketManagerInterface
      */
     public function getTicketList(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
     {
+        @trigger_error(sprintf(
+            'Method `%s()` is deprecated since hackzilla/ticket-bundle 3.3 and will be removed in version 4.0.'
+            .' Use `%s::getTicketListQuery()` instead.',
+            __METHOD__,
+            __CLASS__
+        ), E_USER_DEPRECATED);
+
+        return $query->getTicketListQuery($userManager, $ticketStatus, $ticketPriority);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
+    {
         $query = $this->ticketRepository->createQueryBuilder('t')
-//            ->select($this->ticketClass.' t')
             ->orderBy('t.lastMessage', 'DESC');
 
         switch ($ticketStatus) {

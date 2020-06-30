@@ -2,11 +2,15 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * @method QueryBuilder getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
+ */
 interface TicketManagerInterface
 {
     public function setEntityManager(ObjectManager $om);
@@ -17,6 +21,9 @@ interface TicketManagerInterface
 
     public function createMessage(TicketInterface $ticket = null);
 
+    /**
+     * @return void
+     */
     public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null);
 
     public function deleteTicket(TicketInterface $ticket);
@@ -30,11 +37,15 @@ interface TicketManagerInterface
     public function findTicketsBy(array $criteria);
 
     /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since hackzilla/ticket-bundle 3.3, use `getTicketListQuery()` instead.
+     *
      * @param UserManagerInterface $userManager
      * @param int                  $ticketStatus
      * @param int                  $ticketPriority
      *
-     * @return mixed
+     * @return QueryBuilder
      */
     public function getTicketList(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null);
 
