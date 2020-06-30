@@ -30,7 +30,7 @@ class TicketController extends Controller
         $userManager   = $this->getUserManager();
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
-        $ticketState    = $request->get('state', $this->get('translator')->trans('STATUS_OPEN', [], 'HackzillaTicketBundle'));
+        $ticketState    = $request->get('state', $this->get('translator')->trans('STATUS_OPEN'));
         $ticketPriority = $request->get('priority', null);
 
         $query = $ticketManager->getTicketListQuery(
@@ -157,7 +157,7 @@ class TicketController extends Controller
         $ticket        = $ticketManager->getTicketById($ticketId);
 
         if (!$ticket) {
-            throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
+            throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
         }
 
         $user = $this->getUserManager()->getCurrentUser();
@@ -212,7 +212,7 @@ class TicketController extends Controller
                 $ticket        = $ticketManager->getTicketById($ticketId);
 
                 if (!$ticket) {
-                    throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
+                    throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
                 }
 
                 $ticketManager->deleteTicket($ticket);

@@ -99,7 +99,7 @@ class AutoClosingCommand extends Command
         foreach ($resolved_tickets as $ticket) {
             $message = $this->ticketManager->createMessage()
                 ->setMessage(
-                    $this->translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $this->translator->trans('STATUS_CLOSED', [], 'HackzillaTicketBundle')], 'HackzillaTicketBundle')
+                    $this->translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $this->translator->trans('STATUS_CLOSED')])
                 )
                 ->setStatus(TicketMessage::STATUS_CLOSED)
                 ->setPriority($ticket->getPriority())
