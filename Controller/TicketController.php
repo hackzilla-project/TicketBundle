@@ -30,7 +30,9 @@ class TicketController extends Controller
         $userManager   = $this->getUserManager();
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
 
-        $ticketState    = $request->get('state', $this->get('translator')->trans('STATUS_OPEN'));
+        $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
+
+        $ticketState    = $request->get('state', $this->get('translator')->trans('STATUS_OPEN', [], $translationDomain));
         $ticketPriority = $request->get('priority', null);
 
         $query = $ticketManager->getTicketListQuery(
@@ -48,9 +50,10 @@ class TicketController extends Controller
         return $this->render(
             $this->container->getParameter('hackzilla_ticket.templates')['index'],
             [
-                'pagination'     => $pagination,
-                'ticketState'    => $ticketState,
-                'ticketPriority' => $ticketPriority,
+                'pagination'        => $pagination,
+                'ticketState'       => $ticketState,
+                'ticketPriority'    => $ticketPriority,
+                'translationDomain' => $translationDomain,
             ]
         );
     }
@@ -81,11 +84,14 @@ class TicketController extends Controller
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
 
+        $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
+
         return $this->render(
             $this->container->getParameter('hackzilla_ticket.templates')['new'],
             [
-                'entity' => $ticket,
-                'form'   => $form->createView(),
+                'entity'            => $ticket,
+                'form'              => $form->createView(),
+                'translationDomain' => $translationDomain,
             ]
         );
     }
@@ -100,11 +106,14 @@ class TicketController extends Controller
 
         $form = $this->createForm(TicketType::class, $entity);
 
+        $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
+
         return $this->render(
             $this->container->getParameter('hackzilla_ticket.templates')['new'],
             [
-                'entity' => $entity,
-                'form'   => $form->createView(),
+                'entity'            => $entity,
+                'form'              => $form->createView(),
+                'translationDomain' => $translationDomain,
             ]
         );
     }
@@ -128,7 +137,9 @@ class TicketController extends Controller
         $currentUser = $this->getUserManager()->getCurrentUser();
         $this->getUserManager()->hasPermission($currentUser, $ticket);
 
-        $data = ['ticket' => $ticket];
+        $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
+
+        $data = ['ticket' => $ticket, 'translationDomain' => $translationDomain];
 
         $message = $ticketManager->createMessage($ticket);
 
@@ -156,8 +167,10 @@ class TicketController extends Controller
         $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
         $ticket        = $ticketManager->getTicketById($ticketId);
 
+        $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
+
         if (!$ticket) {
-            throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
+            throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY', [], $translationDomain));
         }
 
         $user = $this->getUserManager()->getCurrentUser();
@@ -176,7 +189,7 @@ class TicketController extends Controller
             return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
         }
 
-        $data = ['ticket' => $ticket, 'form' => $form->createView()];
+        $data = ['ticket' => $ticket, 'form' => $form->createView(), 'translationDomain' => $translationDomain];
 
         if ($user && $this->get('hackzilla_ticket.user_manager')->hasRole($user, TicketRole::ADMIN)) {
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
@@ -212,7 +225,9 @@ class TicketController extends Controller
                 $ticket        = $ticketManager->getTicketById($ticketId);
 
                 if (!$ticket) {
-                    throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY'));
+                    $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
+
+                    throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY', [], $translationDomain));
                 }
 
                 $ticketManager->deleteTicket($ticket);
@@ -264,8 +279,6 @@ class TicketController extends Controller
      */
     private function getUserManager()
     {
-        $userManager = $this->get('hackzilla_ticket.user_manager');
-
-        return $userManager;
+        return $this->get('hackzilla_ticket.user_manager');
     }
 }
