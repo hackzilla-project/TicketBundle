@@ -28,12 +28,12 @@ Available translations for:
 
 ## Version Matrix
 
-| Ticket Bundle     | Symfony         | PHP   |
-| ------------------| --------------- | ----- |
-| [3.x][6] (master) | ^2.8\|^3.0\|^4.0 | >=5.6 |
-| [2.x][7]          | ^2.7\|^3.0      | >=5.3 |
-| [1.x][8]          | ^2.3            | >=5.3 |
-| [0.x][9]          | ^2.3            | >=5.3 |
+| Ticket Bundle | Symfony          | PHP   |
+| --------------| ---------------- | ----- |
+| [3.x][6]      | ^2.8\|^3.0\|^4.0 | >=5.6 |
+| [2.x][7]      | ^2.7\|^3.0       | >=5.3 |
+| [1.x][8]      | ^2.3             | >=5.3 |
+| [0.x][9]      | ^2.3             | >=5.3 |
 
 
 ## Demo
@@ -69,11 +69,11 @@ These optional features that can be turned on or off.
 
 hackzilla_ticket:
     templates:
-        index: 'YOURTicketBundle:Ticket:index.html.twig'
-        new: 'YOURTicketBundle:Ticket:new.html.twig'
-        prototype: 'YOURTicketBundle:Ticket:prototype.html.twig'
-        show: 'YOURTicketBundle:Ticket:show.html.twig'
-        show_attachment: 'YOURTicketBundle:Ticket:show_attachment.html.twig'
+        index: '@App/Ticket/index.html.twig'
+        new: '@App/Ticket/new.html.twig'
+        prototype: '@App/Ticket/prototype.html.twig'
+        show: '@App/Ticket/show.html.twig'
+        show_attachment: '@App/Ticket/show_attachment.html.twig'
 ```
 
 ## Migrate a Previous Version
