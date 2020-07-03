@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.4.0](https://github.com/hackzilla/TicketBundle/compare/3.3.1...3.4.0) - 2020-07-03
+
+ * bugfix #160 Fix bad call at `TicketManager::getTicketList()` (phansys)
+ * minor #158 Deprecate "messages" translation domain in favor of "HackzillaTicketBundle" (backport PR #123) (phansys)
+
 ## [3.3.1](https://github.com/hackzilla/TicketBundle/compare/3.3.0...3.3.1) - 2020-07-01
 
  * bugfix #159 Fix references to "hackzilla_ticket.templates.*" parameters (phansys)
