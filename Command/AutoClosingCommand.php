@@ -49,6 +49,8 @@ class AutoClosingCommand extends ContainerAwareCommand
         $translator = $this->getContainer()->get('translator');
         $translator->setLocale($locale);
 
+        $translationDomain = $this->getContainer()->getParameter('hackzilla_ticket.translation_domain');
+
         $username = $input->getArgument('username');
 
         $resolved_tickets = $ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));
@@ -56,7 +58,7 @@ class AutoClosingCommand extends ContainerAwareCommand
         foreach ($resolved_tickets as $ticket) {
             $message = $ticket_manager->createMessage()
                 ->setMessage(
-                    $translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $translator->trans('STATUS_CLOSED')])
+                    $translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $translator->trans('STATUS_CLOSED', [], $translationDomain)], $translationDomain)
                 )
                 ->setStatus(TicketMessage::STATUS_CLOSED)
                 ->setPriority($ticket->getPriority())

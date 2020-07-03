@@ -13,6 +13,13 @@ class TicketManager implements TicketManagerInterface
 {
     private $translator;
 
+    /**
+     * NEXT_MAJOR: Remove this property and replace its usages with "HackzillaTicketBundle".
+     *
+     * @var string
+     */
+    private $translationDomain = 'messages';
+
     private $objectManager;
 
     private $ticketRepository;
@@ -57,6 +64,20 @@ class TicketManager implements TicketManagerInterface
     public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
+
+        return $this;
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @param string $translationDomain
+     *
+     * @return $this
+     */
+    public function setTranslationDomain($translationDomain)
+    {
+        $this->translationDomain = $translationDomain;
 
         return $this;
     }
@@ -279,7 +300,7 @@ class TicketManager implements TicketManagerInterface
             $statuses = [];
 
             foreach (TicketMessageInterface::STATUSES as $id => $value) {
-                $statuses[$id] = $this->translator->trans($value);
+                $statuses[$id] = $this->translator->trans($value, [], $this->translationDomain);
             }
         }
 
@@ -301,7 +322,7 @@ class TicketManager implements TicketManagerInterface
             $priorities = [];
 
             foreach (TicketMessageInterface::PRIORITIES as $id => $value) {
-                $priorities[$id] = $this->translator->trans($value);
+                $priorities[$id] = $this->translator->trans($value, [], $this->translationDomain);
             }
         }
 

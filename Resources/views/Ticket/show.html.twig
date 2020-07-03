@@ -4,48 +4,48 @@
 {% block hackzilla_ticket_content -%}
 
     <p>
-        <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">{{ 'BUTTON_BACK_TO_LIST'|trans }}</a>
+        <a href="{{ path('hackzilla_ticket') }}" class="btn btn-default">{{ 'BUTTON_BACK_TO_LIST'|trans({}, translationDomain|default('messages')) }}</a>
     </p>
 
     <h1>
-        {{ macros.status_btn(ticket.status, ticket.statusString|trans) }}
-        {{ macros.priority_btn(ticket.priority, ticket.priorityString|trans) }}
+        {{ macros.status_btn(ticket.status, ticket.statusString|trans({}, translationDomain|default('messages')), false, translationDomain) }}
+        {{ macros.priority_btn(ticket.priority, ticket.priorityString|trans({}, translationDomain|default('messages')), false, translationDomain) }}
         <small>#{{ ticket.id }}</small>
         - {{ ticket.subject }}
     </h1>
 
     <p>
-        <i>{{ 'LABEL_CREATED_BY'|trans }} {{ ticket.userCreatedObject }}
-            , {{ ticket.createdAt|date('LABEL_DATE_FORMAT'|trans) }}</i>
-        {# <br />{{ 'LABEL_PRIORITY'|trans }} <span class="label label-{{ ticket.priority == 0 ? 'default' : (ticket.priority == 20 ? 'primary' : (ticket.priority == 21 ? 'warning' : 'danger')) }}">{{ ticket.priorityString|trans }}</span> #}
+        <i>{{ 'LABEL_CREATED_BY'|trans({}, translationDomain|default('messages')) }} {{ ticket.userCreatedObject }}
+            , {{ ticket.createdAt|date('LABEL_DATE_FORMAT'|trans({}, translationDomain|default('messages'))) }}</i>
+        {# <br />{{ 'LABEL_PRIORITY'|trans({}, translationDomain|default('messages')) }} <span class="label label-{{ ticket.priority == 0 ? 'default' : (ticket.priority == 20 ? 'primary' : (ticket.priority == 21 ? 'warning' : 'danger')) }}">{{ ticket.priorityString|trans({}, translationDomain|default('messages')) }}</span> #}
     </p>
 
 
-    {# <h3>{{ 'HEADING_TICKET_THREAD'|trans }}</h3> #}
+    {# <h3>{{ 'HEADING_TICKET_THREAD'|trans({}, translationDomain|default('messages')) }}</h3> #}
     {% set previousStatus = null %}
     {% set previousPriority = null %}
 
     {% for message in ticket.messages %}
 
         {% if previousStatus and previousStatus != message.status %}
-            {{ macros.status_alert(message.status, message.statusString|trans) }}
+            {{ macros.status_alert(message.status, message.statusString|trans({}, translationDomain|default('messages')), translationDomain) }}
         {% endif %}
 
         {% if previousPriority and previousPriority != message.priority %}
-            {{ macros.priority_alert(message.priority, message.priorityString|trans) }}
+            {{ macros.priority_alert(message.priority, message.priorityString|trans({}, translationDomain|default('messages')), translationDomain) }}
         {% endif %}
 
         {% if message.message|length > 0 %}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     {{ message.userObject }}
-                    {# <br />{{ 'LABEL_PRIORITY'|trans }} <span class="label label-{{ message.priority == 0 ? 'default' : (message.priority == 20 ? 'primary' : (message.priority == 21 ? 'warning' : 'danger')) }}">{{ message.priorityString|trans }}</span> #}
-                    {# <br />{{ 'LABEL_STATUS'|trans }} <span class="label label-{{ message.status ? 'success' : 'danger' }}">{{ message.statusString|trans }}</span> #}
+                    {# <br />{{ 'LABEL_PRIORITY'|trans({}, translationDomain|default('messages')) }} <span class="label label-{{ message.priority == 0 ? 'default' : (message.priority == 20 ? 'primary' : (message.priority == 21 ? 'warning' : 'danger')) }}">{{ message.priorityString|trans({}, translationDomain|default('messages')) }}</span> #}
+                    {# <br />{{ 'LABEL_STATUS'|trans({}, translationDomain|default('messages')) }} <span class="label label-{{ message.status ? 'success' : 'danger' }}">{{ message.statusString|trans({}, translationDomain|default('messages')) }}</span> #}
 
                     <span class="pull-right">
                 {% if message.userObject != ticket.userCreatedObject %}<span
-                        class="label label-danger">{{ 'LABEL_ADMIN'|trans }}</span> {% endif %}
-                        <small><i>{{ message.createdAt|date('LABEL_DATE_TIME_FORMAT'|trans) }}</i></small>
+                        class="label label-danger">{{ 'LABEL_ADMIN'|trans({}, translationDomain|default('messages')) }}</span> {% endif %}
+                        <small><i>{{ message.createdAt|date('LABEL_DATE_TIME_FORMAT'|trans({}, translationDomain|default('messages'))) }}</i></small>
             </span>
                 </div>
                 <div class="panel-body">
@@ -71,7 +71,7 @@
             {{ form_rest(form) }}
 
             <p class="form_actions">
-                <button type="submit" class="btn btn-primary">{{ 'BUTTON_UPDATE'|trans }}</button>
+                <button type="submit" class="btn btn-primary">{{ 'BUTTON_UPDATE'|trans({}, translationDomain|default('messages')) }}</button>
             </p>
             {{ form_end(form) }}
         </div>
@@ -82,7 +82,7 @@
         <input type="hidden" name="_method" value="DELETE"/>
         {{ form_widget(delete_form) }}
 
-        <button type="submit" class="btn btn-danger">{{ 'BUTTON_DELETE'|trans }}</button>
+        <button type="submit" class="btn btn-danger">{{ 'BUTTON_DELETE'|trans({}, translationDomain|default('messages')) }}</button>
         {{ form_end(delete_form) }}
     {% endif %}
 
