@@ -1,5 +1,6 @@
 {
     "name": "hackzilla/ticket-bundle",
+    "type": "symfony-bundle",
     "description": "This Bundle provides multilingual ticketing functionality for Symfony applications.",
     "keywords": [
         "ticket",
@@ -14,7 +15,6 @@
         "german",
         "spanish"
     ],
-    "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
         {
@@ -48,6 +48,7 @@
     "require-dev": {
         "ext-pdo_sqlite": "*",
         "friendsofphp/php-cs-fixer": "^1.4 || ^2.0",
+        "phpstan/phpstan": "^0.12.32",
         "phpunit/phpunit": ">=5.4.3,<8.0",
         "symfony/phpunit-bridge": "^3.2 || ^4.0",
         "symfony/security": "^2.8 || ^3.0 || ^4.0"
@@ -56,23 +57,25 @@
         "friendsofsymfony/user-bundle": "In order to ease user management",
         "vich/uploader-bundle": "Allow attaching files to ticket messages"
     },
-    "autoload": {
-        "psr-4": {
-            "Hackzilla\\Bundle\\TicketBundle\\": ""
-        },
-        "exclude-from-classmap": ["Tests/"]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Hackzilla\\Bundle\\TicketBundle\\Tests\\": "Tests/"
-        }
-    },
     "config": {
         "sort-packages": true
     },
     "extra": {
         "branch-alias": {
             "dev-master": "3.x-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Hackzilla\\Bundle\\TicketBundle\\": ""
+        },
+        "exclude-from-classmap": [
+            "Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Hackzilla\\Bundle\\TicketBundle\\Tests\\": "Tests/"
         }
     }
 }

@@ -21,8 +21,6 @@ class TicketController extends Controller
     /**
      * Lists all Ticket entities.
      *
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
@@ -60,8 +58,6 @@ class TicketController extends Controller
 
     /**
      * Creates a new Ticket entity.
-     *
-     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -157,8 +153,7 @@ class TicketController extends Controller
     /**
      * Finds and displays a TicketInterface entity.
      *
-     * @param Request $request
-     * @param int     $ticketId
+     * @param int $ticketId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -201,8 +196,7 @@ class TicketController extends Controller
     /**
      * Deletes a Ticket entity.
      *
-     * @param Request $request
-     * @param int     $ticketId
+     * @param int $ticketId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -259,8 +253,6 @@ class TicketController extends Controller
     }
 
     /**
-     * @param TicketMessageInterface $message
-     *
      * @return \Symfony\Component\Form\Form
      */
     private function createMessageForm(TicketMessageInterface $message)

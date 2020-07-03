@@ -117,8 +117,6 @@ interface TicketMessageInterface
     /**
      * Set createdAt.
      *
-     * @param \DateTime $createdAt
-     *
      * @return $this
      */
     public function setCreatedAt(\DateTime $createdAt);

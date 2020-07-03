@@ -35,7 +35,7 @@ final class TicketManagerTest extends WebTestCase
 
     public function testGetTicketListQuery()
     {
-        $ticketClass = 'App\Ticket';
+        $ticketClass        = 'App\Ticket';
         $ticketMessageClass = 'App\TicketMessage';
 
         $qb = $this->createMock(QueryBuilder::class);
@@ -70,7 +70,7 @@ final class TicketManagerTest extends WebTestCase
      */
     public function testGetTicketList()
     {
-        $ticketClass = 'App\Ticket';
+        $ticketClass        = 'App\Ticket';
         $ticketMessageClass = 'App\TicketMessage';
 
         $qb = $this->createMock(QueryBuilder::class);

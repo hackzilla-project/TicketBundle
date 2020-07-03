@@ -23,9 +23,6 @@ class FileSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param VichEvent\Event $event
-     */
     public function postUpload(VichEvent\Event $event)
     {
         /** @var MessageAttachmentInterface $object */

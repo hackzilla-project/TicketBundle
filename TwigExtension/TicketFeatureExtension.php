@@ -10,9 +10,6 @@ class TicketFeatureExtension extends AbstractExtension
 {
     private $ticketFeatures;
 
-    /**
-     * @param TicketFeatures $ticketFeatures
-     */
     public function __construct(TicketFeatures $ticketFeatures)
     {
         $this->ticketFeatures = $ticketFeatures;

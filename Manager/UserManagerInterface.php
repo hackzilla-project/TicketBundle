@@ -15,7 +15,6 @@ interface UserManagerInterface
 
     /**
      * @param \Hackzilla\Bundle\TicketBundle\Model\UserInterface|string $user
-     * @param TicketInterface                                           $ticket
      */
     public function hasPermission($user, TicketInterface $ticket);
 }

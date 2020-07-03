@@ -1,0 +1,8 @@
+parameters:
+    level: 0
+    paths:
+        - .
+    excludes_analyse:
+        - vendor/
+    ignoreErrors:
+        - '#.* (class|type) Vich\\UploaderBundle\\.*#'

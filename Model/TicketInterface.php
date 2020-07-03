@@ -170,16 +170,12 @@ interface TicketInterface
     /**
      * Add message.
      *
-     * @param TicketMessageInterface $message
-     *
      * @return $this
      */
     public function addMessage(TicketMessageInterface $message);
 
     /**
      * Remove message.
-     *
-     * @param TicketMessageInterface $message
      */
     public function removeMessage(TicketMessageInterface $message);
 

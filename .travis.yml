@@ -46,6 +46,7 @@ cache:
 before_script:
   - if [ -f xdebug.ini ]; then phpenv config-rm xdebug.ini; fi
   - if [ "$GITHUB_OAUTH_TOKEN" != "" ]; then echo -e $GITHUB_OAUTH_TOKEN && composer config -g github-oauth.github.com $GITHUB_OAUTH_TOKEN; fi;
+  - if [ 70100 -gt $(php -r 'echo PHP_VERSION_ID;') ]; then composer remove --dev "phpstan/phpstan" --no-update; fi;
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
   - if [ -n $INSTALL_VICH_UPLOADER_BUNDLE ]; then composer require "vich/uploader-bundle" --no-update; fi;
   - COMPOSER_MEMORY_LIMIT=-1 composer update --prefer-dist --no-interaction $COMPOSER_FLAGS

@@ -74,9 +74,9 @@ services:
     hackzilla_ticket.command.autoclosing:
         class: Hackzilla\Bundle\TicketBundle\Command\AutoClosingCommand
         tags:
-            - { name: console.command, command: ticket:autoclosing }
+            - { name: console.command, command: 'ticket:autoclosing' }
 
     hackzilla_ticket.command.create:
         class: Hackzilla\Bundle\TicketBundle\Command\TicketManagerCommand
         tags:
-            - { name: console.command, command: ticket:create }
+            - { name: console.command, command: 'ticket:create' }
