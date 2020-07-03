@@ -215,7 +215,7 @@ class TicketManager implements TicketManagerInterface
             __CLASS__
         ), E_USER_DEPRECATED);
 
-        return $query->getTicketListQuery($userManager, $ticketStatus, $ticketPriority);
+        return $this->getTicketListQuery($userManager, $ticketStatus, $ticketPriority);
     }
 
     /**
