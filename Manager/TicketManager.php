@@ -43,8 +43,6 @@ class TicketManager implements TicketManagerInterface
     }
 
     /**
-     * @param ObjectManager $om
-     *
      * @return $this
      */
     public function setEntityManager(ObjectManager $om)
@@ -57,8 +55,6 @@ class TicketManager implements TicketManagerInterface
     }
 
     /**
-     * @param TranslatorInterface $translator
-     *
      * @return $this
      */
     public function setTranslator(TranslatorInterface $translator)
@@ -140,8 +136,6 @@ class TicketManager implements TicketManagerInterface
 
     /**
      * Delete a ticket from the database.
-     *
-     * @param TicketInterface $ticket
      */
     public function deleteTicket(TicketInterface $ticket)
     {
@@ -186,8 +180,6 @@ class TicketManager implements TicketManagerInterface
     /**
      * Find ticket by criteria.
      *
-     * @param array $criteria
-     *
      * @return array|TicketInterface[]
      */
     public function findTicketsBy(array $criteria)
@@ -200,9 +192,8 @@ class TicketManager implements TicketManagerInterface
      *
      * @deprecated since hackzilla/ticket-bundle 3.3, use `getTicketListQuery()` instead.
      *
-     * @param UserManagerInterface $userManager
-     * @param int                  $ticketStatus
-     * @param int                  $ticketPriority
+     * @param int $ticketStatus
+     * @param int $ticketPriority
      *
      * @return mixed
      */

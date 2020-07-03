@@ -27,11 +27,6 @@ class UserManager implements UserManagerInterface
      */
     private $userRepository;
 
-    /**
-     * @param TokenStorageInterface         $tokenStorage
-     * @param ObjectRepository              $userRepository
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     */
     public function __construct(
         TokenStorageInterface $tokenStorage,
         ObjectRepository $userRepository,
@@ -73,8 +68,7 @@ class UserManager implements UserManagerInterface
     /**
      * Current user has permission.
      *
-     * @param UserInterface $user
-     * @param string        $role
+     * @param string $role
      *
      * @return bool
      */
@@ -85,14 +79,11 @@ class UserManager implements UserManagerInterface
 
     /**
      * @param UserInterface|string $user
-     * @param TicketInterface      $ticket
      */
     public function hasPermission($user, TicketInterface $ticket)
     {
-        if (!\is_object($user) || (!$this->hasRole(
-                    $user,
-                    TicketRole::ADMIN
-                ) && $ticket->getUserCreated() != $user->getId())
+        if (!\is_object($user) || (!$this->hasRole($user, TicketRole::ADMIN) &&
+            $ticket->getUserCreated() != $user->getId())
         ) {
             throw new AccessDeniedHttpException();
         }

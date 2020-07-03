@@ -227,8 +227,6 @@ trait TicketMessageTrait
     /**
      * Set createdAt.
      *
-     * @param \DateTime $createdAt
-     *
      * @return $this
      */
     public function setCreatedAt(\DateTime $createdAt)

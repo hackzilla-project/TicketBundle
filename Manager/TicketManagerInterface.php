@@ -2,8 +2,8 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\QueryBuilder;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -22,7 +22,7 @@ interface TicketManagerInterface
     public function createMessage(TicketInterface $ticket = null);
 
     /**
-     * @return void
+     * NEXT_MAJOR: Declare `void` as return type.
      */
     public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null);
 
@@ -41,9 +41,8 @@ interface TicketManagerInterface
      *
      * @deprecated since hackzilla/ticket-bundle 3.3, use `getTicketListQuery()` instead.
      *
-     * @param UserManagerInterface $userManager
-     * @param int                  $ticketStatus
-     * @param int                  $ticketPriority
+     * @param int $ticketStatus
+     * @param int $ticketPriority
      *
      * @return QueryBuilder
      */

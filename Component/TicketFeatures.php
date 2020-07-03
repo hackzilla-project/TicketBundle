@@ -9,7 +9,6 @@ class TicketFeatures
     private $features;
 
     /**
-     * @param array  $features
      * @param string $messageClass TicketMessage class
      */
     public function __construct(array $features, $messageClass)

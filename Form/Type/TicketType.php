@@ -17,10 +17,6 @@ class TicketType extends AbstractType
         $this->ticketClass = $ticketClass;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

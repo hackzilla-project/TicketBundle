@@ -28,10 +28,6 @@ class TicketMessageType extends AbstractType
         $this->messageClass = $messageClass;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
