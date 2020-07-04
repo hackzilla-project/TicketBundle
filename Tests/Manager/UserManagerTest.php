@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
-class UserManagerTest extends WebTestCase
+final class UserManagerTest extends WebTestCase
 {
     private $object;
 
@@ -19,7 +19,7 @@ class UserManagerTest extends WebTestCase
 
     private $authorizationChecker;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->tokenStorage            = new TokenStorage();
         $authenticationProviderManager = new AuthenticationProviderManager([new AnonymousAuthenticationProvider('secret')]);
@@ -33,12 +33,7 @@ class UserManagerTest extends WebTestCase
         );
     }
 
-    private function getMockUserRepository()
-    {
-        return $this->createMock(EntityRepository::class);
-    }
-
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }
@@ -46,5 +41,10 @@ class UserManagerTest extends WebTestCase
     public function testObjectCreated()
     {
         $this->assertInstanceOf(UserManager::class, $this->object);
+    }
+
+    private function getMockUserRepository()
+    {
+        return $this->createMock(EntityRepository::class);
     }
 }

@@ -5,16 +5,16 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\DependencyInjection;
 use Hackzilla\Bundle\TicketBundle\DependencyInjection\HackzillaTicketExtension;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class HackzillaTicketExtensionTest extends WebTestCase
+final class HackzillaTicketExtensionTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->object = new HackzillaTicketExtension();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

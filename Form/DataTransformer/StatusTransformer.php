@@ -19,8 +19,6 @@ class StatusTransformer implements DataTransformerInterface
         if (TicketMessage::STATUS_CLOSED == $number) {
             return 1;
         }
-
-        return;
     }
 
     /**
@@ -35,7 +33,5 @@ class StatusTransformer implements DataTransformerInterface
         if (1 == $number) {
             return TicketMessage::STATUS_CLOSED;
         }
-
-        return;
     }
 }

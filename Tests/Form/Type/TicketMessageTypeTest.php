@@ -6,10 +6,11 @@ use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-class TicketMessageTypeTest extends TypeTestCase
+final class TicketMessageTypeTest extends TypeTestCase
 {
     private $user;
 
@@ -20,19 +21,6 @@ class TicketMessageTypeTest extends TypeTestCase
         parent::setUp();
     }
 
-    protected function getExtensions()
-    {
-        $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''), TicketMessage::class);
-
-        return [
-            new PreloadedExtension(
-                [
-                    $ticketMessageType->getBlockPrefix() => $ticketMessageType,
-                ], []
-            ),
-        ];
-    }
-
     public function testSubmitValidData()
     {
         $formData = [
@@ -40,10 +28,8 @@ class TicketMessageTypeTest extends TypeTestCase
             'message'  => null,
         ];
 
-        $data = new TicketMessage();
-        $data->setPriority(TicketMessage::PRIORITY_HIGH);
-
-        $form = $this->factory->create(TicketMessageType::class,
+        $form = $this->factory->create(
+            TicketMessageType::class,
             null,
             [
                 'new_ticket' => true,
@@ -57,8 +43,16 @@ class TicketMessageTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
 
         $formEntity = $form->getData();
-        $formEntity->setCreatedAt($data->getCreatedAt());
-        $this->assertEquals($data, $formEntity);
+
+        $this->assertInstanceOf(TicketMessageInterface::class, $formEntity);
+        $this->assertNull($formEntity->getId());
+        $this->assertNull($formEntity->getTicket());
+        $this->assertNull($formEntity->getUser());
+        $this->assertNull($formEntity->getUserObject());
+        $this->assertNull($formEntity->getMessage());
+        $this->assertNull($formEntity->getStatus());
+        $this->assertSame(TicketMessage::PRIORITY_HIGH, $formEntity->getPriority());
+        $this->assertInstanceOf(\DateTime::class, $formEntity->getCreatedAt());
 
         $view     = $form->createView();
         $children = $view->children;
@@ -66,5 +60,19 @@ class TicketMessageTypeTest extends TypeTestCase
         foreach (array_keys($formData) as $key) {
             $this->assertArrayHasKey($key, $children);
         }
+    }
+
+    protected function getExtensions()
+    {
+        $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''), TicketMessage::class);
+
+        return [
+            new PreloadedExtension(
+                [
+                    $ticketMessageType->getBlockPrefix() => $ticketMessageType,
+                ],
+                []
+            ),
+        ];
     }
 }

@@ -5,16 +5,16 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 use Hackzilla\Bundle\TicketBundle\Form\Type\StatusType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-class StatusTypeTest extends TypeTestCase
+final class StatusTypeTest extends TypeTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->object = new StatusType();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

@@ -2,16 +2,18 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-class TicketTypeTest extends TypeTestCase
+final class TicketTypeTest extends TypeTestCase
 {
     private $user;
 
@@ -20,6 +22,40 @@ class TicketTypeTest extends TypeTestCase
         $this->user = $this->createMock(UserManagerInterface::class);
 
         parent::setUp();
+    }
+
+    public function testSubmitValidData()
+    {
+        $formData = [];
+
+        $form = $this->factory->create(TicketType::class);
+
+        // submit the data to the form directly
+        $form->submit($formData);
+
+        $this->assertTrue($form->isSynchronized());
+
+        $formEntity = $form->getData();
+
+        $this->assertInstanceOf(TicketInterface::class, $formEntity);
+        $this->assertNull($formEntity->getId());
+        $this->assertNull($formEntity->getUserCreated());
+        $this->assertNull($formEntity->getUserCreatedObject());
+        $this->assertNull($formEntity->getLastUser());
+        $this->assertNull($formEntity->getLastUserObject());
+        $this->assertNull($formEntity->getPriority());
+        $this->assertNull($formEntity->getStatus());
+        $this->assertNull($formEntity->getLastMessage());
+        $this->assertInstanceOf(ArrayCollection::class, $formEntity->getMessages());
+        $this->assertEmpty($formEntity->getMessages());
+        $this->assertInstanceOf(\DateTime::class, $formEntity->getCreatedAt());
+
+        $view     = $form->createView();
+        $children = $view->children;
+
+        foreach (array_keys($formData) as $key) {
+            $this->assertArrayHasKey($key, $children);
+        }
     }
 
     protected function getExtensions()
@@ -32,33 +68,9 @@ class TicketTypeTest extends TypeTestCase
                 [
                     $ticketType->getBlockPrefix()        => $ticketType,
                     $ticketMessageType->getBlockPrefix() => $ticketMessageType,
-                ], []
+                ],
+                []
             ),
         ];
-    }
-
-    public function testSubmitValidData()
-    {
-        $formData = [];
-
-        $data = new Ticket();
-
-        $form = $this->factory->create(TicketType::class);
-
-        // submit the data to the form directly
-        $form->submit($formData);
-
-        $this->assertTrue($form->isSynchronized());
-
-        $formEntity = $form->getData();
-        $formEntity->setCreatedAt($data->getCreatedAt());
-        $this->assertEquals($data, $formEntity);
-
-        $view     = $form->createView();
-        $children = $view->children;
-
-        foreach (array_keys($formData) as $key) {
-            $this->assertArrayHasKey($key, $children);
-        }
     }
 }

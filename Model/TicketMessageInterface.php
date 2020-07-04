@@ -4,6 +4,45 @@ namespace Hackzilla\Bundle\TicketBundle\Model;
 
 interface TicketMessageInterface
 {
+    const STATUS_INVALID               = 0;
+
+    const STATUS_OPEN                  = 10;
+
+    const STATUS_IN_PROGRESS           = 11;
+
+    const STATUS_INFORMATION_REQUESTED = 12;
+
+    const STATUS_ON_HOLD               = 13;
+
+    const STATUS_RESOLVED              = 14;
+
+    const STATUS_CLOSED                = 15;
+
+    const STATUSES = [
+        self::STATUS_INVALID               => 'STATUS_INVALID',
+        self::STATUS_OPEN                  => 'STATUS_OPEN',
+        self::STATUS_IN_PROGRESS           => 'STATUS_IN_PROGRESS',
+        self::STATUS_INFORMATION_REQUESTED => 'STATUS_INFORMATION_REQUESTED',
+        self::STATUS_ON_HOLD               => 'STATUS_ON_HOLD',
+        self::STATUS_RESOLVED              => 'STATUS_RESOLVED',
+        self::STATUS_CLOSED                => 'STATUS_CLOSED',
+    ];
+
+    const PRIORITY_INVALID = 0;
+
+    const PRIORITY_LOW     = 20;
+
+    const PRIORITY_MEDIUM  = 21;
+
+    const PRIORITY_HIGH    = 22;
+
+    const PRIORITIES = [
+        self::PRIORITY_INVALID => 'PRIORITY_INVALID',
+        self::PRIORITY_LOW     => 'PRIORITY_LOW',
+        self::PRIORITY_MEDIUM  => 'PRIORITY_MEDIUM',
+        self::PRIORITY_HIGH    => 'PRIORITY_HIGH',
+    ];
+
     /**
      * Get id.
      *
@@ -143,43 +182,4 @@ interface TicketMessageInterface
      * @return TicketInterface
      */
     public function getTicket();
-
-    const STATUS_INVALID               = 0;
-
-    const STATUS_OPEN                  = 10;
-
-    const STATUS_IN_PROGRESS           = 11;
-
-    const STATUS_INFORMATION_REQUESTED = 12;
-
-    const STATUS_ON_HOLD               = 13;
-
-    const STATUS_RESOLVED              = 14;
-
-    const STATUS_CLOSED                = 15;
-
-    const STATUSES = [
-        self::STATUS_INVALID               => 'STATUS_INVALID',
-        self::STATUS_OPEN                  => 'STATUS_OPEN',
-        self::STATUS_IN_PROGRESS           => 'STATUS_IN_PROGRESS',
-        self::STATUS_INFORMATION_REQUESTED => 'STATUS_INFORMATION_REQUESTED',
-        self::STATUS_ON_HOLD               => 'STATUS_ON_HOLD',
-        self::STATUS_RESOLVED              => 'STATUS_RESOLVED',
-        self::STATUS_CLOSED                => 'STATUS_CLOSED',
-    ];
-
-    const PRIORITY_INVALID = 0;
-
-    const PRIORITY_LOW     = 20;
-
-    const PRIORITY_MEDIUM  = 21;
-
-    const PRIORITY_HIGH    = 22;
-
-    const PRIORITIES = [
-        self::PRIORITY_INVALID => 'PRIORITY_INVALID',
-        self::PRIORITY_LOW     => 'PRIORITY_LOW',
-        self::PRIORITY_MEDIUM  => 'PRIORITY_MEDIUM',
-        self::PRIORITY_HIGH    => 'PRIORITY_HIGH',
-    ];
 }
