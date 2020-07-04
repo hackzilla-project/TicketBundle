@@ -12,7 +12,7 @@ use Vich\UploaderBundle\Event\Events;
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-class FunctionalTest extends WebTestCase
+final class FunctionalTest extends WebTestCase
 {
     /**
      * @dataProvider getParameters

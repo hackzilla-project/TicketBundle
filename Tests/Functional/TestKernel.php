@@ -19,7 +19,7 @@ use Vich\UploaderBundle\VichUploaderBundle;
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-class TestKernel extends Kernel
+final class TestKernel extends Kernel
 {
     use MicroKernelTrait;
 
@@ -52,6 +52,32 @@ class TestKernel extends Kernel
         }
 
         return $bundles;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCacheDir()
+    {
+        return $this->getBaseDir().'cache';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLogDir()
+    {
+        return $this->getBaseDir().'log';
+    }
+
+    public function serialize()
+    {
+        return serialize($this->useVichUploaderBundle);
+    }
+
+    public function unserialize($str)
+    {
+        $this->__construct(unserialize($str));
     }
 
     /**
@@ -138,32 +164,6 @@ class TestKernel extends Kernel
                 'db_driver' => 'orm',
             ]);
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCacheDir()
-    {
-        return $this->getBaseDir().'cache';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getLogDir()
-    {
-        return $this->getBaseDir().'log';
-    }
-
-    public function serialize()
-    {
-        return serialize($this->useVichUploaderBundle);
-    }
-
-    public function unserialize($str)
-    {
-        $this->__construct(unserialize($str));
     }
 
     private function getBaseDir()

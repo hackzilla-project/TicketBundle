@@ -7,7 +7,7 @@ use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-class User implements UserInterface
+final class User implements UserInterface
 {
     public function getId()
     {

@@ -6,25 +6,25 @@ use Hackzilla\Bundle\TicketBundle\EventListener\UserLoad;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class UserLoadTest extends WebTestCase
+final class UserLoadTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $userManager = $this->getUserManagerMock();
 
         $this->object = new UserLoad($userManager);
     }
 
+    protected function tearDown()
+    {
+        unset($this->object);
+    }
+
     public function getUserManagerMock()
     {
         return $this->createMock(UserManager::class);
-    }
-
-    public function tearDown()
-    {
-        unset($this->object);
     }
 
     public function testObjectCreated()

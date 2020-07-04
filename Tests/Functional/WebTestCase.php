@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-class WebTestCase extends BaseWebTestCase
+abstract class WebTestCase extends BaseWebTestCase
 {
     protected function setUp()
     {

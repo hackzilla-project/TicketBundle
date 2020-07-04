@@ -7,7 +7,7 @@ use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class TicketFeaturesTest extends WebTestCase
+final class TicketFeaturesTest extends WebTestCase
 {
     /**
      * @dataProvider constructProvider
@@ -41,7 +41,7 @@ class TicketFeaturesTest extends WebTestCase
         $obj = new TicketFeatures($features, $class);
 
         $this->assertInstanceOf(TicketFeatures::class, $obj);
-        $this->assertEquals($obj->hasFeature('attachment'), $compare);
+        $this->assertSame($obj->hasFeature('attachment'), $compare);
     }
 
     public function featureAttachmentProvider()

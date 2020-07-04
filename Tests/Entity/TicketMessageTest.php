@@ -5,16 +5,16 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Entity;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class TicketMessageTest extends WebTestCase
+final class TicketMessageTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->object = new TicketMessage();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

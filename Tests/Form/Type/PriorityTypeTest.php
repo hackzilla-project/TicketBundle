@@ -5,16 +5,16 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 use Hackzilla\Bundle\TicketBundle\Form\Type\PriorityType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-class PriorityTypeTest extends TypeTestCase
+final class PriorityTypeTest extends TypeTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->object = new PriorityType();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

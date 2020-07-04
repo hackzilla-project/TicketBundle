@@ -6,16 +6,16 @@ use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class TicketTest extends WebTestCase
+final class TicketTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->object = new Ticket();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }

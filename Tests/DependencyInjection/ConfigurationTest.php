@@ -5,16 +5,16 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\DependencyInjection;
 use Hackzilla\Bundle\TicketBundle\DependencyInjection\Configuration;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ConfigurationTest extends WebTestCase
+final class ConfigurationTest extends WebTestCase
 {
     private $object;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->object = new Configuration();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->object);
     }
