@@ -10,6 +10,9 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+/**
+ * @final since hackzilla/ticket-bundle 3.x.
+ */
 class UserManager implements UserManagerInterface
 {
     /**
@@ -59,7 +62,7 @@ class UserManager implements UserManagerInterface
     public function getUserById($userId)
     {
         if (!$userId) {
-            return;
+            return null;
         }
 
         return $this->userRepository->find($userId);

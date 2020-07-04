@@ -9,6 +9,9 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * @final since hackzilla/ticket-bundle 3.x.
+ */
 class TicketManager implements TicketManagerInterface
 {
     private $translator;

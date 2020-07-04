@@ -5,6 +5,9 @@ namespace Hackzilla\Bundle\TicketBundle\Form\DataTransformer;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @final since hackzilla/ticket-bundle 3.x.
+ */
 class StatusTransformer implements DataTransformerInterface
 {
     /**
@@ -19,6 +22,8 @@ class StatusTransformer implements DataTransformerInterface
         if (TicketMessage::STATUS_CLOSED == $number) {
             return 1;
         }
+
+        return null;
     }
 
     /**
@@ -33,5 +38,7 @@ class StatusTransformer implements DataTransformerInterface
         if (1 == $number) {
             return TicketMessage::STATUS_CLOSED;
         }
+
+        return null;
     }
 }

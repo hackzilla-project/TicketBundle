@@ -5,6 +5,9 @@ namespace Hackzilla\Bundle\TicketBundle\TwigExtension;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
 
+/**
+ * @final since hackzilla/ticket-bundle 3.x.
+ */
 class TicketGlobalExtension extends AbstractExtension implements GlobalsInterface
 {
     protected $templates = [];

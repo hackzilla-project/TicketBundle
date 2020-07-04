@@ -32,11 +32,10 @@ final class TicketFeaturesTest extends WebTestCase
     /**
      * @dataProvider featureAttachmentProvider
      *
-     * @param array     $features
      * @param string    $class
      * @param bool|null $compare
      */
-    public function testFeatureAttachment($features, $class, $compare)
+    public function testFeatureAttachment(array $features, $class, $compare)
     {
         $obj = new TicketFeatures($features, $class);
 

@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * Ticket Attachment controller.
  *
  * Download attachments
+ *
+ * @final since hackzilla/ticket-bundle 3.x.
  */
 class TicketAttachmentController extends Controller
 {
