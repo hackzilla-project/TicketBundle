@@ -1,14 +1,10 @@
 cs:
 	vendor/bin/php-cs-fixer fix --verbose
+.PHONY: cs
 
 cs_dry_run:
 	vendor/bin/php-cs-fixer fix --verbose --dry-run
-
-test:
-	vendor/bin/simple-phpunit -c phpunit.xml.dist --exclude-group vichuploaderbundle
-
-test_with_vichuploaderbundle:
-	vendor/bin/simple-phpunit -c phpunit.xml.dist
+.PHONY: cs_dry_run
 
 all:
 	@echo "Please choose a task."
@@ -62,12 +58,16 @@ build:
 
 test:
 ifeq ($(shell php --modules|grep --quiet pcov;echo $$?), 0)
+	vendor/bin/simple-phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml --exclude-group vichuploaderbundle
+else
+	vendor/bin/simple-phpunit -c phpunit.xml.dist --exclude-group vichuploaderbundle
+endif
+.PHONY: test
+
+test_with_vichuploaderbundle:
+ifeq ($(shell php --modules|grep --quiet pcov;echo $$?), 0)
 	vendor/bin/simple-phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
 else
 	vendor/bin/simple-phpunit -c phpunit.xml.dist
 endif
 .PHONY: test
-
-docs:
-	cd docs && sphinx-build -W -b html -d _build/doctrees . _build/html
-.PHONY: docs

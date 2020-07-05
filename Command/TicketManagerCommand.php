@@ -49,6 +49,10 @@ class TicketManagerCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if (!$this->getContainer()->has('fos_user.user_manager')) {
+            throw new \RuntimeException(sprintf('Command "%s" requires the service "fos_user.user_manager". Is "friendsofsymfony/user-bundle" installed and enabled?', $this->getName()));
+        }
+
         $userManager = $this->getContainer()->get('fos_user.user_manager');
 
         $ticketManager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
