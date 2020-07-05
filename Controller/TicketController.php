@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Ticket controller.
+ *
+ * @final since hackzilla/ticket-bundle 3.x.
  */
 class TicketController extends Controller
 {

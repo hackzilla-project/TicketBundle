@@ -13,6 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @final since hackzilla/ticket-bundle 3.x.
+ */
 class TicketMessageType extends AbstractType
 {
     protected $userManager;

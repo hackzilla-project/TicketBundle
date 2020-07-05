@@ -10,6 +10,8 @@ use Vich\UploaderBundle\Event as VichEvent;
  * Class FileSubscriber.
  *
  * Source: https://gist.github.com/hubgit/0cdf96c296f20017fe91#file-filesubscriber-php
+ *
+ * @final since hackzilla/ticket-bundle 3.x.
  */
 class FileSubscriber implements EventSubscriberInterface
 {

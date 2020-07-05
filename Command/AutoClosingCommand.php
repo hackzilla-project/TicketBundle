@@ -9,6 +9,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @final since hackzilla/ticket-bundle 3.x.
+ */
 class AutoClosingCommand extends ContainerAwareCommand
 {
     protected static $defaultName = 'ticket:autoclosing';

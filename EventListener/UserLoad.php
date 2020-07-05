@@ -6,6 +6,9 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 
+/**
+ * @final since hackzilla/ticket-bundle 3.x.
+ */
 class UserLoad
 {
     protected $userRepository;

@@ -4,6 +4,9 @@ namespace Hackzilla\Bundle\TicketBundle\Component;
 
 use Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface;
 
+/**
+ * @final since hackzilla/ticket-bundle 3.x.
+ */
 class TicketFeatures
 {
     private $features;
