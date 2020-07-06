@@ -44,7 +44,11 @@ class AutoClosingCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $ticket_manager   = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
+        if (!$this->getContainer()->has('fos_user.user_manager')) {
+            throw new \RuntimeException(sprintf('Command "%s" requires the service "fos_user.user_manager". Is "friendsofsymfony/user-bundle" installed and enabled?', $this->getName()));
+        }
+
+        $ticketManager    = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
         $userManager      = $this->getContainer()->get('fos_user.user_manager');
         $ticketRepository = $this->getContainer()->get('doctrine')->getRepository('HackzillaTicketBundle:Ticket');
 
@@ -59,7 +63,7 @@ class AutoClosingCommand extends ContainerAwareCommand
         $resolved_tickets = $ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));
 
         foreach ($resolved_tickets as $ticket) {
-            $message = $ticket_manager->createMessage()
+            $message = $ticketManager->createMessage()
                 ->setMessage(
                     $translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $translator->trans('STATUS_CLOSED', [], $translationDomain)], $translationDomain)
                 )
@@ -69,7 +73,7 @@ class AutoClosingCommand extends ContainerAwareCommand
                 ->setTicket($ticket);
 
             $ticket->setStatus(TicketMessage::STATUS_CLOSED);
-            $ticket_manager->updateTicket($ticket, $message);
+            $ticketManager->updateTicket($ticket, $message);
 
             $output->writeln('The ticket "'.$ticket->getSubject().'" has been closed.');
         }

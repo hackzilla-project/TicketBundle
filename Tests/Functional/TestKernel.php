@@ -3,6 +3,7 @@
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
+use FOS\UserBundle\FOSUserBundle;
 use Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle;
 use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
@@ -41,6 +42,7 @@ final class TestKernel extends Kernel
             new FrameworkBundle(),
             new SecurityBundle(),
             new DoctrineBundle(),
+            new FOSUserBundle(),
             new KnpPaginatorBundle(),
             new TwigBundle(),
             new HackzillaTicketBundle(),
@@ -96,10 +98,19 @@ final class TestKernel extends Kernel
         $c->loadFromExtension('framework', [
             'secret'         => 'MySecretKey',
             'default_locale' => 'en',
+            'session'        => [
+                'handler_id' => 'session.handler.native_file',
+                'storage_id' => 'session.storage.mock_file',
+                'name'       => 'MOCKSESSID',
+            ],
             'translator'     => [
                 'fallbacks' => [
                     'en',
                 ],
+            ],
+            'form'           => null,
+            'validation'     => [
+                'enabled' => true,
             ],
         ]);
 
@@ -131,19 +142,43 @@ final class TestKernel extends Kernel
             ],
             'orm' => [
                 'default_entity_manager' => 'default',
+                'auto_mapping'           => true,
+                'mappings'               => [
+                    'HackzillaTicketBundle' => [
+                        'dir'    => __DIR__.'/Entity',
+                        'prefix' => 'Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity',
+                        'alias'  => 'HackzillaTicketBundle',
+                        'type'   => 'annotation',
+                    ],
+                ],
             ],
         ]);
 
         // TwigBundle config
         $twigConfig = [
-            'strict_variables' => '%kernel.debug%',
-            'autoescape'       => 'name',
+            'strict_variables'     => '%kernel.debug%',
+            'exception_controller' => null,
+            'autoescape'           => 'name',
         ];
         // "default_path" configuration is available since version 3.4.
         if (version_compare(self::VERSION, '3.4', '>=')) {
             $twigConfig['default_path'] = __DIR__.'/Resources/views';
         }
         $c->loadFromExtension('twig', $twigConfig);
+
+        // FOSUserBundle config
+        $c->loadFromExtension('fos_user', [
+            'user_class'    => User::class,
+            'db_driver'     => 'orm',
+            'firewall_name' => 'api',
+            'from_email'    => [
+                'address'     => 'no-reply@example.com',
+                'sender_name' => 'HackzillaTicketBundle',
+            ],
+            'service' => [
+                'mailer' => 'fos_user.mailer.noop',
+            ],
+        ]);
 
         // HackzillaBundle config
         $c->loadFromExtension('hackzilla_ticket', [
@@ -152,13 +187,6 @@ final class TestKernel extends Kernel
         ]);
 
         if ($this->useVichUploaderBundle) {
-            // FrameworkBundle config
-            // "framework.form" is required since "vich_uploader.namer_directory_property"
-            // service uses "form.property_accessor" service.
-            $c->loadFromExtension('framework', [
-                'form' => null,
-            ]);
-
             // VichUploaderBundle config
             $c->loadFromExtension('vich_uploader', [
                 'db_driver' => 'orm',

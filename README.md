@@ -18,7 +18,7 @@ Available translations for:
 ## Requirements
 
 * PHP >= 5.6
-* [Symfony][1] ^2.8|^3.0|^4.0
+* [Symfony][1] ^2.8|^3.4|^4.0
 * [Knp Paginator bundle][2]
 * [Bootstrap v3][3] (optional) see: [http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme][4]
 
@@ -31,8 +31,8 @@ Available translations for:
 
 | Ticket Bundle | Symfony          | PHP   |
 | --------------| ---------------- | ----- |
-| [3.x][6]      | ^2.8\|^3.0\|^4.0 | >=5.6 |
-| [2.x][7]      | ^2.7\|^3.0       | >=5.3 |
+| [3.x][6]      | ^2.8\|^3.4\|^4.0 | >=5.6 |
+| [2.x][7]      | ^2.7\|^3.4       | >=5.3 |
 | [1.x][8]      | ^2.3             | >=5.3 |
 | [0.x][9]      | ^2.3             | >=5.3 |
 

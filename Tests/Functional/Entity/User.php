@@ -2,38 +2,21 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity;
 
-use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
+use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
+ * @ORM\Entity
+ * @ORM\Table(name="fos_user")
+ *
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-final class User implements UserInterface
+class User extends BaseUser
 {
-    public function getId()
-    {
-    }
-
-    public function getUsername()
-    {
-    }
-
-    public function getEmail()
-    {
-    }
-
-    public function getRoles()
-    {
-    }
-
-    public function getPassword()
-    {
-    }
-
-    public function getSalt()
-    {
-    }
-
-    public function eraseCredentials()
-    {
-    }
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 }
