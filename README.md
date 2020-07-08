@@ -1,31 +1,32 @@
-# Ticketing Bundle v3
+# Hackzilla Ticket Bundle
 
 Simple ticketing bundle for any project.
 Available translations for:
- * Dutch
- * English
- * French
- * German
- * Italian
- * Portuguese
- * Russian
- * Spanish
+
+* Dutch
+* English
+* French
+* German
+* Italian
+* Portuguese
+* Russian
+* Spanish
 
 [![Build Status](https://travis-ci.org/hackzilla/TicketBundle.png?branch=master)](https://travis-ci.org/hackzilla/TicketBundle)
+[![Quality assurance](https://github.com/hackzilla/TicketBundle/workflows/Quality%20assurance/badge.svg)](https://github.com/hackzilla/TicketBundle/actions?query=workflow%3A%22Quality+assurance%22)
+[![Lint](https://github.com/hackzilla/TicketBundle/workflows/Lint/badge.svg)](https://github.com/hackzilla/TicketBundle/actions?query=workflow%3ALint)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/091d37a9-7862-4365-952c-814ce95c4d6c/mini.png)](https://insight.sensiolabs.com/projects/091d37a9-7862-4365-952c-814ce95c4d6c)
-
 
 ## Requirements
 
 * PHP >= 5.6
 * [Symfony][1] ^2.8|^3.4|^4.0
 * [Knp Paginator bundle][2]
-* [Bootstrap v3][3] (optional) see: [http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme][4]
 
 ## Optional Requirements
 
 * [FOSUserBundle][5]
-
+* [Bootstrap v3][3] (see [http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme][4])
 
 ## Version Matrix
 
@@ -36,17 +37,14 @@ Available translations for:
 | [1.x][8]      | ^2.3             | >=5.3 |
 | [0.x][9]      | ^2.3             | >=5.3 |
 
-
 ## Demo
 
 See [Ticket Bundle Demo App][10] for an example installation. This can also be used for confirming bugs.
-
 
 ## Setup
 
 * [Installation with FOSUserBundle][11]
 * [Generic Installation][12]
-
 
 ## Optional Features
 
@@ -58,12 +56,11 @@ These optional features that can be turned on or off.
 * [Custom Entities][14]
 * [Events][15]
 
-# 3rd Party Extensions
+## 3rd Party Extensions
 
-# [Email Notification][16]
+### [Email Notification][16]
 
-
-## Custom Templates (Optional)
+### Custom Templates (Optional)
 
 ```yaml
 # config.yml
