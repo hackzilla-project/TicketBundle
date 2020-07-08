@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -54,8 +63,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('macros')->defaultValue('@HackzillaTicket/Macros/macros.html.twig')->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
 
         return $treeBuilder;
     }

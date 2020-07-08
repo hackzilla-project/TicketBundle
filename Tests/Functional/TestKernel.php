@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
@@ -28,7 +37,7 @@ final class TestKernel extends Kernel
 
     public function __construct()
     {
-        $this->useVichUploaderBundle = \class_exists(VichUploaderBundle::class);
+        $this->useVichUploaderBundle = class_exists(VichUploaderBundle::class);
 
         parent::__construct('test'.(int) $this->useVichUploaderBundle, true);
     }
@@ -96,20 +105,20 @@ final class TestKernel extends Kernel
     {
         // FrameworkBundle config
         $c->loadFromExtension('framework', [
-            'secret'         => 'MySecretKey',
+            'secret' => 'MySecretKey',
             'default_locale' => 'en',
-            'session'        => [
+            'session' => [
                 'handler_id' => 'session.handler.native_file',
                 'storage_id' => 'session.storage.mock_file',
-                'name'       => 'MOCKSESSID',
+                'name' => 'MOCKSESSID',
             ],
-            'translator'     => [
+            'translator' => [
                 'fallbacks' => [
                     'en',
                 ],
             ],
-            'form'           => null,
-            'validation'     => [
+            'form' => null,
+            'validation' => [
                 'enabled' => true,
             ],
         ]);
@@ -142,13 +151,13 @@ final class TestKernel extends Kernel
             ],
             'orm' => [
                 'default_entity_manager' => 'default',
-                'auto_mapping'           => true,
-                'mappings'               => [
+                'auto_mapping' => true,
+                'mappings' => [
                     'HackzillaTicketBundle' => [
-                        'dir'    => __DIR__.'/Entity',
+                        'dir' => __DIR__.'/Entity',
                         'prefix' => 'Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity',
-                        'alias'  => 'HackzillaTicketBundle',
-                        'type'   => 'annotation',
+                        'alias' => 'HackzillaTicketBundle',
+                        'type' => 'annotation',
                     ],
                 ],
             ],
@@ -156,9 +165,9 @@ final class TestKernel extends Kernel
 
         // TwigBundle config
         $twigConfig = [
-            'strict_variables'     => '%kernel.debug%',
+            'strict_variables' => '%kernel.debug%',
             'exception_controller' => null,
-            'autoescape'           => 'name',
+            'autoescape' => 'name',
         ];
         // "default_path" configuration is available since version 3.4.
         if (version_compare(self::VERSION, '3.4', '>=')) {
@@ -168,11 +177,11 @@ final class TestKernel extends Kernel
 
         // FOSUserBundle config
         $c->loadFromExtension('fos_user', [
-            'user_class'    => User::class,
-            'db_driver'     => 'orm',
+            'user_class' => User::class,
+            'db_driver' => 'orm',
             'firewall_name' => 'api',
-            'from_email'    => [
-                'address'     => 'no-reply@example.com',
+            'from_email' => [
+                'address' => 'no-reply@example.com',
                 'sender_name' => 'HackzillaTicketBundle',
             ],
             'service' => [
@@ -182,7 +191,7 @@ final class TestKernel extends Kernel
 
         // HackzillaBundle config
         $c->loadFromExtension('hackzilla_ticket', [
-            'user_class'         => User::class,
+            'user_class' => User::class,
             'translation_domain' => 'HackzillaTicketBundle',
         ]);
 

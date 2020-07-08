@@ -1,5 +1,14 @@
 <?php
 
+$header = <<<'HEADER'
+This file is part of HackzillaTicketBundle package.
+
+(c) Daniel Platt <github@ofdan.co.uk>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+HEADER;
+
 // Use PHP-CS-Fixer 2+ if it is available
 if (\class_exists(PhpCsFixer\Config::class, false)) {
     return PhpCsFixer\Config::create()
@@ -7,19 +16,27 @@ if (\class_exists(PhpCsFixer\Config::class, false)) {
         ->setRiskyAllowed(true)
         ->setRules([
             '@Symfony' => true,
+            '@Symfony:risky' => true,
             'array_syntax' => ['syntax' => 'short'],
-            'binary_operator_spaces' => [
-                'align_double_arrow' => true,
-                'align_equals' => true,
-            ],
             'blank_line_after_opening_tag' => true,
             'combine_consecutive_issets' => true,
             'combine_consecutive_unsets' => true,
+            'explicit_string_variable' => true,
+            'global_namespace_import' => ['import_classes' => false],
+            'header_comment' => [
+                'header' => $header,
+            ],
             'logical_operators' => true,
             'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
+            'multiline_whitespace_before_semicolons' => true,
+            'no_alternative_syntax' => true,
             'no_extra_blank_lines' => true,
+            'no_null_property_initialization' => true,
             'no_php4_constructor' => true,
+            'no_short_echo_tag' => true,
+            'no_superfluous_elseif' => true,
             'no_superfluous_phpdoc_tags' => ['allow_mixed' => true],
+            'no_unset_on_property' => true,
             'no_useless_else' => true,
             'no_useless_return' => true,
             'ordered_class_elements' => true,
@@ -28,6 +45,8 @@ if (\class_exists(PhpCsFixer\Config::class, false)) {
             'php_unit_set_up_tear_down_visibility' => true,
             'php_unit_strict' => true,
             'phpdoc_order' => true,
+            'single_line_throw' => false,
+            'static_lambda' => true,
         ])
         ->setFinder(
             PhpCsFixer\Finder::create()->exclude(['Tests/Functional/cache'])->in(__DIR__)
@@ -38,13 +57,11 @@ if (\class_exists(PhpCsFixer\Config::class, false)) {
 return Symfony\CS\Config\Config::create()
     ->setUsingCache(true)
     ->fixers([
-        'align_double_arrow',
+        'header_comment' => $header,
         'newline_after_open_tag',
         'ordered_use',
         'php_unit_construct',
         'short_array_syntax',
-        '-unalign_double_arrow',
-        '-unalign_equals',
     ])
     ->finder(
         Symfony\CS\Finder\DefaultFinder::create()

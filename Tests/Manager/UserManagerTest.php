@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
 use Doctrine\ORM\EntityRepository;
@@ -21,10 +30,10 @@ final class UserManagerTest extends WebTestCase
 
     protected function setUp()
     {
-        $this->tokenStorage            = new TokenStorage();
+        $this->tokenStorage = new TokenStorage();
         $authenticationProviderManager = new AuthenticationProviderManager([new AnonymousAuthenticationProvider('secret')]);
-        $accessDecisionManager         = new AccessDecisionManager();
-        $this->authorizationChecker    = new AuthorizationChecker($this->tokenStorage, $authenticationProviderManager, $accessDecisionManager);
+        $accessDecisionManager = new AccessDecisionManager();
+        $this->authorizationChecker = new AuthorizationChecker($this->tokenStorage, $authenticationProviderManager, $accessDecisionManager);
 
         $this->object = new UserManager(
             $this->tokenStorage,
@@ -35,7 +44,7 @@ final class UserManagerTest extends WebTestCase
 
     protected function tearDown()
     {
-        unset($this->object);
+        $this->object = null;
     }
 
     public function testObjectCreated()

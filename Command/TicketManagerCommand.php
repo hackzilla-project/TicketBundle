@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
@@ -40,8 +49,7 @@ class TicketManagerCommand extends ContainerAwareCommand
                 InputOption::VALUE_OPTIONAL,
                 'What priority would it be?',
                 '21'
-            )
-        ;
+            );
     }
 
     /**

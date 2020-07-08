@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
@@ -35,8 +44,7 @@ class AutoClosingCommand extends ContainerAwareCommand
                 InputOption::VALUE_OPTIONAL,
                 'How many days since the ticket was resolved?',
                 '10'
-            )
-        ;
+            );
     }
 
     /**
@@ -48,11 +56,11 @@ class AutoClosingCommand extends ContainerAwareCommand
             throw new \RuntimeException(sprintf('Command "%s" requires the service "fos_user.user_manager". Is "friendsofsymfony/user-bundle" installed and enabled?', $this->getName()));
         }
 
-        $ticketManager    = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
-        $userManager      = $this->getContainer()->get('fos_user.user_manager');
+        $ticketManager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
+        $userManager = $this->getContainer()->get('fos_user.user_manager');
         $ticketRepository = $this->getContainer()->get('doctrine')->getRepository('HackzillaTicketBundle:Ticket');
 
-        $locale     = $this->getContainer()->getParameter('locale') ? $this->getContainer()->getParameter('locale') : 'en';
+        $locale = $this->getContainer()->getParameter('locale') ? $this->getContainer()->getParameter('locale') : 'en';
         $translator = $this->getContainer()->get('translator');
         $translator->setLocale($locale);
 

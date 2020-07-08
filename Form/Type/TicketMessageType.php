@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
@@ -26,8 +35,8 @@ class TicketMessageType extends AbstractType
 
     public function __construct(UserManagerInterface $userManager, TicketFeatures $features, $messageClass)
     {
-        $this->userManager  = $userManager;
-        $this->features     = $features;
+        $this->userManager = $userManager;
+        $this->features = $features;
         $this->messageClass = $messageClass;
     }
 
@@ -38,7 +47,7 @@ class TicketMessageType extends AbstractType
                 'message',
                 TextareaType::class,
                 [
-                    'label'    => 'LABEL_MESSAGE',
+                    'label' => 'LABEL_MESSAGE',
                     'required' => false,
                 ]
             )
@@ -48,8 +57,7 @@ class TicketMessageType extends AbstractType
                 [
                     'label' => 'LABEL_PRIORITY',
                 ]
-            )
-        ;
+            );
 
         if ($this->features->hasFeature('attachment')) {
             $builder
@@ -57,11 +65,10 @@ class TicketMessageType extends AbstractType
                     'attachmentFile',
                     FileType::class,
                     [
-                        'label'    => 'LABEL_ATTACHMENT',
+                        'label' => 'LABEL_ATTACHMENT',
                         'required' => false,
                     ]
-                )
-            ;
+                );
         }
 
         // if existing ticket add status
@@ -85,13 +92,12 @@ class TicketMessageType extends AbstractType
                             'status',
                             CheckboxType::class,
                             [
-                                'label'    => 'LABEL_MARK_SOLVED',
+                                'label' => 'LABEL_MARK_SOLVED',
                                 'required' => false,
-                                'value'    => 'STATUS_CLOSED',
+                                'value' => 'STATUS_CLOSED',
                             ]
                         )->addModelTransformer($statusTransformer)
-                    )
-                ;
+                    );
             }
         }
     }

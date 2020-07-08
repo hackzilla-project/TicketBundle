@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\DataTransformer;
 
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
@@ -17,7 +26,7 @@ final class StatusTransformerTest extends WebTestCase
 
     protected function tearDown()
     {
-        unset($this->object);
+        $this->object = null;
     }
 
     public function testObjectCreated()

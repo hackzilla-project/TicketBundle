@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Entity\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -90,7 +99,7 @@ trait TicketTrait
      */
     public function setStatusString($status)
     {
-        $status = \array_search(\strtolower($status), TicketMessageInterface::STATUSES);
+        $status = array_search(strtolower($status), TicketMessageInterface::STATUSES);
 
         if ($status > 0) {
             $this->setStatus($status);
@@ -116,7 +125,7 @@ trait TicketTrait
      */
     public function getStatusString()
     {
-        if (array_key_exists($this->status, TicketMessageInterface::STATUSES)) {
+        if (\array_key_exists($this->status, TicketMessageInterface::STATUSES)) {
             return TicketMessageInterface::STATUSES[$this->status];
         }
 
@@ -146,7 +155,7 @@ trait TicketTrait
      */
     public function setPriorityString($priority)
     {
-        $priority = \array_search(\strtolower($priority), TicketMessageInterface::PRIORITIES);
+        $priority = array_search(strtolower($priority), TicketMessageInterface::PRIORITIES);
 
         if ($priority > 0) {
             $this->setPriority($priority);
@@ -172,7 +181,7 @@ trait TicketTrait
      */
     public function getPriorityString()
     {
-        if (array_key_exists($this->priority, TicketMessageInterface::PRIORITIES)) {
+        if (\array_key_exists($this->priority, TicketMessageInterface::PRIORITIES)) {
             return TicketMessageInterface::PRIORITIES[$this->priority];
         }
 
@@ -190,10 +199,10 @@ trait TicketTrait
     {
         if (\is_object($userCreated)) {
             $this->userCreatedObject = $userCreated;
-            $this->userCreated       = $userCreated->getId();
+            $this->userCreated = $userCreated->getId();
         } else {
             $this->userCreatedObject = null;
-            $this->userCreated       = $userCreated;
+            $this->userCreated = $userCreated;
         }
 
         return $this;
@@ -230,10 +239,10 @@ trait TicketTrait
     {
         if (\is_object($lastUser)) {
             $this->lastUserObject = $lastUser;
-            $this->lastUser       = $lastUser->getId();
+            $this->lastUser = $lastUser->getId();
         } else {
             $this->lastUserObject = null;
-            $this->lastUser       = $lastUser;
+            $this->lastUser = $lastUser;
         }
 
         return $this;
