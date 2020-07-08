@@ -88,7 +88,7 @@ I'm open to pull requests for additional languages, features and/or improvements
 [3]: http://getbootstrap.com/docs/3.3/
 [4]: http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme
 [5]: https://symfony.com/doc/current/bundles/FOSUserBundle/index.html
-[6]: https://github.com/hackzilla/TicketBundle/tree/master
+[6]: https://github.com/hackzilla/TicketBundle/tree/3.x
 [7]: https://github.com/hackzilla/TicketBundle/tree/2.x
 [8]: https://github.com/hackzilla/TicketBundle/tree/1.x
 [9]: https://github.com/hackzilla/TicketBundle/tree/0.9.x
