@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
@@ -41,7 +50,7 @@ class TicketManager implements TicketManagerInterface
      */
     public function __construct($ticketClass, $ticketMessageClass)
     {
-        $this->ticketClass        = $ticketClass;
+        $this->ticketClass = $ticketClass;
         $this->ticketMessageClass = $ticketMessageClass;
     }
 
@@ -50,8 +59,8 @@ class TicketManager implements TicketManagerInterface
      */
     public function setEntityManager(ObjectManager $om)
     {
-        $this->objectManager     = $om;
-        $this->ticketRepository  = $om->getRepository($this->ticketClass);
+        $this->objectManager = $om;
+        $this->ticketRepository = $om->getRepository($this->ticketClass);
         $this->messageRepository = $om->getRepository($this->ticketMessageClass);
 
         return $this;
@@ -124,10 +133,10 @@ class TicketManager implements TicketManagerInterface
      */
     public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null)
     {
-        if (is_null($ticket->getId())) {
+        if (null === $ticket->getId()) {
             $this->objectManager->persist($ticket);
         }
-        if (!\is_null($message)) {
+        if (null !== $message) {
             $message->setTicket($ticket);
             $this->objectManager->persist($message);
         }
@@ -298,7 +307,7 @@ class TicketManager implements TicketManagerInterface
             }
         }
 
-        return \array_search($statusStr, $statuses);
+        return array_search($statusStr, $statuses, true);
     }
 
     /**
@@ -320,6 +329,6 @@ class TicketManager implements TicketManagerInterface
             }
         }
 
-        return \array_search($priorityStr, $priorities);
+        return array_search($priorityStr, $priorities, true);
     }
 }

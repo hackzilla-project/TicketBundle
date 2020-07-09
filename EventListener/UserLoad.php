@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -37,14 +46,14 @@ class UserLoad
         $userRepository = $args->getEntityManager()->getRepository($this->userRepository);
 
         if ($entity instanceof TicketInterface) {
-            if (\is_null($entity->getUserCreatedObject())) {
+            if (null === $entity->getUserCreatedObject()) {
                 $entity->setUserCreated($userRepository->find($entity->getUserCreated()));
             }
-            if (\is_null($entity->getLastUserObject())) {
+            if (null === $entity->getLastUserObject()) {
                 $entity->setLastUser($userRepository->find($entity->getLastUser()));
             }
         } elseif ($entity instanceof TicketMessageInterface) {
-            if (\is_null($entity->getUserObject())) {
+            if (null === $entity->getUserObject()) {
                 $entity->setUser($userRepository->find($entity->getUser()));
             }
         }

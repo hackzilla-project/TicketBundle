@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
@@ -31,12 +40,12 @@ final class FunctionalTest extends WebTestCase
             ['hackzilla_ticket.model.message.class', TicketMessage::class],
             ['hackzilla_ticket.features', ['attachment' => true]],
             ['hackzilla_ticket.templates', [
-                'index'           => '@HackzillaTicket/Ticket/index.html.twig',
-                'new'             => '@HackzillaTicket/Ticket/new.html.twig',
-                'prototype'       => '@HackzillaTicket/Ticket/prototype.html.twig',
-                'show'            => '@HackzillaTicket/Ticket/show.html.twig',
+                'index' => '@HackzillaTicket/Ticket/index.html.twig',
+                'new' => '@HackzillaTicket/Ticket/new.html.twig',
+                'prototype' => '@HackzillaTicket/Ticket/prototype.html.twig',
+                'show' => '@HackzillaTicket/Ticket/show.html.twig',
                 'show_attachment' => '@HackzillaTicket/Ticket/show_attachment.html.twig',
-                'macros'          => '@HackzillaTicket/Macros/macros.html.twig',
+                'macros' => '@HackzillaTicket/Macros/macros.html.twig',
             ]],
         ];
     }
@@ -53,7 +62,7 @@ final class FunctionalTest extends WebTestCase
     public function testConfiguredFileUploadSubscriber()
     {
         $eventDispatcher = static::$kernel->getContainer()->get('event_dispatcher');
-        $listeners       = $eventDispatcher->getListeners();
+        $listeners = $eventDispatcher->getListeners();
 
         $this->assertArrayHasKey(Events::POST_UPLOAD, $listeners);
     }

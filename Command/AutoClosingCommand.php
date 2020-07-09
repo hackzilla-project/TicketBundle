@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -59,9 +68,9 @@ class AutoClosingCommand extends Command
         parent::__construct();
 
         $this->ticketManager = $ticketManager;
-        $this->userManager   = $userManager;
+        $this->userManager = $userManager;
         $this->entityManager = $entityManager;
-        $this->translator    = $translator;
+        $this->translator = $translator;
         if ($container->hasParameter('locale')) {
             $this->locale = $container->getParameter('locale');
         }
@@ -86,8 +95,7 @@ class AutoClosingCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 'How many days since the ticket was resolved?',
                 '10'
-            )
-        ;
+            );
     }
 
     /**
