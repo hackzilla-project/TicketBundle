@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketFeature;
 
 use Symfony\Component\HttpFoundation\File\File;
@@ -90,7 +99,7 @@ trait MessageAttachmentTrait
      */
     public function setAttachmentMimeType($mimeType)
     {
-        $this->attachmentMimeType =  $mimeType;
+        $this->attachmentMimeType = $mimeType;
 
         return $this;
     }

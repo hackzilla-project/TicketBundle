@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Entity\Traits;
 
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
@@ -71,7 +80,7 @@ trait TicketMessageTrait
      */
     public function setStatusString($status)
     {
-        $status = \array_search(\strtolower($status), TicketMessageInterface::STATUSES);
+        $status = array_search(strtolower($status), TicketMessageInterface::STATUSES);
 
         if ($status > 0) {
             $this->setStatus($status);
@@ -127,7 +136,7 @@ trait TicketMessageTrait
      */
     public function setPriorityString($priority)
     {
-        $priority = \array_search(\strtolower($priority), TicketMessageInterface::PRIORITIES);
+        $priority = array_search(strtolower($priority), TicketMessageInterface::PRIORITIES);
 
         if ($priority > 0) {
             $this->setPriority($priority);
@@ -171,10 +180,10 @@ trait TicketMessageTrait
     {
         if (\is_object($user)) {
             $this->userObject = $user;
-            $this->user       = $user->getId();
+            $this->user = $user->getId();
         } else {
             $this->userObject = null;
-            $this->user       = $user;
+            $this->user = $user;
         }
 
         return $this;
@@ -257,14 +266,14 @@ trait TicketMessageTrait
     {
         $this->ticket = $ticket;
 
-        if (\is_null($this->getUserObject())) {
+        if (null === $this->getUserObject()) {
             $user = $this->getUser();
         } else {
             $user = $this->getUserObject();
         }
 
         // if null, then new ticket
-        if (\is_null($ticket->getUserCreated())) {
+        if (null === $ticket->getUserCreated()) {
             $ticket->setUserCreated($user);
         }
 
@@ -273,7 +282,7 @@ trait TicketMessageTrait
         $ticket->setPriority($this->getPriority());
 
         // if ticket not closed, then it'll be set to null
-        if (\is_null($this->getStatus())) {
+        if (null === $this->getStatus()) {
             $this->setStatus($ticket->getStatus());
         } else {
             $ticket->setStatus($this->getStatus());

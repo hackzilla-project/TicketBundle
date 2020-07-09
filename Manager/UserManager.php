@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectRepository;
@@ -35,8 +44,8 @@ class UserManager implements UserManagerInterface
         ObjectRepository $userRepository,
         AuthorizationCheckerInterface $authorizationChecker
     ) {
-        $this->tokenStorage         = $tokenStorage;
-        $this->userRepository       = $userRepository;
+        $this->tokenStorage = $tokenStorage;
+        $this->userRepository = $userRepository;
         $this->authorizationChecker = $authorizationChecker;
     }
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -34,12 +43,12 @@ class TicketType extends AbstractType
                 'messages',
                 CollectionType::class,
                 [
-                    'entry_type'    => TicketMessageType::class,
+                    'entry_type' => TicketMessageType::class,
                     'entry_options' => [
                         'new_ticket' => true,
                     ],
-                    'label'         => false,
-                    'allow_add'     => true,
+                    'label' => false,
+                    'allow_add' => true,
                 ]
             );
     }
