@@ -19,7 +19,7 @@ Available translations for:
 
 ## Requirements
 
-* PHP >= 5.6
+* PHP ^5.6\|^7.0
 * [Symfony][1] ^2.8|^3.4|^4.0
 * [Knp Paginator bundle][2]
 
@@ -30,12 +30,12 @@ Available translations for:
 
 ## Version Matrix
 
-| Ticket Bundle | Symfony          | PHP   |
-| --------------| ---------------- | ----- |
-| [3.x][6]      | ^2.8\|^3.4\|^4.0 | >=5.6 |
-| [2.x][7]      | ^2.7\|^3.4       | >=5.3 |
-| [1.x][8]      | ^2.3             | >=5.3 |
-| [0.x][9]      | ^2.3             | >=5.3 |
+| Ticket Bundle | Symfony          | PHP        |
+| --------------| ---------------- | ---------- |
+| [3.x][6]      | ^2.8\|^3.4\|^4.0 | ^5.6\|^7.0 |
+| [2.x][7]      | ^2.7\|^3.4       | ^5.3\|^7.0 |
+| [1.x][8]      | ^2.3             | ^5.3\|^7.0 |
+| [0.x][9]      | ^2.3             | ^5.3\|^7.0 |
 
 ## Demo
 
@@ -88,7 +88,7 @@ I'm open to pull requests for additional languages, features and/or improvements
 [3]: http://getbootstrap.com/docs/3.3/
 [4]: http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme
 [5]: https://symfony.com/doc/current/bundles/FOSUserBundle/index.html
-[6]: https://github.com/hackzilla/TicketBundle/tree/master
+[6]: https://github.com/hackzilla/TicketBundle/tree/3.x
 [7]: https://github.com/hackzilla/TicketBundle/tree/2.x
 [8]: https://github.com/hackzilla/TicketBundle/tree/1.x
 [9]: https://github.com/hackzilla/TicketBundle/tree/0.9.x

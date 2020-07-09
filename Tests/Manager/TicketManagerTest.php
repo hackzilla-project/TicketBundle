@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
 use Doctrine\Common\Persistence\ObjectManager;
@@ -30,12 +39,12 @@ final class TicketManagerTest extends WebTestCase
 
     protected function tearDown()
     {
-        unset($this->userManager);
+        $this->userManager = null;
     }
 
     public function testGetTicketListQuery()
     {
-        $ticketClass        = 'App\Ticket';
+        $ticketClass = 'App\Ticket';
         $ticketMessageClass = 'App\TicketMessage';
 
         $qb = $this->createMock(QueryBuilder::class);
@@ -70,7 +79,7 @@ final class TicketManagerTest extends WebTestCase
      */
     public function testGetTicketList()
     {
-        $ticketClass        = 'App\Ticket';
+        $ticketClass = 'App\Ticket';
         $ticketMessageClass = 'App\TicketMessage';
 
         $qb = $this->createMock(QueryBuilder::class);

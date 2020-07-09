@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -37,7 +46,7 @@ class TicketManagerCommand extends Command
         parent::__construct();
 
         $this->ticketManager = $ticketManager;
-        $this->userManager   = $userManager;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -64,8 +73,7 @@ class TicketManagerCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 'What priority would it be?',
                 '21'
-            )
-        ;
+            );
     }
 
     /**

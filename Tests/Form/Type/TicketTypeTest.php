@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -50,7 +59,7 @@ final class TicketTypeTest extends TypeTestCase
         $this->assertEmpty($formEntity->getMessages());
         $this->assertInstanceOf(\DateTime::class, $formEntity->getCreatedAt());
 
-        $view     = $form->createView();
+        $view = $form->createView();
         $children = $view->children;
 
         foreach (array_keys($formData) as $key) {
@@ -60,13 +69,13 @@ final class TicketTypeTest extends TypeTestCase
 
     protected function getExtensions()
     {
-        $ticketType        = new TicketType(Ticket::class);
+        $ticketType = new TicketType(Ticket::class);
         $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''), TicketMessage::class);
 
         return [
             new PreloadedExtension(
                 [
-                    $ticketType->getBlockPrefix()        => $ticketType,
+                    $ticketType->getBlockPrefix() => $ticketType,
                     $ticketMessageType->getBlockPrefix() => $ticketMessageType,
                 ],
                 []
