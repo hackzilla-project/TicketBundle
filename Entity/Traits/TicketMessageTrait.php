@@ -80,7 +80,7 @@ trait TicketMessageTrait
      */
     public function setStatusString($status)
     {
-        $status = array_search(strtolower($status), TicketMessageInterface::STATUSES);
+        $status = array_search(strtolower($status), TicketMessageInterface::STATUSES, true);
 
         if ($status > 0) {
             $this->setStatus($status);
@@ -136,7 +136,7 @@ trait TicketMessageTrait
      */
     public function setPriorityString($priority)
     {
-        $priority = array_search(strtolower($priority), TicketMessageInterface::PRIORITIES);
+        $priority = array_search(strtolower($priority), TicketMessageInterface::PRIORITIES, true);
 
         if ($priority > 0) {
             $this->setPriority($priority);

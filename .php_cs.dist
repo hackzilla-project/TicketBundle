@@ -15,6 +15,9 @@ if (\class_exists(PhpCsFixer\Config::class, false)) {
         ->setUsingCache(true)
         ->setRiskyAllowed(true)
         ->setRules([
+            '@PHP56Migration' => true,
+            '@PHP56Migration:risky' => true,
+            '@PHPUnit57Migration:risky' => true,
             '@Symfony' => true,
             '@Symfony:risky' => true,
             'array_syntax' => ['syntax' => 'short'],
@@ -47,6 +50,7 @@ if (\class_exists(PhpCsFixer\Config::class, false)) {
             'phpdoc_order' => true,
             'single_line_throw' => false,
             'static_lambda' => true,
+            'strict_param' => true,
         ])
         ->setFinder(
             PhpCsFixer\Finder::create()->exclude(['Tests/Functional/cache'])->in(__DIR__)
@@ -57,11 +61,18 @@ if (\class_exists(PhpCsFixer\Config::class, false)) {
 return Symfony\CS\Config\Config::create()
     ->setUsingCache(true)
     ->fixers([
+        'combine_consecutive_unsets',
+        'ereg_to_preg',
         'header_comment' => $header,
         'newline_after_open_tag',
         'ordered_use',
         'php_unit_construct',
+        'php_unit_dedicate_assert',
+        'php_unit_strict',
+        'phpdoc_order',
         'short_array_syntax',
+        'short_echo_tag',
+        'strict_param',
     ])
     ->finder(
         Symfony\CS\Finder\DefaultFinder::create()

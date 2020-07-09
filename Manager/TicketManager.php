@@ -307,7 +307,7 @@ class TicketManager implements TicketManagerInterface
             }
         }
 
-        return array_search($statusStr, $statuses);
+        return array_search($statusStr, $statuses, true);
     }
 
     /**
@@ -329,6 +329,6 @@ class TicketManager implements TicketManagerInterface
             }
         }
 
-        return array_search($priorityStr, $priorities);
+        return array_search($priorityStr, $priorities, true);
     }
 }
