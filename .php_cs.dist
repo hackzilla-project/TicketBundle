@@ -17,13 +17,21 @@ if (\class_exists(PhpCsFixer\Config::class, false)) {
         ->setRules([
             '@PHP56Migration' => true,
             '@PHP56Migration:risky' => true,
+            '@PHP70Migration' => true,
+            '@PHP70Migration:risky' => true,
+            '@PHP71Migration' => true,
+            '@PHP71Migration:risky' => true,
+            '@PHP73Migration' => true,
             '@PHPUnit57Migration:risky' => true,
+            '@PHPUnit60Migration:risky' => true,
+            '@PHPUnit75Migration:risky' => true,
             '@Symfony' => true,
             '@Symfony:risky' => true,
             'array_syntax' => ['syntax' => 'short'],
             'blank_line_after_opening_tag' => true,
             'combine_consecutive_issets' => true,
             'combine_consecutive_unsets' => true,
+            'compact_nullable_typehint' => true,
             'explicit_string_variable' => true,
             'global_namespace_import' => ['import_classes' => false],
             'header_comment' => [
@@ -51,6 +59,7 @@ if (\class_exists(PhpCsFixer\Config::class, false)) {
             'single_line_throw' => false,
             'static_lambda' => true,
             'strict_param' => true,
+            'void_return' => null,
         ])
         ->setFinder(
             PhpCsFixer\Finder::create()->exclude(['Tests/Functional/cache'])->in(__DIR__)

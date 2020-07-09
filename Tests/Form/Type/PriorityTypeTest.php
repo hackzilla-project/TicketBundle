@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -18,12 +20,12 @@ final class PriorityTypeTest extends TypeTestCase
 {
     private $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new PriorityType();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->object = null;
     }
