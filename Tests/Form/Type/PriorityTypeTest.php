@@ -30,7 +30,7 @@ final class PriorityTypeTest extends TypeTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(PriorityType::class, $this->object);
     }

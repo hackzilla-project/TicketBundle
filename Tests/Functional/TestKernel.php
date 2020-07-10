@@ -194,7 +194,6 @@ final class TestKernel extends Kernel
         // HackzillaBundle config
         $c->loadFromExtension('hackzilla_ticket', [
             'user_class' => User::class,
-            'translation_domain' => 'HackzillaTicketBundle',
         ]);
 
         if ($this->useVichUploaderBundle) {

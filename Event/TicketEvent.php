@@ -28,7 +28,7 @@ class TicketEvent extends Event
         $this->ticket = $ticket;
     }
 
-    public function getTicket()
+    public function getTicket(): TicketInterface
     {
         return $this->ticket;
     }

@@ -30,7 +30,7 @@ final class HackzillaTicketExtensionTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(HackzillaTicketExtension::class, $this->object);
     }

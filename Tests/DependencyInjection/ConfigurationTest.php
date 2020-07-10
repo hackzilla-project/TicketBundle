@@ -30,7 +30,7 @@ final class ConfigurationTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(Configuration::class, $this->object);
     }

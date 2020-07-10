@@ -38,7 +38,7 @@ final class UserLoadTest extends WebTestCase
         return $this->createMock(UserManager::class);
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(UserLoad::class, $this->object);
     }

@@ -45,7 +45,7 @@ trait MessageAttachmentTrait
     /**
      * {@inheritdoc}
      */
-    public function setAttachmentFile(File $file = null)
+    public function setAttachmentFile(?File $file = null)
     {
         $this->attachmentFile = $file;
 

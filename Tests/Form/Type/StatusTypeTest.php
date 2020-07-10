@@ -30,7 +30,7 @@ final class StatusTypeTest extends TypeTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(StatusType::class, $this->object);
     }

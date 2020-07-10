@@ -30,7 +30,7 @@ final class TicketMessageTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(TicketMessage::class, $this->object);
     }

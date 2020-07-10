@@ -23,7 +23,7 @@ interface MessageAttachmentInterface extends TicketMessageInterface
      *
      * @return $this
      */
-    public function setAttachmentFile(File $file = null);
+    public function setAttachmentFile(?File $file = null);
 
     /**
      * @return File

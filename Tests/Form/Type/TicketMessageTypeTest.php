@@ -32,7 +32,7 @@ final class TicketMessageTypeTest extends TypeTestCase
         parent::setUp();
     }
 
-    public function testSubmitValidData()
+    public function testSubmitValidData(): void
     {
         $formData = [
             'priority' => TicketMessage::PRIORITY_HIGH,

@@ -31,19 +31,19 @@ final class StatusTransformerTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(StatusTransformer::class, $this->object);
     }
 
-    public function testTransform()
+    public function testTransform(): void
     {
         $this->assertSame($this->object->transform(TicketMessage::STATUS_CLOSED), 1);
 
         $this->assertNull($this->object->transform('TEST'));
     }
 
-    public function testReverseTransform()
+    public function testReverseTransform(): void
     {
         $this->assertSame($this->object->reverseTransform(1), TicketMessage::STATUS_CLOSED);
 

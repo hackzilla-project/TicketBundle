@@ -31,12 +31,12 @@ final class TicketTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(Ticket::class, $this->object);
     }
 
-    public function testStatus()
+    public function testStatus(): void
     {
         $this->object->setStatus(TicketMessageInterface::STATUS_INVALID);
         $this->assertSame(TicketMessageInterface::STATUS_INVALID, $this->object->getStatus());

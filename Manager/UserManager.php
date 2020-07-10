@@ -67,10 +67,8 @@ class UserManager implements UserManagerInterface
 
     /**
      * @param int $userId
-     *
-     * @return UserInterface|null
      */
-    public function getUserById($userId)
+    public function getUserById($userId): ?UserInterface
     {
         if (!$userId) {
             return null;
@@ -81,12 +79,8 @@ class UserManager implements UserManagerInterface
 
     /**
      * Current user has permission.
-     *
-     * @param string $role
-     *
-     * @return bool
      */
-    public function hasRole(UserInterface $user, $role)
+    public function hasRole(UserInterface $user, string $role): bool
     {
         return $this->authorizationChecker->isGranted($role);
     }
@@ -94,7 +88,7 @@ class UserManager implements UserManagerInterface
     /**
      * @param UserInterface|string $user
      */
-    public function hasPermission($user, TicketInterface $ticket)
+    public function hasPermission($user, TicketInterface $ticket): void
     {
         if (!\is_object($user) || (!$this->hasRole($user, TicketRole::ADMIN) &&
             $ticket->getUserCreated() != $user->getId())

@@ -38,9 +38,7 @@ class TicketAttachmentController extends Controller
         $ticketMessage = $ticketManager->getMessageById($ticketMessageId);
 
         if (!$ticketMessage || !$ticketMessage instanceof TicketMessageWithAttachment) {
-            $translationDomain = $this->getParameter('hackzilla_ticket.translation_domain');
-
-            throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY', [], $translationDomain));
+            throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
         }
 
         // check permissions

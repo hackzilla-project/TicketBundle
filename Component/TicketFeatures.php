@@ -25,7 +25,7 @@ class TicketFeatures
     /**
      * @param string $messageClass TicketMessage class
      */
-    public function __construct(array $features, $messageClass)
+    public function __construct(array $features, string $messageClass)
     {
         if (!empty($features['attachment']) && !is_a($messageClass, MessageAttachmentInterface::class, true)
         ) {
@@ -37,12 +37,8 @@ class TicketFeatures
 
     /**
      * Check if feature exists or whether enabled.
-     *
-     * @param $feature
-     *
-     * @return bool|null
      */
-    public function hasFeature($feature)
+    public function hasFeature(string $feature): ?bool
     {
         if (!isset($this->features[$feature])) {
             return null;

@@ -49,7 +49,7 @@ final class UserManagerTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(UserManager::class, $this->object);
     }

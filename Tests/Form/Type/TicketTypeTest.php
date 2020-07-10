@@ -35,7 +35,7 @@ final class TicketTypeTest extends TypeTestCase
         parent::setUp();
     }
 
-    public function testSubmitValidData()
+    public function testSubmitValidData(): void
     {
         $formData = [];
 
