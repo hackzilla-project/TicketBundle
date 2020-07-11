@@ -23,9 +23,6 @@ class TicketGlobalExtension extends AbstractExtension implements GlobalsInterfac
 {
     protected $templates = [];
 
-    /**
-     * @param array $templates
-     */
     public function __construct(array $templates)
     {
         $this->templates = $templates;

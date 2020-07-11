@@ -31,8 +31,6 @@ interface MessageAttachmentInterface extends TicketMessageInterface
     public function getAttachmentFile();
 
     /**
-     * @param string $name
-     *
      * @return $this
      */
     public function setAttachmentName(string $name);

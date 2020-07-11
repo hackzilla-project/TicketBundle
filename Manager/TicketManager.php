@@ -40,9 +40,6 @@ class TicketManager implements TicketManagerInterface
 
     /**
      * TicketManager constructor.
-     *
-     * @param string $ticketClass
-     * @param string $ticketMessageClass
      */
     public function __construct(string $ticketClass, string $ticketMessageClass)
     {
