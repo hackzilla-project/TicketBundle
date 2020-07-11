@@ -254,11 +254,9 @@ trait TicketTrait
     /**
      * Set lastMessage.
      *
-     * @param \DateTime $lastMessage
-     *
      * @return $this
      */
-    public function setLastMessage($lastMessage)
+    public function setLastMessage(\DateTimeInterface $lastMessage)
     {
         $this->lastMessage = $lastMessage;
 
@@ -267,10 +265,8 @@ trait TicketTrait
 
     /**
      * Get lastMessage.
-     *
-     * @return \DateTime
      */
-    public function getLastMessage()
+    public function getLastMessage(): ?\DateTimeInterface
     {
         return $this->lastMessage;
     }
@@ -278,11 +274,9 @@ trait TicketTrait
     /**
      * Set createdAt.
      *
-     * @param \DateTime $createdAt
-     *
      * @return $this
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTimeInterface $createdAt)
     {
         $this->createdAt = $createdAt;
 

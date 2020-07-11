@@ -36,12 +36,7 @@ class TicketFeatureExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string $feature
-     *
-     * @return bool|null
-     */
-    public function hasFeature($feature)
+    public function hasFeature(string $feature): ?bool
     {
         return $this->ticketFeatures->hasFeature($feature);
     }

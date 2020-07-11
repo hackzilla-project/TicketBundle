@@ -117,18 +117,14 @@ interface TicketInterface
     /**
      * Set lastMessage.
      *
-     * @param \DateTime $lastMessage
-     *
      * @return $this
      */
-    public function setLastMessage($lastMessage);
+    public function setLastMessage(\DateTimeInterface $lastMessage);
 
     /**
      * Get lastMessage.
-     *
-     * @return \DateTime
      */
-    public function getLastMessage();
+    public function getLastMessage(): ?\DateTimeInterface;
 
     /**
      * Set createdAt.

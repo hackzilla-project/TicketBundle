@@ -35,7 +35,7 @@ interface MessageAttachmentInterface extends TicketMessageInterface
      *
      * @return $this
      */
-    public function setAttachmentName($name);
+    public function setAttachmentName(string $name);
 
     /**
      * @return string
@@ -47,7 +47,7 @@ interface MessageAttachmentInterface extends TicketMessageInterface
      *
      * @return $this
      */
-    public function setAttachmentSize($size);
+    public function setAttachmentSize(int $size);
 
     /**
      * @return string
@@ -59,7 +59,7 @@ interface MessageAttachmentInterface extends TicketMessageInterface
      *
      * @return $this
      */
-    public function setAttachmentMimeType($mimeType);
+    public function setAttachmentMimeType(string $mimeType);
 
     /**
      * @return string
