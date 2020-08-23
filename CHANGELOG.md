@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.5.0](https://github.com/hackzilla/TicketBundle/compare/3.4.0...3.5.0) - 2020-08-26
+
+ * minor #175 Add configuration for Dependabot (phansys)
+ * bugfix #176 Explicitly require "doctrine/common" (phansys)
+ * minor #172 Update `README.md` (phansys)
+ * minor #170 Update coding standard rules (phansys)
+ * minor #169 Update "Version Matrix" section at `README.md` (phansys)
+ * minor #168 Add status badges for GitHub actions (phansys)
+ * minor #166 Add "friendsofsymfony/user-bundle" to development dependencies (phansys)
+ * minor #165 Narrow API marking classes as final (phansys)
+ * minor #164 Lint "*.xlf" files (phansys)
+ * minor #163 [#150] add Dutch translation (bghosts)
+ * minor #162 Fix some PHP CS rules (phansys)
+ * minor #161 Configure SCA through GH actions (phansys)
+
 ## [3.4.0](https://github.com/hackzilla/TicketBundle/compare/3.3.1...3.4.0) - 2020-07-03
 
  * bugfix #160 Fix bad call at `TicketManager::getTicketList()` (phansys)
