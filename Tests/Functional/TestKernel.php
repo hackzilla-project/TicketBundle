@@ -81,16 +81,6 @@ final class TestKernel extends Kernel
         return $this->getBaseDir().'log';
     }
 
-    public function serialize()
-    {
-        return serialize($this->useVichUploaderBundle);
-    }
-
-    public function unserialize($str)
-    {
-        $this->__construct(unserialize($str));
-    }
-
     /**
      * {@inheritdoc}
      */
