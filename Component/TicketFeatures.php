@@ -18,10 +18,14 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface
  */
 class TicketFeatures
 {
-    private $features;
+    /**
+     * @var array<string, bool>
+     */
+    private $features = [];
 
     /**
-     * @param string $messageClass TicketMessage class
+     * @param array<string, bool> $features
+     * @param string              $messageClass TicketMessage class
      */
     public function __construct(array $features, $messageClass)
     {
@@ -34,18 +38,31 @@ class TicketFeatures
     }
 
     /**
+     * NEXT_MAJOR: Remove the BC checks and return only boolean values.
+     *
      * Check if feature exists or whether enabled.
      *
-     * @param $feature
+     * @param string $feature
      *
      * @return bool|null
      */
     public function hasFeature($feature)
     {
+        $args = \func_get_args();
+        if (isset($args[1]) && 'return_strict_bool' === $args[1]) {
+            return isset($this->features[$feature]) && $this->features[$feature];
+        }
+
         if (!isset($this->features[$feature])) {
+            @trigger_error(sprintf(
+                'Returning other type than boolean from "%s()" is deprecated since hackzilla/ticket-bundle 3.x'
+                .' and will be not allowed in version 4.0.',
+                __METHOD__
+            ), E_USER_DEPRECATED);
+
             return null;
         }
 
-        return $this->features[$feature];
+        return (bool) $this->features[$feature];
     }
 }

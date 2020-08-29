@@ -21,20 +21,17 @@ final class TicketFeaturesTest extends WebTestCase
     /**
      * @dataProvider constructProvider
      *
-     * @param array  $features
      * @param string $class
      */
-    public function testConstruct($features, $class)
+    public function testConstruct(array $features, $class)
     {
-        $obj = new TicketFeatures($features, $class);
-
-        $this->assertInstanceOf(TicketFeatures::class, $obj);
+        $this->assertInstanceOf(TicketFeatures::class, new TicketFeatures($features, $class));
     }
 
     public function constructProvider()
     {
         return [
-            [[], '\stdClass'],
+            [[], \stdClass::class],
         ];
     }
 
@@ -49,13 +46,14 @@ final class TicketFeaturesTest extends WebTestCase
         $obj = new TicketFeatures($features, $class);
 
         $this->assertInstanceOf(TicketFeatures::class, $obj);
-        $this->assertSame($obj->hasFeature('attachment'), $compare);
+        // NEXT_MAJOR: Remove the argument 2 for `TicketFeatures::hasFeature()`
+        $this->assertSame($obj->hasFeature('attachment', 'return_strict_bool'), $compare);
     }
 
     public function featureAttachmentProvider()
     {
         return [
-            [[], TicketMessage::class, null],
+            [[], TicketMessage::class, false],
             [['attachment' => true], TicketMessage::class, false],
             [['attachment' => true], TicketMessageWithAttachment::class, true],
         ];

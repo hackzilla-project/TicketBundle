@@ -1,3 +1,11 @@
+UPGRADE FROM 3.5 to 3.6
+=======================
+
+## `Hackzilla\Bundle\TicketBundle\Component\TicketFeatures`
+
+Returning other type than boolean from `TicketFeatures::hasFeature()` is deprecated
+and will be not allowed in version 4.0.
+
 UPGRADE FROM 3.4 to 3.5
 =======================
 
