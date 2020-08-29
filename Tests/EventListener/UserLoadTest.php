@@ -19,14 +19,14 @@ final class UserLoadTest extends WebTestCase
 {
     private $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $userManager = $this->getUserManagerMock();
 
         $this->object = new UserLoad($userManager);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->object = null;
     }

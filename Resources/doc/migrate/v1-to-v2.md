@@ -4,7 +4,7 @@ Add your user class into your config.
 
 ```yaml
 hackzilla_ticket:
-    user_class: AppBundle\Entity\User
+    user_class: App\Entity\User
 ```
 
 ```Hackzilla\Bundle\TicketBundle\User\UserInterface``` has been replaced with ```Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface```

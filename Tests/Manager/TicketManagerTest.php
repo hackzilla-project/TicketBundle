@@ -29,7 +29,7 @@ final class TicketManagerTest extends WebTestCase
      */
     private $userManager;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->userManager = $this->createMock(UserManagerInterface::class);
         $this->userManager
@@ -37,7 +37,7 @@ final class TicketManagerTest extends WebTestCase
             ->willReturn('ANONYMOUS');
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->userManager = null;
     }
