@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.6.0](https://github.com/hackzilla/TicketBundle/compare/3.5.0...3.6.0) - 2020-10-29
+
+ * minor #178 Bump dependencies (phansys)
+ * tests #182 Remove `serialize()` and `unserialize()` methods from `TestKernel` (phansys)
+ * minor #180 Deprecate return other type than boolean from `TicketFeatures::hasFeature()` (phansys)
+ * minor #181 Use `::class` pseudo constants in `Configuration::getConfigTreeBuilder()` (phansys)
+ * tests #179 Mark `FunctionalTest::testConfiguredFileUploadSubscriber()` as skipped if "vich/uploader-bundle" is not available (phansys)
+
 ## [3.5.0](https://github.com/hackzilla/TicketBundle/compare/3.4.0...3.5.0) - 2020-08-26
 
  * minor #175 Add configuration for Dependabot (phansys)
