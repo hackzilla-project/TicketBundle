@@ -18,12 +18,12 @@ final class StatusTypeTest extends TypeTestCase
 {
     private $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new StatusType();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->object = null;
     }
