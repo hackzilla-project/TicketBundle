@@ -18,12 +18,12 @@ final class ConfigurationTest extends WebTestCase
 {
     private $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Configuration();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->object = null;
     }

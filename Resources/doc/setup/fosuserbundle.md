@@ -2,18 +2,17 @@
 
 ## Step 1: Installation
 
-Add HackzillaTicketBundle to your requirements:
+Add HackzillaTicketBundle and FOSUserBundle to your requirements:
 
 ```bash
-composer require hackzilla/ticket-bundle:^2.0@dev
-composer require friendsofsymfony/user-bundle:^2.0
+composer require hackzilla/ticket-bundle friendsofsymfony/user-bundle
 ```
 
 Specify your user class in your config, this will be exactly the same as `user_class` in FOSUserBundle.
 
 ```yaml
 hackzilla_ticket:
-    user_class: AppBundle\Entity\User
+    user_class: App\Entity\User
 ```
 
 Your user class needs to implement ```Hackzilla\Bundle\TicketBundle\Model\UserInterface```
@@ -23,7 +22,7 @@ You'll end up with a class like:
 ```php
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -32,11 +31,11 @@ class User extends BaseUser implements \Hackzilla\Bundle\TicketBundle\Model\User
 }
 ```
 
-Follow [FOSUserBundle guide][1]
+Follow [FOSUserBundle guide](https://github.com/FriendsOfSymfony/FOSUserBundle)
 
 ## Step 2: Enable the bundle
 
-Enable the bundle in the kernel:
+If you are not using [Symfony Flex](https://symfony.com/doc/current/setup/flex.html), you must enable the bundles manually in the kernel:
 
 ```php
 <?php
@@ -52,7 +51,7 @@ return [
 ];
 ```
 
-Or if you are not using Flex:
+If you are using an older kernel implementation, you must update the `registerBundles()` method:
 
 ```php
 <?php
@@ -96,5 +95,3 @@ You can assign "ROLE_TICKET_ADMIN" to any user you want to be able to administer
 ## Step 5: Create tables
 
 ```bin/console doctrine:schema:update --force```
-
-[1]: https://github.com/FriendsOfSymfony/FOSUserBundle

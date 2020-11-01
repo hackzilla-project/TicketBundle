@@ -1,3 +1,41 @@
+UPGRADE FROM 3.5 to 3.6
+=======================
+
+## `Hackzilla\Bundle\TicketBundle\Component\TicketFeatures`
+
+Returning other type than boolean from `TicketFeatures::hasFeature()` is deprecated
+and will be not allowed in version 4.0.
+
+UPGRADE FROM 3.4 to 3.5
+=======================
+
+## API narrowing
+
+ * Extending the following classes is deprecated since they were
+   marked as final.
+
+ - `Hackzilla\Bundle\TicketBundle\Command\AutoClosingCommand`;
+ - `Hackzilla\Bundle\TicketBundle\Command\TicketManagerCommand`;
+ - `Hackzilla\Bundle\TicketBundle\Component\TicketFeatures`;
+ - `Hackzilla\Bundle\TicketBundle\Controller\TicketAttachmentController`;
+ - `Hackzilla\Bundle\TicketBundle\Controller\TicketController`;
+ - `Hackzilla\Bundle\TicketBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass`;
+ - `Hackzilla\Bundle\TicketBundle\DependencyInjection\Configuration`;
+ - `Hackzilla\Bundle\TicketBundle\DependencyInjection\HackzillaTicketExtension`;
+ - `Hackzilla\Bundle\TicketBundle\Event\TicketEvent`;
+ - `Hackzilla\Bundle\TicketBundle\EventListener\FileSubscriber`;
+ - `Hackzilla\Bundle\TicketBundle\EventListener\UserLoad`;
+ - `Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer`;
+ - `Hackzilla\Bundle\TicketBundle\Manager\TicketManager`;
+ - `Hackzilla\Bundle\TicketBundle\Manager\UserManager`;
+ - `Hackzilla\Bundle\TicketBundle\TicketRole`;
+ - `Hackzilla\Bundle\TicketBundle\Type\PriorityType`;
+ - `Hackzilla\Bundle\TicketBundle\Type\StatusType`;
+ - `Hackzilla\Bundle\TicketBundle\Type\TicketMessageType`;
+ - `Hackzilla\Bundle\TicketBundle\Type\TicketType`;
+ - `Hackzilla\Bundle\TicketBundle\TwigExtension\TicketFeatureExtension`;
+ - `Hackzilla\Bundle\TicketBundle\TwigExtension\TicketGlobalExtension`.
+
 UPGRADE FROM 3.3 to 3.4
 =======================
 

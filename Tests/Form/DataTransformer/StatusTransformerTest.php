@@ -19,12 +19,12 @@ final class StatusTransformerTest extends WebTestCase
 {
     private $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new StatusTransformer();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->object = null;
     }

@@ -9,74 +9,48 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 HEADER;
 
-// Use PHP-CS-Fixer 2+ if it is available
-if (\class_exists(PhpCsFixer\Config::class, false)) {
-    return PhpCsFixer\Config::create()
-        ->setUsingCache(true)
-        ->setRiskyAllowed(true)
-        ->setRules([
-            '@PHP56Migration' => true,
-            '@PHP56Migration:risky' => true,
-            '@PHPUnit57Migration:risky' => true,
-            '@Symfony' => true,
-            '@Symfony:risky' => true,
-            'array_syntax' => ['syntax' => 'short'],
-            'blank_line_after_opening_tag' => true,
-            'combine_consecutive_issets' => true,
-            'combine_consecutive_unsets' => true,
-            'explicit_string_variable' => true,
-            'global_namespace_import' => ['import_classes' => false],
-            'header_comment' => [
-                'header' => $header,
-            ],
-            'logical_operators' => true,
-            'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
-            'multiline_whitespace_before_semicolons' => true,
-            'no_alternative_syntax' => true,
-            'no_extra_blank_lines' => true,
-            'no_null_property_initialization' => true,
-            'no_php4_constructor' => true,
-            'no_short_echo_tag' => true,
-            'no_superfluous_elseif' => true,
-            'no_superfluous_phpdoc_tags' => ['allow_mixed' => true],
-            'no_unset_on_property' => true,
-            'no_useless_else' => true,
-            'no_useless_return' => true,
-            'ordered_class_elements' => true,
-            'ordered_imports' => true,
-            'php_unit_construct' => true,
-            'php_unit_set_up_tear_down_visibility' => true,
-            'php_unit_strict' => true,
-            'phpdoc_order' => true,
-            'single_line_throw' => false,
-            'static_lambda' => true,
-            'strict_param' => true,
-        ])
-        ->setFinder(
-            PhpCsFixer\Finder::create()->exclude(['Tests/Functional/cache'])->in(__DIR__)
-        )
-    ;
-}
-
-return Symfony\CS\Config\Config::create()
+return PhpCsFixer\Config::create()
     ->setUsingCache(true)
-    ->fixers([
-        'combine_consecutive_unsets',
-        'ereg_to_preg',
-        'header_comment' => $header,
-        'newline_after_open_tag',
-        'ordered_use',
-        'php_unit_construct',
-        'php_unit_dedicate_assert',
-        'php_unit_strict',
-        'phpdoc_order',
-        'short_array_syntax',
-        'short_echo_tag',
-        'strict_param',
+    ->setRiskyAllowed(true)
+    ->setRules([
+        '@PHP56Migration' => true,
+        '@PHP56Migration:risky' => true,
+        '@PHPUnit57Migration:risky' => true,
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'blank_line_after_opening_tag' => true,
+        'combine_consecutive_issets' => true,
+        'combine_consecutive_unsets' => true,
+        'explicit_string_variable' => true,
+        'global_namespace_import' => ['import_classes' => false],
+        'header_comment' => [
+            'header' => $header,
+        ],
+        'logical_operators' => true,
+        'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
+        'multiline_whitespace_before_semicolons' => true,
+        'no_alternative_syntax' => true,
+        'no_extra_blank_lines' => true,
+        'no_null_property_initialization' => true,
+        'no_php4_constructor' => true,
+        'no_short_echo_tag' => true,
+        'no_superfluous_elseif' => true,
+        'no_superfluous_phpdoc_tags' => ['allow_mixed' => true],
+        'no_unset_on_property' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_class_elements' => true,
+        'ordered_imports' => true,
+        'php_unit_construct' => true,
+        'php_unit_set_up_tear_down_visibility' => true,
+        'php_unit_strict' => true,
+        'phpdoc_order' => true,
+        'single_line_throw' => false,
+        'static_lambda' => true,
+        'strict_param' => true,
     ])
-    ->finder(
-        Symfony\CS\Finder\DefaultFinder::create()
-            ->exclude(['Tests/Functional/cache'])
-            ->in(__DIR__)
+    ->setFinder(
+        PhpCsFixer\Finder::create()->exclude(['Tests/Functional/cache'])->in(__DIR__)
     )
 ;

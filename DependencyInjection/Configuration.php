@@ -11,11 +11,13 @@
 
 namespace Hackzilla\Bundle\TicketBundle\DependencyInjection;
 
+use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
+use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This is the class that validates and merges configuration from your app/config files.
+ * This is the class that validates and merges configuration from your config files.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  *
@@ -43,8 +45,8 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('messages')
                 ->end()
                 ->scalarNode('user_class')->isRequired()->cannotBeEmpty()->end()
-                ->scalarNode('ticket_class')->cannotBeEmpty()->defaultValue('Hackzilla\Bundle\TicketBundle\Entity\Ticket')->end()
-                ->scalarNode('message_class')->cannotBeEmpty()->defaultValue('Hackzilla\Bundle\TicketBundle\Entity\TicketMessage')->end()
+                ->scalarNode('ticket_class')->cannotBeEmpty()->defaultValue(Ticket::class)->end()
+                ->scalarNode('message_class')->cannotBeEmpty()->defaultValue(TicketMessage::class)->end()
                 ->arrayNode('features')
                     ->addDefaultsIfNotSet()
                     ->children()

@@ -2,41 +2,50 @@
 
 ## Attachments
 
-Add UploaderBundle in your composer.json:
+Add UploaderBundle to your requirements:
 
-```json
-{
-    "require": {
-        "hackzilla/ticket-bundle": "~3.0",
-        "vich/uploader-bundle": "~1.0"
-    }
-}
+```bash
+composer require vich/uploader-bundle
 ```
 
 Specify the uploader config, so the bundle knows where to store the files.
 
 ```yaml
 hackzilla_ticket:
-    user_class:             AppBundle\Entity\User
-    ticket_class:           Hackzilla\Bundle\TicketBundle\Entity\TicketWithAttachment
-    message_class:          Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment
+    user_class: App\Entity\User
+    ticket_class: Hackzilla\Bundle\TicketBundle\Entity\TicketWithAttachment
+    message_class: Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment
     features:
-        attachment:         true
+        attachment: true
 
 vich_uploader:
     db_driver: orm
 
     mappings:
         ticket_message_attachment:
-            uri_prefix:         /attachment
-            upload_destination: %kernel.root_dir%/../var/uploads/attachment/
+            uri_prefix: /attachment
+            upload_destination: '%kernel.root_dir%/../var/uploads/attachment/'
 ```
 
 See [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/index.md) documentation for more details.
 
-Don't forget to register VichUploaderBundle in AppKernel.
+If you are not using [Symfony Flex](https://symfony.com/doc/current/setup/flex.html), you must enable the bundles manually in the kernel:
 
-``` php
+```php
+<?php
+// config/bundles.php
+
+return [
+    Vich\UploaderBundle\VichUploaderBundle => ['all' => true],
+    Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle::class => ['all' => true],
+    // ...
+    // Your application bundles
+];
+```
+
+If you are using an older kernel implementation, you must update the `registerBundles()` method:
+
+```php
 <?php
 // app/AppKernel.php
 
@@ -54,6 +63,6 @@ public function registerBundles()
 
 ## Custom Entity
 
-If you want to implement your own entities then you will want to extend 
-    
+If you want to implement your own entities then you will want to extend
+
 ``` \Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface ```

@@ -19,12 +19,12 @@ final class TicketFeaturesTest extends WebTestCase
 {
     private $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new TicketFeatureExtension(new TicketFeatures([], ''));
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->object = null;
     }
