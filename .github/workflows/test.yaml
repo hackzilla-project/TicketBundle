@@ -1,0 +1,87 @@
+name: Test
+
+on:
+    push:
+        branches:
+            - 3.x
+            - master
+    pull_request:
+
+env:
+    ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+jobs:
+    test:
+        name: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }}
+
+        runs-on: ubuntu-latest
+
+        continue-on-error: ${{ matrix.allowed-to-fail }}
+
+        strategy:
+            matrix:
+                php-version:
+                    - '7.2'
+                    - '7.3'
+                    - '7.4'
+                    - '8.0'
+                dependencies: [highest]
+                allowed-to-fail: [false]
+                variant: [normal]
+                include:
+                    - php-version: '7.2'
+                      dependencies: lowest
+                      allowed-to-fail: false
+                      variant: 'vich/uploader-bundle'
+                    - php-version: '7.3'
+                      dependencies: highest
+                      allowed-to-fail: false
+                      variant: normal
+                    - php-version: '7.4'
+                      dependencies: highest
+                      allowed-to-fail: false
+                      variant: 'symfony/symfony:"4.4.*"'
+                    - php-version: '7.4'
+                      dependencies: highest
+                      allowed-to-fail: false
+                      variant: 'vich/uploader-bundle'
+                    - php-version: '8.0'
+                      dependencies: highest
+                      allowed-to-fail: true
+                      variant: normal
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Install PHP with extensions
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php-version }}
+                  coverage: pcov
+                  tools: composer:v2
+
+            - name: Add PHPUnit matcher
+              run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+            - name: Configuration required for PHP 8.0
+              if: matrix.php-version == '8.0'
+              run: composer config platform.php 7.4.99
+
+            - name: Install variant
+              if: matrix.variant != 'normal'
+              run: composer require ${{ matrix.variant }} --no-update
+
+            - name: "Install Composer dependencies (${{ matrix.dependencies }})"
+              uses: "ramsey/composer-install@v1"
+              with:
+                  dependency-versions: "${{ matrix.dependencies }}"
+                  composer-options: "--prefer-dist --prefer-stable"
+
+            - name: Run Tests with "vich/uploader-bundle"
+              if: matrix.variant == 'vich/uploader-bundle'
+              run: make test_with_vichuploaderbundle
+
+            - name: Run Tests
+              if: matrix.variant != 'vich/uploader-bundle'
+              run: make test
