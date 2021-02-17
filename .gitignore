@@ -1,7 +1,8 @@
-/vendor/
-/Tests/Functional/cache
-/Tests/Functional/logs
-composer.lock
-phpunit.xml
 .php_cs.cache
 .phpunit.result.cache
+/Tests/Functional/cache
+/Tests/Functional/logs
+/vendor/
+composer.lock
+phpstan.neon
+phpunit.xml

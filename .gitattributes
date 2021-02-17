@@ -1,4 +1,6 @@
 .* export-ignore
 *.md export-ignore
-Tests export-ignore
+Makefile export-ignore
+phpunit.xml.dist export-ignore
 Resources/doc export-ignore
+Tests export-ignore
