@@ -11,7 +11,8 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectManager as LegacyObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
@@ -54,10 +55,21 @@ class TicketManager implements TicketManagerInterface
         $this->ticketMessageClass = $ticketMessageClass;
     }
 
+    public function setObjectManager(ObjectManager $objectManager): void
+    {
+        $this->objectManager = $objectManager;
+        $this->ticketRepository = $objectManager->getRepository($this->ticketClass);
+        $this->messageRepository = $objectManager->getRepository($this->ticketMessageClass);
+    }
+
     /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since hackzilla/ticket-bundle 3.x, use `setObjectManager()` instead.
+     *
      * @return $this
      */
-    public function setEntityManager(ObjectManager $om)
+    public function setEntityManager(LegacyObjectManager $om)
     {
         $this->objectManager = $om;
         $this->ticketRepository = $om->getRepository($this->ticketClass);

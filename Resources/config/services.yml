@@ -26,7 +26,7 @@ services:
             - '%hackzilla_ticket.model.ticket.class%'
             - '%hackzilla_ticket.model.message.class%'
         calls:
-            - [ setEntityManager, ['@doctrine.orm.entity_manager'] ]
+            - [ setObjectManager, ['@doctrine.orm.entity_manager'] ]
             - [ setTranslator, ['@translator'] ]
         public: true
 

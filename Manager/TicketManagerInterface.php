@@ -11,18 +11,23 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectManager as LegacyObjectManager;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @method QueryBuilder getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
+ * @method void         setObjectManager(ObjectManager $objectManager)
  */
 interface TicketManagerInterface
 {
-    public function setEntityManager(ObjectManager $om);
+    /**
+     * @deprecated since hackzilla/ticket-bundle 3.x, use `setObjectManager()` instead.
+     */
+    public function setEntityManager(LegacyObjectManager $om);
 
     public function setTranslator(TranslatorInterface $translator);
 
