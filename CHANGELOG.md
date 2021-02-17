@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.7.0](https://github.com/hackzilla/TicketBundle/compare/3.6.0...3.7.0) - 2021-02-17
+
+ * minor #193 Add support for "doctrine/persistence:^2.1" (phansys)
+ * minor #194 Running tests from GitHub Actions (phansys)
+
 ## [3.6.0](https://github.com/hackzilla/TicketBundle/compare/3.5.0...3.6.0) - 2020-10-29
 
  * minor #178 Bump dependencies (phansys)
