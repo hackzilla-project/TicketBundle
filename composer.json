@@ -50,13 +50,11 @@
     "require-dev": {
         "ext-pdo_sqlite": "*",
         "friendsofphp/php-cs-fixer": "^2.0",
-        "friendsofsymfony/user-bundle": "^2.1",
         "phpstan/phpstan": "^0.12.32",
         "symfony/phpunit-bridge": "^5.1.1",
         "symfony/security": "^4.4"
     },
     "suggest": {
-        "friendsofsymfony/user-bundle": "In order to ease user management",
         "vich/uploader-bundle": "Allow attaching files to ticket messages"
     },
     "config": {

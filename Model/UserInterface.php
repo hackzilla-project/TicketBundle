@@ -15,7 +15,5 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
 {
     public function getId();
 
-    public function getUsername();
-
     public function getEmail();
 }

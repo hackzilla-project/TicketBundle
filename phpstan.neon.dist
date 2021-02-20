@@ -7,6 +7,4 @@ parameters:
         - Tests/
     ignoreErrors:
         - '#.* (class|type) Vich\\UploaderBundle\\.*#'
-        - '#^Class Doctrine\\Common\\Persistence\\ObjectManager not found\.$#'
-        - '#^Class Doctrine\\Common\\Persistence\\Event\\LifecycleEventArgs not found\.$#'
         - '#^Parameter \$om of method Hackzilla\\Bundle\\TicketBundle\\Manager\\TicketManager(Interface)?::setEntityManager\(\) has invalid typehint type Doctrine\\Common\\Persistence\\ObjectManager\.$#'

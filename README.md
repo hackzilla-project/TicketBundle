@@ -13,8 +13,7 @@ You can see the full requirement definitions for each available version in [Pack
 
 ## Setup
 
-* [Installation with FOSUserBundle](Resources/doc/setup/fosuserbundle.md)
-* [Generic installation](Resources/doc/setup/other.md)
+* [Install](Resources/doc/setup/install.md)
 
 ## Optional features
 
@@ -28,7 +27,6 @@ These optional features that can be turned on or off.
 
 ## Optional integrations
 
-* [FOSUserBundle](https://symfony.com/doc/current/bundles/FOSUserBundle/index.html)
 * [Bootstrap v3](http://getbootstrap.com/docs/3.3/) (see http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme)
 
 ## 3rd party extensions

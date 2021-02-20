@@ -50,10 +50,6 @@ class HackzillaTicketExtension extends Extension
         }
 
         $this->setTranslationDomain($config, $container);
-
-        if (isset($bundles['FOSUserBundle'])) {
-            $this->createDoctrineCommonBackwardCompatibilityAliases();
-        }
     }
 
     public static function bundleDirectory()
@@ -77,20 +73,5 @@ class HackzillaTicketExtension extends Extension
 
         $definition = $container->getDefinition('hackzilla_ticket.ticket_manager');
         $definition->addMethodCall('setTranslationDomain', [$translationDomain]);
-    }
-
-    /**
-     * We MUST remove this method when support for "friendsofsymfony/user-bundle" is dropped
-     * or adapted to work with "doctrine/common:^3".
-     */
-    private function createDoctrineCommonBackwardCompatibilityAliases(): void
-    {
-        if (!interface_exists(\Doctrine\Common\Persistence\ObjectManager::class)) {
-            class_alias(\Doctrine\Persistence\ObjectManager::class, \Doctrine\Common\Persistence\ObjectManager::class);
-        }
-
-        if (!class_exists(\Doctrine\Common\Persistence\Event\LifecycleEventArgs::class)) {
-            class_alias(\Doctrine\Persistence\Event\LifecycleEventArgs::class, \Doctrine\Common\Persistence\Event\LifecycleEventArgs::class);
-        }
     }
 }

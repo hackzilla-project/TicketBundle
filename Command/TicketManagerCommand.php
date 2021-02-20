@@ -23,6 +23,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class TicketManagerCommand extends ContainerAwareCommand
 {
+    use UserManagerTrait;
+
     protected static $defaultName = 'ticket:create';
 
     /**
@@ -57,12 +59,6 @@ class TicketManagerCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!$this->getContainer()->has('fos_user.user_manager')) {
-            throw new \RuntimeException(sprintf('Command "%s" requires the service "fos_user.user_manager". Is "friendsofsymfony/user-bundle" installed and enabled?', $this->getName()));
-        }
-
-        $userManager = $this->getContainer()->get('fos_user.user_manager');
-
         $ticketManager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
 
         $ticket = $ticketManager->createTicket()
@@ -72,7 +68,7 @@ class TicketManagerCommand extends ContainerAwareCommand
             ->setMessage($input->getArgument('message'))
             ->setStatus(TicketMessage::STATUS_OPEN)
             ->setPriority($input->getOption('priority'))
-            ->setUser($userManager->findUserByUsername('system'));
+            ->setUser($this->findUser('system'));
 
         $ticketManager->updateTicket($ticket, $message);
 

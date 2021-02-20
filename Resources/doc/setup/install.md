@@ -2,13 +2,13 @@
 
 ## Step 1: Installation
 
-Add HackzillaTicketBundle and FOSUserBundle to your requirements:
+Add HackzillaTicketBundle to your requirements:
 
 ```bash
-composer require hackzilla/ticket-bundle friendsofsymfony/user-bundle
+composer require hackzilla/ticket-bundle
 ```
 
-Specify your user class in your config, this will be exactly the same as `user_class` in FOSUserBundle.
+Specify your user class in your config.
 
 ```yaml
 hackzilla_ticket:
@@ -17,21 +17,17 @@ hackzilla_ticket:
 
 Your user class needs to implement ```Hackzilla\Bundle\TicketBundle\Model\UserInterface```
 
-You'll end up with a class like:
+You should end up with a class similar to:
 
 ```php
 <?php
 
 namespace App\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
-
-class User extends BaseUser implements \Hackzilla\Bundle\TicketBundle\Model\UserInterface
+class User implements \Hackzilla\Bundle\TicketBundle\Model\UserInterface
 {
 }
 ```
-
-Follow [FOSUserBundle guide](https://github.com/FriendsOfSymfony/FOSUserBundle)
 
 ## Step 2: Enable the bundle
 
@@ -42,7 +38,6 @@ If you are not using [Symfony Flex](https://symfony.com/doc/current/setup/flex.h
 // config/bundles.php
 
 return [
-    FOS\UserBundle\FOSUserBundle::class => ['all' => true],
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
     Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle::class => ['all' => true],
@@ -61,7 +56,6 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new FOS\UserBundle\FOSUserBundle(),
         new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
         new Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle(),
@@ -73,7 +67,7 @@ public function registerBundles()
 
 ## Step 3: Import the routing
 
-```yaml
+``` yml
 hackzilla_ticket:
     resource: "@HackzillaTicketBundle/Resources/config/routing.yml"
     prefix: /
@@ -81,7 +75,7 @@ hackzilla_ticket:
 
 or
 
-```yaml
+``` yml
 hackzilla_ticket:
     resource: "@HackzillaTicketBundle/Resources/config/routing/ticket.yml"
     prefix: /ticket
