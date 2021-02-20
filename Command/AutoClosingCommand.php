@@ -11,6 +11,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
+use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -23,6 +24,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class AutoClosingCommand extends ContainerAwareCommand
 {
+    use UserManagerTrait;
+
     protected static $defaultName = 'ticket:autoclosing';
 
     /**
@@ -57,10 +60,9 @@ class AutoClosingCommand extends ContainerAwareCommand
         }
 
         $ticketManager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
-        $userManager = $this->getContainer()->get('fos_user.user_manager');
-        $ticketRepository = $this->getContainer()->get('doctrine')->getRepository('HackzillaTicketBundle:Ticket');
+        $ticketRepository = $this->getContainer()->get('doctrine')->getRepository(Ticket::class);
 
-        $locale = $this->getContainer()->getParameter('locale') ? $this->getContainer()->getParameter('locale') : 'en';
+        $locale = $this->getContainer()->hasParameter('locale') ? $this->getContainer()->getParameter('locale') : 'en';
         $translator = $this->getContainer()->get('translator');
         $translator->setLocale($locale);
 
@@ -77,7 +79,7 @@ class AutoClosingCommand extends ContainerAwareCommand
                 )
                 ->setStatus(TicketMessage::STATUS_CLOSED)
                 ->setPriority($ticket->getPriority())
-                ->setUser($userManager->findUserByUsername($username))
+                ->setUser($this->findUser($username))
                 ->setTicket($ticket);
 
             $ticket->setStatus(TicketMessage::STATUS_CLOSED);

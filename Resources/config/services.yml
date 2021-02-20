@@ -16,7 +16,7 @@ services:
 
     hackzilla_ticket.user_repository:
         class: Doctrine\ORM\EntityRepository
-        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments:
             - '%hackzilla_ticket.model.user.class%'
 
@@ -73,10 +73,16 @@ services:
 
     hackzilla_ticket.command.autoclosing:
         class: Hackzilla\Bundle\TicketBundle\Command\AutoClosingCommand
+        arguments:
+            - null
+            - '@hackzilla_ticket.user_repository'
         tags:
             - { name: console.command, command: 'ticket:autoclosing' }
 
     hackzilla_ticket.command.create:
         class: Hackzilla\Bundle\TicketBundle\Command\TicketManagerCommand
+        arguments:
+            - null
+            - '@hackzilla_ticket.user_repository'
         tags:
             - { name: console.command, command: 'ticket:create' }
