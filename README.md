@@ -2,9 +2,9 @@
 
 Simple ticketing bundle for any project.
 
-[![Build Status](https://travis-ci.org/hackzilla/TicketBundle.png?branch=master)](https://travis-ci.org/hackzilla/TicketBundle)
-[![Quality assurance](https://github.com/hackzilla/TicketBundle/workflows/Quality%20assurance/badge.svg)](https://github.com/hackzilla/TicketBundle/actions?query=workflow%3A%22Quality+assurance%22)
-[![Lint](https://github.com/hackzilla/TicketBundle/workflows/Lint/badge.svg)](https://github.com/hackzilla/TicketBundle/actions?query=workflow%3ALint)
+[![Test](https://github.com/hackzilla-project/TicketBundle/actions/workflows/test.yaml/badge.svg)](https://github.com/hackzilla-project/TicketBundle/actions/workflows/test.yaml)
+[![Quality assurance](https://github.com/hackzilla-project/TicketBundle/actions/workflows/qa.yaml/badge.svg)](https://github.com/hackzilla-project/TicketBundle/actions/workflows/qa.yaml)
+[![Lint](https://github.com/hackzilla-project/TicketBundle/actions/workflows/lint.yaml/badge.svg)](https://github.com/hackzilla-project/TicketBundle/actions/workflows/lint.yaml)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/091d37a9-7862-4365-952c-814ce95c4d6c/mini.png)](https://insight.sensiolabs.com/projects/091d37a9-7862-4365-952c-814ce95c4d6c)
 
 ## Requirements
