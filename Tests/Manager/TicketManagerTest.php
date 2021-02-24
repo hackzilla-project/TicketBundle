@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Hackzilla\Bundle\TicketBundle\Tests\User;
+namespace Hackzilla\Bundle\TicketBundle\Tests\Manager;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;

@@ -11,29 +11,28 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
-use Doctrine\Persistence\ObjectRepository;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 
 /**
- * NEXT_MAJOR: Inject the object repository and the user class directly in the command
- * classes and remove this trait.
+ * NEXT_MAJOR: Inject the user manager directly in the command classes and remove this trait.
  *
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-trait UserManagerTrait
+trait UserManagerAwareTrait
 {
     /**
-     * @var ObjectRepository
+     * @var UserManagerInterface
      */
-    private $userRepository;
+    private $userManager;
 
-    public function __construct(string $name = null, ?ObjectRepository $userRepository = null)
+    public function __construct(string $name = null, ?UserManagerInterface $userManager = null)
     {
         parent::__construct($name);
 
-        $this->userRepository = $userRepository;
+        $this->userManager = $userManager;
 
-        if (null === $userRepository) {
+        if (null === $userManager) {
             @trigger_error(sprintf(
                 'Omitting or passing null as argument 2 for "%s()" is deprecated since hackzilla/ticket-bundle 3.x.',
                 __METHOD__
@@ -43,8 +42,8 @@ trait UserManagerTrait
 
     private function findUser(string $username): ?UserInterface
     {
-        if (null !== $this->userRepository) {
-            return $this->userRepository->findBy(['username' => $username]);
+        if (null !== $this->userManager) {
+            return $this->userManager->findUserByUsername($username);
         }
 
         if (!$this->getContainer()->has('fos_user.user_manager')) {

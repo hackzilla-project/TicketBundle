@@ -14,6 +14,9 @@ namespace Hackzilla\Bundle\TicketBundle\Manager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 
+/**
+ * @method ?UserInterface findUserByUsername(string $username)
+ */
 interface UserManagerInterface
 {
     public function getCurrentUser();
@@ -26,4 +29,7 @@ interface UserManagerInterface
      * @param \Hackzilla\Bundle\TicketBundle\Model\UserInterface|string $user
      */
     public function hasPermission($user, TicketInterface $ticket);
+
+    // NEXT_MAJOR: Uncomment this method.
+    // public function findUserByUsername(string $username): ?UserInterface;
 }

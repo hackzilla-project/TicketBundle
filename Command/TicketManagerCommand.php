@@ -23,7 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class TicketManagerCommand extends ContainerAwareCommand
 {
-    use UserManagerTrait;
+    use UserManagerAwareTrait;
 
     protected static $defaultName = 'ticket:create';
 

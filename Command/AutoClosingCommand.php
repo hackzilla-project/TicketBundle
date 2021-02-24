@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class AutoClosingCommand extends ContainerAwareCommand
 {
-    use UserManagerTrait;
+    use UserManagerAwareTrait;
 
     protected static $defaultName = 'ticket:autoclosing';
 
