@@ -45,6 +45,15 @@ class UserManager implements UserManagerInterface
         AuthorizationCheckerInterface $authorizationChecker
     ) {
         $this->tokenStorage = $tokenStorage;
+
+        if (!is_subclass_of($userRepository->getClassName(), UserInterface::class)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Argument 2 passed to "%s()" MUST be an object repository for a class implementing "%s".',
+                __METHOD__,
+                UserInterface::class
+            ));
+        }
+
         $this->userRepository = $userRepository;
         $this->authorizationChecker = $authorizationChecker;
     }
@@ -58,6 +67,11 @@ class UserManager implements UserManagerInterface
 
         if ('anon.' === $user) {
             $user = 0;
+        } elseif (!$user instanceof UserInterface) {
+            throw new \LogicException(sprintf(
+                'The object representing the authenticated user MUST implement "%s".',
+                UserInterface::class
+            ));
         }
 
         return $user;
@@ -99,5 +113,10 @@ class UserManager implements UserManagerInterface
         ) {
             throw new AccessDeniedHttpException();
         }
+    }
+
+    public function findUserByUsername(string $username): ?UserInterface
+    {
+        return $this->userRepository->findOneBy(['username' => $username]);
     }
 }

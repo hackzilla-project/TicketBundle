@@ -75,7 +75,7 @@ services:
         class: Hackzilla\Bundle\TicketBundle\Command\AutoClosingCommand
         arguments:
             - null
-            - '@hackzilla_ticket.user_repository'
+            - '@hackzilla_ticket.user_manager'
         tags:
             - { name: console.command, command: 'ticket:autoclosing' }
 
@@ -83,6 +83,6 @@ services:
         class: Hackzilla\Bundle\TicketBundle\Command\TicketManagerCommand
         arguments:
             - null
-            - '@hackzilla_ticket.user_repository'
+            - '@hackzilla_ticket.user_manager'
         tags:
             - { name: console.command, command: 'ticket:create' }
