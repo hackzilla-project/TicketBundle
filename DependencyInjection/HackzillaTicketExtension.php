@@ -33,8 +33,13 @@ class HackzillaTicketExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(self::bundleDirectory().'/Resources/config'));
-        $loader->load('services.yml');
+        $loader = new Loader\PhpFileLoader($container, new FileLocator(self::bundleDirectory().'/Resources/config'));
+        $loader->load('manager.php');
+        $loader->load('form_types.php');
+        $loader->load('event_listener.php');
+        $loader->load('component.php');
+        $loader->load('twig.php');
+        $loader->load('commands.php');
 
         $container->setParameter('hackzilla_ticket.model.user.class', $config['user_class']);
         $container->setParameter('hackzilla_ticket.model.ticket.class', $config['ticket_class']);
