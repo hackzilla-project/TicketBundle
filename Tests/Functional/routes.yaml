@@ -1,0 +1,3 @@
+hackzilla_ticket:
+    resource: "@HackzillaTicketBundle/Resources/config/routing.xml"
+    prefix: /

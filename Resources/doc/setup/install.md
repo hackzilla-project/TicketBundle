@@ -69,7 +69,7 @@ public function registerBundles()
 
 ``` yml
 hackzilla_ticket:
-    resource: "@HackzillaTicketBundle/Resources/config/routing.yml"
+    resource: "@HackzillaTicketBundle/Resources/config/routing.xml"
     prefix: /
 ```
 
@@ -77,7 +77,7 @@ or
 
 ``` yml
 hackzilla_ticket:
-    resource: "@HackzillaTicketBundle/Resources/config/routing/ticket.yml"
+    resource: "@HackzillaTicketBundle/Resources/config/routing/hackzilla_ticket.xml"
     prefix: /ticket
 ```
 
