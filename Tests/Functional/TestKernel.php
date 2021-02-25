@@ -84,6 +84,7 @@ final class TestKernel extends Kernel
      */
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
+        $routes->import(__DIR__.'/routes.yaml', '/', 'yaml');
     }
 
     /**
@@ -109,6 +110,7 @@ final class TestKernel extends Kernel
             'validation' => [
                 'enabled' => true,
             ],
+            'test' => true,
         ]);
 
         // SecurityBundle config

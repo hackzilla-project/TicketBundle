@@ -1,3 +1,4 @@
+# NEXT_MAJOR: remove this file and add upgrade note.
 hackzilla_ticket:
     path: /
     controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::indexAction'

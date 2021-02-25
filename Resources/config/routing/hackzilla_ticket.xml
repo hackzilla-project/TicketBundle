@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns="http://symfony.com/schema/routing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+    <route id="hackzilla_ticket" path="/" controller="Hackzilla\Bundle\TicketBundle\Controller\TicketController::indexAction"/>
+    <route id="hackzilla_ticket_show" path="/{ticketId}/show" controller="Hackzilla\Bundle\TicketBundle\Controller\TicketController::showAction"/>
+    <route id="hackzilla_ticket_new" path="/new" controller="Hackzilla\Bundle\TicketBundle\Controller\TicketController::newAction"/>
+    <route id="hackzilla_ticket_create" path="/create" controller="Hackzilla\Bundle\TicketBundle\Controller\TicketController::createAction" methods="POST"/>
+    <route id="hackzilla_ticket_delete" path="/{ticketId}/delete" controller="Hackzilla\Bundle\TicketBundle\Controller\TicketController::deleteAction" methods="DELETE|POST"/>
+    <route id="hackzilla_ticket_reply" path="/{ticketId}/reply" controller="Hackzilla\Bundle\TicketBundle\Controller\TicketController::replyAction"/>
+    <route id="hackzilla_ticket_attachment" path="/attachment/{ticketMessageId}/download" controller="Hackzilla\Bundle\TicketBundle\Controller\TicketAttachmentController::downloadAction"/>
+</routes>
