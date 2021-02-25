@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.8.0](https://github.com/hackzilla/TicketBundle/compare/3.7.0...3.8.0) - 2021-02-25
+
+ * minor #203 Added XML routing (phansys)
+ * pedantic #202 Use configuration from PHP instead of YAML (phansys)
+ * bugfix #201 Fix argument 1 passed to `UserLoad::__construct()` (phansys)
+ * minor #200 Add `UserManager::findUserByUsername()` (phansys)
+ * minor #199 Update URLs in status badges (phansys)
+ * minor #198 Modernize routing definition (phansys)
+ * minor #196 Update dependency constraints in order to allow some major versions (phansys)
+ * minor #197 Stop suggesting "friendsofsymfony/user-bundle" (phansys)
+
 ## [3.7.0](https://github.com/hackzilla/TicketBundle/compare/3.6.0...3.7.0) - 2021-02-17
 
  * minor #193 Add support for "doctrine/persistence:^2.1" (phansys)
