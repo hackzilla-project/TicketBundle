@@ -23,7 +23,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -60,10 +60,7 @@ class AutoClosingCommand extends Command
      */
     private $translator;
 
-    /**
-     * BC: Replace 5th argument with "Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface" after bumping to "symfony/dependency-injection:^4.1".
-     */
-    public function __construct(TicketManagerInterface $ticketManager, ?UserManagerInterface $userManager = null, EntityManagerInterface $entityManager, TranslatorInterface $translator, ContainerInterface $container)
+    public function __construct(TicketManagerInterface $ticketManager, ?UserManagerInterface $userManager = null, EntityManagerInterface $entityManager, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
         if (null === $userManager) {
             throw new \TypeError(sprintf('Argument 2 passed to "%s()" must be an instance of "%s". Is "friendsofsymfony/user-bundle" installed and enabled?', __METHOD__, UserManagerInterface::class));
@@ -75,8 +72,8 @@ class AutoClosingCommand extends Command
         $this->userManager = $userManager;
         $this->entityManager = $entityManager;
         $this->translator = $translator;
-        if ($container->hasParameter('locale')) {
-            $this->locale = $container->getParameter('locale');
+        if ($parameterBag->has('locale')) {
+            $this->locale = $parameterBag->get('locale');
         }
     }
 
@@ -86,7 +83,6 @@ class AutoClosingCommand extends Command
     protected function configure()
     {
         $this
-            ->setName(static::$defaultName) // BC for symfony/console < 3.4.0
             ->setDescription('Automatically close resolved tickets still opened')
             ->addArgument(
                 'username',
