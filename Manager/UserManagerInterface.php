@@ -23,7 +23,7 @@ interface UserManagerInterface
 
     public function getUserById($userId);
 
-    public function hasRole(UserInterface $user, $role);
+    public function hasRole(UserInterface $user, string $role): bool;
 
     /**
      * @param \Hackzilla\Bundle\TicketBundle\Model\UserInterface|string $user
