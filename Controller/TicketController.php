@@ -21,7 +21,7 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketEvents;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class TicketController extends Controller
+class TicketController extends AbstractController
 {
     /**
      * Lists all Ticket entities.

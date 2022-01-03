@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Controller;
 
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Ticket Attachment controller.
@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class TicketAttachmentController extends Controller
+class TicketAttachmentController extends AbstractController
 {
     /**
      * Download attachment on message.
