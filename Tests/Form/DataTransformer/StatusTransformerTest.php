@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\DataTransformer;
 
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
@@ -10,29 +21,29 @@ class StatusTransformerTest extends WebTestCase
 {
     private $object;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->object = new StatusTransformer();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         unset($this->object);
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(StatusTransformer::class, $this->object);
     }
 
-    public function testTransform()
+    public function testTransform(): void
     {
         $this->assertSame($this->object->transform(TicketMessage::STATUS_CLOSED), 1);
 
         $this->assertNull($this->object->transform('TEST'));
     }
 
-    public function testReverseTransform()
+    public function testReverseTransform(): void
     {
         $this->assertSame($this->object->reverseTransform(1), TicketMessage::STATUS_CLOSED);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -50,7 +52,7 @@ final class FunctionalTest extends WebTestCase
         ];
     }
 
-    public function testConfiguredTicketManager()
+    public function testConfiguredTicketManager(): void
     {
         $this->assertTrue(static::$kernel->getContainer()->has('hackzilla_ticket.ticket_manager'));
         $this->assertInstanceOf(TicketManagerInterface::class, static::$kernel->getContainer()->get('hackzilla_ticket.ticket_manager'));
@@ -59,7 +61,7 @@ final class FunctionalTest extends WebTestCase
     /**
      * @group vichuploaderbundle
      */
-    public function testConfiguredFileUploadSubscriber()
+    public function testConfiguredFileUploadSubscriber(): void
     {
         if (!class_exists(Events::class)) {
             $this->markTestSkipped(sprintf('%s() requires vich/uploader-bundle to be installed.', __METHOD__));
@@ -71,7 +73,7 @@ final class FunctionalTest extends WebTestCase
         $this->assertArrayHasKey(Events::POST_UPLOAD, $listeners);
     }
 
-    public function testTemplateLoad()
+    public function testTemplateLoad(): void
     {
         $twig = static::$kernel->getContainer()->get('twig');
 

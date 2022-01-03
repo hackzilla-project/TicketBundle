@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Tests\EventListener;
 
 use Hackzilla\Bundle\TicketBundle\EventListener\UserLoad;
@@ -10,7 +21,7 @@ class UserLoadTest extends WebTestCase
 {
     private $object;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $userManager = $this->getUserManagerMock();
 
@@ -22,12 +33,12 @@ class UserLoadTest extends WebTestCase
         return $this->createMock(UserManager::class);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         unset($this->object);
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(UserLoad::class, $this->object);
     }

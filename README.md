@@ -1,104 +1,73 @@
-# Ticketing Bundle v3
+# Hackzilla Ticket Bundle
 
 Simple ticketing bundle for any project.
-Available translations for:
- * English
- * French
- * German
- * Italian
- * Portuguese
- * Russian
- * Spanish
 
-[![Build Status](https://travis-ci.org/hackzilla/TicketBundle.png?branch=master)](https://travis-ci.org/hackzilla/TicketBundle)
+[![Test](https://github.com/hackzilla-project/TicketBundle/actions/workflows/test.yaml/badge.svg)](https://github.com/hackzilla-project/TicketBundle/actions/workflows/test.yaml)
+[![Quality assurance](https://github.com/hackzilla-project/TicketBundle/actions/workflows/qa.yaml/badge.svg)](https://github.com/hackzilla-project/TicketBundle/actions/workflows/qa.yaml)
+[![Lint](https://github.com/hackzilla-project/TicketBundle/actions/workflows/lint.yaml/badge.svg)](https://github.com/hackzilla-project/TicketBundle/actions/workflows/lint.yaml)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/091d37a9-7862-4365-952c-814ce95c4d6c/mini.png)](https://insight.sensiolabs.com/projects/091d37a9-7862-4365-952c-814ce95c4d6c)
-
 
 ## Requirements
 
-* PHP >= 5.6
-* [Symfony][1] ^2.8|^3.0|^4.0
-* [Knp Paginator bundle][2]
-* [Bootstrap v3][3] (optional) see: [http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme][4]
-
-## Optional Requirements
-
-* [FOSUserBundle][5]
-
-
-## Version Matrix
-
-| Ticket Bundle     | Symfony                | PHP   |
-| ------------------| ---------------------- | ----- |
-| [3.x][6] (master) | ^2.8\|^3.0\|^4.0\|^5.0 | >=5.6 |
-| [2.x][7]          | ^2.7\|^3.0             | >=5.3 |
-| [1.x][8]          | ^2.3                   | >=5.3 |
-| [0.x][9]          | ^2.3                   | >=5.3 |
-
-
-## Demo
-
-See [Ticket Bundle Demo App][10] for an example installation. This can also be used for confirming bugs.
-
+You can see the full requirement definitions for each available version in [Packagist](https://packagist.org/packages/hackzilla/ticket-bundle).
 
 ## Setup
 
-* [Installation with FOSUserBundle][11]
-* [Generic Installation][12]
+* [Install](Resources/doc/setup/install.md)
 
-
-## Optional Features
+## Optional features
 
 These optional features that can be turned on or off.
 
 ### Features
 
-* [Attachments][13]
-* [Custom Entities][14]
-* [Events][15]
+* [Attachments](Resources/doc/setup/feature/attachments.md)
+* [Custom entities](Resources/doc/setup/feature/custom-entities.md)
+* [Events](Resources/doc/setup/feature/events.md)
 
-# 3rd Party Extensions
+## Optional integrations
 
-# [Email Notification][16]
+* [Bootstrap v3](http://getbootstrap.com/docs/3.3/) (see http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme)
 
+## 3rd party extensions
 
-## Custom Templates (Optional)
+### [Email notifications](https://github.com/flodaq/TicketNotificationBundle)
+
+### Custom templates (optional)
 
 ```yaml
-# config.yml
+# config/packages/hackzilla_ticket.yaml
 
 hackzilla_ticket:
     templates:
-        index: 'YOURTicketBundle:Ticket:index.html.twig'
-        new: 'YOURTicketBundle:Ticket:new.html.twig'
-        prototype: 'YOURTicketBundle:Ticket:prototype.html.twig'
-        show: 'YOURTicketBundle:Ticket:show.html.twig'
-        show_attachment: 'YOURTicketBundle:Ticket:show_attachment.html.twig'
+        index: '@App/Ticket/index.html.twig'
+        new: '@App/Ticket/new.html.twig'
+        prototype: '@App/Ticket/prototype.html.twig'
+        show: '@App/Ticket/show.html.twig'
+        show_attachment: '@App/Ticket/show_attachment.html.twig'
 ```
 
-## Migrate a Previous Version
+## Translations
 
-* [How to migrate][17]
+Built in translations are available for the following languages:
 
+* Dutch
+* English
+* French
+* German
+* Italian
+* Portuguese
+* Russian
+* Spanish
 
-## Pull Requests
+## Demo
+
+See [Ticket Bundle Demo App](https://github.com/hackzilla/TicketBundleDemoApp) for an example installation. This can also be used for confirming bugs.
+
+## Migrate a previous version
+
+* [How to migrate](Resources/doc/migrate/index.md)
+
+## Pull requests
 
 I'm open to pull requests for additional languages, features and/or improvements.
-
-[1]: https://symfony.com/
-[2]: https://github.com/KnpLabs/KnpPaginatorBundle
-[3]: http://getbootstrap.com/docs/3.3/
-[4]: http://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme
-[5]: https://symfony.com/doc/current/bundles/FOSUserBundle/index.html
-[6]: https://github.com/hackzilla/TicketBundle/tree/master
-[7]: https://github.com/hackzilla/TicketBundle/tree/2.x
-[8]: https://github.com/hackzilla/TicketBundle/tree/1.x
-[9]: https://github.com/hackzilla/TicketBundle/tree/0.9.x
-[10]: https://github.com/hackzilla/TicketBundleDemoApp
-[11]: Resources/doc/setup/fosuserbundle.md
-[12]: Resources/doc/setup/other.md
-[13]: Resources/doc/setup/feature/attachments.md
-[14]: Resources/doc/setup/feature/custom-entities.md
-[15]: Resources/doc/setup/feature/events.md
-[16]: https://github.com/flodaq/TicketNotificationBundle
-[17]: Resources/doc/migrate/index.md

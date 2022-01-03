@@ -30,6 +30,5 @@ interface UserManagerInterface
      */
     public function hasPermission($user, TicketInterface $ticket);
 
-    // NEXT_MAJOR: Uncomment this method.
-    // public function findUserByUsername(string $username): ?UserInterface;
+    public function findUserByUsername(string $username): ?UserInterface;
 }

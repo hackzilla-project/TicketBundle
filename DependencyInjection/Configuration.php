@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -35,10 +37,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder
             ->getRootNode()
             ->children()
-                ->enumNode('translation_domain')
-                    ->values(['HackzillaTicketBundle', 'messages'])
-                    ->defaultValue('messages')
-                ->end()
                 ->scalarNode('user_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('ticket_class')->cannotBeEmpty()->defaultValue(Ticket::class)->end()
                 ->scalarNode('message_class')->cannotBeEmpty()->defaultValue(TicketMessage::class)->end()

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -33,7 +35,7 @@ final class TicketTypeTest extends TypeTestCase
         parent::setUp();
     }
 
-    public function testSubmitValidData()
+    public function testSubmitValidData(): void
     {
         $formData = [];
 
