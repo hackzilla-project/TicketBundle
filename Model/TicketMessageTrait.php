@@ -11,12 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Hackzilla\Bundle\TicketBundle\Entity\Traits;
-
-use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+namespace Hackzilla\Bundle\TicketBundle\Model;
 
 /**
  * Ticket Message Trait.
@@ -34,8 +29,6 @@ trait TicketMessageTrait
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
      */
     protected $message;
 

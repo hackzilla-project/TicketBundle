@@ -33,6 +33,17 @@ These optional features that can be turned on or off.
 
 ### [Email notifications](https://github.com/flodaq/TicketNotificationBundle)
 
+## Configure your entities
+
+```yaml
+# config.yml
+
+hackzilla_ticket:
+    user_class: App\Entity\User
+    ticket_class: App\Entity\TicketWithAttachment
+    message_class: App\Entity\TicketMessageWithAttachment
+```
+
 ### Custom templates (optional)
 
 ```yaml

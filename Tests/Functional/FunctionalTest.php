@@ -1,29 +1,17 @@
 <?php
 
-declare(strict_types=1);
-
-/*
- * This file is part of HackzillaTicketBundle package.
- *
- * (c) Daniel Platt <github@ofdan.co.uk>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
-use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
-use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
-use Twig\Template;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Vich\UploaderBundle\Event\Events;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-final class FunctionalTest extends WebTestCase
+class FunctionalTest extends WebTestCase
 {
     /**
      * @dataProvider getParameters
@@ -42,41 +30,37 @@ final class FunctionalTest extends WebTestCase
             ['hackzilla_ticket.model.message.class', TicketMessage::class],
             ['hackzilla_ticket.features', ['attachment' => true]],
             ['hackzilla_ticket.templates', [
-                'index' => '@HackzillaTicket/Ticket/index.html.twig',
-                'new' => '@HackzillaTicket/Ticket/new.html.twig',
-                'prototype' => '@HackzillaTicket/Ticket/prototype.html.twig',
-                'show' => '@HackzillaTicket/Ticket/show.html.twig',
-                'show_attachment' => '@HackzillaTicket/Ticket/show_attachment.html.twig',
-                'macros' => '@HackzillaTicket/Macros/macros.html.twig',
+                'index'           => 'HackzillaTicketBundle:Ticket:index.html.twig',
+                'new'             => 'HackzillaTicketBundle:Ticket:new.html.twig',
+                'prototype'       => 'HackzillaTicketBundle:Ticket:prototype.html.twig',
+                'show'            => 'HackzillaTicketBundle:Ticket:show.html.twig',
+                'show_attachment' => 'HackzillaTicketBundle:Ticket:show_attachment.html.twig',
+                'macros'          => 'HackzillaTicketBundle:Macros:macros.html.twig',
             ]],
         ];
     }
 
-    public function testConfiguredTicketManager(): void
+    public function testConfiguredTicketManager()
     {
         $this->assertTrue(static::$kernel->getContainer()->has('hackzilla_ticket.ticket_manager'));
         $this->assertInstanceOf(TicketManagerInterface::class, static::$kernel->getContainer()->get('hackzilla_ticket.ticket_manager'));
     }
 
+    public function testValidation()
+    {
+        $validator = static::$kernel->getContainer()->get('validator');
+        $violations = $validator->validate(new Ticket());
+        $this->assertNotEmpty($violations);
+    }
+
     /**
      * @group vichuploaderbundle
      */
-    public function testConfiguredFileUploadSubscriber(): void
+    public function testConfiguredFileUploadSubscriber()
     {
-        if (!class_exists(Events::class)) {
-            $this->markTestSkipped(sprintf('%s() requires vich/uploader-bundle to be installed.', __METHOD__));
-        }
-
         $eventDispatcher = static::$kernel->getContainer()->get('event_dispatcher');
-        $listeners = $eventDispatcher->getListeners();
+        $listeners       = $eventDispatcher->getListeners();
 
         $this->assertArrayHasKey(Events::POST_UPLOAD, $listeners);
-    }
-
-    public function testTemplateLoad(): void
-    {
-        $twig = static::$kernel->getContainer()->get('twig');
-
-        $this->assertInstanceOf(Template::class, $twig->loadTemplate('@HackzillaTicket/Ticket/index.html.twig'));
     }
 }

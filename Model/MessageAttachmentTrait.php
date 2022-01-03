@@ -11,10 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketFeature;
+namespace Hackzilla\Bundle\TicketBundle\Model;
 
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 trait MessageAttachmentTrait
 {
@@ -22,8 +21,6 @@ trait MessageAttachmentTrait
      * NOTE: This field is not persisted to database!
      *
      * @var File
-     *
-     * @Vich\UploadableField(mapping="ticket_message_attachment", fileNameProperty="attachmentName")
      */
     protected $attachmentFile;
 

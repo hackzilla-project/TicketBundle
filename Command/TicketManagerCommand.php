@@ -16,6 +16,7 @@ namespace Hackzilla\Bundle\TicketBundle\Command;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -83,7 +84,7 @@ final class TicketManagerCommand extends Command
 
         $message = $this->ticketManager->createMessage()
             ->setMessage($input->getArgument('message'))
-            ->setStatus(TicketMessage::STATUS_OPEN)
+            ->setStatus(TicketMessageInterface::STATUS_OPEN)
             ->setPriority($input->getOption('priority'))
             ->setUser($this->userManager->findUserByUsername('system'));
 

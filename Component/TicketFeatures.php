@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Component;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface;
+use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface;
 
 /**
  * @final since hackzilla/ticket-bundle 3.x.

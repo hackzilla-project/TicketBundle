@@ -11,9 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Hackzilla\Bundle\TicketBundle\Model\TicketFeature;
+namespace Hackzilla\Bundle\TicketBundle\Model;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
 interface MessageAttachmentInterface extends TicketMessageInterface

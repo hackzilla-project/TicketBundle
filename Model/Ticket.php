@@ -11,17 +11,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Hackzilla\Bundle\TicketBundle\Entity;
-
-use Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketMessageTrait;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+namespace Hackzilla\Bundle\TicketBundle\Model;
 
 /**
- * Ticket Message.
+ * Ticket.
  */
-class TicketMessage implements TicketMessageInterface
+abstract class Ticket implements TicketInterface
 {
-    use TicketMessageTrait;
+    use TicketTrait;
 
     /**
      * @var int

@@ -12,9 +12,9 @@ Specify the uploader config, so the bundle knows where to store the files.
 
 ```yaml
 hackzilla_ticket:
-    user_class: App\Entity\User
-    ticket_class: Hackzilla\Bundle\TicketBundle\Entity\TicketWithAttachment
-    message_class: Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment
+    user_class:             App\Entity\User
+    ticket_class:           App\Entity\TicketWithAttachment
+    message_class:          App\Entity\TicketMessageWithAttachment
     features:
         attachment: true
 
@@ -65,4 +65,4 @@ public function registerBundles()
 
 If you want to implement your own entities then you will want to extend
 
-``` \Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface ```
+``` \Hackzilla\Bundle\TicketBundle\Model\TicketMessageAttachmentInterface ```

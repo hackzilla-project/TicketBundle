@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity;
+namespace Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
