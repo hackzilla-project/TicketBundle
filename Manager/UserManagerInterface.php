@@ -25,10 +25,7 @@ interface UserManagerInterface
 
     public function hasRole(UserInterface $user, string $role): bool;
 
-    /**
-     * @param \Hackzilla\Bundle\TicketBundle\Model\UserInterface|string $user
-     */
-    public function hasPermission($user, TicketInterface $ticket);
+    public function hasPermission(UserInterface|string $user, TicketInterface $ticket);
 
     public function findUserByUsername(string $username): ?UserInterface;
 }

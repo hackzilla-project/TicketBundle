@@ -11,7 +11,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use Doctrine\Common\Persistence\ObjectManager as LegacyObjectManager;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
@@ -26,12 +26,7 @@ final class TicketManager implements TicketManagerInterface
 {
     private $translator;
 
-    /**
-     * NEXT_MAJOR: Remove this property and replace its usages with "HackzillaTicketBundle".
-     *
-     * @var string
-     */
-    private $translationDomain = 'messages';
+    private $translationDomain = 'HackzillaTicketBundle';
 
     private $objectManager;
 
@@ -63,41 +58,11 @@ final class TicketManager implements TicketManagerInterface
     }
 
     /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since hackzilla/ticket-bundle 3.x, use `setObjectManager()` instead.
-     *
      * @return $this
      */
-    public function setEntityManager(LegacyObjectManager $om)
-    {
-        $this->objectManager = $om;
-        $this->ticketRepository = $om->getRepository($this->ticketClass);
-        $this->messageRepository = $om->getRepository($this->ticketMessageClass);
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function setTranslator(TranslatorInterface $translator)
+    public function setTranslator(Translator $translator)
     {
         $this->translator = $translator;
-
-        return $this;
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @param string $translationDomain
-     *
-     * @return $this
-     */
-    public function setTranslationDomain($translationDomain)
-    {
-        $this->translationDomain = $translationDomain;
 
         return $this;
     }
@@ -143,7 +108,7 @@ final class TicketManager implements TicketManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null)
+    public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null): void
     {
         if (null === $ticket->getId()) {
             $this->objectManager->persist($ticket);
@@ -153,9 +118,6 @@ final class TicketManager implements TicketManagerInterface
             $this->objectManager->persist($message);
         }
         $this->objectManager->flush();
-
-        // NEXT_MAJOR: Remove the `return` statement.
-        return $ticket;
     }
 
     /**
@@ -212,31 +174,9 @@ final class TicketManager implements TicketManagerInterface
     }
 
     /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since hackzilla/ticket-bundle 3.3, use `getTicketListQuery()` instead.
-     *
-     * @param int $ticketStatus
-     * @param int $ticketPriority
-     *
-     * @return mixed
-     */
-    public function getTicketList(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
-    {
-        @trigger_error(sprintf(
-            'Method `%s()` is deprecated since hackzilla/ticket-bundle 3.3 and will be removed in version 4.0.'
-            .' Use `%s::getTicketListQuery()` instead.',
-            __METHOD__,
-            __CLASS__
-        ), E_USER_DEPRECATED);
-
-        return $this->getTicketListQuery($userManager, $ticketStatus, $ticketPriority);
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
+    public function getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null): QueryBuilder
     {
         $query = $this->ticketRepository->createQueryBuilder('t')
             ->orderBy('t.lastMessage', 'DESC');

@@ -11,23 +11,15 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use Doctrine\Common\Persistence\ObjectManager as LegacyObjectManager;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\Translation\Translator;
 
-/**
- * @method QueryBuilder getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
- * @method void         setObjectManager(ObjectManager $objectManager)
- */
 interface TicketManagerInterface
 {
-    /**
-     * @deprecated since hackzilla/ticket-bundle 3.x, use `setObjectManager()` instead.
-     */
-    public function setEntityManager(LegacyObjectManager $om);
+    public function setObjectManager(ObjectManager $objectManager): void;
 
     public function setTranslator(Translator $translator);
 
@@ -35,10 +27,7 @@ interface TicketManagerInterface
 
     public function createMessage(TicketInterface $ticket = null);
 
-    /**
-     * NEXT_MAJOR: Declare `void` as return type.
-     */
-    public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null);
+    public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null): void;
 
     public function deleteTicket(TicketInterface $ticket);
 
@@ -50,17 +39,7 @@ interface TicketManagerInterface
 
     public function findTicketsBy(array $criteria);
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since hackzilla/ticket-bundle 3.3, use `getTicketListQuery()` instead.
-     *
-     * @param int $ticketStatus
-     * @param int $ticketPriority
-     *
-     * @return QueryBuilder
-     */
-    public function getTicketList(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null);
+    public function getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null): QueryBuilder;
 
     /**
      * @param int $days
