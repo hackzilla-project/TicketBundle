@@ -14,21 +14,37 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
+use Symfony\Component\HttpKernel\KernelInterface;
+
+if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 6) {
+    trait createKernel
+    {
+        protected static function createKernel(array $options = []): KernelInterface
+        {
+            return new TestKernel();
+        }
+    }    
+} else {
+    trait createKernel
+    {
+        protected static function createKernel(array $options = [])
+        {
+            return new TestKernel();
+        }
+    }    
+}
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
 abstract class WebTestCase extends BaseWebTestCase
 {
+    use createKernel;
+    
     protected function setUp(): void
     {
         parent::setUp();
 
         static::bootKernel();
-    }
-
-    protected static function createKernel(array $options = [])
-    {
-        return new TestKernel();
     }
 }
