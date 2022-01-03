@@ -13,7 +13,7 @@ class TicketMessageTypeTest extends TypeTestCase
 {
     private $user;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->user = $this->getMockBuilder(UserManagerInterface::class)->getMock();
 
