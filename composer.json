@@ -48,8 +48,9 @@
     "require-dev": {
         "ext-pdo_sqlite": "*",
         "friendsofphp/php-cs-fixer": "^2.0 || ^3.0",
-        "phpunit/phpunit": ">=8.0,<10.0",
-        "symfony/phpunit-bridge": "^4.0 || ^5.0 || ^6.0"
+        "phpunit/phpunit": "^9.5",
+        "symfony/phpunit-bridge": "^4.0 || ^5.0 || ^6.0",
+        "symfony/test-pack": "^1.0"
     },
     "suggest": {
         "friendsofsymfony/user-bundle": "In order to ease user management",
