@@ -29,6 +29,7 @@ use Vich\UploaderBundle\VichUploaderBundle;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
+ * @author Daniel Platt <github@ofdan.co.uk>
  */
 final class TestKernel extends Kernel
 {
@@ -46,7 +47,7 @@ final class TestKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    public function registerBundles()
+    public function registerBundles(): array
     {
         $bundles = [
             new FrameworkBundle(),
@@ -68,22 +69,6 @@ final class TestKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    public function getCacheDir()
-    {
-        return $this->getBaseDir().'cache';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getLogDir()
-    {
-        return $this->getBaseDir().'log';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
         $routes->import(__DIR__.'/routes.yaml', '/', 'yaml');
@@ -100,7 +85,6 @@ final class TestKernel extends Kernel
             'default_locale' => 'en',
             'session' => [
                 'handler_id' => 'session.handler.native_file',
-                'storage_id' => 'session.storage.mock_file',
                 'name' => 'MOCKSESSID',
             ],
             'translator' => [
@@ -116,7 +100,8 @@ final class TestKernel extends Kernel
         ]);
 
         // SecurityBundle config
-        $mainFirewallConfig = ['anonymous' => null];
+        $mainFirewallConfig = [];
+
         // "logout_on_user_change" configuration was marked as mandatory since version 3.4 and deprecated as of 4.1.
         if (version_compare(self::VERSION, '3.4', '>=') && version_compare(self::VERSION, '4.1', '<')) {
             $mainFirewallConfig['logout_on_user_change'] = true;
@@ -178,10 +163,5 @@ final class TestKernel extends Kernel
                 'db_driver' => 'orm',
             ]);
         }
-    }
-
-    private function getBaseDir()
-    {
-        return sys_get_temp_dir().'/hackzilla-ticket-bundle/var/'.(int) $this->useVichUploaderBundle.'/';
     }
 }
