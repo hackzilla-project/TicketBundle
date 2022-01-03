@@ -40,6 +40,7 @@ final class HackzillaTicketExtension extends Extension
         $loader->load('form_types.php');
         $loader->load('event_listener.php');
         $loader->load('component.php');
+        $loader->load('controllers.php');
         $loader->load('twig.php');
         $loader->load('commands.php');
 
