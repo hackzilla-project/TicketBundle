@@ -22,7 +22,7 @@ use Symfony\Component\Translation\Translator;
 /**
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class TicketManager implements TicketManagerInterface
+final class TicketManager implements TicketManagerInterface
 {
     private $translator;
 

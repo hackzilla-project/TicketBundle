@@ -27,7 +27,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class TicketMessageType extends AbstractType
+final class TicketMessageType extends AbstractType
 {
     protected $userManager;
 

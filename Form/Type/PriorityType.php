@@ -22,7 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class PriorityType extends AbstractType
+final class PriorityType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver)
     {

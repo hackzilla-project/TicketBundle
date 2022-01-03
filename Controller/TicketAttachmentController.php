@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  *
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class TicketAttachmentController extends AbstractController
+final class TicketAttachmentController extends AbstractController
 {
     /**
      * Download attachment on message.

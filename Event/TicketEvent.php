@@ -19,7 +19,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 /**
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class TicketEvent extends Event
+final class TicketEvent extends Event
 {
     protected $ticket;
 

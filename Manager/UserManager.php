@@ -24,7 +24,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class UserManager implements UserManagerInterface
+final class UserManager implements UserManagerInterface
 {
     /**
      * @var TokenStorageInterface

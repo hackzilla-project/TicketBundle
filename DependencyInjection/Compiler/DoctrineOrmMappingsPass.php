@@ -26,7 +26,7 @@ use Symfony\Component\DependencyInjection\Definition;
 /**
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class DoctrineOrmMappingsPass extends \Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass
+final class DoctrineOrmMappingsPass extends \Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass
 {
     public function __construct($driver = null, array $namespaces = [], $managerParameters = [], $enabledParameter = false, array $aliasMap = [])
     {

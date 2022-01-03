@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class TicketController extends AbstractController
+final class TicketController extends AbstractController
 {
     /**
      * Lists all Ticket entities.

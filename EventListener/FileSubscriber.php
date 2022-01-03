@@ -24,7 +24,7 @@ use Vich\UploaderBundle\Event as VichEvent;
  *
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class FileSubscriber implements EventSubscriberInterface
+final class FileSubscriber implements EventSubscriberInterface
 {
     /**
      * @return array

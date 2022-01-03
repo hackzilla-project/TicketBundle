@@ -19,7 +19,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 /**
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class StatusTransformer implements DataTransformerInterface
+final class StatusTransformer implements DataTransformerInterface
 {
     /**
      * Transforms checkbox value into Ticket Message Status Closed.

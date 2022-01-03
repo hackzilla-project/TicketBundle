@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class HackzillaTicketExtension extends Extension
+final class HackzillaTicketExtension extends Extension
 {
     /**
      * {@inheritdoc}

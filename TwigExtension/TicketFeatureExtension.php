@@ -20,7 +20,7 @@ use Twig\TwigFunction;
 /**
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class TicketFeatureExtension extends AbstractExtension
+final class TicketFeatureExtension extends AbstractExtension
 {
     private $ticketFeatures;
 

@@ -19,7 +19,7 @@ use Twig\Extension\GlobalsInterface;
 /**
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class TicketGlobalExtension extends AbstractExtension implements GlobalsInterface
+final class TicketGlobalExtension extends AbstractExtension implements GlobalsInterface
 {
     protected $templates = [];
 

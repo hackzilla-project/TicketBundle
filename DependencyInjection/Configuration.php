@@ -25,7 +25,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class Configuration implements ConfigurationInterface
+final class Configuration implements ConfigurationInterface
 {
     /**
      * {@inheritdoc}
