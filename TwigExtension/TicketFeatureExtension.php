@@ -27,7 +27,7 @@ class TicketFeatureExtension extends AbstractExtension
         $this->ticketFeatures = $ticketFeatures;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('hasTicketFeature', [$this, 'hasFeature']),

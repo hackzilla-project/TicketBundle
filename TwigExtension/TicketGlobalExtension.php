@@ -32,7 +32,7 @@ class TicketGlobalExtension extends AbstractExtension implements GlobalsInterfac
     /**
      * @return array
      */
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return [
             'hackzilla_ticket' => [

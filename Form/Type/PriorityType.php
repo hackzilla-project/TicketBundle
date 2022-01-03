@@ -40,7 +40,7 @@ class PriorityType extends AbstractType
         return ChoiceType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'priority';
     }

@@ -40,7 +40,7 @@ class StatusType extends AbstractType
         return ChoiceType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'status';
     }
