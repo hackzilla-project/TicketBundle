@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Controller;
 
+use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Ticket Attachment controller.
@@ -27,14 +30,9 @@ final class TicketAttachmentController extends AbstractController
 {
     /**
      * Download attachment on message.
-     *
-     * @param int $ticketMessageId
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function downloadAction($ticketMessageId)
+    public function downloadAction(TicketManager $ticketManager, UserManager $userManager, int $ticketMessageId): Response
     {
-        $ticketManager = $this->get('hackzilla_ticket.ticket_manager');
         $ticketMessage = $ticketManager->getMessageById($ticketMessageId);
 
         if (!$ticketMessage || !$ticketMessage instanceof TicketMessageWithAttachment) {
@@ -42,7 +40,6 @@ final class TicketAttachmentController extends AbstractController
         }
 
         // check permissions
-        $userManager = $this->get('hackzilla_ticket.user_manager');
         $userManager->hasPermission($userManager->getCurrentUser(), $ticketMessage->getTicket());
 
         $downloadHandler = $this->get('vich_uploader.download_handler');
