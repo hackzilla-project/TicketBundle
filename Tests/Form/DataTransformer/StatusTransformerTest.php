@@ -1,32 +1,23 @@
 <?php
 
-/*
- * This file is part of HackzillaTicketBundle package.
- *
- * (c) Daniel Platt <github@ofdan.co.uk>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\DataTransformer;
 
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-final class StatusTransformerTest extends WebTestCase
+class StatusTransformerTest extends WebTestCase
 {
     private $object;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         $this->object = new StatusTransformer();
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
-        $this->object = null;
+        unset($this->object);
     }
 
     public function testObjectCreated()
