@@ -57,6 +57,10 @@
         "friendsofsymfony/user-bundle": "In order to ease user management",
         "vich/uploader-bundle": "Allow attaching files to ticket messages"
     },
+    "conflict": {
+        "symfony/framework-bundle": ">=6",
+        "symfony/http-kernel": ">=6"
+    },
     "autoload": {
         "psr-4": {
             "Hackzilla\\Bundle\\TicketBundle\\": ""
