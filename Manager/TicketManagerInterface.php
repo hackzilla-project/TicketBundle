@@ -16,7 +16,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @method QueryBuilder getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
@@ -29,7 +29,7 @@ interface TicketManagerInterface
      */
     public function setEntityManager(LegacyObjectManager $om);
 
-    public function setTranslator(TranslatorInterface $translator);
+    public function setTranslator(Translator $translator);
 
     public function createTicket();
 

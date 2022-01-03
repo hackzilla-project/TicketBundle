@@ -18,9 +18,13 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface
 /**
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class TicketFeatures
+final class TicketFeatures
 {
-    private $features;
+    /**
+     * @param array<string, bool> $features
+     * @param string              $messageClass TicketMessage class
+     */
+    private $features = [];
 
     /**
      * @param string $messageClass TicketMessage class
@@ -38,12 +42,12 @@ class TicketFeatures
     /**
      * Check if feature exists or whether enabled.
      */
-    public function hasFeature(string $feature): ?bool
+    public function hasFeature(string $feature): bool
     {
         if (!isset($this->features[$feature])) {
-            return null;
+            return false;
         }
 
-        return $this->features[$feature];
+        return (bool) $this->features[$feature];
     }
 }

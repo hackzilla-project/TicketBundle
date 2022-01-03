@@ -4,7 +4,7 @@ parameters:
         - .
     excludePaths:
         - vendor/
+        - var/
         - Tests/
     ignoreErrors:
         - '#.* (class|type) Vich\\UploaderBundle\\.*#'
-        - '#^Parameter \$om of method Hackzilla\\Bundle\\TicketBundle\\Manager\\TicketManager(Interface)?::setEntityManager\(\) has invalid typehint type Doctrine\\Common\\Persistence\\ObjectManager\.$#'

@@ -14,25 +14,22 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @final since hackzilla/ticket-bundle 3.x.
  */
-class AutoClosingCommand extends Command
+final class AutoClosingCommand extends Command
 {
-    use UserManagerAwareTrait;
-
     protected static $defaultName = 'ticket:autoclosing';
 
     /**
@@ -46,9 +43,9 @@ class AutoClosingCommand extends Command
     private $userManager;
 
     /**
-     * @var EntityManagerInterface
+     * @var Repository
      */
-    private $entityManager;
+    private $ticketRepository;
 
     /**
      * @var string
@@ -56,25 +53,30 @@ class AutoClosingCommand extends Command
     private $locale = 'en';
 
     /**
-     * @var TranslatorInterface
+     * @var string
+     */
+    private $translationDomain = 'HackzillaTicketBundle';
+
+    /**
+     * @var Translator
      */
     private $translator;
 
-    public function __construct(TicketManagerInterface $ticketManager, ?UserManagerInterface $userManager = null, EntityManagerInterface $entityManager, TranslatorInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager, EntityManagerInterface $entityManager, Translator $translator, ParameterBagInterface $parameterBag)
     {
-        if (null === $userManager) {
-            throw new \TypeError(sprintf('Argument 2 passed to "%s()" must be an instance of "%s". Is "friendsofsymfony/user-bundle" installed and enabled?', __METHOD__, UserManagerInterface::class));
-        }
-
         parent::__construct();
 
         $this->ticketManager = $ticketManager;
         $this->userManager = $userManager;
-        $this->entityManager = $entityManager;
         $this->translator = $translator;
+        $this->translator->setLocale($this->locale);
+
         if ($parameterBag->has('locale')) {
             $this->locale = $parameterBag->get('locale');
         }
+
+        $ticketClass = $parameterBag->get('hackzilla_ticket.model.ticket.class');
+        $this->ticketRepository = $entityManager->getRepository($ticketClass);
     }
 
     /**
@@ -103,34 +105,26 @@ class AutoClosingCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $ticketManager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
-        $ticketRepository = $this->getContainer()->get('doctrine')->getRepository(Ticket::class);
-
-        $locale = $this->getContainer()->hasParameter('locale') ? $this->getContainer()->getParameter('locale') : 'en';
-        $translator = $this->getContainer()->get('translator');
-        $translator->setLocale($locale);
-
-        $translationDomain = $this->getContainer()->getParameter('hackzilla_ticket.translation_domain');
-
         $username = $input->getArgument('username');
 
-        $resolvedTickets = $ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));
+        $resolvedTickets = $this->ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));
 
         foreach ($resolvedTickets as $ticket) {
             $message = $this->ticketManager->createMessage()
                 ->setMessage(
-                    $this->translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $this->translator->trans('STATUS_CLOSED', [], 'HackzillaTicketBundle')], 'HackzillaTicketBundle')
+                    $this->translator->trans('MESSAGE_STATUS_CHANGED', ['%status%' => $this->translator->trans('STATUS_CLOSED', [], $this->translationDomain)], $this->translationDomain)
                 )
-                ->setStatus(TicketMessage::STATUS_CLOSED)
+                ->setStatus(TicketMessageInterface::STATUS_CLOSED)
                 ->setPriority($ticket->getPriority())
-                ->setUser($this->findUser($username))
+                ->setUser($this->userManager->findUserByUsername($username))
                 ->setTicket($ticket);
 
-            $ticket->setStatus(TicketMessage::STATUS_CLOSED);
-
+            $ticket->setStatus(TicketMessageInterface::STATUS_CLOSED);
             $this->ticketManager->updateTicket($ticket, $message);
 
             $output->writeln('The ticket "'.$ticket->getSubject().'" has been closed.');
         }
+
+        return Command::SUCCESS;
     }
 }
