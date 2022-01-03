@@ -13,10 +13,9 @@ Once you've defined your entities then you will need to override the builtin one
 
 ```yaml
 hackzilla_ticket:
-    ticket_class:           AppBundle\Entity\Ticket
-    message_class:          AppBundle\Entity\TicketMessage
+    ticket_class: App\Entity\Ticket
+    message_class: App\Entity\TicketMessage
 ```
-
 
 ### Features
 
@@ -28,7 +27,7 @@ hackzilla_ticket:
 ### Traits
 
 To make creating your own entities a little easier there are traits.
-The only thing missing form the traits are the primary id.  This will allow you to use whatever you want as the primary id, whether its int or uuid. 
+The only thing missing form the traits are the primary id. This will allow you to use whatever you want as the primary id, whether its int or uuid.
 
 | Entity          | Trait                                                                             |
 | --------------- | --------------------------------------------------------------------------------- |
@@ -36,6 +35,6 @@ The only thing missing form the traits are the primary id.  This will allow you 
 | Ticket Message  | Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketMessageTrait                    |
 | Ticket Message  | Hackzilla\Bundle\TicketBundle\Entity\Traits\TicketFeature\MessageAttachmentTrait  |
 
-At the moment they only support xml configuration.  Use the [TicketBundle xml](Resources/config/doctrine/model) as a basis and copy it into your bundle.
+At the moment they only support xml configuration. Use the [TicketBundle xml](Resources/config/doctrine/model) as a basis and copy it into your bundle.
 
 If you know of a better way, then either open an Issue or Pull Request.

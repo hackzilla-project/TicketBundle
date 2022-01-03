@@ -2,6 +2,45 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.8.0](https://github.com/hackzilla/TicketBundle/compare/3.7.0...3.8.0) - 2021-02-25
+
+ * minor #203 Added XML routing (phansys)
+ * pedantic #202 Use configuration from PHP instead of YAML (phansys)
+ * bugfix #201 Fix argument 1 passed to `UserLoad::__construct()` (phansys)
+ * minor #200 Add `UserManager::findUserByUsername()` (phansys)
+ * minor #199 Update URLs in status badges (phansys)
+ * minor #198 Modernize routing definition (phansys)
+ * minor #196 Update dependency constraints in order to allow some major versions (phansys)
+ * minor #197 Stop suggesting "friendsofsymfony/user-bundle" (phansys)
+
+## [3.7.0](https://github.com/hackzilla/TicketBundle/compare/3.6.0...3.7.0) - 2021-02-17
+
+ * minor #193 Add support for "doctrine/persistence:^2.1" (phansys)
+ * minor #194 Running tests from GitHub Actions (phansys)
+
+## [3.6.0](https://github.com/hackzilla/TicketBundle/compare/3.5.0...3.6.0) - 2020-10-29
+
+ * minor #178 Bump dependencies (phansys)
+ * tests #182 Remove `serialize()` and `unserialize()` methods from `TestKernel` (phansys)
+ * minor #180 Deprecate return other type than boolean from `TicketFeatures::hasFeature()` (phansys)
+ * minor #181 Use `::class` pseudo constants in `Configuration::getConfigTreeBuilder()` (phansys)
+ * tests #179 Mark `FunctionalTest::testConfiguredFileUploadSubscriber()` as skipped if "vich/uploader-bundle" is not available (phansys)
+
+## [3.5.0](https://github.com/hackzilla/TicketBundle/compare/3.4.0...3.5.0) - 2020-08-26
+
+ * minor #175 Add configuration for Dependabot (phansys)
+ * bugfix #176 Explicitly require "doctrine/common" (phansys)
+ * minor #172 Update `README.md` (phansys)
+ * minor #170 Update coding standard rules (phansys)
+ * minor #169 Update "Version Matrix" section at `README.md` (phansys)
+ * minor #168 Add status badges for GitHub actions (phansys)
+ * minor #166 Add "friendsofsymfony/user-bundle" to development dependencies (phansys)
+ * minor #165 Narrow API marking classes as final (phansys)
+ * minor #164 Lint "*.xlf" files (phansys)
+ * minor #163 [#150] add Dutch translation (bghosts)
+ * minor #162 Fix some PHP CS rules (phansys)
+ * minor #161 Configure SCA through GH actions (phansys)
+
 ## [3.4.0](https://github.com/hackzilla/TicketBundle/compare/3.3.1...3.4.0) - 2020-07-03
 
  * bugfix #160 Fix bad call at `TicketManager::getTicketList()` (phansys)

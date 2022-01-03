@@ -29,6 +29,8 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class AutoClosingCommand extends Command
 {
+    use UserManagerAwareTrait;
+
     protected static $defaultName = 'ticket:autoclosing';
 
     /**
@@ -103,9 +105,14 @@ class AutoClosingCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $ticketRepository = $this->entityManager->getRepository(Ticket::class);
+        $ticketManager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
+        $ticketRepository = $this->getContainer()->get('doctrine')->getRepository(Ticket::class);
 
-        $this->translator->setLocale($this->locale);
+        $locale = $this->getContainer()->hasParameter('locale') ? $this->getContainer()->getParameter('locale') : 'en';
+        $translator = $this->getContainer()->get('translator');
+        $translator->setLocale($locale);
+
+        $translationDomain = $this->getContainer()->getParameter('hackzilla_ticket.translation_domain');
 
         $username = $input->getArgument('username');
 
@@ -118,7 +125,7 @@ class AutoClosingCommand extends Command
                 )
                 ->setStatus(TicketMessage::STATUS_CLOSED)
                 ->setPriority($ticket->getPriority())
-                ->setUser($this->userManager->findUserByUsername($username))
+                ->setUser($this->findUser($username))
                 ->setTicket($ticket);
 
             $ticket->setStatus(TicketMessage::STATUS_CLOSED);

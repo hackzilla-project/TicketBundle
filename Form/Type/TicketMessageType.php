@@ -59,7 +59,8 @@ class TicketMessageType extends AbstractType
                 ]
             );
 
-        if ($this->features->hasFeature('attachment')) {
+        // NEXT_MAJOR: Remove the argument 2 for `TicketFeatures::hasFeature()`
+        if ($this->features->hasFeature('attachment', 'return_strict_bool')) {
             $builder
                 ->add(
                     'attachmentFile',

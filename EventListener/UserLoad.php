@@ -12,6 +12,7 @@
 namespace Hackzilla\Bundle\TicketBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 
@@ -20,11 +21,14 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
  */
 class UserLoad
 {
-    protected $userRepository;
+    /**
+     * @var UserManagerInterface
+     */
+    protected $userManager;
 
-    public function __construct($userRepository)
+    public function __construct(UserManagerInterface $userManager)
     {
-        $this->userRepository = $userRepository;
+        $this->userManager = $userManager;
     }
 
     public function getSubscribedEvents()
@@ -38,23 +42,21 @@ class UserLoad
     {
         $entity = $args->getEntity();
 
-        // Ignore any entity lifecycle events not relating to this bundles entities.
+        // Ignore any entity lifecycle events not related to this bundle's entities.
         if (!$entity instanceof TicketInterface && !$entity instanceof TicketMessageInterface) {
             return;
         }
 
-        $userRepository = $args->getEntityManager()->getRepository($this->userRepository);
-
         if ($entity instanceof TicketInterface) {
             if (null === $entity->getUserCreatedObject()) {
-                $entity->setUserCreated($userRepository->find($entity->getUserCreated()));
+                $entity->setUserCreated($this->userManager->getUserById($entity->getUserCreated()));
             }
             if (null === $entity->getLastUserObject()) {
-                $entity->setLastUser($userRepository->find($entity->getLastUser()));
+                $entity->setLastUser($this->userManager->getUserById($entity->getLastUser()));
             }
         } elseif ($entity instanceof TicketMessageInterface) {
             if (null === $entity->getUserObject()) {
-                $entity->setUser($userRepository->find($entity->getUser()));
+                $entity->setUser($this->userManager->getUserById($entity->getUser()));
             }
         }
     }

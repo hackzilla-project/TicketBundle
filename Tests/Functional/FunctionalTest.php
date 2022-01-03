@@ -61,6 +61,10 @@ final class FunctionalTest extends WebTestCase
      */
     public function testConfiguredFileUploadSubscriber()
     {
+        if (!class_exists(Events::class)) {
+            $this->markTestSkipped(sprintf('%s() requires vich/uploader-bundle to be installed.', __METHOD__));
+        }
+
         $eventDispatcher = static::$kernel->getContainer()->get('event_dispatcher');
         $listeners = $eventDispatcher->getListeners();
 

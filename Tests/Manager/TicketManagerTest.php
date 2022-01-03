@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Hackzilla\Bundle\TicketBundle\Tests\User;
+namespace Hackzilla\Bundle\TicketBundle\Tests\Manager;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
@@ -29,7 +29,7 @@ final class TicketManagerTest extends WebTestCase
      */
     private $userManager;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->userManager = $this->createMock(UserManagerInterface::class);
         $this->userManager
@@ -37,7 +37,7 @@ final class TicketManagerTest extends WebTestCase
             ->willReturn('ANONYMOUS');
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->userManager = null;
     }
@@ -65,7 +65,7 @@ final class TicketManagerTest extends WebTestCase
             ->willReturn($entityRepository);
 
         $ticketManager = new TicketManager($ticketClass, $ticketMessageClass);
-        $ticketManager->setEntityManager($om);
+        $ticketManager->setObjectManager($om);
 
         $this->assertInstanceOf(QueryBuilder::class, $ticketManager->getTicketListQuery($this->userManager, TicketMessageInterface::STATUS_OPEN));
     }
@@ -100,7 +100,7 @@ final class TicketManagerTest extends WebTestCase
             ->willReturn($entityRepository);
 
         $ticketManager = new TicketManager($ticketClass, $ticketMessageClass);
-        $ticketManager->setEntityManager($om);
+        $ticketManager->setObjectManager($om);
 
         $this->assertInstanceOf(QueryBuilder::class, $ticketManager->getTicketList($this->userManager, TicketMessageInterface::STATUS_OPEN));
     }

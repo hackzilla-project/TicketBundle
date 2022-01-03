@@ -12,7 +12,6 @@
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use FOS\UserBundle\FOSUserBundle;
 use Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle;
 use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
@@ -51,7 +50,6 @@ final class TestKernel extends Kernel
             new FrameworkBundle(),
             new SecurityBundle(),
             new DoctrineBundle(),
-            new FOSUserBundle(),
             new KnpPaginatorBundle(),
             new TwigBundle(),
             new HackzillaTicketBundle(),
@@ -81,21 +79,12 @@ final class TestKernel extends Kernel
         return $this->getBaseDir().'log';
     }
 
-    public function serialize()
-    {
-        return serialize($this->useVichUploaderBundle);
-    }
-
-    public function unserialize($str)
-    {
-        $this->__construct(unserialize($str));
-    }
-
     /**
      * {@inheritdoc}
      */
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
+        $routes->import(__DIR__.'/routes.yaml', '/', 'yaml');
     }
 
     /**
@@ -121,6 +110,7 @@ final class TestKernel extends Kernel
             'validation' => [
                 'enabled' => true,
             ],
+            'test' => true,
         ]);
 
         // SecurityBundle config
@@ -174,20 +164,6 @@ final class TestKernel extends Kernel
             $twigConfig['default_path'] = __DIR__.'/Resources/views';
         }
         $c->loadFromExtension('twig', $twigConfig);
-
-        // FOSUserBundle config
-        $c->loadFromExtension('fos_user', [
-            'user_class' => User::class,
-            'db_driver' => 'orm',
-            'firewall_name' => 'api',
-            'from_email' => [
-                'address' => 'no-reply@example.com',
-                'sender_name' => 'HackzillaTicketBundle',
-            ],
-            'service' => [
-                'mailer' => 'fos_user.mailer.noop',
-            ],
-        ]);
 
         // HackzillaBundle config
         $c->loadFromExtension('hackzilla_ticket', [

@@ -18,12 +18,12 @@ final class TicketMessageWithAttachmentTest extends WebTestCase
 {
     private $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new TicketMessageWithAttachment();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->object = null;
     }

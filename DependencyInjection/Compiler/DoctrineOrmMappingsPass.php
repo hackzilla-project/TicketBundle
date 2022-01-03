@@ -11,8 +11,8 @@
 
 namespace Hackzilla\Bundle\TicketBundle\DependencyInjection\Compiler;
 
-use Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator;
 use Doctrine\ORM\Mapping\Driver\XmlDriver;
+use Doctrine\Persistence\Mapping\Driver\SymfonyFileLocator;
 use Hackzilla\Bundle\TicketBundle\DependencyInjection\HackzillaTicketExtension;
 use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;

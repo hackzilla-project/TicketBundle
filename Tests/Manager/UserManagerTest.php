@@ -9,10 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Hackzilla\Bundle\TicketBundle\Tests\User;
+namespace Hackzilla\Bundle\TicketBundle\Tests\Manager;
 
 use Doctrine\ORM\EntityRepository;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
+use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider;
@@ -28,7 +29,7 @@ final class UserManagerTest extends WebTestCase
 
     private $authorizationChecker;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->tokenStorage = new TokenStorage();
         $authenticationProviderManager = new AuthenticationProviderManager([new AnonymousAuthenticationProvider('secret')]);
@@ -42,7 +43,7 @@ final class UserManagerTest extends WebTestCase
         );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->object = null;
     }
@@ -54,6 +55,11 @@ final class UserManagerTest extends WebTestCase
 
     private function getMockUserRepository()
     {
-        return $this->createMock(EntityRepository::class);
+        $userRepository = $this->createMock(EntityRepository::class);
+        $userRepository
+            ->method('getClassName')
+            ->willReturn(User::class);
+
+        return $userRepository;
     }
 }

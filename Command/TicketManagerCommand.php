@@ -25,6 +25,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class TicketManagerCommand extends Command
 {
+    use UserManagerAwareTrait;
+
     protected static $defaultName = 'ticket:create';
 
     /**
@@ -81,14 +83,16 @@ class TicketManagerCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $ticket = $this->ticketManager->createTicket()
+        $ticketManager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
+
+        $ticket = $ticketManager->createTicket()
             ->setSubject($input->getArgument('subject'));
 
         $message = $this->ticketManager->createMessage()
             ->setMessage($input->getArgument('message'))
             ->setStatus(TicketMessage::STATUS_OPEN)
             ->setPriority($input->getOption('priority'))
-            ->setUser($this->userManager->findUserByUsername('system'));
+            ->setUser($this->findUser('system'));
 
         $this->ticketManager->updateTicket($ticket, $message);
 
