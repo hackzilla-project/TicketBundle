@@ -65,6 +65,10 @@ final class UserManager implements UserManagerInterface
      */
     public function getCurrentUser()
     {
+        if (null === $this->tokenStorage->getToken()) {
+            return 0;
+        }
+
         $user = $this->tokenStorage->getToken()->getUser();
 
         if ('anon.' === $user) {
