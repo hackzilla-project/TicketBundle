@@ -37,8 +37,8 @@ final class DoctrineOrmMappingsPass extends BaseDoctrineOrmMappingsPass
         $bundleDirectory = HackzillaTicketExtension::bundleDirectory();
         $namespaces = [];
 
-        if (is_subclass_of(TicketWithAttachment::class, $container->getParameter('hackzilla_ticket.model.ticket.class'))
-            || is_subclass_of(TicketMessageWithAttachment::class, $container->getParameter('hackzilla_ticket.model.message.class'))
+        if (is_subclass_of($container->getParameter('hackzilla_ticket.model.ticket.class'), TicketWithAttachment::class)
+            || is_subclass_of($container->getParameter('hackzilla_ticket.model.message.class'), TicketMessageWithAttachment::class)
         ) {
             $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/attachment')] = 'Hackzilla\Bundle\TicketBundle\Model';
         } else {
