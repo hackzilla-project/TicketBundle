@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Controller;
 
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
-use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\Translator;
+use Vich\UploaderBundle\Handler\DownloadHandler;
 
 /**
  * Ticket Attachment controller.
@@ -28,22 +30,41 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class TicketAttachmentController extends AbstractController
 {
+    private DownloadHandler $downloadHandler;
+
+    private TicketManager $ticketManager;
+
+    private Translator $translator;
+
+    private UserManagerInterface $userManager;
+
+    public function __construct(
+        DownloadHandler $downloadHandler,
+        TicketManager $ticketManager, 
+        Translator $translator, 
+        UserManagerInterface $userManager
+    )
+    {
+        $this->downloadHandler = $downloadHandler;
+        $this->ticketManager = $ticketManager;
+        $this->translator = $translator;
+        $this->userManager = $userManager;
+    }
+
     /**
      * Download attachment on message.
      */
-    public function downloadAction(TicketManager $ticketManager, UserManager $userManager, int $ticketMessageId): Response
+    public function downloadAction(int $ticketMessageId): Response
     {
-        $ticketMessage = $ticketManager->getMessageById($ticketMessageId);
+        $ticketMessage = $this->ticketManager->getMessageById($ticketMessageId);
 
         if (!$ticketMessage || !$ticketMessage instanceof TicketMessageWithAttachment) {
-            throw $this->createNotFoundException($this->get('translator')->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
+            throw $this->createNotFoundException($this->translator->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
         }
 
         // check permissions
-        $userManager->hasPermission($userManager->getCurrentUser(), $ticketMessage->getTicket());
+        $this->userManager->hasPermission($this->userManager->getCurrentUser(), $ticketMessage->getTicket());
 
-        $downloadHandler = $this->get('vich_uploader.download_handler');
-
-        return $downloadHandler->downloadObject($ticketMessage, 'attachmentFile');
+        return $this->downloadHandler->downloadObject($ticketMessage, 'attachmentFile');
     }
 }
