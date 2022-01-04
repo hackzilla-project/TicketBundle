@@ -21,16 +21,18 @@ return static function (ContainerConfigurator $container): void {
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $container->services()
 
-        ->set('hackzilla_ticket.controller.ticket_attachment_controller', TicketAttachmentController::class)
+        ->set(TicketAttachmentController::class)
             ->args([
                 new ReferenceConfigurator('vich_uploader.download_handler'),
                 new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
                 new ReferenceConfigurator('translator'),
                 new ReferenceConfigurator('hackzilla_ticket.user_manager'),
             ])
+            ->call('setContainer', [new ReferenceConfigurator('service_container')])
             ->tag('controller.service_arguments')
+            ->alias('hackzilla_ticket.controller.ticket_attachment_controller', TicketAttachmentController::class)
 
-        ->set('hackzilla_ticket.controller.ticket_controller', TicketController::class)
+        ->set(TicketController::class)
             ->args([
                 new ReferenceConfigurator('event_dispatcher'),
                 new ReferenceConfigurator('knp_paginator'),
@@ -39,7 +41,9 @@ return static function (ContainerConfigurator $container): void {
                 new ReferenceConfigurator('translator'),
                 new ReferenceConfigurator('hackzilla_ticket.user_manager'),
             ])
+            ->call('setContainer', [new ReferenceConfigurator('service_container')])
             ->tag('controller.service_arguments')
+            ->alias('hackzilla_ticket.controller.ticket_controller', TicketController::class)
 
     ;
 };
