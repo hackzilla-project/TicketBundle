@@ -27,7 +27,7 @@ vich_uploader:
             upload_destination: '%kernel.root_dir%/../var/uploads/attachment/'
 ```
 
-See [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/index.md) documentation for more details.
+See [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle/) documentation for more details.
 
 If you are not using [Symfony Flex](https://symfony.com/doc/current/setup/flex.html), you must enable the bundles manually in the kernel:
 
