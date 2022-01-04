@@ -269,10 +269,10 @@ final class TicketController extends AbstractController
         return $this->redirect($this->generateUrl('hackzilla_ticket'));
     }
 
-    private function dispatchTicketEvent($ticketEvent, TicketInterface $ticket): void
+    private function dispatchTicketEvent(string $ticketEvent, TicketInterface $ticket): void
     {
         $event = new TicketEvent($ticket);
-        $this->dispatcher->dispatch($ticketEvent, $event);
+        $this->dispatcher->dispatch($event, $ticketEvent);
     }
 
     /**
