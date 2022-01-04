@@ -13,14 +13,8 @@ declare(strict_types=1);
 
 use Hackzilla\Bundle\TicketBundle\Controller\TicketAttachmentController;
 use Hackzilla\Bundle\TicketBundle\Controller\TicketController;
-use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
-use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\Translation\Translator;
 
 return static function (ContainerConfigurator $container): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
@@ -30,20 +24,20 @@ return static function (ContainerConfigurator $container): void {
         ->set('hackzilla_ticket.controller.ticket_attachment_controller', TicketAttachmentController::class)
             ->args([
                 new ReferenceConfigurator('vich_uploader.download_handler'),
-                new ReferenceConfigurator(TicketManagerInterface::class),
-                new ReferenceConfigurator(Translator::class),
-                new ReferenceConfigurator(UserManagerInterface::class),
+                new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
+                new ReferenceConfigurator('translator'),
+                new ReferenceConfigurator('hackzilla_ticket.user_manager'),
             ])
             ->tag('controller.service_arguments')
 
         ->set('hackzilla_ticket.controller.ticket_controller', TicketController::class)
             ->args([
-                new ReferenceConfigurator(EventDispatcher::class),
-                new ReferenceConfigurator(PaginatorInterface::class),
-                new ReferenceConfigurator(ParameterBagInterface::class),
-                new ReferenceConfigurator(TicketManagerInterface::class),
-                new ReferenceConfigurator(Translator::class),
-                new ReferenceConfigurator(UserManagerInterface::class),
+                new ReferenceConfigurator('event_dispatcher'),
+                new ReferenceConfigurator('knp_paginator'),
+                new ReferenceConfigurator('parameter_bag'),
+                new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
+                new ReferenceConfigurator('translator'),
+                new ReferenceConfigurator('hackzilla_ticket.user_manager'),
             ])
             ->tag('controller.service_arguments')
 

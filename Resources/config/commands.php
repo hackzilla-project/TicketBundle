@@ -26,8 +26,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'command' => 'ticket:autoclosing',
             ])
             ->args([
-                null,
+                new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
                 new ReferenceConfigurator('hackzilla_ticket.user_manager'),
+                new ReferenceConfigurator('doctrine.orm.entity_manager'),
+                new ReferenceConfigurator('parameter_bag'),
+                new ReferenceConfigurator('translator'),
             ])
 
         ->set('hackzilla_ticket.command.create', TicketManagerCommand::class)
@@ -35,7 +38,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'command' => 'ticket:create',
             ])
             ->args([
-                null,
+                new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
                 new ReferenceConfigurator('hackzilla_ticket.user_manager'),
             ]);
 };
