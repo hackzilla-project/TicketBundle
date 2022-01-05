@@ -51,11 +51,11 @@ hackzilla_ticket:
 
 hackzilla_ticket:
     templates:
-        index: '@App/Ticket/index.html.twig'
-        new: '@App/Ticket/new.html.twig'
-        prototype: '@App/Ticket/prototype.html.twig'
-        show: '@App/Ticket/show.html.twig'
-        show_attachment: '@App/Ticket/show_attachment.html.twig'
+        index: 'ticket/index.html.twig'
+        new: 'ticket/new.html.twig'
+        prototype: 'ticket/prototype.html.twig'
+        show: 'ticket/show.html.twig'
+        show_attachment: 'ticket/show_attachment.html.twig'
 ```
 
 ## Translations
