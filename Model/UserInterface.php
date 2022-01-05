@@ -20,4 +20,6 @@ interface UserInterface extends BaseUserInterface
     public function getId();
 
     public function getEmail(): ?string;
+
+    public function __tostring(): string;
 }
