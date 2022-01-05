@@ -12,7 +12,7 @@
     <field name="attachmentSize" type="integer" column="attachment_size" nullable="true"/>
     <field name="attachmentMimeType" type="string" column="attachment_mimetype" length="255" nullable="true"/>
     <field name="createdAt" type="datetime" column="created_at" precision="0" scale="0" nullable="false"/>
-    <many-to-one field="ticket" target-entity="Hackzilla\Bundle\TicketBundle\Model\TicketWithAttachment" fetch="LAZY">
+    <many-to-one field="ticket" target-entity="Hackzilla\Bundle\TicketBundle\Model\Ticket" fetch="LAZY">
       <join-columns>
         <join-column name="ticket_id" referenced-column-name="id" on-delete="CASCADE" nullable="1"/>
       </join-columns>

@@ -40,7 +40,7 @@ These optional features that can be turned on or off.
 
 hackzilla_ticket:
     user_class: App\Entity\User
-    ticket_class: App\Entity\TicketWithAttachment
+    ticket_class: App\Entity\Ticket
     message_class: App\Entity\TicketMessageWithAttachment
 ```
 

@@ -17,8 +17,7 @@ use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappi
 use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Doctrine\Persistence\Mapping\Driver\SymfonyFileLocator;
 use Hackzilla\Bundle\TicketBundle\DependencyInjection\HackzillaTicketExtension;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment;
-use Hackzilla\Bundle\TicketBundle\Model\TicketWithAttachment;
+use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -37,9 +36,7 @@ final class DoctrineOrmMappingsPass extends BaseDoctrineOrmMappingsPass
         $bundleDirectory = HackzillaTicketExtension::bundleDirectory();
         $namespaces = [];
 
-        if (is_subclass_of($container->getParameter('hackzilla_ticket.model.ticket.class'), TicketWithAttachment::class)
-            || is_subclass_of($container->getParameter('hackzilla_ticket.model.message.class'), TicketMessageWithAttachment::class)
-        ) {
+        if (is_subclass_of($container->getParameter('hackzilla_ticket.model.message.class'), MessageAttachmentInterface::class)) {
             $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/attachment')] = 'Hackzilla\Bundle\TicketBundle\Model';
         } else {
             $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/plain')] = 'Hackzilla\Bundle\TicketBundle\Model';
