@@ -332,6 +332,10 @@ trait TicketTrait
      */
     public function getMessages(): Collection
     {
+        if (null === $this->messages) {
+            $this->messages = new ArrayCollection();
+        }
+
         return $this->messages;
     }
 }
