@@ -31,15 +31,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 '%hackzilla_ticket.model.user.class%',
             ])
 
-        ->set('hackzilla_ticket.user_manager', UserManager::class)
+        ->set(UserManager::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('security.token_storage'),
                 new ReferenceConfigurator('hackzilla_ticket.user_repository'),
                 new ReferenceConfigurator('security.authorization_checker'),
             ])
+            ->alias('hackzilla_ticket.user_manager', UserManager::class)
 
-        ->set('hackzilla_ticket.ticket_manager', TicketManager::class)
+        ->set(TicketManager::class)
             ->public()
             ->args([
                 '%hackzilla_ticket.model.ticket.class%',
@@ -50,5 +51,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ])
             ->call('setTranslator', [
                 new ReferenceConfigurator('translator'),
-            ]);
+            ])
+            ->alias('hackzilla_ticket.ticket_manager', TicketManager::class)
+        ;
+
 };
