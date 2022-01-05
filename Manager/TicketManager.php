@@ -16,7 +16,7 @@ use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
-use Symfony\Component\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @final since hackzilla/ticket-bundle 3.x.
@@ -59,7 +59,7 @@ final class TicketManager implements TicketManagerInterface
     /**
      * @return $this
      */
-    public function setTranslator(Translator $translator)
+    public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
 

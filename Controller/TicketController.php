@@ -25,11 +25,11 @@ use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Translation\Translator;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Ticket controller.
@@ -38,24 +38,24 @@ use Symfony\Component\Translation\Translator;
  */
 final class TicketController extends AbstractController
 {
-    private EventDispatcher $dispatcher;
+    private EventDispatcherInterface $dispatcher;
 
     private PaginatorInterface $pagination;
 
     private TicketManager $ticketManager;
 
-    private Translator $translator;
+    private TranslatorInterface $translator;
 
     private UserManagerInterface $userManager;
 
     private array $templates = [];
 
     public function __construct(
-        EventDispatcher $dispatcher,
+        EventDispatcherInterface $dispatcher,
         PaginatorInterface $pagination,
         ParameterBagInterface $bag,
         TicketManager $ticketManager, 
-        Translator $translator, 
+        TranslatorInterface $translator, 
         UserManagerInterface $userManager
     )
     {

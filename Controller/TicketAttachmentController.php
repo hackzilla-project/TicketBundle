@@ -18,7 +18,7 @@ use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Vich\UploaderBundle\Handler\DownloadHandler;
 
 /**
@@ -34,14 +34,14 @@ final class TicketAttachmentController extends AbstractController
 
     private TicketManager $ticketManager;
 
-    private Translator $translator;
+    private TranslatorInterface $translator;
 
     private UserManagerInterface $userManager;
 
     public function __construct(
         DownloadHandler $downloadHandler,
         TicketManager $ticketManager, 
-        Translator $translator, 
+        TranslatorInterface $translator, 
         UserManagerInterface $userManager
     )
     {
