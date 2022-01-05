@@ -19,19 +19,23 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 return static function (ContainerConfigurator $container): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
+
+    if (class_exists("\\Vich\\UploaderBundle\\Handler\\DownloadHandler")) {
+        $container->services()
+            ->set(TicketAttachmentController::class)
+                ->args([
+                    new ReferenceConfigurator('vich_uploader.download_handler'),
+                    new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
+                    new ReferenceConfigurator('translator'),
+                    new ReferenceConfigurator('hackzilla_ticket.user_manager'),
+                ])
+                ->call('setContainer', [new ReferenceConfigurator('service_container')])
+                ->tag('controller.service_arguments')
+                ->alias('hackzilla_ticket.controller.ticket_attachment_controller', TicketAttachmentController::class)
+        ;
+    }
+
     $container->services()
-
-        ->set(TicketAttachmentController::class)
-            ->args([
-                new ReferenceConfigurator('vich_uploader.download_handler'),
-                new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
-                new ReferenceConfigurator('translator'),
-                new ReferenceConfigurator('hackzilla_ticket.user_manager'),
-            ])
-            ->call('setContainer', [new ReferenceConfigurator('service_container')])
-            ->tag('controller.service_arguments')
-            ->alias('hackzilla_ticket.controller.ticket_attachment_controller', TicketAttachmentController::class)
-
         ->set(TicketController::class)
             ->args([
                 new ReferenceConfigurator('event_dispatcher'),
