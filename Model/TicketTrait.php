@@ -56,9 +56,9 @@ trait TicketTrait
     protected $priority;
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      */
-    protected $messages;
+    protected Collection $messages;
 
     /**
      * @var \DateTime
@@ -310,7 +310,7 @@ trait TicketTrait
      */
     public function addMessage(TicketMessageInterface $message)
     {
-        $this->messages[] = $message;
+        $this->messages->addElement($message);
 
         return $this;
     }
