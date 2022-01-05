@@ -3,7 +3,7 @@ name: Test
 on:
     push:
         branches:
-            - 3.x
+            - 4.x
             - master
     pull_request:
 
@@ -21,22 +21,17 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '7.2'
-                    - '7.3'
                     - '7.4'
                     - '8.0'
+                    - '8.1'
                 dependencies: [highest]
                 allowed-to-fail: [false]
                 variant: [normal]
                 include:
-                    - php-version: '7.2'
+                    - php-version: '7.4'
                       dependencies: lowest
                       allowed-to-fail: false
                       variant: 'vich/uploader-bundle'
-                    - php-version: '7.3'
-                      dependencies: highest
-                      allowed-to-fail: false
-                      variant: normal
                     - php-version: '7.4'
                       dependencies: highest
                       allowed-to-fail: false
@@ -47,7 +42,11 @@ jobs:
                       variant: 'vich/uploader-bundle'
                     - php-version: '8.0'
                       dependencies: highest
-                      allowed-to-fail: true
+                      allowed-to-fail: false
+                      variant: normal
+                    - php-version: '8.1'
+                      dependencies: highest
+                      allowed-to-fail: false
                       variant: normal
 
         steps:
