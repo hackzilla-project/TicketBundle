@@ -2,15 +2,15 @@
 {% import hackzilla_ticket.templates.macros as macros %}
 
 {% block hackzilla_ticket_content -%}
-    <h1>{{ 'HEADING_TICKET_LIST'|trans({}, translationDomain|default('messages')) }}</h1>
+    <h1>{{ 'HEADING_TICKET_LIST'|trans({}, translationDomain) }}</h1>
 
     <div class="row">
         <div class="col-xs-4">
             <div class="btn-group">
-                <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_OPEN'|trans({}, translationDomain|default('messages'))}) }}"
-                   class="btn btn-default {{ ticketState != 'STATUS_CLOSED'|trans({}, translationDomain|default('messages')) ? 'active' : '' }}">{{ 'STATUS_OPEN'|trans({}, translationDomain|default('messages'))|upper }}</a>
-                <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_CLOSED'|trans({}, translationDomain|default('messages'))}) }}"
-                   class="btn btn-default {{ ticketState == 'STATUS_CLOSED'|trans({}, translationDomain|default('messages')) ? 'active' : '' }}">{{ 'STATUS_CLOSED'|trans({}, translationDomain|default('messages'))|upper }}</a>
+                <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_OPEN'|trans({}, translationDomain)}) }}"
+                   class="btn btn-default {{ ticketState != 'STATUS_CLOSED'|trans({}, translationDomain) ? 'active' : '' }}">{{ 'STATUS_OPEN'|trans({}, translationDomain)|upper }}</a>
+                <a href="{{ path('hackzilla_ticket', {'state': 'STATUS_CLOSED'|trans({}, translationDomain)}) }}"
+                   class="btn btn-default {{ ticketState == 'STATUS_CLOSED'|trans({}, translationDomain) ? 'active' : '' }}">{{ 'STATUS_CLOSED'|trans({}, translationDomain)|upper }}</a>
             </div>
         </div>
 
@@ -19,19 +19,19 @@
                 <a href="{{ path('hackzilla_ticket') }}"
                    class="btn btn-default {{ ticketPriority is null ? 'active' : '' }}"><span
                             class="glyphicon glyphicon-remove"></span></a>
-                <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_HIGH'|trans({}, translationDomain|default('messages'))}) }}"
-                   class="btn btn-danger {{ ticketPriority == 'PRIORITY_HIGH'|trans({}, translationDomain|default('messages')) ? 'active' : '' }}">{{ 'PRIORITY_HIGH'|trans({}, translationDomain|default('messages'))|upper }}</a>
-                <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_MEDIUM'|trans({}, translationDomain|default('messages'))}) }}"
-                   class="btn btn-warning {{ ticketPriority == 'PRIORITY_MEDIUM'|trans({}, translationDomain|default('messages')) ? 'active' : '' }}">{{ 'PRIORITY_MEDIUM'|trans({}, translationDomain|default('messages'))|upper }}</a>
-                <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_LOW'|trans({}, translationDomain|default('messages'))}) }}"
-                   class="btn btn-info {{ ticketPriority == 'PRIORITY_LOW'|trans({}, translationDomain|default('messages')) ? 'active' : '' }}">{{ 'PRIORITY_LOW'|trans({}, translationDomain|default('messages'))|upper }}</a>
+                <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_HIGH'|trans({}, translationDomain)}) }}"
+                   class="btn btn-danger {{ ticketPriority == 'PRIORITY_HIGH'|trans({}, translationDomain) ? 'active' : '' }}">{{ 'PRIORITY_HIGH'|trans({}, translationDomain)|upper }}</a>
+                <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_MEDIUM'|trans({}, translationDomain)}) }}"
+                   class="btn btn-warning {{ ticketPriority == 'PRIORITY_MEDIUM'|trans({}, translationDomain) ? 'active' : '' }}">{{ 'PRIORITY_MEDIUM'|trans({}, translationDomain)|upper }}</a>
+                <a href="{{ path('hackzilla_ticket', {'priority': 'PRIORITY_LOW'|trans({}, translationDomain)}) }}"
+                   class="btn btn-info {{ ticketPriority == 'PRIORITY_LOW'|trans({}, translationDomain) ? 'active' : '' }}">{{ 'PRIORITY_LOW'|trans({}, translationDomain)|upper }}</a>
             </div>
         </div>
 
         <div class="col-xs-4 text-right">
             <div class="btn-group">
                 <a href="{{ path('hackzilla_ticket_new') }}" class="btn btn-primary"><span
-                            class="glyphicon glyphicon-plus"></span> {{ 'BUTTON_NEW'|trans({}, translationDomain|default('messages')) }}</a>
+                            class="glyphicon glyphicon-plus"></span> {{ 'BUTTON_NEW'|trans({}, translationDomain) }}</a>
             </div>
         </div>
     </div>
@@ -39,13 +39,13 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th class="col-xs-1">{{ knp_pagination_sortable(pagination, 'HEADING_TICKET'|trans({}, translationDomain|default('messages')), 't.id') }}</th>
-            <th{% if pagination.isSorted('t.subject') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_SUBJECT'|trans({}, translationDomain|default('messages')), 't.subject') }}</th>
-            <th{% if pagination.isSorted('t.userCreated') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_AUTHOR'|trans({}, translationDomain|default('messages')), 't.userCreated') }}</th>
-            <th{% if pagination.isSorted('t.status') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_STATUS'|trans({}, translationDomain|default('messages')), 't.status') }}</th>
-            <th{% if pagination.isSorted('t.priority') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_PRIORITY'|trans({}, translationDomain|default('messages')), 't.priority') }}</th>
-            <th{% if pagination.isSorted('t.modified') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_MODIFIED'|trans({}, translationDomain|default('messages')), 't.lastMessage') }}</th>
-            <th{% if pagination.isSorted('t.created') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_CREATED'|trans({}, translationDomain|default('messages')), 't.createdAt') }}</th>
+            <th class="col-xs-1">{{ knp_pagination_sortable(pagination, 'HEADING_TICKET'|trans({}, translationDomain), 't.id') }}</th>
+            <th{% if pagination.isSorted('t.subject') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_SUBJECT'|trans({}, translationDomain), 't.subject') }}</th>
+            <th{% if pagination.isSorted('t.userCreated') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_AUTHOR'|trans({}, translationDomain), 't.userCreated') }}</th>
+            <th{% if pagination.isSorted('t.status') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_STATUS'|trans({}, translationDomain), 't.status') }}</th>
+            <th{% if pagination.isSorted('t.priority') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_PRIORITY'|trans({}, translationDomain), 't.priority') }}</th>
+            <th{% if pagination.isSorted('t.modified') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_MODIFIED'|trans({}, translationDomain), 't.lastMessage') }}</th>
+            <th{% if pagination.isSorted('t.created') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'HEADING_CREATED'|trans({}, translationDomain), 't.createdAt') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -54,14 +54,14 @@
                 <td><a href="{{ path('hackzilla_ticket_show', { 'ticketId': entity.id }) }}">{{ entity.id }}</a></td>
                 <td><a href="{{ path('hackzilla_ticket_show', { 'ticketId': entity.id }) }}">{{ entity.subject }}</a></td>
                 <td>{{ entity.userCreatedObject }}</td>
-                <td>{{ macros.status_btn(entity.status, entity.statusString|trans({}, translationDomain|default('messages')), true, translationDomain) }}</td>
-                <td>{{ macros.priority_btn(entity.priority, entity.priorityString|trans({}, translationDomain|default('messages')), true, translationDomain) }}</td>
-                <td>{% if entity.lastMessage %}{{ entity.lastMessage|date('LABEL_DATE_TIME_FORMAT'|trans({}, translationDomain|default('messages'))) }}{% endif %}</td>
-                <td>{% if entity.createdAt %}{{ entity.createdAt|date('LABEL_DATE_TIME_FORMAT'|trans({}, translationDomain|default('messages'))) }}{% endif %}</td>
+                <td>{{ macros.status_btn(entity.status, entity.statusString|trans({}, translationDomain), true, translationDomain) }}</td>
+                <td>{{ macros.priority_btn(entity.priority, entity.priorityString|trans({}, translationDomain), true, translationDomain) }}</td>
+                <td>{% if entity.lastMessage %}{{ entity.lastMessage|date('LABEL_DATE_TIME_FORMAT'|trans({}, translationDomain)) }}{% endif %}</td>
+                <td>{% if entity.createdAt %}{{ entity.createdAt|date('LABEL_DATE_TIME_FORMAT'|trans({}, translationDomain)) }}{% endif %}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">{{ 'MESSAGE_NO_TICKETS'|trans({}, translationDomain|default('messages')) }}.</td>
+                <td colspan="7">{{ 'MESSAGE_NO_TICKETS'|trans({}, translationDomain) }}.</td>
             </tr>
         {% endfor %}
         </tbody>
