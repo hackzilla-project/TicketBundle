@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle;
 
-use Hackzilla\Bundle\TicketBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
+use Hackzilla\Bundle\TicketBundle\DependencyInjection\Compiler\DoctrineMappingCompiler;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -23,6 +23,6 @@ class HackzillaTicketBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new DoctrineOrmMappingsPass());
+        $container->addCompilerPass(new DoctrineMappingCompiler());
     }
 }
