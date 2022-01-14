@@ -15,6 +15,9 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment;
+use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\Ticket;
+use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -153,9 +156,17 @@ final class TestKernel extends Kernel
         $c->loadFromExtension('twig', $twigConfig);
 
         // HackzillaBundle config
-        $c->loadFromExtension('hackzilla_ticket', [
+        $bundleConfig = [
             'user_class' => User::class,
-        ]);
+            'ticket_class' => Ticket::class,
+            'message_class' => TicketMessage::class,
+        ];
+
+        if ($this->useVichUploaderBundle) {
+            $bundleConfig['message_class'] = TicketMessageWithAttachment::class;
+        }
+
+        $c->loadFromExtension('hackzilla_ticket', $bundleConfig);
 
         if ($this->useVichUploaderBundle) {
             // VichUploaderBundle config
