@@ -50,16 +50,16 @@ build:
 
 test:
 ifeq ($(shell php --modules|grep --quiet pcov;echo $$?), 0)
-	vendor/bin/simple-phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml --exclude-group vichuploaderbundle
+	vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml --exclude-group vichuploaderbundle
 else
-	vendor/bin/simple-phpunit -c phpunit.xml.dist --exclude-group vichuploaderbundle
+	vendor/bin/phpunit -c phpunit.xml.dist --exclude-group vichuploaderbundle
 endif
 .PHONY: test
 
 test_with_vichuploaderbundle:
 ifeq ($(shell php --modules|grep --quiet pcov;echo $$?), 0)
-	vendor/bin/simple-phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
+	vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
 else
-	vendor/bin/simple-phpunit -c phpunit.xml.dist
+	vendor/bin/phpunit -c phpunit.xml.dist
 endif
 .PHONY: test
