@@ -29,8 +29,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
                 new ReferenceConfigurator('hackzilla_ticket.user_manager'),
                 new ReferenceConfigurator('doctrine.orm.entity_manager'),
-                new ReferenceConfigurator('parameter_bag'),
                 new ReferenceConfigurator('translator'),
+                new ReferenceConfigurator('parameter_bag'),
             ])
 
         ->set('hackzilla_ticket.command.create', TicketManagerCommand::class)

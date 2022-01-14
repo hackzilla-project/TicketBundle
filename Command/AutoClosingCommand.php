@@ -23,7 +23,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
 
 /**
  * @final since hackzilla/ticket-bundle 3.x.
@@ -62,12 +63,17 @@ final class AutoClosingCommand extends Command
      */
     private $translator;
 
-    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager, EntityManagerInterface $entityManager, Translator $translator, ParameterBagInterface $parameterBag)
+    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager, EntityManagerInterface $entityManager, LocaleAwareInterface $translator, ParameterBagInterface $parameterBag)
     {
         parent::__construct();
 
         $this->ticketManager = $ticketManager;
         $this->userManager = $userManager;
+
+        if (!is_a($translator, TranslatorInterface::class)) {
+            throw new \InvalidArgumentException(get_class($translator) . " Must implement TranslatorInterface and LocaleAwareInterface");
+        }
+
         $this->translator = $translator;
         $this->translator->setLocale($this->locale);
 
