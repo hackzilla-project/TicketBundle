@@ -39,7 +39,7 @@ if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 6) {
  */
 abstract class WebTestCase extends BaseWebTestCase
 {
-    use createKernel;
+    use CreateKernel;
     
     protected function setUp(): void
     {
