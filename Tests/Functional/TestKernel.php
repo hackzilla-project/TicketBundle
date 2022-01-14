@@ -27,8 +27,30 @@ use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 use Vich\UploaderBundle\VichUploaderBundle;
+
+if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 5) {
+    trait ConfigureRoutes
+    {
+        protected function configureRoutes(RoutingConfigurator $routes): void
+        {
+            $routes->import(__DIR__.'/routes.yaml', 'yaml');
+        }
+    }
+} else {
+    trait ConfigureRoutes
+    {
+        /**
+         * {@inheritdoc}
+         */
+        protected function configureRoutes(RouteCollectionBuilder $routes)
+        {
+            $routes->import(__DIR__.'/routes.yaml', '/', 'yaml');
+        }
+    }
+}
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
@@ -36,7 +58,9 @@ use Vich\UploaderBundle\VichUploaderBundle;
  */
 final class TestKernel extends Kernel
 {
-    use MicroKernelTrait;
+    use MicroKernelTrait, ConfigureRoutes {
+        ConfigureRoutes::configureRoutes insteadOf MicroKernelTrait;
+    }
 
     private $useVichUploaderBundle = false;
 
@@ -44,7 +68,7 @@ final class TestKernel extends Kernel
     {
         $this->useVichUploaderBundle = class_exists(VichUploaderBundle::class);
 
-        parent::__construct('test'.(int) $this->useVichUploaderBundle, true);
+        parent::__construct('test', true);
     }
 
     /**
@@ -69,13 +93,6 @@ final class TestKernel extends Kernel
         return $bundles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configureRoutes(RouteCollectionBuilder $routes)
-    {
-        $routes->import(__DIR__.'/routes.yaml', '/', 'yaml');
-    }
 
     /**
      * {@inheritdoc}
