@@ -60,7 +60,7 @@ return $config
         'ordered_imports' => true,
         'php_unit_construct' => true,
         'php_unit_set_up_tear_down_visibility' => true,
-        'php_unit_strict' => true,
+        'php_unit_strict' => false,
         'phpdoc_order' => true,
         'single_line_throw' => false,
         'static_lambda' => true,
