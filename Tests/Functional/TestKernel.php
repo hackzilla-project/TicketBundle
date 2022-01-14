@@ -58,8 +58,8 @@ if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 5) {
  */
 final class TestKernel extends Kernel
 {
-    use MicroKernelTrait, ConfigureRoutes {
-        ConfigureRoutes::configureRoutes insteadOf MicroKernelTrait;
+    use ConfigureRoutes, MicroKernelTrait {
+        ConfigureRoutes::configureRoutes insteadof MicroKernelTrait;
     }
 
     private $useVichUploaderBundle = false;
@@ -92,7 +92,6 @@ final class TestKernel extends Kernel
 
         return $bundles;
     }
-
 
     /**
      * {@inheritdoc}
