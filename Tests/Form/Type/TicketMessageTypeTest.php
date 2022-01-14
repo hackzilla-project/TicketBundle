@@ -16,6 +16,7 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
@@ -34,12 +35,12 @@ class TicketMessageTypeTest extends TypeTestCase
     public function testSubmitValidData()
     {
         $formData = [
-            'priority' => TicketMessage::PRIORITY_HIGH,
+            'priority' => TicketMessageInterface::PRIORITY_HIGH,
             'message' => null,
         ];
 
         $data = new TicketMessage();
-        $data->setPriority(TicketMessage::PRIORITY_HIGH);
+        $data->setPriority(TicketMessageInterface::PRIORITY_HIGH);
 
         $form = $this->factory->create(
             TicketMessageType::class,
