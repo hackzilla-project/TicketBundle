@@ -47,6 +47,11 @@ class User implements UserInterface
      */
     private $email;
 
+    public function __toString(): string
+    {
+        return 'Test User';
+    }
+
     public function getId()
     {
         return $this->id;

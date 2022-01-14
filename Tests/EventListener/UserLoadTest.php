@@ -14,7 +14,8 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Tests\EventListener;
 
 use Hackzilla\Bundle\TicketBundle\EventListener\UserLoad;
-use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserLoadTest extends WebTestCase
@@ -33,9 +34,18 @@ class UserLoadTest extends WebTestCase
         $this->object = null;
     }
 
-    public function getUserManagerMock()
+    public function getUserManagerMock(): UserManagerInterface
     {
-        return $this->createMock(UserManager::class);
+        $userManager = $this->getMockBuilder(UserManagerInterface::class)
+            ->getMock();
+
+        $user = new User();
+
+        $userManager
+            ->method('getUserById')
+            ->willReturn($user);
+
+        return $userManager;
     }
 
     public function testObjectCreated(): void
