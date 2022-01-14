@@ -12,9 +12,9 @@ Specify the uploader config, so the bundle knows where to store the files.
 
 ```yaml
 hackzilla_ticket:
-    user_class:             App\Entity\User
-    ticket_class:           App\Entity\TicketWithAttachment
-    message_class:          App\Entity\TicketMessageWithAttachment
+    user_class: App\Entity\User
+    ticket_class: App\Entity\TicketWithAttachment
+    message_class: App\Entity\TicketMessageWithAttachment
     features:
         attachment: true
 
