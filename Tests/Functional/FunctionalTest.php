@@ -41,12 +41,12 @@ class FunctionalTest extends WebTestCase
             ['hackzilla_ticket.model.message.class', TicketMessage::class],
             ['hackzilla_ticket.features', ['attachment' => true]],
             ['hackzilla_ticket.templates', [
-                'index' => 'HackzillaTicketBundle:Ticket:index.html.twig',
-                'new' => 'HackzillaTicketBundle:Ticket:new.html.twig',
-                'prototype' => 'HackzillaTicketBundle:Ticket:prototype.html.twig',
-                'show' => 'HackzillaTicketBundle:Ticket:show.html.twig',
-                'show_attachment' => 'HackzillaTicketBundle:Ticket:show_attachment.html.twig',
-                'macros' => 'HackzillaTicketBundle:Macros:macros.html.twig',
+                'index' => '@HackzillaTicket/Ticket/index.html.twig',
+                'new' => '@HackzillaTicket/Ticket/new.html.twig',
+                'prototype' => '@HackzillaTicket/Ticket/prototype.html.twig',
+                'show' => '@HackzillaTicket/Ticket/show.html.twig',
+                'show_attachment' => '@HackzillaTicket/Ticket/show_attachment.html.twig',
+                'macros' => '@HackzillaTicket/Macros/macros.html.twig',
             ]],
         ];
     }
