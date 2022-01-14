@@ -11,7 +11,10 @@ HEADER;
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
-    ->exclude(['Tests/Functional/cache'])
+    ->exclude([
+        'Tests/Functional/cache', 
+        'var',
+    ])
 ;
 
 $config = new PhpCsFixer\Config();
