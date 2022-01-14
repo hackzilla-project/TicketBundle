@@ -30,7 +30,6 @@ To make creating your own entities a little easier there are traits.
 
 The only thing missing from the traits are the primary id. This will allow you to use whatever you want as the primary id, whether its "int" or "uuid".
 
-
 | Entity         | Trait                                                      |
 | -------------- | ---------------------------------------------------------- |
 | Ticket         | Hackzilla\Bundle\TicketBundle\Model\TicketTrait            |
