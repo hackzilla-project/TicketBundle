@@ -24,7 +24,7 @@ vich_uploader:
     mappings:
         ticket_message_attachment:
             uri_prefix: /attachment
-            upload_destination: '%kernel.project_dir%/../var/uploads/attachment/'
+            upload_destination: '%kernel.project_dir%/var/uploads/attachment/'
 ```
 
 See [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle/) documentation for more details.
