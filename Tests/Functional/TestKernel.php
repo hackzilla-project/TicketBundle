@@ -132,14 +132,6 @@ final class TestKernel extends Kernel
             'orm' => [
                 'default_entity_manager' => 'default',
                 'auto_mapping' => true,
-                'mappings' => [
-                    'HackzillaTicketBundle' => [
-                        'dir' => __DIR__.'/Entity',
-                        'prefix' => 'Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity',
-                        'alias' => 'HackzillaTicketBundle',
-                        'type' => 'annotation',
-                    ],
-                ],
             ],
         ]);
 
