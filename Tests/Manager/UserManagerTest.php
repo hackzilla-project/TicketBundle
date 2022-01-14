@@ -13,13 +13,11 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Persistence\ObjectRepository;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
+use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
-use Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class UserManagerTest extends WebTestCase
@@ -28,19 +26,14 @@ class UserManagerTest extends WebTestCase
 
     private $tokenStorage;
 
-    private $authorizationChecker;
-
     protected function setUp(): void
     {
         $this->tokenStorage = new TokenStorage();
-        $authenticationProviderManager = new AuthenticationProviderManager([new AnonymousAuthenticationProvider('secret')]);
-        $accessDecisionManager = new AccessDecisionManager();
-        $this->authorizationChecker = new AuthorizationChecker($this->tokenStorage, $authenticationProviderManager, $accessDecisionManager);
 
         $this->object = new UserManager(
             $this->tokenStorage,
             $this->getMockUserRepository(),
-            $this->authorizationChecker
+            $this->getAuthorizationChecker()
         );
     }
 
@@ -56,6 +49,13 @@ class UserManagerTest extends WebTestCase
 
     private function getMockUserRepository()
     {
-        return $this->createMock(EntityRepository::class);
+        $doctrine = static::getContainer()->get('doctrine');
+
+        return $doctrine->getRepository(UserInterface::class);
+    }
+
+    private function getAuthorizationChecker()
+    {
+        return $this->createMock(AuthorizationChecker::class);
     }
 }
