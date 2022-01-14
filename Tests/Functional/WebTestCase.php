@@ -25,7 +25,7 @@ if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 6) {
         }
     }    
 } else {
-    trait createKernel
+    trait CreateKernel
     {
         protected static function createKernel(array $options = [])
         {
