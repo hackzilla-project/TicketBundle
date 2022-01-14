@@ -52,7 +52,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->call('setTranslator', [
                 new ReferenceConfigurator('translator'),
             ])
-            ->alias('hackzilla_ticket.ticket_manager', TicketManager::class)
-        ;
-
+            ->alias('hackzilla_ticket.ticket_manager', TicketManager::class);
 };

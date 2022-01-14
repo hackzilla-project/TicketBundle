@@ -17,9 +17,9 @@ use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 
 interface UserInterface extends BaseUserInterface
 {
+    public function __toString(): string;
+
     public function getId();
 
     public function getEmail(): ?string;
-
-    public function __tostring(): string;
 }

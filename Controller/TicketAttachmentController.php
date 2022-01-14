@@ -25,8 +25,6 @@ use Vich\UploaderBundle\Handler\DownloadHandler;
  * Ticket Attachment controller.
  *
  * Download attachments
- *
- * @final since hackzilla/ticket-bundle 3.x.
  */
 final class TicketAttachmentController extends AbstractController
 {
@@ -40,11 +38,10 @@ final class TicketAttachmentController extends AbstractController
 
     public function __construct(
         DownloadHandler $downloadHandler,
-        TicketManager $ticketManager, 
-        TranslatorInterface $translator, 
+        TicketManager $ticketManager,
+        TranslatorInterface $translator,
         UserManagerInterface $userManager
-    )
-    {
+    ) {
         $this->downloadHandler = $downloadHandler;
         $this->ticketManager = $ticketManager;
         $this->translator = $translator;

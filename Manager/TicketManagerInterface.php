@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -25,9 +27,9 @@ interface TicketManagerInterface
 
     public function createTicket();
 
-    public function createMessage(TicketInterface $ticket = null);
+    public function createMessage(?TicketInterface $ticket = null);
 
-    public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null): void;
+    public function updateTicket(TicketInterface $ticket, ?TicketMessageInterface $message = null): void;
 
     public function deleteTicket(TicketInterface $ticket);
 

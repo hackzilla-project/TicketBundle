@@ -27,7 +27,7 @@ class StatusTypeTest extends TypeTestCase
 
     protected function tearDown(): void
     {
-        unset($this->object);
+        $this->object = null;
     }
 
     public function testObjectCreated(): void

@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
 final class TicketRole
 {
-    const ADMIN = 'ROLE_TICKET_ADMIN';
+    public const ADMIN = 'ROLE_TICKET_ADMIN';
 }

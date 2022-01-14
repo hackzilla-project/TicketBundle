@@ -21,9 +21,6 @@ use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
 final class DoctrineOrmMappingsPass extends BaseDoctrineOrmMappingsPass
 {
     public function __construct($driver = null, array $namespaces = [], $managerParameters = [], $enabledParameter = false, array $aliasMap = [])
@@ -42,9 +39,9 @@ final class DoctrineOrmMappingsPass extends BaseDoctrineOrmMappingsPass
             $namespaces[realpath($bundleDirectory.'/Resources/config/doctrine/model/plain')] = 'Hackzilla\Bundle\TicketBundle\Model';
         }
 
-        $arguments        = [$namespaces, '.orm.xml'];
-        $locator          = new Definition(SymfonyFileLocator::class, $arguments);
-        $this->driver     = new Definition(XmlDriver::class, [$locator]);
+        $arguments = [$namespaces, '.orm.xml'];
+        $locator = new Definition(SymfonyFileLocator::class, $arguments);
+        $this->driver = new Definition(XmlDriver::class, [$locator]);
         $this->namespaces = $namespaces;
 
         parent::process($container);

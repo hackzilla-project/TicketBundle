@@ -17,9 +17,6 @@ use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
 final class TicketFeatureExtension extends AbstractExtension
 {
     private $ticketFeatures;

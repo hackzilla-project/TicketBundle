@@ -23,12 +23,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
 final class AutoClosingCommand extends Command
 {
     protected static $defaultName = 'ticket:autoclosing';
@@ -71,7 +68,7 @@ final class AutoClosingCommand extends Command
         $this->userManager = $userManager;
 
         if (!is_a($translator, TranslatorInterface::class)) {
-            throw new \InvalidArgumentException(get_class($translator) . " Must implement TranslatorInterface and LocaleAwareInterface");
+            throw new \InvalidArgumentException(\get_class($translator).' Must implement TranslatorInterface and LocaleAwareInterface');
         }
 
         $this->translator = $translator;

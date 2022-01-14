@@ -33,8 +33,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Ticket controller.
- *
- * @final since hackzilla/ticket-bundle 3.x.
  */
 final class TicketController extends AbstractController
 {
@@ -54,11 +52,10 @@ final class TicketController extends AbstractController
         EventDispatcherInterface $dispatcher,
         PaginatorInterface $pagination,
         ParameterBagInterface $bag,
-        TicketManager $ticketManager, 
-        TranslatorInterface $translator, 
+        TicketManager $ticketManager,
+        TranslatorInterface $translator,
         UserManagerInterface $userManager
-    )
-    {
+    ) {
         $this->dispatcher = $dispatcher;
         $this->pagination = $pagination;
         $this->ticketManager = $ticketManager;

@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
@@ -20,30 +31,18 @@ class TicketMessageTypeTest extends TypeTestCase
         parent::setUp();
     }
 
-    protected function getExtensions()
-    {
-        $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''), TicketMessage::class);
-
-        return [
-            new PreloadedExtension(
-                [
-                    $ticketMessageType->getBlockPrefix() => $ticketMessageType,
-                ], []
-            ),
-        ];
-    }
-
     public function testSubmitValidData()
     {
         $formData = [
             'priority' => TicketMessage::PRIORITY_HIGH,
-            'message'  => null,
+            'message' => null,
         ];
 
         $data = new TicketMessage();
         $data->setPriority(TicketMessage::PRIORITY_HIGH);
 
-        $form = $this->factory->create(TicketMessageType::class,
+        $form = $this->factory->create(
+            TicketMessageType::class,
             null,
             [
                 'new_ticket' => true,
@@ -58,13 +57,27 @@ class TicketMessageTypeTest extends TypeTestCase
 
         $formEntity = $form->getData();
         $formEntity->setCreatedAt($data->getCreatedAt());
-        $this->assertEquals($data, $formEntity);
+        $this->assertSame($data, $formEntity);
 
-        $view     = $form->createView();
+        $view = $form->createView();
         $children = $view->children;
 
         foreach (array_keys($formData) as $key) {
             $this->assertArrayHasKey($key, $children);
         }
+    }
+
+    protected function getExtensions()
+    {
+        $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''), TicketMessage::class);
+
+        return [
+            new PreloadedExtension(
+                [
+                    $ticketMessageType->getBlockPrefix() => $ticketMessageType,
+                ],
+                []
+            ),
+        ];
     }
 }

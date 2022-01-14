@@ -18,15 +18,12 @@ use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
 final class UserLoad
 {
     /**
      * @var UserManagerInterface
      */
-    protected $userManager;
+    private $userManager;
 
     public function __construct(UserManagerInterface $userManager)
     {

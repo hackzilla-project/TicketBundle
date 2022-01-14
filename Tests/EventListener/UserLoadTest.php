@@ -28,14 +28,14 @@ class UserLoadTest extends WebTestCase
         $this->object = new UserLoad($userManager);
     }
 
+    protected function tearDown(): void
+    {
+        $this->object = null;
+    }
+
     public function getUserManagerMock()
     {
         return $this->createMock(UserManager::class);
-    }
-
-    protected function tearDown(): void
-    {
-        unset($this->object);
     }
 
     public function testObjectCreated(): void

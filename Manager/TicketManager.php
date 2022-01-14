@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -18,9 +20,6 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
 final class TicketManager implements TicketManagerInterface
 {
     private $translator;
@@ -88,7 +87,7 @@ final class TicketManager implements TicketManagerInterface
      *
      * @return TicketMessageInterface
      */
-    public function createMessage(TicketInterface $ticket = null)
+    public function createMessage(?TicketInterface $ticket = null)
     {
         /* @var TicketMessageInterface $ticket */
         $message = new $this->ticketMessageClass();
@@ -107,7 +106,7 @@ final class TicketManager implements TicketManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null): void
+    public function updateTicket(TicketInterface $ticket, ?TicketMessageInterface $message = null): void
     {
         if (null === $ticket->getId()) {
             $this->objectManager->persist($ticket);

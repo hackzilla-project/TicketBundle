@@ -10,7 +10,8 @@ file that was distributed with this source code.
 HEADER;
 
 $finder = PhpCsFixer\Finder::create()
-    ->exclude(['Tests/Functional/cache'])->in(__DIR__)
+    ->in(__DIR__)
+    ->exclude(['Tests/Functional/cache'])
 ;
 
 $config = new PhpCsFixer\Config();

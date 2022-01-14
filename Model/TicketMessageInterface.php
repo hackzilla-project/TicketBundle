@@ -15,21 +15,21 @@ namespace Hackzilla\Bundle\TicketBundle\Model;
 
 interface TicketMessageInterface
 {
-    const STATUS_INVALID = 0;
+    public const STATUS_INVALID = 0;
 
-    const STATUS_OPEN = 10;
+    public const STATUS_OPEN = 10;
 
-    const STATUS_IN_PROGRESS = 11;
+    public const STATUS_IN_PROGRESS = 11;
 
-    const STATUS_INFORMATION_REQUESTED = 12;
+    public const STATUS_INFORMATION_REQUESTED = 12;
 
-    const STATUS_ON_HOLD = 13;
+    public const STATUS_ON_HOLD = 13;
 
-    const STATUS_RESOLVED = 14;
+    public const STATUS_RESOLVED = 14;
 
-    const STATUS_CLOSED = 15;
+    public const STATUS_CLOSED = 15;
 
-    const STATUSES = [
+    public const STATUSES = [
         self::STATUS_INVALID => 'STATUS_INVALID',
         self::STATUS_OPEN => 'STATUS_OPEN',
         self::STATUS_IN_PROGRESS => 'STATUS_IN_PROGRESS',
@@ -39,15 +39,15 @@ interface TicketMessageInterface
         self::STATUS_CLOSED => 'STATUS_CLOSED',
     ];
 
-    const PRIORITY_INVALID = 0;
+    public const PRIORITY_INVALID = 0;
 
-    const PRIORITY_LOW = 20;
+    public const PRIORITY_LOW = 20;
 
-    const PRIORITY_MEDIUM = 21;
+    public const PRIORITY_MEDIUM = 21;
 
-    const PRIORITY_HIGH = 22;
+    public const PRIORITY_HIGH = 22;
 
-    const PRIORITIES = [
+    public const PRIORITIES = [
         self::PRIORITY_INVALID => 'PRIORITY_INVALID',
         self::PRIORITY_LOW => 'PRIORITY_LOW',
         self::PRIORITY_MEDIUM => 'PRIORITY_MEDIUM',

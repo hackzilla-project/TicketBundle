@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
@@ -22,21 +33,6 @@ class TicketTypeTest extends TypeTestCase
         parent::setUp();
     }
 
-    protected function getExtensions()
-    {
-        $ticketType        = new TicketType(Ticket::class);
-        $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''), TicketMessage::class);
-
-        return [
-            new PreloadedExtension(
-                [
-                    $ticketType->getBlockPrefix()        => $ticketType,
-                    $ticketMessageType->getBlockPrefix() => $ticketMessageType,
-                ], []
-            ),
-        ];
-    }
-
     public function testSubmitValidData()
     {
         $formData = [];
@@ -52,13 +48,29 @@ class TicketTypeTest extends TypeTestCase
 
         $formEntity = $form->getData();
         $formEntity->setCreatedAt($data->getCreatedAt());
-        $this->assertEquals($data, $formEntity);
+        $this->assertSame($data, $formEntity);
 
-        $view     = $form->createView();
+        $view = $form->createView();
         $children = $view->children;
 
         foreach (array_keys($formData) as $key) {
             $this->assertArrayHasKey($key, $children);
         }
+    }
+
+    protected function getExtensions()
+    {
+        $ticketType = new TicketType(Ticket::class);
+        $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''), TicketMessage::class);
+
+        return [
+            new PreloadedExtension(
+                [
+                    $ticketType->getBlockPrefix() => $ticketType,
+                    $ticketMessageType->getBlockPrefix() => $ticketMessageType,
+                ],
+                []
+            ),
+        ];
     }
 }

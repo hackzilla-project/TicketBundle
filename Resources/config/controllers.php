@@ -20,7 +20,7 @@ return static function (ContainerConfigurator $container): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
 
-    if (class_exists("\\Vich\\UploaderBundle\\Handler\\DownloadHandler")) {
+    if (class_exists('\\Vich\\UploaderBundle\\Handler\\DownloadHandler')) {
         $container->services()
             ->set(TicketAttachmentController::class)
                 ->args([
@@ -31,8 +31,7 @@ return static function (ContainerConfigurator $container): void {
                 ])
                 ->call('setContainer', [new ReferenceConfigurator('service_container')])
                 ->tag('controller.service_arguments')
-                ->alias('hackzilla_ticket.controller.ticket_attachment_controller', TicketAttachmentController::class)
-        ;
+                ->alias('hackzilla_ticket.controller.ticket_attachment_controller', TicketAttachmentController::class);
     }
 
     $container->services()
@@ -47,7 +46,5 @@ return static function (ContainerConfigurator $container): void {
             ])
             ->call('setContainer', [new ReferenceConfigurator('service_container')])
             ->tag('controller.service_arguments')
-            ->alias('hackzilla_ticket.controller.ticket_controller', TicketController::class)
-
-    ;
+            ->alias('hackzilla_ticket.controller.ticket_controller', TicketController::class);
 };

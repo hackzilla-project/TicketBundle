@@ -32,10 +32,10 @@ class UserManagerTest extends WebTestCase
 
     protected function setUp(): void
     {
-        $this->tokenStorage            = new TokenStorage();
+        $this->tokenStorage = new TokenStorage();
         $authenticationProviderManager = new AuthenticationProviderManager([new AnonymousAuthenticationProvider('secret')]);
-        $accessDecisionManager         = new AccessDecisionManager();
-        $this->authorizationChecker    = new AuthorizationChecker($this->tokenStorage, $authenticationProviderManager, $accessDecisionManager);
+        $accessDecisionManager = new AccessDecisionManager();
+        $this->authorizationChecker = new AuthorizationChecker($this->tokenStorage, $authenticationProviderManager, $accessDecisionManager);
 
         $this->object = new UserManager(
             $this->tokenStorage,
@@ -44,18 +44,18 @@ class UserManagerTest extends WebTestCase
         );
     }
 
-    private function getMockUserRepository()
-    {
-        return $this->createMock(EntityRepository::class);
-    }
-
     protected function tearDown(): void
     {
-        unset($this->object);
+        $this->object = null;
     }
 
     public function testObjectCreated()
     {
         $this->assertInstanceOf(UserManager::class, $this->object);
+    }
+
+    private function getMockUserRepository()
+    {
+        return $this->createMock(EntityRepository::class);
     }
 }

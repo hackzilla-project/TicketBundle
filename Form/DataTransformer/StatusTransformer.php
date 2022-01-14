@@ -16,9 +16,6 @@ namespace Hackzilla\Bundle\TicketBundle\Form\DataTransformer;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessage;
 use Symfony\Component\Form\DataTransformerInterface;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
 final class StatusTransformer implements DataTransformerInterface
 {
     /**

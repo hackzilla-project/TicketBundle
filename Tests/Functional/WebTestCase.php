@@ -23,7 +23,7 @@ if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 6) {
         {
             return new TestKernel();
         }
-    }    
+    }
 } else {
     trait CreateKernel
     {
@@ -31,7 +31,7 @@ if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 6) {
         {
             return new TestKernel();
         }
-    }    
+    }
 }
 
 /**
@@ -40,7 +40,7 @@ if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 6) {
 abstract class WebTestCase extends BaseWebTestCase
 {
     use CreateKernel;
-    
+
     protected function setUp(): void
     {
         parent::setUp();

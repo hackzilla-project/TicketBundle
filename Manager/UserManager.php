@@ -21,9 +21,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
 final class UserManager implements UserManagerInterface
 {
     /**

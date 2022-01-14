@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
@@ -30,12 +41,12 @@ class FunctionalTest extends WebTestCase
             ['hackzilla_ticket.model.message.class', TicketMessage::class],
             ['hackzilla_ticket.features', ['attachment' => true]],
             ['hackzilla_ticket.templates', [
-                'index'           => 'HackzillaTicketBundle:Ticket:index.html.twig',
-                'new'             => 'HackzillaTicketBundle:Ticket:new.html.twig',
-                'prototype'       => 'HackzillaTicketBundle:Ticket:prototype.html.twig',
-                'show'            => 'HackzillaTicketBundle:Ticket:show.html.twig',
+                'index' => 'HackzillaTicketBundle:Ticket:index.html.twig',
+                'new' => 'HackzillaTicketBundle:Ticket:new.html.twig',
+                'prototype' => 'HackzillaTicketBundle:Ticket:prototype.html.twig',
+                'show' => 'HackzillaTicketBundle:Ticket:show.html.twig',
                 'show_attachment' => 'HackzillaTicketBundle:Ticket:show_attachment.html.twig',
-                'macros'          => 'HackzillaTicketBundle:Macros:macros.html.twig',
+                'macros' => 'HackzillaTicketBundle:Macros:macros.html.twig',
             ]],
         ];
     }
@@ -59,7 +70,7 @@ class FunctionalTest extends WebTestCase
     public function testConfiguredFileUploadSubscriber()
     {
         $eventDispatcher = static::$kernel->getContainer()->get('event_dispatcher');
-        $listeners       = $eventDispatcher->getListeners();
+        $listeners = $eventDispatcher->getListeners();
 
         $this->assertArrayHasKey(Events::POST_UPLOAD, $listeners);
     }
