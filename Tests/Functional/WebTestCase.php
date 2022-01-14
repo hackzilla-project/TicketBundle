@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 6) {
-    trait createKernel
+    trait CreateKernel
     {
         protected static function createKernel(array $options = []): KernelInterface
         {
