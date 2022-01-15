@@ -53,15 +53,8 @@ class FunctionalTest extends WebTestCase
 
     public function testConfiguredTicketManager()
     {
-        $this->assertTrue(static::$kernel->getContainer()->has('hackzilla_ticket.ticket_manager'));
-        $this->assertInstanceOf(TicketManagerInterface::class, static::$kernel->getContainer()->get('hackzilla_ticket.ticket_manager'));
-    }
-
-    public function testValidation()
-    {
-        $validator = static::$kernel->getContainer()->get('validator');
-        $violations = $validator->validate(new Ticket());
-        $this->assertNotEmpty($violations);
+        $this->assertTrue(static::$kernel->getContainer()->has(TicketManagerInterface::class));
+        $this->assertInstanceOf(TicketManagerInterface::class, static::$kernel->getContainer()->get(TicketManagerInterface::class));
     }
 
     /**
