@@ -4,7 +4,6 @@ parameters:
         - .
     excludePaths:
         - vendor/
-        - var/
         - Tests/
     ignoreErrors:
         - '#.* (class|type) Vich\\UploaderBundle\\.*#'

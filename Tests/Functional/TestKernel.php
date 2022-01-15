@@ -39,6 +39,22 @@ if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 5) {
             $routes->import(__DIR__.'/routes.yaml', 'yaml');
         }
     }
+
+    trait KernelDirectories
+    {
+        public function getCacheDir(): string
+        {
+            return $this->getBaseDir().'cache';
+        }
+
+        /**
+         * {@inheritdoc}
+         */
+        public function getLogDir(): string
+        {
+            return $this->getBaseDir().'log';
+        }
+    }
 } else {
     trait ConfigureRoutes
     {
@@ -50,6 +66,22 @@ if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 5) {
             $routes->import(__DIR__.'/routes.yaml', '/', 'yaml');
         }
     }
+
+    trait KernelDirectories
+    {
+        public function getCacheDir()
+        {
+            return $this->getBaseDir().'cache';
+        }
+
+        /**
+         * {@inheritdoc}
+         */
+        public function getLogDir()
+        {
+            return $this->getBaseDir().'log';
+        }
+    }
 }
 
 /**
@@ -58,8 +90,10 @@ if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 5) {
  */
 final class TestKernel extends Kernel
 {
-    use ConfigureRoutes, MicroKernelTrait {
+    use ConfigureRoutes, KernelDirectories, MicroKernelTrait {
         ConfigureRoutes::configureRoutes insteadof MicroKernelTrait;
+        KernelDirectories::getCacheDir insteadof MicroKernelTrait;
+        KernelDirectories::getLogDir insteadof MicroKernelTrait;
     }
 
     private $useVichUploaderBundle = false;
@@ -182,5 +216,10 @@ final class TestKernel extends Kernel
                 'db_driver' => 'orm',
             ]);
         }
+    }
+
+    private function getBaseDir()
+    {
+        return sys_get_temp_dir().'/hackzilla-ticket-bundle/var/'.(int) $this->useVichUploaderBundle.'/';
     }
 }

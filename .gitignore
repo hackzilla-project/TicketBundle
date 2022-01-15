@@ -7,4 +7,3 @@
 composer.lock
 phpstan.neon
 phpunit.xml
-/var
