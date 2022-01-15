@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 use Doctrine\ORM\EntityRepository;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
+use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -38,7 +40,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('hackzilla_ticket.user_repository'),
                 new ReferenceConfigurator('security.authorization_checker'),
             ])
-            ->alias('hackzilla_ticket.user_manager', UserManager::class)
+
+        ->alias('hackzilla_ticket.user_manager', UserManager::class)
+            ->public()
+
+        ->alias(UserManagerInterface::class, UserManager::class)
+            ->public()
 
         ->set(TicketManager::class)
             ->public()
@@ -52,5 +59,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->call('setTranslator', [
                 new ReferenceConfigurator('translator'),
             ])
-            ->alias('hackzilla_ticket.ticket_manager', TicketManager::class);
+
+        ->alias('hackzilla_ticket.ticket_manager', TicketManager::class)
+            ->public()
+
+        ->alias(TicketManagerInterface::class, TicketManager::class)
+            ->public()
+        ;
 };
