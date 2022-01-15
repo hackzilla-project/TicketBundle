@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
-use Doctrine\Persistence\ObjectRepository;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
