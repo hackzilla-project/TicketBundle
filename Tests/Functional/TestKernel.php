@@ -133,7 +133,7 @@ final class TestKernel extends Kernel
     protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
     {
         // FrameworkBundle config
-        $c->loadFromExtension('framework', [
+        $frameworkConfig = [
             'secret' => 'MySecretKey',
             'default_locale' => 'en',
             'session' => [
@@ -150,7 +150,14 @@ final class TestKernel extends Kernel
                 'enabled' => true,
             ],
             'test' => true,
-        ]);
+        ];
+
+        if (version_compare(self::VERSION, '5.1', '>=') && version_compare(self::VERSION, '6.0', '<')) {
+            $frameworkConfig['session'] = ['storage_factory_id' => 'session.storage.factory.native'];
+            $frameworkConfig['router'] = ['utf8' => true];
+        }
+
+        $c->loadFromExtension('framework', $frameworkConfig);
 
         // SecurityBundle config
         $mainFirewallConfig = [];
