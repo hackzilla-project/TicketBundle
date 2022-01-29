@@ -114,6 +114,7 @@ final class TicketManager implements TicketManagerInterface
         if (null !== $message) {
             $message->setTicket($ticket);
             $this->objectManager->persist($message);
+            $ticket->setPriority($message->getPriority());
         }
         $this->objectManager->flush();
     }
