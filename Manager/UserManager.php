@@ -105,8 +105,19 @@ final class UserManager implements UserManagerInterface
      */
     public function hasPermission($user, TicketInterface $ticket): void
     {
+        // allow custom permissions from final user class
+        if (\is_object($user) && method_exists($user, 'hasPermissionForTicket')) {
+            if ($user->hasPermissionForTicket($ticket)) {
+                return;
+            }
+            else {
+                throw new AccessDeniedHttpException();
+            }
+        }
+
+        // falback to default condition
         if (!\is_object($user) || (!$this->hasRole($user, TicketRole::ADMIN) &&
-            $ticket->getUserCreated() != $user->getId())
+                $ticket->getUserCreated() != $user->getId())
         ) {
             throw new AccessDeniedHttpException();
         }
