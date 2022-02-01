@@ -127,7 +127,7 @@ final class UserManager implements UserManagerInterface
 
         // falback to default condition
         if (!\is_object($user) || (!$this->hasRole($user, TicketRole::ADMIN) &&
-                $ticket->getUserCreated() != $user->getId())
+            $ticket->getUserCreated() != $user->getId())
         ) {
             throw new AccessDeniedHttpException();
         }
