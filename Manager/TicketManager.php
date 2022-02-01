@@ -205,9 +205,17 @@ final class TicketManager implements TicketManagerInterface
 
         if (\is_object($user)) {
             if (!$userManager->hasRole($user, TicketRole::ADMIN)) {
-                $query
-                    ->andWhere('t.userCreatedObject = :user')
-                    ->setParameter('user', $user);
+                // allow custom permissions from final user class
+                if (\is_object($user) && method_exists($user, 'addConditionForAccess')) {
+                    $query = $user->addConditionForAccess($query);
+                }
+
+                // falback to default condition
+                else {
+                    $query
+                        ->andWhere('t.userCreatedObject = :user')
+                        ->setParameter('user', $user);
+                }
             }
         } else {
             // anonymous user
