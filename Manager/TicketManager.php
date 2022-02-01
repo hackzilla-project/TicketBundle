@@ -207,7 +207,7 @@ final class TicketManager implements TicketManagerInterface
             if (!$userManager->hasRole($user, TicketRole::ADMIN)) {
                 // allow custom permissions from final user class
                 if (\is_object($user) && method_exists($user, 'addConditionForAccess')) {
-                    $qb = $user->addConditionForAccess($$qb);
+                    $query = $user->addConditionForAccess($query);
                 }
 
                 // falback to default condition
