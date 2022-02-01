@@ -114,6 +114,7 @@ final class TicketManager implements TicketManagerInterface
         if (null !== $message) {
             $message->setTicket($ticket);
             $this->objectManager->persist($message);
+            $ticket->setPriority($message->getPriority());
         }
         $this->objectManager->flush();
     }
@@ -205,8 +206,8 @@ final class TicketManager implements TicketManagerInterface
         if (\is_object($user)) {
             if (!$userManager->hasRole($user, TicketRole::ADMIN)) {
                 $query
-                    ->andWhere('t.userCreated = :userId')
-                    ->setParameter('userId', $user->getId());
+                    ->andWhere('t.userCreatedObject = :user')
+                    ->setParameter('user', $user);
             }
         } else {
             // anonymous user
