@@ -19,10 +19,8 @@ interface TicketInterface
 {
     /**
      * Get ticket id.
-     *
-     * @return mixed
      */
-    public function getId();
+//    public function getId();
 
     /**
      * Set status.

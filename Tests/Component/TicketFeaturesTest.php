@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Tests\Extension;
 
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessage;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class TicketFeaturesTest extends WebTestCase

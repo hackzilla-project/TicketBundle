@@ -56,6 +56,7 @@
         "symfony/test-pack": "^1.0"
     },
     "suggest": {
+        "symfony/maker-bundle": "Used to build the entities",
         "friendsofsymfony/user-bundle": "In order to ease user management",
         "vich/uploader-bundle": "Allow attaching files to ticket messages"
     },

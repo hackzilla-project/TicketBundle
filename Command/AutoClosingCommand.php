@@ -79,7 +79,11 @@ final class AutoClosingCommand extends Command
         }
 
         $ticketClass = $parameterBag->get('hackzilla_ticket.model.ticket.class');
-        $this->ticketRepository = $entityManager->getRepository($ticketClass);
+        if (class_exists($ticketClass)) {
+            $this->ticketRepository = $entityManager->getRepository($ticketClass);
+        } else {
+            $this->ticketRepository = '';
+        }
     }
 
     /**
@@ -108,6 +112,12 @@ final class AutoClosingCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if (!$this->ticketRepository) {
+            $output->writeln('The ticket entity has not been set up.');
+
+            return Command::FAILURE;
+        }
+
         $username = $input->getArgument('username');
 
         $resolvedTickets = $this->ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));

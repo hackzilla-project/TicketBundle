@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Form\DataTransformer;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
 final class StatusTransformer implements DataTransformerInterface
@@ -27,7 +27,7 @@ final class StatusTransformer implements DataTransformerInterface
      */
     public function transform($number)
     {
-        if (TicketMessage::STATUS_CLOSED == $number) {
+        if (TicketMessageInterface::STATUS_CLOSED == $number) {
             return 1;
         }
 
@@ -44,7 +44,7 @@ final class StatusTransformer implements DataTransformerInterface
     public function reverseTransform($number)
     {
         if (1 == $number) {
-            return TicketMessage::STATUS_CLOSED;
+            return TicketMessageInterface::STATUS_CLOSED;
         }
 
         return null;

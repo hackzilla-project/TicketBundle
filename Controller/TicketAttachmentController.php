@@ -15,7 +15,7 @@ namespace Hackzilla\Bundle\TicketBundle\Controller;
 
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment;
+use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -55,7 +55,7 @@ final class TicketAttachmentController extends AbstractController
     {
         $ticketMessage = $this->ticketManager->getMessageById($ticketMessageId);
 
-        if (!$ticketMessage || !$ticketMessage instanceof TicketMessageWithAttachment) {
+        if (!$ticketMessage || !$ticketMessage instanceof MessageAttachmentInterface) {
             throw $this->createNotFoundException($this->translator->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
         }
 

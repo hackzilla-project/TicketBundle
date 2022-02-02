@@ -15,9 +15,9 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;

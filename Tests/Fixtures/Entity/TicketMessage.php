@@ -14,19 +14,27 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessage as BaseTicketMessage;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageTrait;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  *
  * @ORM\Entity()
  */
-class TicketMessage extends BaseTicketMessage
+class TicketMessage implements TicketMessageInterface
 {
+    use TicketMessageTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     protected $id;
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

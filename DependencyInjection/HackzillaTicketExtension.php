@@ -35,6 +35,7 @@ final class HackzillaTicketExtension extends Extension
 
         $loader = new Loader\PhpFileLoader($container, new FileLocator(self::bundleDirectory().'/Resources/config'));
         $loader->load('manager.php');
+        $loader->load('maker.php');
         $loader->load('form_types.php');
         $loader->load('event_listener.php');
         $loader->load('component.php');

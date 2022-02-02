@@ -21,50 +21,6 @@ use Doctrine\Common\Collections\Collection;
  */
 trait TicketTrait
 {
-    /**
-     * @var int
-     */
-    protected $userCreated;
-
-    protected $userCreatedObject;
-
-    /**
-     * @var int
-     */
-    protected $lastUser;
-
-    protected $lastUserObject;
-
-    /**
-     * @var \DateTime
-     */
-    protected $lastMessage;
-
-    /**
-     * @var string
-     */
-    protected $subject;
-
-    /**
-     * @var int
-     */
-    protected $status;
-
-    /**
-     * @var int
-     */
-    protected $priority;
-
-    /**
-     * @var ArrayCollection
-     */
-    protected $messages;
-
-    /**
-     * @var \DateTime
-     */
-    protected $createdAt;
-
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());

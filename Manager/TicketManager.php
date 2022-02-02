@@ -17,6 +17,8 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\Bundle\TicketBundle\TicketRole;
+use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class TicketManager implements TicketManagerInterface
@@ -43,8 +45,23 @@ final class TicketManager implements TicketManagerInterface
      * @param string $ticketClass
      * @param string $ticketMessageClass
      */
-    public function __construct($ticketClass, $ticketMessageClass, $persmissionsServiceClass)
+    public function __construct($ticketClass, $ticketMessageClass, ?LoggerInterface $logger = null)
     {
+        if (!class_exists($ticketClass)) {
+            if ($logger) {
+                $logger->error(sprintf('Ticket entity %s doesn\'t exist', $ticketMessageClass));
+            }
+
+            $ticketClass = '';
+        }
+        if (!class_exists($ticketMessageClass)) {
+            if ($logger) {
+                $logger->error(sprintf('Message entity %s doesn\'t exist', $ticketMessageClass));
+            }
+
+            $ticketMessageClass = '';
+        }
+
         $this->ticketClass = $ticketClass;
         $this->ticketMessageClass = $ticketMessageClass;
         $this->persmissionsService = new $persmissionsServiceClass();
@@ -53,8 +70,14 @@ final class TicketManager implements TicketManagerInterface
     public function setObjectManager(ObjectManager $objectManager): void
     {
         $this->objectManager = $objectManager;
-        $this->ticketRepository = $objectManager->getRepository($this->ticketClass);
-        $this->messageRepository = $objectManager->getRepository($this->ticketMessageClass);
+
+        if ($this->ticketClass) {
+            $this->ticketRepository = $objectManager->getRepository($this->ticketClass);
+        }
+
+        if ($this->ticketMessageClass) {
+            $this->messageRepository = $objectManager->getRepository($this->ticketMessageClass);
+        }
     }
 
     /**

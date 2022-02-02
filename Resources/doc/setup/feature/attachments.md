@@ -8,15 +8,15 @@ Add UploaderBundle to your requirements:
 composer require vich/uploader-bundle
 ```
 
+Your `TicketMessage` entity will also need to implement `Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface`
+
 Specify the uploader config, so the bundle knows where to store the files.
 
 ```yaml
 hackzilla_ticket:
     user_class: App\Entity\User
-    ticket_class: App\Entity\TicketWithAttachment
-    message_class: App\Entity\TicketMessageWithAttachment
-    features:
-        attachment: true
+    ticket_class: App\Entity\Ticket
+    message_class: App\Entity\TicketMessage
 
 vich_uploader:
     db_driver: orm
@@ -60,9 +60,3 @@ public function registerBundles()
     );
 }
 ```
-
-## Custom Entity
-
-If you want to implement your own entities then you will want to extend
-
-``` \Hackzilla\Bundle\TicketBundle\Model\TicketMessageAttachmentInterface ```

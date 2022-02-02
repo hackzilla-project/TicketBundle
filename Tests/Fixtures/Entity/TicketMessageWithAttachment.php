@@ -14,19 +14,30 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment as BaseTicketMessageWithAttachment;
+use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface;
+use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentTrait;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageTrait;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  *
  * @ORM\Entity()
  */
-class TicketMessageWithAttachment extends BaseTicketMessageWithAttachment
+class TicketMessageWithAttachment implements TicketMessageInterface, MessageAttachmentInterface
 {
+    use TicketMessageTrait;
+    use MessageAttachmentTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     protected $id;
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }
