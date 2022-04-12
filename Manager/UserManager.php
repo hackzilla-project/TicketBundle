@@ -16,7 +16,6 @@ namespace Hackzilla\Bundle\TicketBundle\Manager;
 use Doctrine\Persistence\ObjectRepository;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
-use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -38,10 +37,13 @@ final class UserManager implements UserManagerInterface
      */
     private $userRepository;
 
+    private $persmissionsService;
+
     public function __construct(
         TokenStorageInterface $tokenStorage,
         ObjectRepository $userRepository,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        string $persmissionsServiceClass
     ) {
         $this->tokenStorage = $tokenStorage;
 
@@ -55,6 +57,7 @@ final class UserManager implements UserManagerInterface
 
         $this->userRepository = $userRepository;
         $this->authorizationChecker = $authorizationChecker;
+        $this->persmissionsService = new $persmissionsServiceClass();
     }
 
     /**
@@ -105,11 +108,7 @@ final class UserManager implements UserManagerInterface
      */
     public function hasPermission($user, TicketInterface $ticket): void
     {
-        if (!\is_object($user) || (!$this->hasRole($user, TicketRole::ADMIN) &&
-            $ticket->getUserCreated() != $user->getId())
-        ) {
-            throw new AccessDeniedHttpException();
-        }
+        $this->persmissionsService->hasPermission($user, $ticket, $this);
     }
 
     public function findUserByUsername(string $username): ?UserInterface

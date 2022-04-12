@@ -36,6 +36,7 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('user_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('ticket_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('message_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('permissions_class')->isRequired()->cannotBeEmpty()->end()
                 ->arrayNode('features')
                     ->addDefaultsIfNotSet()
                     ->children()

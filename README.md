@@ -42,6 +42,7 @@ hackzilla_ticket:
     user_class: App\Entity\User
     ticket_class: App\Entity\Ticket
     message_class: App\Entity\TicketMessageWithAttachment
+    permissions_class: App\Service\TicketPermissionService
 ```
 
 ### Custom templates (optional)
