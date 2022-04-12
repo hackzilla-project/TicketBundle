@@ -85,7 +85,7 @@ final class TicketController extends AbstractController
 
         $pagination = $this->pagination->paginate(
             $query->getQuery(),
-            $request->query->get('page', 1)/*page number*/,
+            intval($request->query->get('page', 1))/*page number*/,
             10/*limit per page*/
         );
 
