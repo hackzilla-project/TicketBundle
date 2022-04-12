@@ -27,7 +27,7 @@ trait PermissionsServiceTrait
      * @param UserManagerInterface $userManager
      * @return QueryBuilder
      */
-    public function addUserPermissions($query, UserInterface $user, UserManagerInterface $userManager): QueryBuilder
+    public function addUserPermissionsCondition($query, UserInterface $user, UserManagerInterface $userManager): QueryBuilder
     {
         if (\is_object($user)) {
             if (!$userManager->hasRole($user, TicketRole::ADMIN)) {

@@ -24,7 +24,7 @@ interface PermissionsServiceInterface
      * @param UserManagerInterface $userManager
      * @return void
      */
-    public function addUserPermissions($query, UserInterface $user, UserManagerInterface $userManager);
+    public function addUserPermissionsCondition($query, UserInterface $user, UserManagerInterface $userManager);
 
     /**
      * used by UserManager::hasPermission()

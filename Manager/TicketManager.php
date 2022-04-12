@@ -204,7 +204,7 @@ final class TicketManager implements TicketManagerInterface
         }
 
         // add permissions check and return updated query
-        return $this->persmissionsService->addUserPermissions(
+        return $this->persmissionsService->addUserPermissionsCondition(
             $query,
             $userManager->getCurrentUser(),
             $userManager
