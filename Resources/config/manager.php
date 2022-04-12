@@ -39,6 +39,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('security.token_storage'),
                 new ReferenceConfigurator('hackzilla_ticket.user_repository'),
                 new ReferenceConfigurator('security.authorization_checker'),
+                '%hackzilla_ticket.model.permissions.class%',
             ])
 
         ->alias('hackzilla_ticket.user_manager', UserManager::class)
@@ -52,6 +53,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 '%hackzilla_ticket.model.ticket.class%',
                 '%hackzilla_ticket.model.message.class%',
+                '%hackzilla_ticket.model.permissions.class%',
             ])
             ->call('setObjectManager', [
                 new ReferenceConfigurator('doctrine.orm.entity_manager'),

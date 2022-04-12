@@ -17,7 +17,6 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class TicketManager implements TicketManagerInterface
@@ -36,16 +35,19 @@ final class TicketManager implements TicketManagerInterface
 
     private $ticketMessageClass;
 
+    private $persmissionsService;
+
     /**
      * TicketManager constructor.
      *
      * @param string $ticketClass
      * @param string $ticketMessageClass
      */
-    public function __construct($ticketClass, $ticketMessageClass)
+    public function __construct($ticketClass, $ticketMessageClass, $persmissionsServiceClass)
     {
         $this->ticketClass = $ticketClass;
         $this->ticketMessageClass = $ticketMessageClass;
+        $this->persmissionsService = new $persmissionsServiceClass();
     }
 
     public function setObjectManager(ObjectManager $objectManager): void
@@ -201,22 +203,12 @@ final class TicketManager implements TicketManagerInterface
                 ->setParameter('priority', $ticketPriority);
         }
 
-        $user = $userManager->getCurrentUser();
-
-        if (\is_object($user)) {
-            if (!$userManager->hasRole($user, TicketRole::ADMIN)) {
-                $query
-                    ->andWhere('t.userCreatedObject = :user')
-                    ->setParameter('user', $user);
-            }
-        } else {
-            // anonymous user
-            $query
-                ->andWhere('t.userCreated = :userId')
-                ->setParameter('userId', 0);
-        }
-
-        return $query;
+        // add permissions check and return updated query
+        return $this->persmissionsService->addUserPermissionsCondition(
+            $query,
+            $userManager->getCurrentUser(),
+            $userManager
+        );
     }
 
     /**

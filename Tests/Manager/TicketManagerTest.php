@@ -48,6 +48,7 @@ final class TicketManagerTest extends WebTestCase
     {
         $ticketClass = 'App\Ticket';
         $ticketMessageClass = 'App\TicketMessage';
+        $persmissionsServiceClass = 'App\PermissionService';
 
         $qb = $this->createMock(QueryBuilder::class);
         $qb
@@ -66,7 +67,7 @@ final class TicketManagerTest extends WebTestCase
             ->method('getRepository')
             ->willReturn($entityRepository);
 
-        $ticketManager = new TicketManager($ticketClass, $ticketMessageClass);
+        $ticketManager = new TicketManager($ticketClass, $ticketMessageClass, $persmissionsServiceClass);
         $ticketManager->setObjectManager($om);
 
         $this->assertInstanceOf(QueryBuilder::class, $ticketManager->getTicketListQuery($this->userManager, TicketMessageInterface::STATUS_OPEN));

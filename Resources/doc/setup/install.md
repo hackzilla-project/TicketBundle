@@ -13,6 +13,7 @@ Specify your user class in your config.
 ```yaml
 hackzilla_ticket:
     user_class: App\Entity\User
+    permissions_class: App\Service\TicketPermissionService
 ```
 
 Your user class needs to implement ```Hackzilla\Bundle\TicketBundle\Model\UserInterface```
@@ -26,6 +27,24 @@ namespace App\Entity;
 
 class User implements \Hackzilla\Bundle\TicketBundle\Model\UserInterface
 {
+}
+```
+
+Your permission class needs to implement ```Hackzilla\Bundle\TicketBundle\Model\PermissionsServiceInterface```
+
+You should end up with a class similar to:
+
+```php
+<?php
+
+namespace App\Service;
+
+use \Hackzilla\Bundle\TicketBundle\Model\PermissionsServiceInterface;
+use \Hackzilla\Bundle\TicketBundle\Model\PermissionsServiceTrait;
+
+class TicketPermissionService implements PermissionsServiceInterface
+{
+    use PermissionsServiceTrait;
 }
 ```
 
