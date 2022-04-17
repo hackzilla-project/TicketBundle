@@ -175,7 +175,7 @@ This is how you would do it the Maker component.
  Next: When you're ready, create a migration with php bin/console make:migration
 ```
 
-Finally, you can use the custom aker commands to update these entities with the required fields.
+Finally, you can use the custom Maker commands to update these entities with the required fields.
 
 ```php
 % bin/console make:entity:ticket
@@ -213,6 +213,8 @@ Finally, you can use the custom aker commands to update these entities with the 
  no change: src/Entity/TicketMessage.php
  no change: src/Entity/Ticket.php
 ```
+
+Note: make:entity:message also accepts a `--attachment` argument.
 
 These are now your entities.
 You will be able to customise them and even convert the ids to UUIDs if you want.
