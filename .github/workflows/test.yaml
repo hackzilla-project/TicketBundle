@@ -74,14 +74,14 @@ jobs:
               if: matrix.variant != 'normal'
               run: composer require ${{ matrix.variant }} --no-update
 
+            - name: Install maker
+              run: composer require symfony/maker-bundle --no-update
+
             - name: "Install Composer dependencies (${{ matrix.dependencies }})"
               uses: "ramsey/composer-install@v1"
               with:
                   dependency-versions: "${{ matrix.dependencies }}"
                   composer-options: "--prefer-dist --prefer-stable"
-
-            - name: Install maker
-              run: composer require symfony/maker-bundle --no-progress
 
             - name: Run Tests with "vich/uploader-bundle"
               if: matrix.variant == 'vich/uploader-bundle'
