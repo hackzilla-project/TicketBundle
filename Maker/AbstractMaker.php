@@ -45,7 +45,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
     private $ticketClass;
     private $messageClass;
 
-    public function __construct(FileManager $fileManager, DoctrineHelper $doctrineHelper, Generator $generator, EntityClassGenerator $entityClassGenerator, ParameterBagInterface $bag)
+    public function __construct(FileManager $fileManager, DoctrineHelper $doctrineHelper, EntityClassGenerator $entityClassGenerator, ParameterBagInterface $bag)
     {
         $this->fileManager = $fileManager;
         $this->doctrineHelper = $doctrineHelper;
@@ -75,7 +75,6 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
     {
         $command
             ->addOption('api-resource', 'a', InputOption::VALUE_NONE, 'Mark this class as an API Platform resource (expose a CRUD API for it)')
-            ->addOption('regenerate', null, InputOption::VALUE_NONE, 'Instead of adding new fields, simply generate the methods (e.g. getter/setter) for existing fields')
             ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite any existing getter/setter methods');
     }
 
@@ -120,18 +119,14 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
             throw new RuntimeCommandException('To use Doctrine entity attributes you\'ll need PHP 8, doctrine/orm 2.9, doctrine/doctrine-bundle 2.4 and symfony/framework-bundle 5.2.');
         }
 
-        $classExists = class_exists($entityClassDetails->getFullName());
-
         if (
             !$this->doesEntityUseAnnotationMapping($entityClassDetails->getFullName())
             && !$this->doesEntityUseAttributeMapping($entityClassDetails->getFullName())
         ) {
-            throw new RuntimeCommandException(sprintf('Only annotation or attribute mapping is supported by %s, but the <info>%s</info> class uses a different format. If you would like this command to generate the properties & getter/setter methods, add your mapping configuration, and then re-run this command with the <info>--regenerate</info> flag.', self::getCommandName(), $entityClassDetails->getFullName()));
+            throw new RuntimeCommandException(sprintf('Only annotation or attribute mapping is supported by this command, but the <info>%s</info> class uses a different format. If you would like this command to generate the properties & getter/setter methods, add your mapping configuration, and then re-run this command with the <info>--regenerate</info> flag.', $entityClassDetails->getFullName()));
         }
 
-        if ($classExists) {
-            $entityPath = $this->getPathOfClass($entityClassDetails->getFullName());
-        }
+        $entityPath = $this->getPathOfClass($entityClassDetails->getFullName());
 
         $currentFields = $this->getPropertyNames($entityClassDetails->getFullName());
         $manipulator = $this->createClassManipulator($entityPath, $io, $overwrite, $entityClassDetails->getFullName());
