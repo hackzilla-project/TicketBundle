@@ -6,6 +6,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Install symfony/maker-bundle
+        run: composer require symfony/maker-bundle --no-progress
+
       - name: PHPStan
         uses: "docker://oskarstark/phpstan-ga"
         env:
