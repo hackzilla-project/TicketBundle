@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony MakerBundle package.
  *
@@ -12,11 +14,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Maker;
 
-use Doctrine\DBAL\Types\Type;
 use Hackzilla\Bundle\TicketBundle\Maker\Util\ClassSourceManipulator;
-use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
-use PhpParser\Builder\Param;
-use PhpParser\Node;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
@@ -27,25 +25,22 @@ use Symfony\Bundle\MakerBundle\Exception\RuntimeCommandException;
 use Symfony\Bundle\MakerBundle\FileManager;
 use Symfony\Bundle\MakerBundle\Generator;
 use Symfony\Bundle\MakerBundle\InputConfiguration;
-use Symfony\Bundle\MakerBundle\Maker\MakeEntity;
 use Symfony\Bundle\MakerBundle\Str;
 use Symfony\Bundle\MakerBundle\Util\ClassDetails;
 use Symfony\Bundle\MakerBundle\Util\ClassNameDetails;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * A lot of this class is a duplication of the Symfony Maker component.
- * My hope is the Maker component will eventually open up as it becomes more mature
+ * My hope is the Maker component will eventually open up as it becomes more mature.
  */
 abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractMaker
 {
     private $fileManager;
     private $doctrineHelper;
-    private $generator;
     private $entityClassGenerator;
     private $ticketClass;
     private $messageClass;
@@ -54,20 +49,11 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
     {
         $this->fileManager = $fileManager;
         $this->doctrineHelper = $doctrineHelper;
-        $this->generator = $generator;
         $this->entityClassGenerator = $entityClassGenerator;
 
         $this->ticketClass = $bag->get('hackzilla_ticket.model.ticket.class');
         $this->messageClass = $bag->get('hackzilla_ticket.model.message.class');
     }
-
-    abstract protected function fields(): array;
-
-    abstract protected function entityClass(): string;
-
-    abstract protected function traits(): array;
-
-    abstract protected function interfaces(): array;
 
     public function getTicketClass(): string
     {
@@ -90,8 +76,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
         $command
             ->addOption('api-resource', 'a', InputOption::VALUE_NONE, 'Mark this class as an API Platform resource (expose a CRUD API for it)')
             ->addOption('regenerate', null, InputOption::VALUE_NONE, 'Instead of adding new fields, simply generate the methods (e.g. getter/setter) for existing fields')
-            ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite any existing getter/setter methods')
-        ;
+            ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite any existing getter/setter methods');
     }
 
     /**
@@ -99,7 +84,6 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
      */
     public function configureDependencies(DependencyBuilder $dependencies)
     {
-
     }
 
     /**
@@ -107,7 +91,6 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
      */
     public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
     {
-
     }
 
     /**
@@ -153,7 +136,6 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
         $currentFields = $this->getPropertyNames($entityClassDetails->getFullName());
         $manipulator = $this->createClassManipulator($entityPath, $io, $overwrite, $entityClassDetails->getFullName());
 
-        $isFirstField = true;
         foreach ($this->fields() as $newField) {
             $io->comment(is_a($newField, EntityRelation::class) ? $newField->getOwningProperty() : $newField['fieldName']);
             $fileManagerOperations = [];
@@ -242,6 +224,13 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
         ]);
     }
 
+    abstract protected function fields(): array;
+
+    abstract protected function entityClass(): string;
+
+    abstract protected function traits(): array;
+
+    abstract protected function interfaces(): array;
 
     private function createClassManipulator(string $path, ConsoleStyle $io, bool $overwrite, string $className, bool $originalClass = true): ClassSourceManipulator
     {
@@ -273,13 +262,6 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
         return $classDetails->getPath();
     }
 
-    private function isClassInVendor(string $class): bool
-    {
-        $path = $this->getPathOfClass($class);
-
-        return $this->fileManager->isPathInVendor($path);
-    }
-
     private function regenerateEntities(string $classOrNamespace, bool $overwrite, Generator $generator)
     {
         $regenerator = new EntityRegenerator($this->doctrineHelper, $this->fileManager, $generator, $this->entityClassGenerator, $overwrite);
@@ -294,7 +276,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
 
         $reflClass = new \ReflectionClass($class);
 
-        return array_map(function (\ReflectionProperty $prop) {
+        return array_map(static function (\ReflectionProperty $prop) {
             return $prop->getName();
         }, $reflClass->getProperties());
     }
@@ -333,22 +315,5 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
         }
 
         return $this->doctrineHelper->doesClassUsesAttributes($className);
-    }
-
-    private function getEntityNamespace(): string
-    {
-        return $this->doctrineHelper->getEntityNamespace();
-    }
-
-    private function getTypesMap(): array
-    {
-        $types = Type::getTypesMap();
-
-        // remove deprecated json_array if it exists
-        if (\defined(sprintf('%s::JSON_ARRAY', Type::class))) {
-            unset($types[Type::JSON_ARRAY]);
-        }
-
-        return $types;
     }
 }

@@ -12,7 +12,8 @@ HEADER;
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->exclude([
-        'Tests/Functional/cache', 
+        'Maker',
+        'Tests/Functional/cache',
     ])
 ;
 

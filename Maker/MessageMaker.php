@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Maker;
 
 use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface;
@@ -14,7 +25,6 @@ use Symfony\Bundle\MakerBundle\Maker\MakeEntity;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 final class MessageMaker extends AbstractMaker
 {
@@ -47,7 +57,7 @@ final class MessageMaker extends AbstractMaker
     protected function fields(): array
     {
         $ticketRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getTicketClass(), $this->getMessageClass());
-        $ticketRelation->setOwningProperty('ticket');
+        $ticketRelation->setOwningProperty('messages');
         $ticketRelation->setInverseProperty('ticket');
 
         $fields = [

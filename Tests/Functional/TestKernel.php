@@ -17,8 +17,9 @@ use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
-use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Service\TicketPermissionService;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -189,6 +190,14 @@ final class TestKernel extends Kernel
             'orm' => [
                 'default_entity_manager' => 'default',
                 'auto_mapping' => true,
+                'mappings' => [
+                    'HackzillaTicketBundle' => [
+                        'dir' => 'Tests/Fixtures/Entity',
+                        'prefix' => 'Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity',
+                        'alias' => 'HackzillaTicketBundle',
+                        'type' => 'attribute',
+                    ],
+                ],
             ],
         ]);
 
@@ -209,6 +218,7 @@ final class TestKernel extends Kernel
             'user_class' => User::class,
             'ticket_class' => Ticket::class,
             'message_class' => TicketMessage::class,
+            'permissions_class' => TicketPermissionService::class,
         ];
 
         if ($this->useVichUploaderBundle) {

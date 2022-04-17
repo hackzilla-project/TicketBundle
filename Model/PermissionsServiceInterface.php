@@ -18,19 +18,18 @@ use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 interface PermissionsServiceInterface
 {
     /**
-     * used in TicketManager::getTicketListQuery()
+     * used in TicketManager::getTicketListQuery().
+     *
      * @param $query
-     * @param UserInterface $user
-     * @param UserManagerInterface $userManager
+     *
      * @return void
      */
     public function addUserPermissionsCondition($query, UserInterface $user, UserManagerInterface $userManager);
 
     /**
-     * used by UserManager::hasPermission()
+     * used by UserManager::hasPermission().
+     *
      * @param UserInterface|string $user
-     * @param TicketInterface $ticket
-     * @param UserManagerInterface $userManager
      */
     public function hasPermission($user, TicketInterface $ticket, UserManagerInterface $userManager): void;
 }

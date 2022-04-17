@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony MakerBundle package.
  *
@@ -13,7 +15,6 @@
 namespace Hackzilla\Bundle\TicketBundle\Maker\Util;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use PhpParser\Builder;
 use PhpParser\BuilderHelpers;
 use PhpParser\Comment\Doc;
@@ -179,7 +180,7 @@ final class ClassSourceManipulator
         $importedClassName = $this->addUseStatementIfNecessary($trait);
 
         /** @var Node\Stmt\TraitUse[] $traitNodes */
-        $traitNodes = $this->findAllNodes(function ($node) {
+        $traitNodes = $this->findAllNodes(static function ($node) {
             return $node instanceof Node\Stmt\TraitUse;
         });
 
@@ -232,7 +233,7 @@ final class ClassSourceManipulator
     /**
      * @param Node[] $params
      */
-    public function addMethodBuilder(Builder\Method $methodBuilder, array $params = [], string $methodBody = null): void
+    public function addMethodBuilder(Builder\Method $methodBuilder, array $params = [], ?string $methodBody = null): void
     {
         $this->addMethodParams($methodBuilder, $params);
 
@@ -339,6 +340,84 @@ final class ClassSourceManipulator
         $docComment = new Doc(implode("\n", $docLines));
         $this->getClassNode()->setDocComment($docComment);
         $this->updateSourceCodeFromNewStmts();
+    }
+
+    /**
+     * @return string The alias to use when referencing this class
+     */
+    public function addUseStatementIfNecessary(string $class): string
+    {
+        $shortClassName = Str::getShortClassName($class);
+        if ($this->isInSameNamespace($class)) {
+            return $shortClassName;
+        }
+
+        $namespaceNode = $this->getNamespaceNode();
+
+        $targetIndex = null;
+        $addLineBreak = false;
+        $lastUseStmtIndex = null;
+        foreach ($namespaceNode->stmts as $index => $stmt) {
+            if ($stmt instanceof Node\Stmt\Use_) {
+                // I believe this is an array to account for use statements with {}
+                foreach ($stmt->uses as $use) {
+                    $alias = $use->alias ? $use->alias->name : $use->name->getLast();
+
+                    // the use statement already exists? Don't add it again
+                    if ($class === (string) $use->name) {
+                        return $alias;
+                    }
+
+                    if ($alias === $shortClassName) {
+                        // we have a conflicting alias!
+                        // to be safe, use the fully-qualified class name
+                        // everywhere and do not add another use statement
+                        return '\\'.$class;
+                    }
+                }
+
+                // if $class is alphabetically before this use statement, place it before
+                // only set $targetIndex the first time you find it
+                if (null === $targetIndex && Str::areClassesAlphabetical($class, (string) $stmt->uses[0]->name)) {
+                    $targetIndex = $index;
+                }
+
+                $lastUseStmtIndex = $index;
+            } elseif ($stmt instanceof Node\Stmt\Class_) {
+                if (null !== $targetIndex) {
+                    // we already found where to place the use statement
+
+                    break;
+                }
+
+                // we hit the class! If there were any use statements,
+                // then put this at the bottom of the use statement list
+                if (null !== $lastUseStmtIndex) {
+                    $targetIndex = $lastUseStmtIndex + 1;
+                } else {
+                    $targetIndex = $index;
+                    $addLineBreak = true;
+                }
+
+                break;
+            }
+        }
+
+        if (null === $targetIndex) {
+            throw new \Exception('Could not find a class!');
+        }
+
+        $newUseNode = (new Builder\Use_($class, Node\Stmt\Use_::TYPE_NORMAL))->getNode();
+        array_splice(
+            $namespaceNode->stmts,
+            $targetIndex,
+            0,
+            $addLineBreak ? [$newUseNode, $this->createBlankLineNode(self::CONTEXT_OUTSIDE_CLASS)] : [$newUseNode]
+        );
+
+        $this->updateSourceCodeFromNewStmts();
+
+        return $shortClassName;
     }
 
     private function addCustomGetter(string $propertyName, string $methodName, $returnType, bool $isReturnTypeNullable, array $commentLines = [], $typeCast = null): void
@@ -604,84 +683,6 @@ final class ClassSourceManipulator
         return null;
     }
 
-    /**
-     * @return string The alias to use when referencing this class
-     */
-    public function addUseStatementIfNecessary(string $class): string
-    {
-        $shortClassName = Str::getShortClassName($class);
-        if ($this->isInSameNamespace($class)) {
-            return $shortClassName;
-        }
-
-        $namespaceNode = $this->getNamespaceNode();
-
-        $targetIndex = null;
-        $addLineBreak = false;
-        $lastUseStmtIndex = null;
-        foreach ($namespaceNode->stmts as $index => $stmt) {
-            if ($stmt instanceof Node\Stmt\Use_) {
-                // I believe this is an array to account for use statements with {}
-                foreach ($stmt->uses as $use) {
-                    $alias = $use->alias ? $use->alias->name : $use->name->getLast();
-
-                    // the use statement already exists? Don't add it again
-                    if ($class === (string) $use->name) {
-                        return $alias;
-                    }
-
-                    if ($alias === $shortClassName) {
-                        // we have a conflicting alias!
-                        // to be safe, use the fully-qualified class name
-                        // everywhere and do not add another use statement
-                        return '\\'.$class;
-                    }
-                }
-
-                // if $class is alphabetically before this use statement, place it before
-                // only set $targetIndex the first time you find it
-                if (null === $targetIndex && Str::areClassesAlphabetical($class, (string) $stmt->uses[0]->name)) {
-                    $targetIndex = $index;
-                }
-
-                $lastUseStmtIndex = $index;
-            } elseif ($stmt instanceof Node\Stmt\Class_) {
-                if (null !== $targetIndex) {
-                    // we already found where to place the use statement
-
-                    break;
-                }
-
-                // we hit the class! If there were any use statements,
-                // then put this at the bottom of the use statement list
-                if (null !== $lastUseStmtIndex) {
-                    $targetIndex = $lastUseStmtIndex + 1;
-                } else {
-                    $targetIndex = $index;
-                    $addLineBreak = true;
-                }
-
-                break;
-            }
-        }
-
-        if (null === $targetIndex) {
-            throw new \Exception('Could not find a class!');
-        }
-
-        $newUseNode = (new Builder\Use_($class, Node\Stmt\Use_::TYPE_NORMAL))->getNode();
-        array_splice(
-            $namespaceNode->stmts,
-            $targetIndex,
-            0,
-            $addLineBreak ? [$newUseNode, $this->createBlankLineNode(self::CONTEXT_OUTSIDE_CLASS)] : [$newUseNode]
-        );
-
-        $this->updateSourceCodeFromNewStmts();
-
-        return $shortClassName;
-    }
-
     private function updateSourceCodeFromNewStmts(): void
     {
         $newCode = $this->printer->printFormatPreserving(
@@ -728,7 +729,7 @@ final class ClassSourceManipulator
 
     private function getClassNode(): Node\Stmt\Class_
     {
-        $node = $this->findFirstNode(function ($node) {
+        $node = $this->findFirstNode(static function ($node) {
             return $node instanceof Node\Stmt\Class_;
         });
 
@@ -741,7 +742,7 @@ final class ClassSourceManipulator
 
     private function getNamespaceNode(): Node\Stmt\Namespace_
     {
-        $node = $this->findFirstNode(function ($node) {
+        $node = $this->findFirstNode(static function ($node) {
             return $node instanceof Node\Stmt\Namespace_;
         });
 
@@ -827,7 +828,7 @@ final class ClassSourceManipulator
         $docBlock = "/**\n";
         foreach ($commentLines as $commentLine) {
             if ($commentLine) {
-                $docBlock .= " * $commentLine\n";
+                $docBlock .= " * ${commentLine}\n";
             } else {
                 // avoid the empty, extra space on blank lines
                 $docBlock .= " *\n";
@@ -966,27 +967,27 @@ final class ClassSourceManipulator
         $classNode = $this->getClassNode();
 
         // try to add after last property
-        $targetNode = $this->findLastNode(function ($node) {
+        $targetNode = $this->findLastNode(static function ($node) {
             return $node instanceof Node\Stmt\Property;
         }, [$classNode]);
 
         // otherwise, try to add after the last constant
         if (!$targetNode) {
-            $targetNode = $this->findLastNode(function ($node) {
+            $targetNode = $this->findLastNode(static function ($node) {
                 return $node instanceof Node\Stmt\ClassConst;
             }, [$classNode]);
         }
 
         // otherwise, try to add after the last trait
         if (!$targetNode) {
-            $targetNode = $this->findLastNode(function ($node) {
+            $targetNode = $this->findLastNode(static function ($node) {
                 return $node instanceof Node\Stmt\TraitUse;
             }, [$classNode]);
         }
 
         // add the new property after this node
         if ($targetNode) {
-            $index = array_search($targetNode, $classNode->stmts);
+            $index = array_search($targetNode, $classNode->stmts, true);
 
             array_splice(
                 $classNode->stmts,

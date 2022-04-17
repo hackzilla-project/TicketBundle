@@ -1,10 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Hackzilla\Bundle\TicketBundle\Maker;
 
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageTrait;
 use Hackzilla\Bundle\TicketBundle\Model\TicketTrait;
 use Symfony\Bundle\MakerBundle\Doctrine\EntityRelation;
 use Symfony\Bundle\MakerBundle\Maker\MakeEntity;
@@ -24,7 +33,7 @@ final class TicketMaker extends AbstractMaker
     protected function fields(): array
     {
         $messageRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getTicketClass(), $this->getMessageClass());
-        $messageRelation->setOwningProperty('ticket');
+        $messageRelation->setOwningProperty('messages');
         $messageRelation->setInverseProperty('ticket');
 
         return [

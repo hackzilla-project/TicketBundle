@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface;
 use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentTrait;
@@ -21,22 +22,53 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketMessageTrait;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
- *
- * @ORM\Entity()
+ * @author Daniel Platt <github@ofdan.co.uk>
  */
+#[ORM\Entity()]
 class TicketMessageWithAttachment implements TicketMessageInterface, MessageAttachmentInterface
 {
-    use TicketMessageTrait;
     use MessageAttachmentTrait;
+    use TicketMessageTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private $id;
 
-    public function getId()
+    #[ORM\OneToMany(mappedBy: 'messages', targetEntity: Ticket::class)]
+    private $ticket;
+
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private $user_id;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $message;
+
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private $status;
+
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private $priority;
+
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private $createdAt;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $attachmentName;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $attachmentSize;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $attachmentMimeType;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->ticket = new ArrayCollection();
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }

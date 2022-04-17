@@ -17,7 +17,7 @@ use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
-use Vich\UploaderBundle\Event\Events;
+use Vich\UploaderBundle\Event\Event;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
@@ -65,6 +65,6 @@ class FunctionalTest extends WebTestCase
         $eventDispatcher = static::$kernel->getContainer()->get('event_dispatcher');
         $listeners = $eventDispatcher->getListeners();
 
-        $this->assertArrayHasKey(Events::POST_UPLOAD, $listeners);
+        $this->assertArrayHasKey(Event::POST_UPLOAD, $listeners);
     }
 }

@@ -17,7 +17,6 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -37,7 +36,7 @@ final class TicketManager implements TicketManagerInterface
 
     private $ticketMessageClass;
 
-    private $persmissionsService;
+    private $permissionsService;
 
     /**
      * TicketManager constructor.
@@ -45,7 +44,7 @@ final class TicketManager implements TicketManagerInterface
      * @param string $ticketClass
      * @param string $ticketMessageClass
      */
-    public function __construct($ticketClass, $ticketMessageClass, ?LoggerInterface $logger = null)
+    public function __construct($ticketClass, $ticketMessageClass, $permissionsServiceClass, ?LoggerInterface $logger = null)
     {
         if (!class_exists($ticketClass)) {
             if ($logger) {
@@ -64,7 +63,7 @@ final class TicketManager implements TicketManagerInterface
 
         $this->ticketClass = $ticketClass;
         $this->ticketMessageClass = $ticketMessageClass;
-        $this->persmissionsService = new $persmissionsServiceClass();
+        $this->permissionsService = new $permissionsServiceClass();
     }
 
     public function setObjectManager(ObjectManager $objectManager): void
@@ -227,7 +226,7 @@ final class TicketManager implements TicketManagerInterface
         }
 
         // add permissions check and return updated query
-        return $this->persmissionsService->addUserPermissionsCondition(
+        return $this->permissionsService->addUserPermissionsCondition(
             $query,
             $userManager->getCurrentUser(),
             $userManager
