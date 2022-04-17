@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
@@ -41,11 +40,6 @@ final class AutoClosingCommand extends Command
     private $userManager;
 
     /**
-     * @var Repository
-     */
-    private $ticketRepository;
-
-    /**
      * @var string
      */
     private $locale = 'en';
@@ -56,11 +50,11 @@ final class AutoClosingCommand extends Command
     private $translationDomain = 'HackzillaTicketBundle';
 
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
 
-    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager, EntityManagerInterface $entityManager, LocaleAwareInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager, LocaleAwareInterface $translator, ParameterBagInterface $parameterBag)
     {
         parent::__construct();
 
@@ -76,13 +70,6 @@ final class AutoClosingCommand extends Command
 
         if ($parameterBag->has('locale')) {
             $this->locale = $parameterBag->get('locale');
-        }
-
-        $ticketClass = $parameterBag->get('hackzilla_ticket.model.ticket.class');
-        if (class_exists($ticketClass)) {
-            $this->ticketRepository = $entityManager->getRepository($ticketClass);
-        } else {
-            $this->ticketRepository = '';
         }
     }
 
@@ -112,15 +99,9 @@ final class AutoClosingCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!$this->ticketRepository) {
-            $output->writeln('The ticket entity has not been set up.');
-
-            return Command::FAILURE;
-        }
-
         $username = $input->getArgument('username');
 
-        $resolvedTickets = $this->ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));
+        $resolvedTickets = $this->ticketManager->getResolvedTicketOlderThan($input->getOption('age'));
 
         foreach ($resolvedTickets as $ticket) {
             $message = $this->ticketManager->createMessage()

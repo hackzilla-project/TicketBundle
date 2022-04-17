@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
-use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Service\TicketPermissionService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -52,7 +52,7 @@ class UserManagerTest extends WebTestCase
     {
         $doctrine = static::getContainer()->get('doctrine');
 
-        return $doctrine->getRepository(UserInterface::class);
+        return $doctrine->getRepository(User::class);
     }
 
     private function getAuthorizationChecker()

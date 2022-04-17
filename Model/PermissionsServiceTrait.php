@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
-use Doctrine\ORM\QueryBuilder;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -23,9 +22,9 @@ trait PermissionsServiceTrait
     /**
      * used in TicketManager::getTicketListQuery().
      *
-     * @param $query
+     * @param object $query
      */
-    public function addUserPermissionsCondition($query, UserInterface|string $user, UserManagerInterface $userManager): QueryBuilder
+    public function addUserPermissionsCondition($query, UserInterface|string $user, UserManagerInterface $userManager)
     {
         if (\is_object($user)) {
             if (!$userManager->hasRole($user, TicketRole::ADMIN)) {

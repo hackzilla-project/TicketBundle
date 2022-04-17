@@ -28,7 +28,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
                 new ReferenceConfigurator('hackzilla_ticket.user_manager'),
-                new ReferenceConfigurator('doctrine.orm.entity_manager'),
                 new ReferenceConfigurator('translator'),
                 new ReferenceConfigurator('parameter_bag'),
             ])

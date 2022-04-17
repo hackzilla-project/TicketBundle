@@ -22,6 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @author Javier Spagnoletti <phansys@gmail.com>
  * @author Daniel Platt <github@ofdan.co.uk>
  */
+#[ORM\Entity()]
 #[ORM\Table(name: '`user`')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, TicketBundleUserInterface
 {

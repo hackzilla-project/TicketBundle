@@ -20,9 +20,7 @@ interface PermissionsServiceInterface
     /**
      * used in TicketManager::getTicketListQuery().
      *
-     * @param $query
-     *
-     * @return void
+     * @param object $query
      */
     public function addUserPermissionsCondition($query, UserInterface $user, UserManagerInterface $userManager);
 
