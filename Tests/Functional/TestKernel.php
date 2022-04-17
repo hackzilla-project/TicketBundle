@@ -161,7 +161,10 @@ final class TestKernel extends Kernel
         $c->loadFromExtension('framework', $frameworkConfig);
 
         // SecurityBundle config
-        $mainFirewallConfig = [];
+        $mainFirewallConfig = [
+            'lazy' => true,
+            'provider' => 'in_memory',
+        ];
 
         // "logout_on_user_change" configuration was marked as mandatory since version 3.4 and deprecated as of 4.1.
         if (version_compare(self::VERSION, '3.4', '>=') && version_compare(self::VERSION, '4.1', '<')) {
