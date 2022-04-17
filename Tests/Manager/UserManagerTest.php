@@ -28,6 +28,7 @@ class UserManagerTest extends WebTestCase
 
     protected function setUp(): void
     {
+        self::bootKernel();
         $this->tokenStorage = new TokenStorage();
 
         $this->object = new UserManager(
