@@ -16,18 +16,15 @@ namespace Hackzilla\Bundle\TicketBundle\Manager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 
-/**
- * @method ?UserInterface findUserByUsername(string $username)
- */
 interface UserManagerInterface
 {
-    public function getCurrentUser();
+    public function getCurrentUser(): ?UserInterface;
 
-    public function getUserById($userId);
+    public function getUserById($userId): ?UserInterface;
 
     public function hasRole(UserInterface $user, string $role): bool;
 
-    public function hasPermission(UserInterface|string $user, TicketInterface $ticket);
+    public function hasPermission(?UserInterface $user, TicketInterface $ticket): bool;
 
     public function findUserByUsername(string $username): ?UserInterface;
 }

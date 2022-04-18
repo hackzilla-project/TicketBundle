@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Doctrine\Persistence\ObjectRepository;
+use Hackzilla\Bundle\TicketBundle\Model\PermissionsServiceInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -36,13 +37,14 @@ final class UserManager implements UserManagerInterface
      */
     private $userRepository;
 
-    private $persmissionsService;
+    /** @var PermissionsServiceInterface */
+    private $permissionService;
 
     public function __construct(
         TokenStorageInterface $tokenStorage,
         ObjectRepository $userRepository,
         AuthorizationCheckerInterface $authorizationChecker,
-        string $persmissionsServiceClass
+        PermissionManagerInterface $permissionService,
     ) {
         $this->tokenStorage = $tokenStorage;
 
@@ -56,22 +58,19 @@ final class UserManager implements UserManagerInterface
 
         $this->userRepository = $userRepository;
         $this->authorizationChecker = $authorizationChecker;
-        $this->persmissionsService = new $persmissionsServiceClass();
+        $this->permissionService = $permissionService;
     }
 
-    /**
-     * @return int|UserInterface
-     */
-    public function getCurrentUser()
+    public function getCurrentUser(): ?UserInterface
     {
         if (null === $this->tokenStorage->getToken()) {
-            return 0;
+            return null;
         }
 
         $user = $this->tokenStorage->getToken()->getUser();
 
         if ('anon.' === $user) {
-            $user = 0;
+            $user = null;
         } elseif (!$user instanceof UserInterface) {
             throw new \LogicException(sprintf(
                 'The object representing the authenticated user MUST implement "%s".',
@@ -103,11 +102,11 @@ final class UserManager implements UserManagerInterface
     }
 
     /**
-     * @param UserInterface|string $user
+     * @param ?UserInterface $user
      */
-    public function hasPermission($user, TicketInterface $ticket): void
+    public function hasPermission(?UserInterface $user, TicketInterface $ticket): bool
     {
-        $this->persmissionsService->hasPermission($user, $ticket, $this);
+        $this->permissionService->hasPermission($user, $ticket, $this);
     }
 
     public function findUserByUsername(string $username): ?UserInterface

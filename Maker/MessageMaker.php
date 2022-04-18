@@ -60,6 +60,7 @@ final class MessageMaker extends AbstractMaker
         $userRelation->setOwningProperty('user');
         $userRelation->setInverseProperty('user');
         $userRelation->setMapInverseRelation(false);
+        $userRelation->setIsNullable(true);
 
         $ticketRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getMessageClass(), $this->getTicketClass());
         $ticketRelation->setOwningProperty('ticket');

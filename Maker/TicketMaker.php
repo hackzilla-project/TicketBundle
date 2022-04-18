@@ -36,11 +36,13 @@ final class TicketMaker extends AbstractMaker
         $lastUserRelation->setOwningProperty('lastUser');
         $lastUserRelation->setInverseProperty('lastUser');
         $lastUserRelation->setMapInverseRelation(false);
+        $lastUserRelation->setIsNullable(true);
 
         $createdUserRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getTicketClass(), $this->getUserClass());
-        $createdUserRelation->setOwningProperty('createdUser');
-        $createdUserRelation->setInverseProperty('createdUser');
+        $createdUserRelation->setOwningProperty('userCreated');
+        $createdUserRelation->setInverseProperty('userCreated');
         $createdUserRelation->setMapInverseRelation(false);
+        $createdUserRelation->setIsNullable(true);
 
         $messageRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getMessageClass(), $this->getTicketClass());
         $messageRelation->setOwningProperty('ticket');

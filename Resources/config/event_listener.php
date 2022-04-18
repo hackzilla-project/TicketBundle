@@ -21,14 +21,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $containerConfigurator->services()
 
-        ->set('hackzilla_ticket.listener', UserLoad::class)
-            ->tag('doctrine.event_listener', [
-                'event' => 'postLoad',
-            ])
-            ->args([
-                new ReferenceConfigurator('hackzilla_ticket.user_manager'),
-            ])
-
         ->set('hackzilla_ticket.file_upload_subscriber', FileSubscriber::class)
             ->tag('kernel.event_subscriber');
 };

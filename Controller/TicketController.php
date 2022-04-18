@@ -114,6 +114,7 @@ final class TicketController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            /** @var TicketMessageInterface $message */
             $message = $ticket->getMessages()->current();
             $message->setStatus(TicketMessageInterface::STATUS_OPEN)
                 ->setUser($this->userManager->getCurrentUser());
