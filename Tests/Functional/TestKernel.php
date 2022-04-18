@@ -162,7 +162,10 @@ final class TestKernel extends Kernel
 
         // SecurityBundle config
         $mainFirewallConfig = [
-            'provider' => 'in_memory',
+            'pattern' => '^/',
+            'form_login' => [
+                'provider' => 'in_memory',
+            ],
         ];
 
         // "logout_on_user_change" configuration was marked as mandatory since version 3.4 and deprecated as of 4.1.
