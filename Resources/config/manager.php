@@ -16,6 +16,7 @@ use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Model\PermissionManagerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -39,7 +40,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('security.token_storage'),
                 new ReferenceConfigurator('hackzilla_ticket.user_repository'),
                 new ReferenceConfigurator('security.authorization_checker'),
-                '%hackzilla_ticket.model.permissions.class%',
+                new ReferenceConfigurator(PermissionManagerInterface::class),
             ])
 
         ->alias('hackzilla_ticket.user_manager', UserManager::class)
@@ -48,12 +49,20 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->alias(UserManagerInterface::class, UserManager::class)
             ->public()
 
+        ->set(PermissionManagerInterface::class)
+            ->class('%hackzilla_ticket.model.permissions.class%')
+            ->public()
+            ->call('setUserManager', [
+                new ReferenceConfigurator(UserManagerInterface::class),
+            ])
+
         ->set(TicketManager::class)
             ->public()
             ->args([
                 '%hackzilla_ticket.model.ticket.class%',
                 '%hackzilla_ticket.model.message.class%',
-                '%hackzilla_ticket.model.permissions.class%',
+                new ReferenceConfigurator(PermissionManagerInterface::class),
+                new ReferenceConfigurator('logger'),
             ])
             ->call('setObjectManager', [
                 new ReferenceConfigurator('doctrine.orm.entity_manager'),

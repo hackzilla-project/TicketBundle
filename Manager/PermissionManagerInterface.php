@@ -11,23 +11,26 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Hackzilla\Bundle\TicketBundle\Model;
+namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 
-interface PermissionsServiceInterface
+interface PermissionManagerInterface
 {
+    public function setUserManager(UserManagerInterface $userManager): void;
+
     /**
      * used in TicketManager::getTicketListQuery().
      *
      * @param object $query
      */
-    public function addUserPermissionsCondition($query, UserInterface $user, UserManagerInterface $userManager);
+    public function addUserPermissionsCondition($query, UserInterface $user);
 
     /**
      * used by UserManager::hasPermission().
      *
-     * @param UserInterface|string $user
+     * @param ?UserInterface $user
      */
-    public function hasPermission($user, TicketInterface $ticket, UserManagerInterface $userManager): void;
+    public function hasPermission(?UserInterface $user, TicketInterface $ticket): void;
 }
