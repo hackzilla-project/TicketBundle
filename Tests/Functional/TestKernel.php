@@ -162,7 +162,6 @@ final class TestKernel extends Kernel
 
         // SecurityBundle config
         $mainFirewallConfig = [
-            'lazy' => true,
             'provider' => 'in_memory',
         ];
 
