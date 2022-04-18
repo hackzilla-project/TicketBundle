@@ -50,7 +50,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->public()
 
         ->set(PermissionManagerInterface::class)
-            ->class('%hackzilla_ticket.model.permissions.class%')
+            ->class('%hackzilla_ticket.model.permission.class%')
             ->public()
             ->call('setUserManager', [
                 new ReferenceConfigurator(UserManagerInterface::class),

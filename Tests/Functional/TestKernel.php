@@ -225,7 +225,7 @@ final class TestKernel extends Kernel
             'user_class' => User::class,
             'ticket_class' => Ticket::class,
             'message_class' => TicketMessage::class,
-            'permissions_class' => TicketPermissionService::class,
+            'permission_class' => TicketPermissionService::class,
         ];
 
         if ($this->useVichUploaderBundle) {

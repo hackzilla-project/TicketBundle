@@ -44,7 +44,7 @@ class User implements \Hackzilla\Bundle\TicketBundle\Model\UserInterface
 # config/packages/hackzilla_ticket.yml
 hackzilla_ticket:
     user_class: App\Entity\User
-    permissions_class: App\Service\TicketPermissionService
+    permission_class: App\Service\TicketPermissionService
 ```
 
 Your permission class needs to implement ```Hackzilla\Bundle\TicketBundle\Model\PermissionsServiceInterface```
