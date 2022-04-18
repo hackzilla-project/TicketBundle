@@ -21,11 +21,7 @@ use Doctrine\Common\Collections\Collection;
  */
 trait TicketTrait
 {
-    public function __construct()
-    {
-        $this->setCreatedAt(new \DateTime());
-        $this->messages = new ArrayCollection();
-    }
+    private $userCreatedObject;
 
     /**
      * Set status.

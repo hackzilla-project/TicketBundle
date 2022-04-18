@@ -18,10 +18,7 @@ namespace Hackzilla\Bundle\TicketBundle\Model;
  */
 trait TicketMessageTrait
 {
-    public function __construct()
-    {
-//        $this->setCreatedAt(new \DateTime());
-    }
+    protected $userObject;
 
     /**
      * Set status.

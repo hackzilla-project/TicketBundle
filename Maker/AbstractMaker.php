@@ -104,15 +104,6 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
         }
 
         $overwrite = $input->getOption('overwrite');
-
-        // the regenerate option has entirely custom behavior
-        if ($input->getOption('regenerate')) {
-            $this->regenerateEntities($input->getArgument('name'), $overwrite, $generator);
-            $this->writeSuccessMessage($io);
-
-            return;
-        }
-
         $entityClassDetails = new ClassNameDetails($entityClass, substr($entityClass, 0, strrpos($entityClass, '\\') + 1));
 
         if (!$this->doctrineHelper->isDoctrineSupportingAttributes() && $this->doctrineHelper->doesClassUsesAttributes($entityClassDetails->getFullName())) {
@@ -123,7 +114,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
             !$this->doesEntityUseAnnotationMapping($entityClassDetails->getFullName())
             && !$this->doesEntityUseAttributeMapping($entityClassDetails->getFullName())
         ) {
-            throw new RuntimeCommandException(sprintf('Only annotation or attribute mapping is supported by this command, but the <info>%s</info> class uses a different format. If you would like this command to generate the properties & getter/setter methods, add your mapping configuration, and then re-run this command with the <info>--regenerate</info> flag.', $entityClassDetails->getFullName()));
+            throw new RuntimeCommandException(sprintf('Only annotation or attribute mapping is supported by this command, but the <info>%s</info> class uses a different format.', $entityClassDetails->getFullName()));
         }
 
         $entityPath = $this->getPathOfClass($entityClassDetails->getFullName());
@@ -255,12 +246,6 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
         $classDetails = new ClassDetails($class);
 
         return $classDetails->getPath();
-    }
-
-    private function regenerateEntities(string $classOrNamespace, bool $overwrite, Generator $generator)
-    {
-        $regenerator = new EntityRegenerator($this->doctrineHelper, $this->fileManager, $generator, $this->entityClassGenerator, $overwrite);
-        $regenerator->regenerateEntities($classOrNamespace);
     }
 
     private function getPropertyNames(string $class): array
