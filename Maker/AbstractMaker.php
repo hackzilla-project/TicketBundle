@@ -42,6 +42,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
     private $fileManager;
     private $doctrineHelper;
     private $entityClassGenerator;
+    private $userClass;
     private $ticketClass;
     private $messageClass;
 
@@ -51,8 +52,14 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
         $this->doctrineHelper = $doctrineHelper;
         $this->entityClassGenerator = $entityClassGenerator;
 
+        $this->userClass = $bag->get('hackzilla_ticket.model.user.class');
         $this->ticketClass = $bag->get('hackzilla_ticket.model.ticket.class');
         $this->messageClass = $bag->get('hackzilla_ticket.model.message.class');
+    }
+
+    public function getUserClass(): string
+    {
+        return $this->userClass;
     }
 
     public function getTicketClass(): string

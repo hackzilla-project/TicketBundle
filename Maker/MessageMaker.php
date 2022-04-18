@@ -56,17 +56,22 @@ final class MessageMaker extends AbstractMaker
 
     protected function fields(): array
     {
-        $ticketRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getTicketClass(), $this->getMessageClass());
-        $ticketRelation->setOwningProperty('messages');
-        $ticketRelation->setInverseProperty('ticket');
+        $userRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getMessageClass(), $this->getUserClass());
+        $userRelation->setOwningProperty('user');
+        $userRelation->setInverseProperty('user');
+        $userRelation->setMapInverseRelation(false);
+
+        $ticketRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getMessageClass(), $this->getTicketClass());
+        $ticketRelation->setOwningProperty('ticket');
+        $ticketRelation->setInverseProperty('messages');
 
         $fields = [
-            ['fieldName' => 'user_id', 'type' => 'integer', 'nullable' => false],
+            $ticketRelation,
+            $userRelation,
             ['fieldName' => 'message', 'type' => 'text', 'nullable' => true],
             ['fieldName' => 'status', 'type' => 'integer', 'nullable' => false],
             ['fieldName' => 'priority', 'type' => 'integer', 'nullable' => false],
             ['fieldName' => 'createdAt', 'type' => 'datetime', 'nullable' => false],
-            $ticketRelation,
         ];
 
         if ($this->hasAttachment()) {

@@ -32,14 +32,24 @@ final class TicketMaker extends AbstractMaker
 
     protected function fields(): array
     {
-        $messageRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getTicketClass(), $this->getMessageClass());
-        $messageRelation->setOwningProperty('messages');
-        $messageRelation->setInverseProperty('ticket');
+        $lastUserRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getTicketClass(), $this->getUserClass());
+        $lastUserRelation->setOwningProperty('lastUser');
+        $lastUserRelation->setInverseProperty('lastUser');
+        $lastUserRelation->setMapInverseRelation(false);
+
+        $createdUserRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getTicketClass(), $this->getUserClass());
+        $createdUserRelation->setOwningProperty('createdUser');
+        $createdUserRelation->setInverseProperty('createdUser');
+        $createdUserRelation->setMapInverseRelation(false);
+
+        $messageRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getMessageClass(), $this->getTicketClass());
+        $messageRelation->setOwningProperty('ticket');
+        $messageRelation->setInverseProperty('messages');
 
         return [
-            ['fieldName' => 'user_created_id', 'type' => 'integer', 'nullable' => false],
-            ['fieldName' => 'last_user_id', 'type' => 'integer', 'nullable' => false],
-            ['fieldName' => 'last_message', 'type' => 'text', 'nullable' => false],
+            $createdUserRelation,
+            $lastUserRelation,
+            ['fieldName' => 'lastMessage', 'type' => 'text', 'nullable' => false],
             ['fieldName' => 'subject', 'type' => 'text', 'nullable' => false],
             ['fieldName' => 'status', 'type' => 'integer', 'nullable' => false],
             ['fieldName' => 'priority', 'type' => 'integer', 'nullable' => false],
