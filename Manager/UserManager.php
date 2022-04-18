@@ -106,7 +106,13 @@ final class UserManager implements UserManagerInterface
      */
     public function hasPermission(?UserInterface $user, TicketInterface $ticket): bool
     {
-        $this->permissionService->hasPermission($user, $ticket, $this);
+        try {
+            $this->permissionService->hasPermission($user, $ticket, $this);
+        } catch (\Exception $exception) {
+            return false;
+        }
+
+        return true;
     }
 
     public function findUserByUsername(string $username): ?UserInterface

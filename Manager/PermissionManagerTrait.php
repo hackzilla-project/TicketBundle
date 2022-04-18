@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -37,14 +38,14 @@ trait PermissionManagerTrait
         if (\is_object($user)) {
             if (!$this->getUserManager()->hasRole($user, TicketRole::ADMIN)) {
                 $query
-                    ->andWhere('t.userCreatedObject = :user')
+                    ->andWhere('t.userCreated = :user')
                     ->setParameter('user', $user);
             }
         } else {
             // anonymous user
             $query
                 ->andWhere('t.userCreated = :userId')
-                ->setParameter('userId', 0);
+                ->setParameter('userId', null);
         }
 
         return $query;
@@ -58,7 +59,7 @@ trait PermissionManagerTrait
     public function hasPermission(?UserInterface $user, TicketInterface $ticket): void
     {
         if (!\is_object($user) || (!$this->getUserManager()->hasRole($user, TicketRole::ADMIN) &&
-                (null === $ticket->getUserCreatedObject() || $ticket->getUserCreatedObject()->getId() != $user->getId()))
+                (null === $ticket->getUserCreated() || $ticket->getUserCreated()->getId() != $user->getId()))
         ) {
             throw new AccessDeniedHttpException();
         }

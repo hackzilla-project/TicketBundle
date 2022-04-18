@@ -53,7 +53,7 @@
             <tr>
                 <td><a href="{{ path('hackzilla_ticket_show', { 'ticketId': entity.id }) }}">{{ entity.id }}</a></td>
                 <td><a href="{{ path('hackzilla_ticket_show', { 'ticketId': entity.id }) }}">{{ entity.subject }}</a></td>
-                <td>{{ entity.userCreatedObject }}</td>
+                <td>{{ entity.userCreated }}</td>
                 <td>{{ macros.status_btn(entity.status, entity.statusString|trans({}, translationDomain), true, translationDomain) }}</td>
                 <td>{{ macros.priority_btn(entity.priority, entity.priorityString|trans({}, translationDomain), true, translationDomain) }}</td>
                 <td>{% if entity.lastMessage %}{{ entity.lastMessage|date('LABEL_DATE_TIME_FORMAT'|trans({}, translationDomain)) }}{% endif %}</td>

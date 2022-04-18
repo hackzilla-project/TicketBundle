@@ -18,8 +18,6 @@ namespace Hackzilla\Bundle\TicketBundle\Model;
  */
 trait TicketMessageTrait
 {
-    protected $userObject;
-
     /**
      * Set status.
      *

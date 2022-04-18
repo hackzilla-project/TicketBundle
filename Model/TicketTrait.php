@@ -21,8 +21,6 @@ use Doctrine\Common\Collections\Collection;
  */
 trait TicketTrait
 {
-    private $userCreatedObject;
-
     /**
      * Set status.
      *
@@ -122,19 +120,13 @@ trait TicketTrait
     /**
      * Set userCreated.
      *
-     * @param int|object $userCreated
+     * @param ?UserInterface $userCreated
      *
      * @return $this
      */
-    public function setUserCreated($userCreated)
+    public function setUserCreated(?UserInterface $userCreated)
     {
-        if (\is_object($userCreated)) {
-            $this->userCreatedObject = $userCreated;
-            $this->userCreated = $userCreated->getId();
-        } else {
-            $this->userCreatedObject = null;
-            $this->userCreated = $userCreated;
-        }
+        $this->userCreated = $userCreated;
 
         return $this;
     }
@@ -142,37 +134,23 @@ trait TicketTrait
     /**
      * Get userCreated.
      *
-     * @return int
+     * @return ?UserInterface
      */
-    public function getUserCreated()
+    public function getUserCreated(): ?UserInterface
     {
         return $this->userCreated;
     }
 
     /**
-     * Get userCreated object.
-     */
-    public function getUserCreatedObject(): ?UserInterface
-    {
-        return $this->userCreatedObject;
-    }
-
-    /**
      * Set lastUser.
      *
-     * @param int|object $lastUser
+     * @param ?UserInterface $lastUser
      *
      * @return $this
      */
-    public function setLastUser($lastUser)
+    public function setLastUser(?UserInterface $lastUser)
     {
-        if (\is_object($lastUser)) {
-            $this->lastUserObject = $lastUser;
-            $this->lastUser = $lastUser->getId();
-        } else {
-            $this->lastUserObject = null;
-            $this->lastUser = $lastUser;
-        }
+        $this->lastUser = $lastUser;
 
         return $this;
     }
@@ -180,19 +158,11 @@ trait TicketTrait
     /**
      * Get lastUser.
      *
-     * @return int
+     * @return ?UserInterface
      */
-    public function getLastUser()
+    public function getLastUser(): ?UserInterface
     {
         return $this->lastUser;
-    }
-
-    /**
-     * Get lastUser object.
-     */
-    public function getLastUserObject(): ?UserInterface
-    {
-        return $this->lastUserObject;
     }
 
     /**

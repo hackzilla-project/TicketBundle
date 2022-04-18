@@ -51,7 +51,7 @@ final class TicketMaker extends AbstractMaker
         return [
             $createdUserRelation,
             $lastUserRelation,
-            ['fieldName' => 'lastMessage', 'type' => 'text', 'nullable' => false],
+            ['fieldName' => 'lastMessage', 'type' => 'datetime', 'nullable' => false],
             ['fieldName' => 'subject', 'type' => 'text', 'nullable' => false],
             ['fieldName' => 'status', 'type' => 'integer', 'nullable' => false],
             ['fieldName' => 'priority', 'type' => 'integer', 'nullable' => false],
