@@ -206,6 +206,10 @@
                 <source>LABEL_ATTACHMENT</source>
                 <target>прикрепление</target>
             </trans-unit>
+            <trans-unit id="anonymous">
+                <source>ANONYMOUS</source>
+                <target>Анонимный пользователь</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

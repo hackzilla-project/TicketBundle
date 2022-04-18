@@ -23,7 +23,7 @@ final class TicketType extends AbstractType
 {
     protected $ticketClass;
 
-    public function __construct($ticketClass)
+    public function __construct(string $ticketClass)
     {
         $this->ticketClass = $ticketClass;
     }
@@ -36,7 +36,7 @@ final class TicketType extends AbstractType
                 TextType::class,
                 [
                     'label' => 'LABEL_SUBJECT',
-                ]
+                ],
             )
             ->add(
                 'messages',
@@ -57,6 +57,7 @@ final class TicketType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => $this->ticketClass,
+                'translation_domain' => 'HackzillaTicketBundle',
             ]
         );
     }

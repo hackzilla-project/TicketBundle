@@ -32,7 +32,7 @@ final class TicketMessageType extends AbstractType
 
     protected $messageClass;
 
-    public function __construct(UserManagerInterface $userManager, TicketFeatures $features, $messageClass)
+    public function __construct(UserManagerInterface $userManager, TicketFeatures $features, string $messageClass)
     {
         $this->userManager = $userManager;
         $this->features = $features;
@@ -107,6 +107,7 @@ final class TicketMessageType extends AbstractType
             [
                 'data_class' => $this->messageClass,
                 'new_ticket' => false,
+                'translation_domain' => 'HackzillaTicketBundle',
             ]
         );
     }

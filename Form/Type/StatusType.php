@@ -26,12 +26,10 @@ final class StatusType extends AbstractType
         $choices = TicketMessageInterface::STATUSES;
         unset($choices[TicketMessageInterface::STATUS_INVALID]);
 
-        // Workaround for symfony/options-resolver >= 2.7, < 3.1.
-        if ($resolver->hasDefault('choices_as_values') && version_compare(Kernel::VERSION, '3.1', '<')) {
-            $resolver->setDefaults(['choices' => array_flip($choices), 'choices_as_values' => true]);
-        } else {
-            $resolver->setDefaults(['choices' => array_flip($choices)]);
-        }
+        $resolver->setDefaults([
+            'choices' => array_flip($choices),
+            'translation_domain' => 'HackzillaTicketBundle',
+        ]);
     }
 
     public function getParent()
