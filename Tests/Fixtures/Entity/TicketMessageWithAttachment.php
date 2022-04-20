@@ -27,19 +27,13 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketMessageTrait;
 #[ORM\Entity()]
 class TicketMessageWithAttachment implements TicketMessageInterface, MessageAttachmentInterface
 {
-    use MessageAttachmentTrait;
     use TicketMessageTrait;
+    use MessageAttachmentTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
-
-    #[ORM\OneToMany(mappedBy: 'messages', targetEntity: Ticket::class)]
-    private $ticket;
-
-    #[ORM\Column(type: 'integer', nullable: false)]
-    private $user_id;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $message;
@@ -62,10 +56,16 @@ class TicketMessageWithAttachment implements TicketMessageInterface, MessageAtta
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $attachmentMimeType;
 
+    #[ORM\ManyToOne(targetEntity: Ticket::class, inversedBy: 'messages')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $ticket;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private $user;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->ticket = new ArrayCollection();
     }
 
     public function getId(): ?int

@@ -32,12 +32,6 @@ class TicketMessage implements TicketMessageInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\OneToMany(mappedBy: 'messages', targetEntity: Ticket::class)]
-    private $ticket;
-
-    #[ORM\Column(type: 'integer', nullable: false)]
-    private $user_id;
-
     #[ORM\Column(type: 'text', nullable: true)]
     private $message;
 
@@ -50,10 +44,16 @@ class TicketMessage implements TicketMessageInterface
     #[ORM\Column(type: 'datetime', nullable: false)]
     private $createdAt;
 
+    #[ORM\ManyToOne(targetEntity: Ticket::class, inversedBy: 'messages')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $ticket;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private $user;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->ticket = new ArrayCollection();
     }
 
     public function getId(): ?int

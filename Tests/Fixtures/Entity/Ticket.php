@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketTrait;
@@ -31,14 +32,8 @@ class Ticket implements TicketInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'integer', nullable: false)]
-    private $user_created_id;
-
-    #[ORM\Column(type: 'integer', nullable: false)]
-    private $last_user_id;
-
-    #[ORM\Column(type: 'text', nullable: false)]
-    private $last_message;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private $lastMessage;
 
     #[ORM\Column(type: 'text', nullable: false)]
     private $subject;
@@ -52,13 +47,19 @@ class Ticket implements TicketInterface
     #[ORM\Column(type: 'datetime', nullable: false)]
     private $createdAt;
 
-    #[ORM\ManyToOne(targetEntity: TicketMessage::class, inversedBy: 'ticket')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToMany(mappedBy: 'ticket', targetEntity: TicketMessage::class)]
     private $messages;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private $userCreated;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private $lastUser;
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->messages = new ArrayCollection();
     }
 
     public function getId(): ?int
