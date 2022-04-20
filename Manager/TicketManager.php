@@ -36,7 +36,7 @@ final class TicketManager implements TicketManagerInterface
 
     private $ticketMessageClass;
 
-    private $permissionService;
+    private $permissionManager;
 
     /**
      * TicketManager constructor.
@@ -44,7 +44,7 @@ final class TicketManager implements TicketManagerInterface
      * @param string $ticketClass
      * @param string $ticketMessageClass
      */
-    public function __construct(string $ticketClass, string $ticketMessageClass, PermissionManagerInterface $permissionService, ?LoggerInterface $logger = null)
+    public function __construct(string $ticketClass, string $ticketMessageClass, PermissionManagerInterface $permissionManager, ?LoggerInterface $logger = null)
     {
         if (!class_exists($ticketClass)) {
             if ($logger) {
@@ -63,7 +63,7 @@ final class TicketManager implements TicketManagerInterface
 
         $this->ticketClass = $ticketClass;
         $this->ticketMessageClass = $ticketMessageClass;
-        $this->permissionService = $permissionService;
+        $this->permissionManager = $permissionManager;
     }
 
     public function setObjectManager(ObjectManager $objectManager): void
@@ -226,7 +226,7 @@ final class TicketManager implements TicketManagerInterface
         }
 
         // add permissions check and return updated query
-        return $this->permissionService->addUserPermissionsCondition(
+        return $this->permissionManager->addUserPermissionsCondition(
             $query,
             $userManager->getCurrentUser(),
         );

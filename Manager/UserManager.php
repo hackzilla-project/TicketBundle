@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Doctrine\Persistence\ObjectRepository;
-use Hackzilla\Bundle\TicketBundle\Model\PermissionsServiceInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -37,14 +36,14 @@ final class UserManager implements UserManagerInterface
      */
     private $userRepository;
 
-    /** @var PermissionsServiceInterface */
-    private $permissionService;
+    /** @var PermissionManagerInterface */
+    private $permissionManager;
 
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        ObjectRepository $userRepository,
+        TokenStorageInterface         $tokenStorage,
+        ObjectRepository              $userRepository,
         AuthorizationCheckerInterface $authorizationChecker,
-        PermissionManagerInterface $permissionService,
+        PermissionManagerInterface    $permissionManager,
     ) {
         $this->tokenStorage = $tokenStorage;
 
@@ -58,7 +57,7 @@ final class UserManager implements UserManagerInterface
 
         $this->userRepository = $userRepository;
         $this->authorizationChecker = $authorizationChecker;
-        $this->permissionService = $permissionService;
+        $this->permissionManager = $permissionManager;
     }
 
     public function getCurrentUser(): ?UserInterface
@@ -107,7 +106,7 @@ final class UserManager implements UserManagerInterface
     public function hasPermission(?UserInterface $user, TicketInterface $ticket): bool
     {
         try {
-            $this->permissionService->hasPermission($user, $ticket, $this);
+            $this->permissionManager->hasPermission($user, $ticket, $this);
         } catch (\Exception $exception) {
             return false;
         }

@@ -21,7 +21,7 @@ use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
-use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Service\TicketPermissionService;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Manager\TicketPermissionManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -51,7 +51,7 @@ final class TicketManagerTest extends WebTestCase
     {
         $ticketClass = Ticket::class;
         $ticketMessageClass = TicketMessage::class;
-        $permissionsServiceClass = TicketPermissionService::class;
+        $permissionManagerClass = TicketPermissionManager::class;
 
         $qb = $this->createMock(QueryBuilder::class);
         $qb
@@ -70,7 +70,7 @@ final class TicketManagerTest extends WebTestCase
             ->method('getRepository')
             ->willReturn($entityRepository);
 
-        $ticketManager = new TicketManager($ticketClass, $ticketMessageClass, $permissionsServiceClass);
+        $ticketManager = new TicketManager($ticketClass, $ticketMessageClass, $permissionManagerClass);
         $ticketManager->setObjectManager($om);
 
         $this->assertInstanceOf(QueryBuilder::class, $ticketManager->getTicketListQuery($this->userManager, TicketMessageInterface::STATUS_OPEN));

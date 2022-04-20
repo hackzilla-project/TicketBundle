@@ -16,7 +16,7 @@ use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
-use Hackzilla\Bundle\TicketBundle\Model\PermissionManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Manager\PermissionManagerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -50,7 +50,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->public()
 
         ->set(PermissionManagerInterface::class)
-            ->class('%hackzilla_ticket.model.permission.class%')
+            ->class('%hackzilla_ticket.manager.permission.class%')
             ->public()
             ->call('setUserManager', [
                 new ReferenceConfigurator(UserManagerInterface::class),

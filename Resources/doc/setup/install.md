@@ -44,23 +44,23 @@ class User implements \Hackzilla\Bundle\TicketBundle\Model\UserInterface
 # config/packages/hackzilla_ticket.yml
 hackzilla_ticket:
     user_class: App\Entity\User
-    permission_class: App\Service\TicketPermissionService
+    permission_class: App\Manager\TicketPermissionManager
 ```
 
-Your permission class needs to implement ```Hackzilla\Bundle\TicketBundle\Model\PermissionsServiceInterface```
+Your permission class needs to implement ```Hackzilla\Bundle\TicketBundle\Manager\PermissionManagerInterface```
 You should end up with a class similar to:
 
 ```php
 <?php
 
-namespace App\Service;
+namespace App\Manager;
 
-use Hackzilla\Bundle\TicketBundle\Model\PermissionsServiceInterface;
-use Hackzilla\Bundle\TicketBundle\Model\PermissionsServiceTrait;
+use Hackzilla\Bundle\TicketBundle\Manager\PermissionManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Manager\PermissionManagerTrait;
 
-class TicketPermissionService implements PermissionsServiceInterface
+class TicketPermissionManager implements PermissionManagerInterface
 {
-    use PermissionsServiceTrait;
+    use PermissionManagerTrait;
 }
 ```
 
