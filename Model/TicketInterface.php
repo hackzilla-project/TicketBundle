@@ -20,7 +20,7 @@ interface TicketInterface
     /**
      * Get ticket id.
      */
-//    public function getId();
+    public function getId();
 
     /**
      * Set status.

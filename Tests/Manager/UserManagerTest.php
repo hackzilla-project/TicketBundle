@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -47,11 +50,11 @@ class UserManagerTest extends WebTestCase
         $this->assertInstanceOf(UserManager::class, $this->object);
     }
 
-    private function getMockUserRepository(): User
+    private function getMockUserRepository(): EntityRepository
     {
-        $doctrine = static::getContainer()->get('doctrine');
+        $em = static::getContainer()->get(EntityManagerInterface::class);
 
-        return $doctrine->getRepository(User::class);
+        return new EntityRepository($em, new ClassMetadata(User::class));
     }
 
     private function getAuthorizationChecker()

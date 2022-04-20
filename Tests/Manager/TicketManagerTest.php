@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Manager;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectManager;
@@ -22,6 +23,7 @@ use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -46,21 +48,24 @@ final class TicketManagerTest extends WebTestCase
             ->method('createQueryBuilder')
             ->willReturn($qb);
 
-        $om = $this->createMock(ObjectManager::class);
+        $om = $this->createMock(EntityManagerInterface::class);
         $om
             ->method('getRepository')
             ->willReturn($entityRepository);
 
-        $permissionManager = $this->createMock(PermissionManager::class);
-
         $userManager = $this->createMock(UserManagerInterface::class);
         $userManager
             ->method('getCurrentUser')
-            ->willReturn(new QueryBuilder($om));
+            ->willReturn(new User());
+
+        $permissionManager = (new PermissionManager())
+            ->setUserManager($userManager)
+        ;
 
         $ticketManager = (new TicketManager($ticketClass, $ticketMessageClass))
             ->setObjectManager($om)
             ->setUserManager($userManager)
+            ->setPermissionManager($permissionManager)
         ;
 
         $this->assertInstanceOf(QueryBuilder::class, $ticketManager->getTicketListQuery(TicketMessageInterface::STATUS_OPEN));

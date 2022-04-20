@@ -57,7 +57,7 @@ interface TicketMessageInterface
     /**
      * Get id.
      */
-    // public function getId();
+     public function getId();
 
     /**
      * Set status.

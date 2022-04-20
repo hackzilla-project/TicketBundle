@@ -18,7 +18,7 @@ use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
-use Vich\UploaderBundle\Event\Event;
+use Vich\UploaderBundle\Event\Events;
 use Vich\UploaderBundle\VichUploaderBundle;
 
 /**
@@ -37,7 +37,7 @@ class FunctionalTest extends WebTestCase
 
     public function getParameters(): array
     {
-        $messageCLass = class_exists(VichUploaderBundle::class) ? TicketMessage::class : TicketMessageWithAttachment::class;
+        $messageCLass = !class_exists(VichUploaderBundle::class) ? TicketMessage::class : TicketMessageWithAttachment::class;
 
         return [
             ['hackzilla_ticket.model.user.class', User::class],
@@ -69,6 +69,6 @@ class FunctionalTest extends WebTestCase
         $eventDispatcher = static::$kernel->getContainer()->get('event_dispatcher');
         $listeners = $eventDispatcher->getListeners();
 
-        $this->assertArrayHasKey(Event::POST_UPLOAD, $listeners);
+        $this->assertArrayHasKey(Events::POST_UPLOAD, $listeners);
     }
 }
