@@ -171,10 +171,8 @@ final class TestKernel extends Kernel
         // "logout_on_user_change" configuration was marked as mandatory since version 3.4 and deprecated as of 4.1.
         if (version_compare(self::VERSION, '3.4', '>=') && version_compare(self::VERSION, '4.1', '<')) {
             $mainFirewallConfig['logout_on_user_change'] = true;
-        } elseif (version_compare(self::VERSION, '5.4', '>=') && version_compare(self::VERSION, '6.0', '<')) {
-            $mainFirewallConfig['enable_authenticator_manager'] = true;
         }
-        $c->loadFromExtension('security', [
+        $securityConfig = [
             'providers' => [
                 'in_memory' => [
                     'memory' => null,
@@ -183,7 +181,13 @@ final class TestKernel extends Kernel
             'firewalls' => [
                 'main' => $mainFirewallConfig,
             ],
-        ]);
+        ];
+
+        if (version_compare(self::VERSION, '5.3', '>=') && version_compare(self::VERSION, '7.0', '<')) {
+            $securityConfig['enable_authenticator_manager'] = true;
+        }
+
+        $c->loadFromExtension('security', $securityConfig);
 
         // DoctrineBundle config
         $c->loadFromExtension('doctrine', [
