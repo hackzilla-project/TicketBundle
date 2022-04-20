@@ -48,7 +48,6 @@ class TicketMessageTypeTest extends TypeTestCase
             [
                 'new_ticket' => true,
             ],
-            TicketMessage::class
         );
 
         // submit the data to the form directly
