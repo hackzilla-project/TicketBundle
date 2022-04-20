@@ -21,56 +21,14 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 trait PermissionManagerTrait
 {
-    private ?UserManagerInterface $userManager;
+    private ?PermissionManagerInterface $permissionManager;
 
-    public function setUserManager(UserManagerInterface $userManager): void
+    protected function getPermissionManager(): PermissionManagerInterface
     {
-        $this->userManager = $userManager;
-    }
-
-    /**
-     * used in TicketManager::getTicketListQuery().
-     *
-     * @param object $query
-     */
-    public function addUserPermissionsCondition($query, ?UserInterface $user)
-    {
-        if (\is_object($user)) {
-            if (!$this->getUserManager()->hasRole($user, TicketRole::ADMIN)) {
-                $query
-                    ->andWhere('t.userCreated = :user')
-                    ->setParameter('user', $user);
-            }
-        } else {
-            // anonymous user
-            $query
-                ->andWhere('t.userCreated = :userId')
-                ->setParameter('userId', null);
+        if (!$this->permissionManager) {
+            throw new \Exception('Undefined Permission Manager');
         }
 
-        return $query;
-    }
-
-    /**
-     * used by UserManager::hasPermission().
-     *
-     * @param ?UserInterface $user
-     */
-    public function hasPermission(?UserInterface $user, TicketInterface $ticket): void
-    {
-        if (!\is_object($user) || (!$this->getUserManager()->hasRole($user, TicketRole::ADMIN) &&
-                (null === $ticket->getUserCreated() || $ticket->getUserCreated()->getId() != $user->getId()))
-        ) {
-            throw new AccessDeniedHttpException();
-        }
-    }
-
-    private function getUserManager(): UserManagerInterface
-    {
-        if (!$this->userManager) {
-            throw new \Exception('Undefined UserManager');
-        }
-
-        return $this->userManager;
+        return $this->permissionManager;
     }
 }
