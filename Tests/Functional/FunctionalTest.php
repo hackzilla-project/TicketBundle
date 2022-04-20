@@ -27,13 +27,13 @@ class FunctionalTest extends WebTestCase
     /**
      * @dataProvider getParameters
      */
-    public function testConfiguredParameter($parameter, $value)
+    public function testConfiguredParameter($parameter, $value): void
     {
         $this->assertTrue(static::$kernel->getContainer()->hasParameter($parameter));
         $this->assertSame($value, static::$kernel->getContainer()->getParameter($parameter));
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
         return [
             ['hackzilla_ticket.model.user.class', User::class],
@@ -51,7 +51,7 @@ class FunctionalTest extends WebTestCase
         ];
     }
 
-    public function testConfiguredTicketManager()
+    public function testConfiguredTicketManager(): void
     {
         $this->assertTrue(static::$kernel->getContainer()->has(TicketManagerInterface::class));
         $this->assertInstanceOf(TicketManagerInterface::class, static::$kernel->getContainer()->get(TicketManagerInterface::class));
@@ -60,7 +60,7 @@ class FunctionalTest extends WebTestCase
     /**
      * @group vichuploaderbundle
      */
-    public function testConfiguredFileUploadSubscriber()
+    public function testConfiguredFileUploadSubscriber(): void
     {
         $eventDispatcher = static::$kernel->getContainer()->get('event_dispatcher');
         $listeners = $eventDispatcher->getListeners();

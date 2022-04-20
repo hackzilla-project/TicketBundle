@@ -44,12 +44,12 @@ class UserManagerTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(UserManager::class, $this->object);
     }
 
-    private function getMockUserRepository()
+    private function getMockUserRepository(): User
     {
         $doctrine = static::getContainer()->get('doctrine');
 

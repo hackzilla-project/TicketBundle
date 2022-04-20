@@ -73,7 +73,7 @@ final class TicketManagerCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $ticket = $this->ticketManager->createTicket()
             ->setSubject($input->getArgument('subject'));

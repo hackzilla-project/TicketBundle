@@ -66,7 +66,7 @@ final class TicketManager implements TicketManagerInterface
         $this->permissionManager = $permissionManager;
     }
 
-    public function setObjectManager(ObjectManager $objectManager): void
+    public function setObjectManager(ObjectManager $objectManager): self
     {
         $this->objectManager = $objectManager;
 
@@ -82,7 +82,7 @@ final class TicketManager implements TicketManagerInterface
     /**
      * @return $this
      */
-    public function setTranslator(TranslatorInterface $translator)
+    public function setTranslator(TranslatorInterface $translator): self
     {
         $this->translator = $translator;
 
