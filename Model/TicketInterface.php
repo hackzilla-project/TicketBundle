@@ -77,7 +77,7 @@ interface TicketInterface
      *
      * @return $this
      */
-    public function setUserCreated(?UserInterface$userCreated);
+    public function setUserCreated(?UserInterface $userCreated);
 
     /**
      * Get userCreated.

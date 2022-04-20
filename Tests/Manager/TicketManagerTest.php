@@ -16,7 +16,6 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Manager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Manager\PermissionManager;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;

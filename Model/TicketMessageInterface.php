@@ -57,7 +57,7 @@ interface TicketMessageInterface
     /**
      * Get id.
      */
-     public function getId();
+    public function getId();
 
     /**
      * Set status.
@@ -114,7 +114,7 @@ interface TicketMessageInterface
      *
      * @return $this
      */
-    public function setUser(?UserInterface$user);
+    public function setUser(?UserInterface $user);
 
     /**
      * Get user.

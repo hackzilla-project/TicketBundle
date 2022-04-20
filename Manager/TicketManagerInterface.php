@@ -14,10 +14,8 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Symfony\Component\Translation\Translator;
 
 interface TicketManagerInterface
 {

@@ -13,12 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
-use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
-use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
-use Hackzilla\Bundle\TicketBundle\TicketRole;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-
 trait PermissionManagerTrait
 {
     private ?PermissionManagerInterface $permissionManager;

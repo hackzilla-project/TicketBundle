@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
-
 trait TicketManagerTrait
 {
     private ?TicketManagerInterface $ticketManager;

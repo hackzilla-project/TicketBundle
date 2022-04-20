@@ -38,20 +38,15 @@ final class UserManager implements UserManagerInterface
      */
     private $userRepository;
 
-
     public function __construct(
-        TokenStorageInterface         $tokenStorage,
-        ObjectRepository              $userRepository,
+        TokenStorageInterface $tokenStorage,
+        ObjectRepository $userRepository,
         AuthorizationCheckerInterface $authorizationChecker,
     ) {
         $this->tokenStorage = $tokenStorage;
 
         if (!is_subclass_of($userRepository->getClassName(), UserInterface::class)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Argument 2 passed to "%s()" MUST be an object repository for a class implementing "%s".',
-                __METHOD__,
-                UserInterface::class
-            ));
+            throw new \InvalidArgumentException(sprintf('Argument 2 passed to "%s()" MUST be an object repository for a class implementing "%s".', __METHOD__, UserInterface::class));
         }
 
         $this->userRepository = $userRepository;
@@ -69,10 +64,7 @@ final class UserManager implements UserManagerInterface
         if ('anon.' === $user) {
             $user = null;
         } elseif (!$user instanceof UserInterface) {
-            throw new \LogicException(sprintf(
-                'The object representing the authenticated user MUST implement "%s".',
-                UserInterface::class
-            ));
+            throw new \LogicException(sprintf('The object representing the authenticated user MUST implement "%s".', UserInterface::class));
         }
 
         return $user;

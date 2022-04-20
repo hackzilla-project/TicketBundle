@@ -12,11 +12,11 @@ declare(strict_types=1);
  */
 
 use Doctrine\ORM\EntityRepository;
+use Hackzilla\Bundle\TicketBundle\Manager\PermissionManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
-use Hackzilla\Bundle\TicketBundle\Manager\PermissionManagerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 

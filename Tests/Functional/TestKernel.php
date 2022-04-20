@@ -15,7 +15,6 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle;
-use Hackzilla\Bundle\TicketBundle\Manager\PermissionManager;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
