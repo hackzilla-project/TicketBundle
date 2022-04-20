@@ -19,8 +19,6 @@ use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 
 interface PermissionManagerInterface
 {
-    public function setUserManager(UserManagerInterface $userManager): void;
-
     /**
      * used in TicketManager::getTicketListQuery().
      *

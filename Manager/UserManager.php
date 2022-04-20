@@ -21,6 +21,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class UserManager implements UserManagerInterface
 {
+    use PermissionManagerTrait;
+
     /**
      * @var TokenStorageInterface
      */
@@ -36,14 +38,11 @@ final class UserManager implements UserManagerInterface
      */
     private $userRepository;
 
-    /** @var PermissionManagerInterface */
-    private $permissionManager;
 
     public function __construct(
         TokenStorageInterface         $tokenStorage,
         ObjectRepository              $userRepository,
         AuthorizationCheckerInterface $authorizationChecker,
-        PermissionManagerInterface    $permissionManager,
     ) {
         $this->tokenStorage = $tokenStorage;
 
@@ -57,7 +56,6 @@ final class UserManager implements UserManagerInterface
 
         $this->userRepository = $userRepository;
         $this->authorizationChecker = $authorizationChecker;
-        $this->permissionManager = $permissionManager;
     }
 
     public function getCurrentUser(): ?UserInterface
@@ -106,7 +104,7 @@ final class UserManager implements UserManagerInterface
     public function hasPermission(?UserInterface $user, TicketInterface $ticket): bool
     {
         try {
-            $this->permissionManager->hasPermission($user, $ticket, $this);
+            $this->getPermissionManager()->hasPermission($user, $ticket);
         } catch (\Exception $exception) {
             return false;
         }

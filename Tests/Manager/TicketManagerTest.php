@@ -16,12 +16,12 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Manager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectManager;
+use Hackzilla\Bundle\TicketBundle\Manager\PermissionManager;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
-use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Manager\TicketPermissionManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -29,29 +29,10 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 final class TicketManagerTest extends WebTestCase
 {
-    /**
-     * @var UserManagerInterface
-     */
-    private $userManager;
-
-    protected function setUp(): void
-    {
-        $this->userManager = $this->createMock(UserManagerInterface::class);
-        $this->userManager
-            ->method('getCurrentUser')
-            ->willReturn('ANONYMOUS');
-    }
-
-    protected function tearDown(): void
-    {
-        $this->userManager = null;
-    }
-
     public function testGetTicketListQuery(): void
     {
         $ticketClass = Ticket::class;
         $ticketMessageClass = TicketMessage::class;
-        $permissionManagerClass = TicketPermissionManager::class;
 
         $qb = $this->createMock(QueryBuilder::class);
         $qb
@@ -70,9 +51,18 @@ final class TicketManagerTest extends WebTestCase
             ->method('getRepository')
             ->willReturn($entityRepository);
 
-        $ticketManager = new TicketManager($ticketClass, $ticketMessageClass, $permissionManagerClass);
-        $ticketManager->setObjectManager($om);
+        $permissionManager = $this->createMock(PermissionManager::class);
 
-        $this->assertInstanceOf(QueryBuilder::class, $ticketManager->getTicketListQuery($this->userManager, TicketMessageInterface::STATUS_OPEN));
+        $userManager = $this->createMock(UserManagerInterface::class);
+        $userManager
+            ->method('getCurrentUser')
+            ->willReturn(new QueryBuilder($om));
+
+        $ticketManager = (new TicketManager($ticketClass, $ticketMessageClass))
+            ->setObjectManager($om)
+            ->setUserManager($userManager)
+        ;
+
+        $this->assertInstanceOf(QueryBuilder::class, $ticketManager->getTicketListQuery(TicketMessageInterface::STATUS_OPEN));
     }
 }

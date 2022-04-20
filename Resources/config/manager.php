@@ -40,11 +40,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('security.token_storage'),
                 new ReferenceConfigurator('hackzilla_ticket.user_repository'),
                 new ReferenceConfigurator('security.authorization_checker'),
-                new ReferenceConfigurator(PermissionManagerInterface::class),
             ])
-
-        ->alias('hackzilla_ticket.user_manager', UserManager::class)
-            ->public()
+        ->call('setPermissionManager', [
+            new ReferenceConfigurator(PermissionManagerInterface::class),
+        ])
 
         ->alias(UserManagerInterface::class, UserManager::class)
             ->public()
@@ -61,8 +60,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 '%hackzilla_ticket.model.ticket.class%',
                 '%hackzilla_ticket.model.message.class%',
+            ])
+            ->call('setPermissionManager', [
                 new ReferenceConfigurator(PermissionManagerInterface::class),
-                new ReferenceConfigurator('logger'),
+            ])
+            ->call('setUserManager', [
+                new ReferenceConfigurator(UserManagerInterface::class),
             ])
             ->call('setObjectManager', [
                 new ReferenceConfigurator('doctrine.orm.entity_manager'),
@@ -70,9 +73,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->call('setTranslator', [
                 new ReferenceConfigurator('translator'),
             ])
-
-        ->alias('hackzilla_ticket.ticket_manager', TicketManager::class)
-            ->public()
+            ->call('setLogger', [
+                new ReferenceConfigurator('logger'),
+            ])
 
         ->alias(TicketManagerInterface::class, TicketManager::class)
             ->public();

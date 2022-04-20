@@ -19,7 +19,7 @@ use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-class PermissionManager
+class PermissionManager implements PermissionManagerInterface
 {
     use UserManagerTrait;
 

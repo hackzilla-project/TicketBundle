@@ -78,7 +78,6 @@ final class TicketController extends AbstractController
         $ticketPriority = $request->get('priority', null);
 
         $query = $ticketManager->getTicketListQuery(
-            $userManager,
             $ticketManager->getTicketStatus($ticketState),
             $ticketManager->getTicketPriority($ticketPriority)
         );

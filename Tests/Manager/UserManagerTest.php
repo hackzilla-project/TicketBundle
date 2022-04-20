@@ -15,7 +15,6 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
-use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Manager\TicketPermissionManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
@@ -35,7 +34,6 @@ class UserManagerTest extends WebTestCase
             $this->tokenStorage,
             $this->getMockUserRepository(),
             $this->getAuthorizationChecker(),
-            TicketPermissionManager::class,
         );
     }
 

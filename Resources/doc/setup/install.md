@@ -38,13 +38,13 @@ class User implements \Hackzilla\Bundle\TicketBundle\Model\UserInterface
 }
 ```
 
-### Permission class
+### Permission class (optional)
 
 ```yaml
 # config/packages/hackzilla_ticket.yml
 hackzilla_ticket:
     user_class: App\Entity\User
-    permission_class: App\Manager\TicketPermissionManager
+    permission_class: App\Manager\PermissionManager
 ```
 
 Your permission class needs to implement ```Hackzilla\Bundle\TicketBundle\Manager\PermissionManagerInterface```
@@ -56,15 +56,14 @@ You should end up with a class similar to:
 namespace App\Manager;
 
 use Hackzilla\Bundle\TicketBundle\Manager\PermissionManagerInterface;
-use Hackzilla\Bundle\TicketBundle\Manager\PermissionManagerTrait;
 
-class TicketPermissionManager implements PermissionManagerInterface
+class PermissionManager implements PermissionManagerInterface
 {
-    use PermissionManagerTrait;
+    // ...
 }
 ```
 
-This class is required but also allows you to override any permission assumptions that bundle makes.
+This class is optional but if specified will allow you to override any permission assumptions that bundle makes.
 
 ## Step 2: Enable the bundle
 

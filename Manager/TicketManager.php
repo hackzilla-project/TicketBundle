@@ -22,6 +22,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class TicketManager implements TicketManagerInterface
 {
+    use PermissionManagerTrait;
+    use UserManagerTrait;
+
     private $translator;
 
     private $translationDomain = 'HackzillaTicketBundle';
@@ -36,7 +39,7 @@ final class TicketManager implements TicketManagerInterface
 
     private $ticketMessageClass;
 
-    private $permissionManager;
+    private $logger;
 
     /**
      * TicketManager constructor.
@@ -44,26 +47,28 @@ final class TicketManager implements TicketManagerInterface
      * @param string $ticketClass
      * @param string $ticketMessageClass
      */
-    public function __construct(string $ticketClass, string $ticketMessageClass, PermissionManagerInterface $permissionManager, ?LoggerInterface $logger = null)
+    public function __construct(string $ticketClass, string $ticketMessageClass)
     {
-        if (!class_exists($ticketClass)) {
-            if ($logger) {
-                $logger->error(sprintf('Ticket entity %s doesn\'t exist', $ticketMessageClass));
-            }
-
-            $ticketClass = '';
-        }
-        if (!class_exists($ticketMessageClass)) {
-            if ($logger) {
-                $logger->error(sprintf('Message entity %s doesn\'t exist', $ticketMessageClass));
-            }
-
-            $ticketMessageClass = '';
-        }
-
         $this->ticketClass = $ticketClass;
         $this->ticketMessageClass = $ticketMessageClass;
-        $this->permissionManager = $permissionManager;
+    }
+
+    public function setLogger(LoggerInterface $logger): self
+    {
+        $this->logger = $logger;
+
+        if (!class_exists($this->ticketClass)) {
+            if ($logger) {
+                $logger->error(sprintf('Ticket entity %s doesn\'t exist', $this->ticketClass));
+            }
+        }
+        if (!class_exists($this->ticketMessageClass)) {
+            if ($logger) {
+                $logger->error(sprintf('Message entity %s doesn\'t exist', $this->ticketMessageClass));
+            }
+        }
+
+        return $this;
     }
 
     public function setObjectManager(ObjectManager $objectManager): self
@@ -77,6 +82,8 @@ final class TicketManager implements TicketManagerInterface
         if ($this->ticketMessageClass) {
             $this->messageRepository = $objectManager->getRepository($this->ticketMessageClass);
         }
+
+        return $this;
     }
 
     /**
@@ -199,7 +206,7 @@ final class TicketManager implements TicketManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null): QueryBuilder
+    public function getTicketListQuery($ticketStatus, $ticketPriority = null): QueryBuilder
     {
         $query = $this->ticketRepository->createQueryBuilder('t')
             ->orderBy('t.lastMessage', 'DESC');
@@ -226,9 +233,9 @@ final class TicketManager implements TicketManagerInterface
         }
 
         // add permissions check and return updated query
-        return $this->permissionManager->addUserPermissionsCondition(
+        return $this->getPermissionManager()->addUserPermissionsCondition(
             $query,
-            $userManager->getCurrentUser(),
+            $this->getUserManager()->getCurrentUser(),
         );
     }
 

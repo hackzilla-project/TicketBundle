@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -34,7 +35,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'alias' => 'hackzilla_ticket_message',
             ])
             ->args([
-                new ReferenceConfigurator('hackzilla_ticket.user_manager'),
+                new ReferenceConfigurator(UserManagerInterface::class),
                 new ReferenceConfigurator('hackzilla_ticket.features'),
                 '%hackzilla_ticket.model.message.class%',
             ]);

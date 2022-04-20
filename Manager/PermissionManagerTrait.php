@@ -23,12 +23,15 @@ trait PermissionManagerTrait
 {
     private ?PermissionManagerInterface $permissionManager;
 
+    public function setPermissionManager(PermissionManagerInterface $permissionManager): self
+    {
+        $this->permissionManager = $permissionManager;
+
+        return $this;
+    }
+
     protected function getPermissionManager(): PermissionManagerInterface
     {
-        if (!$this->permissionManager) {
-            throw new \Exception('Undefined Permission Manager');
-        }
-
         return $this->permissionManager;
     }
 }

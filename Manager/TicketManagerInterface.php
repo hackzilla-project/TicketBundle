@@ -21,10 +21,6 @@ use Symfony\Component\Translation\Translator;
 
 interface TicketManagerInterface
 {
-    public function setObjectManager(ObjectManager $objectManager): void;
-
-    public function setTranslator(Translator $translator);
-
     public function createTicket();
 
     public function createMessage(?TicketInterface $ticket = null);
@@ -41,7 +37,7 @@ interface TicketManagerInterface
 
     public function findTicketsBy(array $criteria);
 
-    public function getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null): QueryBuilder;
+    public function getTicketListQuery($ticketStatus, $ticketPriority = null): QueryBuilder;
 
     /**
      * @param int $days

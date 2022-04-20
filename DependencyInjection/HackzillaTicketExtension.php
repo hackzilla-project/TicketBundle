@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\DependencyInjection;
 
+use Hackzilla\Bundle\TicketBundle\Manager\PermissionManager;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -46,7 +47,14 @@ final class HackzillaTicketExtension extends Extension
         $container->setParameter('hackzilla_ticket.model.user.class', $config['user_class']);
         $container->setParameter('hackzilla_ticket.model.ticket.class', $config['ticket_class']);
         $container->setParameter('hackzilla_ticket.model.message.class', $config['message_class']);
-        $container->setParameter('hackzilla_ticket.manager.permission.class', $config['permission_class']);
+
+        $permissionClass = $config['permission_class'] ?? PermissionManager::class;
+
+        if (!class_exists($permissionClass)) {
+            throw new \Exception(sprintf('Permission manager does not exist: %s', $permissionClass));
+        }
+
+        $container->setParameter('hackzilla_ticket.manager.permission.class', $permissionClass);
 
         $container->setParameter('hackzilla_ticket.features', $config['features']);
         $container->setParameter('hackzilla_ticket.templates', $config['templates']);
