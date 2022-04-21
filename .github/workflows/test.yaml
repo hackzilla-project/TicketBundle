@@ -28,18 +28,14 @@ jobs:
                 variant: [normal]
                 include:
                     - php-version: '8.0'
-                      dependencies: lowest
-                      allowed-to-fail: false
-                      variant: 'vich/uploader-bundle'
-                    - php-version: '8.0'
                       dependencies: highest
                       allowed-to-fail: false
                       variant: 'symfony/symfony:"5.4.*"'
                     - php-version: '8.0'
                       dependencies: highest
-                      allowed-to-fail: false
-                      variant: 'symfony/symfony:"4.4.*"'
-                    - php-version: '8.0'
+                      allowed-to-fail: true
+                      variant: 'symfony/symfony:"6.0.*"'
+                    - php-version: '8.1'
                       dependencies: highest
                       allowed-to-fail: false
                       variant: 'vich/uploader-bundle'
