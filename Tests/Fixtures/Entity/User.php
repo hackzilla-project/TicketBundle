@@ -15,8 +15,6 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface as TicketBundleUserInterface;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
@@ -24,7 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 #[ORM\Entity()]
 #[ORM\Table(name: '`user`')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, TicketBundleUserInterface
+class User implements TicketBundleUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
