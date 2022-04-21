@@ -44,10 +44,6 @@ jobs:
                       allowed-to-fail: false
                       variant: 'vich/uploader-bundle'
                     - php-version: '8.1'
-                      dependencies: lowest
-                      allowed-to-fail: false
-                      variant: normal
-                    - php-version: '8.1'
                       dependencies: highest
                       allowed-to-fail: false
                       variant: normal
