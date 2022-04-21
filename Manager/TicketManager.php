@@ -39,8 +39,6 @@ final class TicketManager implements TicketManagerInterface
 
     private $ticketMessageClass;
 
-    private $logger;
-
     /**
      * TicketManager constructor.
      */
@@ -52,17 +50,11 @@ final class TicketManager implements TicketManagerInterface
 
     public function setLogger(LoggerInterface $logger): self
     {
-        $this->logger = $logger;
-
         if (!class_exists($this->ticketClass)) {
-            if ($logger) {
-                $logger->error(sprintf('Ticket entity %s doesn\'t exist', $this->ticketClass));
-            }
+            $logger->error(sprintf('Ticket entity %s doesn\'t exist', $this->ticketClass));
         }
         if (!class_exists($this->ticketMessageClass)) {
-            if ($logger) {
-                $logger->error(sprintf('Message entity %s doesn\'t exist', $this->ticketMessageClass));
-            }
+            $logger->error(sprintf('Message entity %s doesn\'t exist', $this->ticketMessageClass));
         }
 
         return $this;
@@ -159,7 +151,7 @@ final class TicketManager implements TicketManagerInterface
     /**
      * Find all tickets in the database.
      *
-     * @return array|TicketInterface[]
+     * @return TicketInterface[]
      */
     public function findTickets()
     {
@@ -171,9 +163,9 @@ final class TicketManager implements TicketManagerInterface
      *
      * @param int $ticketId
      *
-     * @return TicketInterface
+     * @return ?TicketInterface
      */
-    public function getTicketById($ticketId)
+    public function getTicketById($ticketId): ?TicketInterface
     {
         return $this->ticketRepository->find($ticketId);
     }
@@ -185,7 +177,7 @@ final class TicketManager implements TicketManagerInterface
      *
      * @return TicketMessageInterface
      */
-    public function getMessageById($ticketMessageId)
+    public function getMessageById($ticketMessageId): ?TicketMessageInterface
     {
         return $this->messageRepository->find($ticketMessageId);
     }

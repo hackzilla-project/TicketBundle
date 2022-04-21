@@ -18,7 +18,6 @@ use Hackzilla\Bundle\TicketBundle\Maker\Util\ClassSourceManipulator;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
-use Symfony\Bundle\MakerBundle\Doctrine\EntityClassGenerator;
 use Symfony\Bundle\MakerBundle\Doctrine\EntityRelation;
 use Symfony\Bundle\MakerBundle\Exception\RuntimeCommandException;
 use Symfony\Bundle\MakerBundle\FileManager;
@@ -40,16 +39,14 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
 {
     private $fileManager;
     private $doctrineHelper;
-    private $entityClassGenerator;
     private $userClass;
     private $ticketClass;
     private $messageClass;
 
-    public function __construct(FileManager $fileManager, DoctrineHelper $doctrineHelper, EntityClassGenerator $entityClassGenerator, ParameterBagInterface $bag)
+    public function __construct(FileManager $fileManager, DoctrineHelper $doctrineHelper, ParameterBagInterface $bag)
     {
         $this->fileManager = $fileManager;
         $this->doctrineHelper = $doctrineHelper;
-        $this->entityClassGenerator = $entityClassGenerator;
 
         $this->userClass = $bag->get('hackzilla_ticket.model.user.class');
         $this->ticketClass = $bag->get('hackzilla_ticket.model.ticket.class');
@@ -201,11 +198,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
             }
 
             foreach ($fileManagerOperations as $path => $manipulatorOrMessage) {
-                if (\is_string($manipulatorOrMessage)) {
-                    $io->comment($manipulatorOrMessage);
-                } else {
-                    $this->fileManager->dumpFile($path, $manipulatorOrMessage->getSourceCode());
-                }
+                $this->fileManager->dumpFile($path, $manipulatorOrMessage->getSourceCode());
             }
         }
 

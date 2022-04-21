@@ -23,7 +23,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 new ReferenceConfigurator('maker.file_manager'),
                 new ReferenceConfigurator('maker.doctrine_helper'),
-                new ReferenceConfigurator('maker.entity_class_generator'),
                 new ReferenceConfigurator('parameter_bag'),
             ])
             ->tag('maker.command')
@@ -32,7 +31,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 new ReferenceConfigurator('maker.file_manager'),
                 new ReferenceConfigurator('maker.doctrine_helper'),
-                new ReferenceConfigurator('maker.entity_class_generator'),
                 new ReferenceConfigurator('parameter_bag'),
             ])
             ->tag('maker.command');

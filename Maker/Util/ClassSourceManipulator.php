@@ -26,6 +26,7 @@ use PhpParser\Parser;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\Doctrine\BaseCollectionRelation;
 use Symfony\Bundle\MakerBundle\Doctrine\BaseRelation;
+use Symfony\Bundle\MakerBundle\Doctrine\BaseSingleRelation;
 use Symfony\Bundle\MakerBundle\Doctrine\RelationManyToMany;
 use Symfony\Bundle\MakerBundle\Doctrine\RelationManyToOne;
 use Symfony\Bundle\MakerBundle\Doctrine\RelationOneToMany;
@@ -562,7 +563,7 @@ final class ClassSourceManipulator
             ];
         }
 
-        if (!$relation->isNullable() && $relation->isOwning()) {
+        if ($relation instanceof BaseSingleRelation && !$relation->isNullable() && $relation->isOwning()) {
             if (!$this->useAttributesForDoctrineMapping) {
                 $annotations[] = $this->buildAnnotationLine('@ORM\\JoinColumn', [
                     'nullable' => false,
@@ -737,6 +738,7 @@ final class ClassSourceManipulator
             throw new \Exception('Could not find class node');
         }
 
+        /** @phpstan-ignore-next-line */
         return $node;
     }
 
@@ -750,6 +752,7 @@ final class ClassSourceManipulator
             throw new \Exception('Could not find namespace node');
         }
 
+        /** @phpstan-ignore-next-line */
         return $node;
     }
 

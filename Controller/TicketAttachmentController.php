@@ -55,7 +55,7 @@ final class TicketAttachmentController extends AbstractController
     {
         $ticketMessage = $this->ticketManager->getMessageById($ticketMessageId);
 
-        if (!$ticketMessage || !$ticketMessage instanceof MessageAttachmentInterface) {
+        if (!$ticketMessage instanceof MessageAttachmentInterface) {
             throw $this->createNotFoundException($this->translator->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
         }
 
