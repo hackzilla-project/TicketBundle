@@ -114,9 +114,10 @@ final class TicketController extends AbstractController
 
         if ($form->isValid()) {
             /** @var TicketMessageInterface $message */
-            $message = $ticket->getMessages()->current();
-            $message->setStatus(TicketMessageInterface::STATUS_OPEN)
-                ->setUser($this->userManager->getCurrentUser());
+            $message = $ticket->getMessages()->current()
+                ->setStatus(TicketMessageInterface::STATUS_OPEN)
+                ->setUser($this->userManager->getCurrentUser())
+            ;
 
             $ticketManager->updateTicket($ticket, $message);
             $this->dispatchTicketEvent(TicketEvents::TICKET_CREATE, $ticket);
@@ -289,7 +290,9 @@ final class TicketController extends AbstractController
         $form = $this->createForm(
             TicketMessageType::class,
             $message,
-            ['new_ticket' => false]
+            [
+                'ticket' => $message->getTicket(),
+            ]
         );
 
         return $form;

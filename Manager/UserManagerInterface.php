@@ -22,7 +22,7 @@ interface UserManagerInterface
 
     public function getUserById($userId): ?UserInterface;
 
-    public function hasRole(UserInterface $user, string $role): bool;
+    public function hasRole(?UserInterface $user, string $role): bool;
 
     public function hasPermission(?UserInterface $user, TicketInterface $ticket): bool;
 

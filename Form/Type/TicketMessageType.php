@@ -16,6 +16,7 @@ namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -71,7 +72,7 @@ final class TicketMessageType extends AbstractType
         }
 
         // if existing ticket add status
-        if (isset($options['new_ticket']) && !$options['new_ticket']) {
+        if (isset($options['ticket']) && $options['ticket']) {
             $user = $this->userManager->getCurrentUser();
 
             if ($this->userManager->hasRole($user, TicketRole::ADMIN)) {
@@ -83,7 +84,7 @@ final class TicketMessageType extends AbstractType
                     ]
                 );
             } else {
-                $statusTransformer = new StatusTransformer();
+                $statusTransformer = new StatusTransformer($options['ticket']);
 
                 $builder
                     ->add(
@@ -93,7 +94,7 @@ final class TicketMessageType extends AbstractType
                             [
                                 'label' => 'LABEL_MARK_SOLVED',
                                 'required' => false,
-                                'value' => 'STATUS_CLOSED',
+                                'value' => TicketMessageInterface::STATUS_CLOSED,
                             ]
                         )->addModelTransformer($statusTransformer)
                     );
@@ -107,6 +108,7 @@ final class TicketMessageType extends AbstractType
             [
                 'data_class' => $this->messageClass,
                 'new_ticket' => false,
+                'ticket' => null,
                 'translation_domain' => 'HackzillaTicketBundle',
             ]
         );

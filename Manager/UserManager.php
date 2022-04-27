@@ -83,7 +83,7 @@ final class UserManager implements UserManagerInterface
     /**
      * Current user has permission.
      */
-    public function hasRole(UserInterface $user, string $role): bool
+    public function hasRole(?UserInterface $user, string $role): bool
     {
         return $this->authorizationChecker->isGranted($role);
     }
