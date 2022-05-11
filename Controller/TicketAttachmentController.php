@@ -18,6 +18,7 @@ use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Vich\UploaderBundle\Handler\DownloadHandler;
 
@@ -60,7 +61,9 @@ final class TicketAttachmentController extends AbstractController
         }
 
         // check permissions
-        $this->userManager->hasPermission($this->userManager->getCurrentUser(), $ticketMessage->getTicket());
+        if (!$this->userManager->hasPermission($this->userManager->getCurrentUser(), $ticketMessage->getTicket())) {
+            throw new AccessDeniedHttpException();
+        }
 
         return $this->downloadHandler->downloadObject($ticketMessage, 'attachmentFile');
     }
