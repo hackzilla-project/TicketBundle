@@ -28,6 +28,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -172,7 +173,10 @@ final class TicketController extends AbstractController
         }
 
         $currentUser = $this->userManager->getCurrentUser();
-        $this->userManager->hasPermission($currentUser, $ticket);
+
+        if (!$this->userManager->hasPermission($currentUser, $ticket)) {
+            throw new AccessDeniedHttpException();
+        }
 
         $data = ['ticket' => $ticket, 'translationDomain' => 'HackzillaTicketBundle'];
 
@@ -206,7 +210,10 @@ final class TicketController extends AbstractController
         }
 
         $user = $this->userManager->getCurrentUser();
-        $this->userManager->hasPermission($user, $ticket);
+
+        if (!$this->userManager->hasPermission($user, $ticket)) {
+            throw new AccessDeniedHttpException();
+        }
 
         $message = $ticketManager->createMessage($ticket);
 
