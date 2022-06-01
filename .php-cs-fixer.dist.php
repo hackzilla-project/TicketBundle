@@ -44,7 +44,7 @@ return $config
         ],
         'logical_operators' => true,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
-        'multiline_whitespace_before_semicolons' => true,
+        'multiline_whitespace_before_semicolons' => 'new_line_for_chained_calls',
         'no_alternative_syntax' => true,
         'no_extra_blank_lines' => true,
         'no_null_property_initialization' => true,

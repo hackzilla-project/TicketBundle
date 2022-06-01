@@ -738,7 +738,7 @@ final class ClassSourceManipulator
             throw new \Exception('Could not find class node');
         }
 
-        /** @phpstan-ignore-next-line */
+        /* @phpstan-ignore-next-line */
         return $node;
     }
 
@@ -752,7 +752,7 @@ final class ClassSourceManipulator
             throw new \Exception('Could not find namespace node');
         }
 
-        /** @phpstan-ignore-next-line */
+        /* @phpstan-ignore-next-line */
         return $node;
     }
 

@@ -61,7 +61,7 @@ final class UserManager implements UserManagerInterface
 
         $user = $this->tokenStorage->getToken()->getUser();
 
-        if ($user !== null && !$user instanceof UserInterface) {
+        if (null !== $user && !$user instanceof UserInterface) {
             throw new \LogicException(sprintf('The object representing the authenticated user MUST implement "%s".', UserInterface::class));
         }
 
