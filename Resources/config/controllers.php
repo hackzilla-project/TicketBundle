@@ -33,7 +33,8 @@ return static function (ContainerConfigurator $container): void {
                 ])
                 ->call('setContainer', [new ReferenceConfigurator('service_container')])
                 ->tag('controller.service_arguments')
-                ->alias('hackzilla_ticket.controller.ticket_attachment_controller', TicketAttachmentController::class);
+                ->alias('hackzilla_ticket.controller.ticket_attachment_controller', TicketAttachmentController::class)
+        ;
     }
 
     $container->services()
@@ -48,5 +49,6 @@ return static function (ContainerConfigurator $container): void {
             ])
             ->call('setContainer', [new ReferenceConfigurator('service_container')])
             ->tag('controller.service_arguments')
-            ->alias('hackzilla_ticket.controller.ticket_controller', TicketController::class);
+            ->alias('hackzilla_ticket.controller.ticket_controller', TicketController::class)
+    ;
 };

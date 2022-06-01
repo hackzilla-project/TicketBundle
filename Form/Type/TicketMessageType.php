@@ -57,7 +57,8 @@ final class TicketMessageType extends AbstractType
                 [
                     'label' => 'LABEL_PRIORITY',
                 ]
-            );
+            )
+        ;
 
         if ($this->features->hasFeature('attachment')) {
             $builder
@@ -68,7 +69,8 @@ final class TicketMessageType extends AbstractType
                         'label' => 'LABEL_ATTACHMENT',
                         'required' => false,
                     ]
-                );
+                )
+            ;
         }
 
         // if existing ticket add status
@@ -97,7 +99,8 @@ final class TicketMessageType extends AbstractType
                                 'value' => TicketMessageInterface::STATUS_CLOSED,
                             ]
                         )->addModelTransformer($statusTransformer)
-                    );
+                    )
+                ;
             }
         }
     }

@@ -41,5 +41,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 new ReferenceConfigurator(TicketManagerInterface::class),
                 new ReferenceConfigurator(UserManagerInterface::class),
-            ]);
+            ])
+    ;
 };

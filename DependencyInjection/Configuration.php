@@ -55,7 +55,8 @@ final class Configuration implements ConfigurationInterface
                         ->scalarNode('macros')->defaultValue('@HackzillaTicket/Macros/macros.html.twig')->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
 
         return $treeBuilder;
     }

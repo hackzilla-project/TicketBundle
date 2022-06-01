@@ -91,7 +91,8 @@ final class AutoClosingCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 'How many days since the ticket was resolved?',
                 '10'
-            );
+            )
+        ;
     }
 
     /**
@@ -111,7 +112,8 @@ final class AutoClosingCommand extends Command
                 ->setStatus(TicketMessageInterface::STATUS_CLOSED)
                 ->setPriority($ticket->getPriority())
                 ->setUser($this->userManager->findUserByUsername($username))
-                ->setTicket($ticket);
+                ->setTicket($ticket)
+            ;
 
             $ticket->setStatus(TicketMessageInterface::STATUS_CLOSED);
             $this->ticketManager->updateTicket($ticket, $message);

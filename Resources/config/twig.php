@@ -31,5 +31,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->tag('twig.extension')
             ->args([
                 '%hackzilla_ticket.templates%',
-            ]);
+            ])
+    ;
 };

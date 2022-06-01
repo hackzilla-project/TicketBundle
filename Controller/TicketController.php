@@ -289,7 +289,8 @@ final class TicketController extends AbstractController
     {
         return $this->createFormBuilder(['id' => $id])
             ->add('id', HiddenType::class)
-            ->getForm();
+            ->getForm()
+        ;
     }
 
     private function createMessageForm(TicketMessageInterface $message): FormInterface

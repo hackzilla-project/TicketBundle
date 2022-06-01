@@ -78,5 +78,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ])
 
         ->alias(TicketManagerInterface::class, TicketManager::class)
-            ->public();
+            ->public()
+    ;
 };

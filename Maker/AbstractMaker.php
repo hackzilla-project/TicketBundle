@@ -78,7 +78,8 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
     {
         $command
             ->addOption('api-resource', 'a', InputOption::VALUE_NONE, 'Mark this class as an API Platform resource (expose a CRUD API for it)')
-            ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite any existing getter/setter methods');
+            ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite any existing getter/setter methods')
+        ;
     }
 
     /**

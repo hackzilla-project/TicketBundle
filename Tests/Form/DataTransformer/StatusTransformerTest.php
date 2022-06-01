@@ -26,7 +26,8 @@ class StatusTransformerTest extends WebTestCase
     {
         $mock = $this->getMockBuilder(TicketInterface::class)
             ->setMockClassName('Ticket')
-            ->getMock();
+            ->getMock()
+        ;
         $this->object = new StatusTransformer($mock);
     }
 
@@ -42,7 +43,7 @@ class StatusTransformerTest extends WebTestCase
 
     public function testTransform(): void
     {
-        $this->assertSame(true, $this->object->transform(TicketMessageInterface::STATUS_CLOSED));
+        $this->assertTrue($this->object->transform(TicketMessageInterface::STATUS_CLOSED));
 
         $this->assertNull($this->object->transform('TEST'));
     }

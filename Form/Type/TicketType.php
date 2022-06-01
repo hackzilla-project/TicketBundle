@@ -49,7 +49,8 @@ final class TicketType extends AbstractType
                     'label' => false,
                     'allow_add' => true,
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

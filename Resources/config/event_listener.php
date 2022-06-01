@@ -20,5 +20,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
 
         ->set('hackzilla_ticket.file_upload_subscriber', FileSubscriber::class)
-            ->tag('kernel.event_subscriber');
+            ->tag('kernel.event_subscriber')
+    ;
 };

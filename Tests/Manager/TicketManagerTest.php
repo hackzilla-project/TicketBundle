@@ -38,24 +38,29 @@ final class TicketManagerTest extends WebTestCase
         $qb = $this->createMock(QueryBuilder::class);
         $qb
             ->method('orderBy')
-            ->willReturn($qb);
+            ->willReturn($qb)
+        ;
         $qb
             ->method('andWhere')
-            ->willReturn($qb);
+            ->willReturn($qb)
+        ;
         $entityRepository = $this->createMock(EntityRepository::class);
         $entityRepository
             ->method('createQueryBuilder')
-            ->willReturn($qb);
+            ->willReturn($qb)
+        ;
 
         $om = $this->createMock(EntityManagerInterface::class);
         $om
             ->method('getRepository')
-            ->willReturn($entityRepository);
+            ->willReturn($entityRepository)
+        ;
 
         $userManager = $this->createMock(UserManagerInterface::class);
         $userManager
             ->method('getCurrentUser')
-            ->willReturn(new User());
+            ->willReturn(new User())
+        ;
 
         $permissionManager = (new PermissionManager())
             ->setUserManager($userManager)

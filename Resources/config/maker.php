@@ -33,5 +33,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('maker.doctrine_helper'),
                 new ReferenceConfigurator('parameter_bag'),
             ])
-            ->tag('maker.command');
+            ->tag('maker.command')
+    ;
 };

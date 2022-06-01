@@ -26,8 +26,8 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketMessageTrait;
 #[ORM\Entity()]
 class TicketMessageWithAttachment implements TicketMessageInterface, MessageAttachmentInterface
 {
-    use TicketMessageTrait;
     use MessageAttachmentTrait;
+    use TicketMessageTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

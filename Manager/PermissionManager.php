@@ -33,13 +33,15 @@ class PermissionManager implements PermissionManagerInterface
             if (!$this->getUserManager()->hasRole($user, TicketRole::ADMIN)) {
                 $query
                     ->andWhere('t.userCreated = :user')
-                    ->setParameter('user', $user);
+                    ->setParameter('user', $user)
+                ;
             }
         } else {
             // anonymous user
             $query
                 ->andWhere('t.userCreated = :userId')
-                ->setParameter('userId', null);
+                ->setParameter('userId', null)
+            ;
         }
 
         return $query;

@@ -254,7 +254,8 @@ final class ClassSourceManipulator
     public function createMethodBuilder(string $methodName, $returnType, bool $isReturnTypeNullable, array $commentLines = []): Builder\Method
     {
         $methodNodeBuilder = (new Builder\Method($methodName))
-            ->makePublic();
+            ->makePublic()
+        ;
 
         if (null !== $returnType) {
             if (class_exists($returnType) || interface_exists($returnType)) {
@@ -440,7 +441,8 @@ final class ClassSourceManipulator
             ->makePublic()
             ->addStmt(
                 new Node\Stmt\Return_($propertyFetch)
-            );
+            )
+        ;
 
         if (null !== $returnType) {
             $getterNodeBuilder->setReturnType($isReturnTypeNullable ? new Node\NullableType($returnType) : $returnType);
@@ -797,11 +799,13 @@ final class ClassSourceManipulator
         switch ($context) {
             case self::CONTEXT_OUTSIDE_CLASS:
                 return (new Builder\Use_('__EXTRA__LINE', Node\Stmt\Use_::TYPE_NORMAL))
-                    ->getNode();
+                    ->getNode()
+                ;
             case self::CONTEXT_CLASS:
                 return (new Builder\Property('__EXTRA__LINE'))
                     ->makePrivate()
-                    ->getNode();
+                    ->getNode()
+                ;
             case self::CONTEXT_CLASS_METHOD:
                 return new Node\Expr\Variable('__EXTRA__LINE');
             default:
@@ -895,7 +899,8 @@ final class ClassSourceManipulator
 
         $methodBuilder
             ->addStmt($this->createBlankLineNode(self::CONTEXT_CLASS_METHOD))
-            ->addStmt(new Node\Stmt\Return_(new Node\Expr\Variable('this')));
+            ->addStmt(new Node\Stmt\Return_(new Node\Expr\Variable('this')))
+        ;
         $methodBuilder->setReturnType('self');
     }
 

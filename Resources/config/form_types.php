@@ -38,5 +38,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator(UserManagerInterface::class),
                 new ReferenceConfigurator('hackzilla_ticket.features'),
                 '%hackzilla_ticket.model.message.class%',
-            ]);
+            ])
+    ;
 };

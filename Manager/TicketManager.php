@@ -198,13 +198,15 @@ final class TicketManager implements TicketManagerInterface
     public function getTicketListQuery($ticketStatus, $ticketPriority = null): QueryBuilder
     {
         $query = $this->ticketRepository->createQueryBuilder('t')
-            ->orderBy('t.lastMessage', 'DESC');
+            ->orderBy('t.lastMessage', 'DESC')
+        ;
 
         switch ($ticketStatus) {
             case TicketMessageInterface::STATUS_CLOSED:
                 $query
                     ->andWhere('t.status = :status')
-                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED);
+                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED)
+                ;
 
                 break;
 
@@ -212,13 +214,15 @@ final class TicketManager implements TicketManagerInterface
             default:
                 $query
                     ->andWhere('t.status != :status')
-                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED);
+                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED)
+                ;
         }
 
         if ($ticketPriority) {
             $query
                 ->andWhere('t.priority = :priority')
-                ->setParameter('priority', $ticketPriority);
+                ->setParameter('priority', $ticketPriority)
+            ;
         }
 
         // add permissions check and return updated query
@@ -243,7 +247,8 @@ final class TicketManager implements TicketManagerInterface
             ->where('t.status = :status')
             ->andWhere('t.lastMessage < :closeBeforeDate')
             ->setParameter('status', TicketMessageInterface::STATUS_RESOLVED)
-            ->setParameter('closeBeforeDate', $closeBeforeDate);
+            ->setParameter('closeBeforeDate', $closeBeforeDate)
+        ;
 
         return $query->getQuery()->getResult();
     }

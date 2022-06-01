@@ -23,5 +23,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 '%hackzilla_ticket.features%',
                 '%hackzilla_ticket.model.message.class%',
-            ]);
+            ])
+    ;
 };
