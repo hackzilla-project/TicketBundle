@@ -69,6 +69,9 @@ jobs:
             - name: Install maker
               run: composer require symfony/maker-bundle --no-update
 
+            - name: Install doctrine/orm
+              run: composer require doctrine/orm --no-update
+
             - name: "Install Composer dependencies (${{ matrix.dependencies }})"
               uses: "ramsey/composer-install@v1"
               with:

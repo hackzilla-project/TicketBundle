@@ -16,6 +16,9 @@ jobs:
       - name: Install symfony/maker-bundle
         run: composer require symfony/maker-bundle --no-progress
 
+      - name: Install doctrine/orm
+        run: composer require doctrine/orm --no-progress
+
       - name: PHPStan
         uses: "docker://oskarstark/phpstan-ga"
         env:
