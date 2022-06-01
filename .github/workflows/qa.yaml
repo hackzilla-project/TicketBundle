@@ -7,6 +7,9 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
+      - name: Force php 8.1
+        run: composer config platform.php 8.0.99
+
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 

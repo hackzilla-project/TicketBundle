@@ -31,7 +31,7 @@ jobs:
                       dependencies: highest
                       allowed-to-fail: false
                       variant: 'symfony/symfony:"5.4.*"'
-                    - php-version: '8.0'
+                    - php-version: '8.1'
                       dependencies: highest
                       allowed-to-fail: true
                       variant: 'symfony/symfony:"6.0.*"'
