@@ -31,7 +31,7 @@ final class StatusTransformer implements DataTransformerInterface
      *
      * @param int $number
      *
-     * @return int|null
+     * @return true|null
      */
     public function transform($number)
     {
