@@ -178,6 +178,7 @@ final class TicketManager implements TicketManagerInterface
     public function getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null): QueryBuilder
     {
         $query = $this->ticketRepository->createQueryBuilder('t')
+            ->innerjoin('t.userCreated', 'u')
             ->orderBy('t.lastMessage', 'DESC');
 
         switch ($ticketStatus) {
