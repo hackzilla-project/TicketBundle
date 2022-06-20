@@ -28,6 +28,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -78,15 +79,14 @@ final class TicketController extends AbstractController
         $ticketPriority = $request->get('priority', null);
 
         $query = $ticketManager->getTicketListQuery(
-            $userManager,
             $ticketManager->getTicketStatus($ticketState),
             $ticketManager->getTicketPriority($ticketPriority)
         );
 
         $pagination = $this->pagination->paginate(
             $query->getQuery(),
-            intval($request->query->get('page', 1))/*page number*/,
-            10/*limit per page*/
+            (int) ($request->query->get('page', 1))/* page number */,
+            10/* limit per page */
         );
 
         return $this->render(
@@ -114,9 +114,11 @@ final class TicketController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $message = $ticket->getMessages()->current();
-            $message->setStatus(TicketMessageInterface::STATUS_OPEN)
-                ->setUser($this->userManager->getCurrentUser());
+            /** @var TicketMessageInterface $message */
+            $message = $ticket->getMessages()->current()
+                ->setStatus(TicketMessageInterface::STATUS_OPEN)
+                ->setUser($this->userManager->getCurrentUser())
+            ;
 
             $ticketManager->updateTicket($ticket, $message);
             $this->dispatchTicketEvent(TicketEvents::TICKET_CREATE, $ticket);
@@ -171,7 +173,10 @@ final class TicketController extends AbstractController
         }
 
         $currentUser = $this->userManager->getCurrentUser();
-        $this->userManager->hasPermission($currentUser, $ticket);
+
+        if (!$this->userManager->hasPermission($currentUser, $ticket)) {
+            throw new AccessDeniedHttpException();
+        }
 
         $data = ['ticket' => $ticket, 'translationDomain' => 'HackzillaTicketBundle'];
 
@@ -205,7 +210,10 @@ final class TicketController extends AbstractController
         }
 
         $user = $this->userManager->getCurrentUser();
-        $this->userManager->hasPermission($user, $ticket);
+
+        if (!$this->userManager->hasPermission($user, $ticket)) {
+            throw new AccessDeniedHttpException();
+        }
 
         $message = $ticketManager->createMessage($ticket);
 
@@ -281,7 +289,8 @@ final class TicketController extends AbstractController
     {
         return $this->createFormBuilder(['id' => $id])
             ->add('id', HiddenType::class)
-            ->getForm();
+            ->getForm()
+        ;
     }
 
     private function createMessageForm(TicketMessageInterface $message): FormInterface
@@ -289,7 +298,9 @@ final class TicketController extends AbstractController
         $form = $this->createForm(
             TicketMessageType::class,
             $message,
-            ['new_ticket' => false]
+            [
+                'ticket' => $message->getTicket(),
+            ]
         );
 
         return $form;

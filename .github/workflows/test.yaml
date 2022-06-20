@@ -28,25 +28,17 @@ jobs:
                 variant: [normal]
                 include:
                     - php-version: '8.0'
-                      dependencies: lowest
-                      allowed-to-fail: false
-                      variant: 'vich/uploader-bundle'
-                    - php-version: '8.0'
                       dependencies: highest
                       allowed-to-fail: false
                       variant: 'symfony/symfony:"5.4.*"'
-                    - php-version: '8.0'
+                    - php-version: '8.1'
                       dependencies: highest
-                      allowed-to-fail: false
-                      variant: 'symfony/symfony:"4.4.*"'
-                    - php-version: '8.0'
+                      allowed-to-fail: true
+                      variant: 'symfony/symfony:"6.0.*"'
+                    - php-version: '8.1'
                       dependencies: highest
                       allowed-to-fail: false
                       variant: 'vich/uploader-bundle'
-                    - php-version: '8.1'
-                      dependencies: lowest
-                      allowed-to-fail: false
-                      variant: normal
                     - php-version: '8.1'
                       dependencies: highest
                       allowed-to-fail: false
@@ -73,6 +65,12 @@ jobs:
             - name: Install variant
               if: matrix.variant != 'normal'
               run: composer require ${{ matrix.variant }} --no-update
+
+            - name: Install maker
+              run: composer require symfony/maker-bundle --no-update
+
+            - name: Install doctrine/orm
+              run: composer require doctrine/orm --no-update
 
             - name: "Install Composer dependencies (${{ matrix.dependencies }})"
               uses: "ramsey/composer-install@v1"

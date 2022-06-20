@@ -18,40 +18,6 @@ namespace Hackzilla\Bundle\TicketBundle\Model;
  */
 trait TicketMessageTrait
 {
-    protected $ticket;
-
-    /**
-     * @var int
-     */
-    protected $user;
-
-    protected $userObject;
-
-    /**
-     * @var string
-     */
-    protected $message;
-
-    /**
-     * @var int
-     */
-    protected $status;
-
-    /**
-     * @var int
-     */
-    protected $priority;
-
-    /**
-     * @var \DateTime
-     */
-    protected $createdAt;
-
-    public function __construct()
-    {
-        $this->setCreatedAt(new \DateTime());
-    }
-
     /**
      * Set status.
      *
@@ -151,39 +117,23 @@ trait TicketMessageTrait
     /**
      * Set user.
      *
-     * @param int|UserInterface $user
+     * @param ?UserInterface $user
      *
      * @return $this
      */
     public function setUser($user)
     {
-        if (\is_object($user)) {
-            $this->userObject = $user;
-            $this->user = $user->getId();
-        } else {
-            $this->userObject = null;
-            $this->user = $user;
-        }
+        $this->user = $user;
 
         return $this;
     }
 
     /**
      * Get user.
-     *
-     * @return int
      */
-    public function getUser()
+    public function getUser(): ?UserInterface
     {
         return $this->user;
-    }
-
-    /**
-     * Get user object.
-     */
-    public function getUserObject(): ?UserInterface
-    {
-        return $this->userObject;
     }
 
     /**
@@ -236,12 +186,7 @@ trait TicketMessageTrait
     public function setTicket(?TicketInterface $ticket = null)
     {
         $this->ticket = $ticket;
-
-        if (null === $this->getUserObject()) {
-            $user = $this->getUser();
-        } else {
-            $user = $this->getUserObject();
-        }
+        $user = $this->getUser();
 
         // if null, then new ticket
         if (null === $ticket->getUserCreated()) {

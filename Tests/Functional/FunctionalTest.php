@@ -16,8 +16,10 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Vich\UploaderBundle\Event\Events;
+use Vich\UploaderBundle\VichUploaderBundle;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
@@ -27,18 +29,20 @@ class FunctionalTest extends WebTestCase
     /**
      * @dataProvider getParameters
      */
-    public function testConfiguredParameter($parameter, $value)
+    public function testConfiguredParameter($parameter, $value): void
     {
         $this->assertTrue(static::$kernel->getContainer()->hasParameter($parameter));
         $this->assertSame($value, static::$kernel->getContainer()->getParameter($parameter));
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
+        $messageCLass = !class_exists(VichUploaderBundle::class) ? TicketMessage::class : TicketMessageWithAttachment::class;
+
         return [
             ['hackzilla_ticket.model.user.class', User::class],
             ['hackzilla_ticket.model.ticket.class', Ticket::class],
-            ['hackzilla_ticket.model.message.class', TicketMessage::class],
+            ['hackzilla_ticket.model.message.class', $messageCLass],
             ['hackzilla_ticket.features', ['attachment' => true]],
             ['hackzilla_ticket.templates', [
                 'index' => '@HackzillaTicket/Ticket/index.html.twig',
@@ -51,7 +55,7 @@ class FunctionalTest extends WebTestCase
         ];
     }
 
-    public function testConfiguredTicketManager()
+    public function testConfiguredTicketManager(): void
     {
         $this->assertTrue(static::$kernel->getContainer()->has(TicketManagerInterface::class));
         $this->assertInstanceOf(TicketManagerInterface::class, static::$kernel->getContainer()->get(TicketManagerInterface::class));
@@ -60,7 +64,7 @@ class FunctionalTest extends WebTestCase
     /**
      * @group vichuploaderbundle
      */
-    public function testConfiguredFileUploadSubscriber()
+    public function testConfiguredFileUploadSubscriber(): void
     {
         $eventDispatcher = static::$kernel->getContainer()->get('event_dispatcher');
         $listeners = $eventDispatcher->getListeners();

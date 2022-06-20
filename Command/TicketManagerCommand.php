@@ -67,22 +67,25 @@ final class TicketManagerCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 'What priority would it be?',
                 '21'
-            );
+            )
+        ;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $ticket = $this->ticketManager->createTicket()
-            ->setSubject($input->getArgument('subject'));
+            ->setSubject($input->getArgument('subject'))
+        ;
 
         $message = $this->ticketManager->createMessage()
             ->setMessage($input->getArgument('message'))
             ->setStatus(TicketMessageInterface::STATUS_OPEN)
             ->setPriority($input->getOption('priority'))
-            ->setUser($this->userManager->findUserByUsername('system'));
+            ->setUser($this->userManager->findUserByUsername('system'))
+        ;
 
         $this->ticketManager->updateTicket($ticket, $message);
 

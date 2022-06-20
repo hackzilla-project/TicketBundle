@@ -14,17 +14,11 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Symfony\Component\Translation\Translator;
 
 interface TicketManagerInterface
 {
-    public function setObjectManager(ObjectManager $objectManager): void;
-
-    public function setTranslator(Translator $translator);
-
     public function createTicket();
 
     public function createMessage(?TicketInterface $ticket = null);
@@ -33,15 +27,15 @@ interface TicketManagerInterface
 
     public function deleteTicket(TicketInterface $ticket);
 
-    public function getTicketById($ticketId);
+    public function getTicketById($ticketId): ?TicketInterface;
 
-    public function getMessageById($ticketMessageId);
+    public function getMessageById($ticketMessageId): ?TicketMessageInterface;
 
     public function findTickets();
 
     public function findTicketsBy(array $criteria);
 
-    public function getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null): QueryBuilder;
+    public function getTicketListQuery($ticketStatus, $ticketPriority = null): QueryBuilder;
 
     /**
      * @param int $days

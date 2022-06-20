@@ -19,8 +19,6 @@ interface TicketInterface
 {
     /**
      * Get ticket id.
-     *
-     * @return mixed
      */
     public function getId();
 
@@ -75,44 +73,32 @@ interface TicketInterface
     /**
      * Set userCreated.
      *
-     * @param int|UserInterface $userCreated
+     * @param ?UserInterface $userCreated
      *
      * @return $this
      */
-    public function setUserCreated($userCreated);
+    public function setUserCreated(?UserInterface $userCreated);
 
     /**
      * Get userCreated.
      *
-     * @return int
+     * @return ?UserInterface
      */
-    public function getUserCreated();
-
-    /**
-     * Get userCreated object.
-     */
-    public function getUserCreatedObject(): ?UserInterface;
+    public function getUserCreated(): ?UserInterface;
 
     /**
      * Set lastUser.
      *
-     * @param int|UserInterface $lastUser
+     * @param ?UserInterface $lastUser
      *
      * @return $this
      */
-    public function setLastUser($lastUser);
+    public function setLastUser(?UserInterface $lastUser);
 
     /**
-     * Get lastUser id.
-     *
-     * @return mixed
+     * Get lastUser .
      */
-    public function getLastUser();
-
-    /**
-     * Get lastUser object.
-     */
-    public function getLastUserObject(): ?UserInterface;
+    public function getLastUser(): ?UserInterface;
 
     /**
      * Set lastMessage.

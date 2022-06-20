@@ -16,7 +16,6 @@ UPGRADE FROM 3.8 to 4.0
  - `Hackzilla\Bundle\TicketBundle\DependencyInjection\HackzillaTicketExtension`;
  - `Hackzilla\Bundle\TicketBundle\Event\TicketEvent`;
  - `Hackzilla\Bundle\TicketBundle\EventListener\FileSubscriber`;
- - `Hackzilla\Bundle\TicketBundle\EventListener\UserLoad`;
  - `Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer`;
  - `Hackzilla\Bundle\TicketBundle\Manager\TicketManager`;
  - `Hackzilla\Bundle\TicketBundle\Manager\UserManager`;

@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
-use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
@@ -27,12 +30,13 @@ class UserManagerTest extends WebTestCase
 
     protected function setUp(): void
     {
+        self::bootKernel();
         $this->tokenStorage = new TokenStorage();
 
         $this->object = new UserManager(
             $this->tokenStorage,
             $this->getMockUserRepository(),
-            $this->getAuthorizationChecker()
+            $this->getAuthorizationChecker(),
         );
     }
 
@@ -41,16 +45,16 @@ class UserManagerTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(UserManager::class, $this->object);
     }
 
-    private function getMockUserRepository()
+    private function getMockUserRepository(): EntityRepository
     {
-        $doctrine = static::getContainer()->get('doctrine');
+        $em = static::getContainer()->get(EntityManagerInterface::class);
 
-        return $doctrine->getRepository(UserInterface::class);
+        return new EntityRepository($em, new ClassMetadata(User::class));
     }
 
     private function getAuthorizationChecker()

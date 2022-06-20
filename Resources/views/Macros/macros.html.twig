@@ -1,4 +1,4 @@
-{% macro status_btn(status, text, small = false, translationDomain = 'messages') %}
+{% macro status_btn(status, text, small = false, translationDomain = 'HackzillaTicketBundle') %}
     {% apply spaceless %}
         {% if status == 10 %}
             <button class="btn btn-warning {{ small ? 'btn-xs' : '' }} disabled active"><span
@@ -22,7 +22,7 @@
     {% endapply %}
 {% endmacro %}
 
-{% macro status_alert(status, text, translationDomain = 'messages') %}
+{% macro status_alert(status, text, translationDomain = 'HackzillaTicketBundle') %}
     {% apply spaceless %}
         {% if status == 10 %}
             <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain) }}
@@ -49,7 +49,7 @@
     {% endapply %}
 {% endmacro %}
 
-{% macro priority_btn(priority, text, small = false, translationDomain = 'messages') %}
+{% macro priority_btn(priority, text, small = false, translationDomain = 'HackzillaTicketBundle') %}
     {% apply spaceless %}
         {% if priority <= 20 %}
             <button class="btn btn-info {{ small ? 'btn-xs' : '' }} disabled active">{{ text|upper }}</button>
@@ -63,7 +63,7 @@
     {% endapply %}
 {% endmacro %}
 
-{% macro priority_alert(priority, text, translationDomain = 'messages') %}
+{% macro priority_alert(priority, text, translationDomain = 'HackzillaTicketBundle') %}
     {% apply spaceless %}
         {% if priority <= 20 %}
             <div class="alert alert-info"

@@ -11,8 +11,6 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Hackzilla\Bundle\TicketBundle\TwigExtension\TicketFeatureExtension;
-use Hackzilla\Bundle\TicketBundle\TwigExtension\TicketGlobalExtension;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -21,16 +19,20 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $containerConfigurator->services()
 
-        ->set('hackzilla_ticket.component.twig_extension.ticket_features', TicketFeatureExtension::class)
-            ->tag('twig.extension')
+        ->set('hackzilla_ticket.maker.ticket', \Hackzilla\Bundle\TicketBundle\Maker\TicketMaker::class)
             ->args([
-                new ReferenceConfigurator('hackzilla_ticket.features'),
+                new ReferenceConfigurator('maker.file_manager'),
+                new ReferenceConfigurator('maker.doctrine_helper'),
+                new ReferenceConfigurator('parameter_bag'),
             ])
+            ->tag('maker.command')
 
-        ->set('hackzilla_ticket.component.twig_extension.ticket_global', TicketGlobalExtension::class)
-            ->tag('twig.extension')
+        ->set('hackzilla_ticket.maker.message', \Hackzilla\Bundle\TicketBundle\Maker\MessageMaker::class)
             ->args([
-                '%hackzilla_ticket.templates%',
+                new ReferenceConfigurator('maker.file_manager'),
+                new ReferenceConfigurator('maker.doctrine_helper'),
+                new ReferenceConfigurator('parameter_bag'),
             ])
+            ->tag('maker.command')
     ;
 };

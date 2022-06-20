@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\DataTransformer;
 
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
+use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -23,7 +24,11 @@ class StatusTransformerTest extends WebTestCase
 
     protected function setUp(): void
     {
-        $this->object = new StatusTransformer();
+        $mock = $this->getMockBuilder(TicketInterface::class)
+            ->setMockClassName('Ticket')
+            ->getMock()
+        ;
+        $this->object = new StatusTransformer($mock);
     }
 
     protected function tearDown(): void
@@ -38,15 +43,15 @@ class StatusTransformerTest extends WebTestCase
 
     public function testTransform(): void
     {
-        $this->assertSame($this->object->transform(TicketMessageInterface::STATUS_CLOSED), 1);
+        $this->assertTrue($this->object->transform(TicketMessageInterface::STATUS_CLOSED));
 
         $this->assertNull($this->object->transform('TEST'));
     }
 
     public function testReverseTransform(): void
     {
-        $this->assertSame($this->object->reverseTransform(1), TicketMessageInterface::STATUS_CLOSED);
+        $this->assertSame(TicketMessageInterface::STATUS_CLOSED, $this->object->reverseTransform(1));
 
-        $this->assertNull($this->object->reverseTransform('TEST'));
+        $this->assertNull($this->object->reverseTransform(''));
     }
 }

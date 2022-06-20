@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 use Hackzilla\Bundle\TicketBundle\Controller\TicketAttachmentController;
 use Hackzilla\Bundle\TicketBundle\Controller\TicketController;
+use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -25,13 +27,14 @@ return static function (ContainerConfigurator $container): void {
             ->set(TicketAttachmentController::class)
                 ->args([
                     new ReferenceConfigurator('vich_uploader.download_handler'),
-                    new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
+                    new ReferenceConfigurator(TicketManagerInterface::class),
                     new ReferenceConfigurator('translator'),
-                    new ReferenceConfigurator('hackzilla_ticket.user_manager'),
+                    new ReferenceConfigurator(UserManagerInterface::class),
                 ])
                 ->call('setContainer', [new ReferenceConfigurator('service_container')])
                 ->tag('controller.service_arguments')
-                ->alias('hackzilla_ticket.controller.ticket_attachment_controller', TicketAttachmentController::class);
+                ->alias('hackzilla_ticket.controller.ticket_attachment_controller', TicketAttachmentController::class)
+        ;
     }
 
     $container->services()
@@ -40,11 +43,12 @@ return static function (ContainerConfigurator $container): void {
                 new ReferenceConfigurator('event_dispatcher'),
                 new ReferenceConfigurator('knp_paginator'),
                 new ReferenceConfigurator('parameter_bag'),
-                new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
+                new ReferenceConfigurator(TicketManagerInterface::class),
                 new ReferenceConfigurator('translator'),
-                new ReferenceConfigurator('hackzilla_ticket.user_manager'),
+                new ReferenceConfigurator(UserManagerInterface::class),
             ])
             ->call('setContainer', [new ReferenceConfigurator('service_container')])
             ->tag('controller.service_arguments')
-            ->alias('hackzilla_ticket.controller.ticket_controller', TicketController::class);
+            ->alias('hackzilla_ticket.controller.ticket_controller', TicketController::class)
+    ;
 };

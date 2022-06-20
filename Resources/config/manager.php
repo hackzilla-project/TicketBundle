@@ -12,6 +12,7 @@ declare(strict_types=1);
  */
 
 use Doctrine\ORM\EntityRepository;
+use Hackzilla\Bundle\TicketBundle\Manager\PermissionManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
@@ -40,12 +41,19 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('hackzilla_ticket.user_repository'),
                 new ReferenceConfigurator('security.authorization_checker'),
             ])
-
-        ->alias('hackzilla_ticket.user_manager', UserManager::class)
-            ->public()
+        ->call('setPermissionManager', [
+            new ReferenceConfigurator(PermissionManagerInterface::class),
+        ])
 
         ->alias(UserManagerInterface::class, UserManager::class)
             ->public()
+
+        ->set(PermissionManagerInterface::class)
+            ->class('%hackzilla_ticket.manager.permission.class%')
+            ->public()
+            ->call('setUserManager', [
+                new ReferenceConfigurator(UserManagerInterface::class),
+            ])
 
         ->set(TicketManager::class)
             ->public()
@@ -53,17 +61,23 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 '%hackzilla_ticket.model.ticket.class%',
                 '%hackzilla_ticket.model.message.class%',
             ])
+            ->call('setPermissionManager', [
+                new ReferenceConfigurator(PermissionManagerInterface::class),
+            ])
+            ->call('setUserManager', [
+                new ReferenceConfigurator(UserManagerInterface::class),
+            ])
             ->call('setObjectManager', [
                 new ReferenceConfigurator('doctrine.orm.entity_manager'),
             ])
             ->call('setTranslator', [
                 new ReferenceConfigurator('translator'),
             ])
-
-        ->alias('hackzilla_ticket.ticket_manager', TicketManager::class)
-            ->public()
+            ->call('setLogger', [
+                new ReferenceConfigurator('logger'),
+            ])
 
         ->alias(TicketManagerInterface::class, TicketManager::class)
             ->public()
-        ;
+    ;
 };

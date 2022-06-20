@@ -15,7 +15,7 @@
     </h1>
 
     <p>
-        <i>{{ 'LABEL_CREATED_BY'|trans({}, translationDomain) }} {{ ticket.userCreatedObject }}
+        <i>{{ 'LABEL_CREATED_BY'|trans({}, translationDomain) }} {{ ticket.userCreated.userIdentifier|default('ANONYMOUS'|trans({}, translationDomain)) }}
             , {{ ticket.createdAt|date('LABEL_DATE_FORMAT'|trans({}, translationDomain)) }}</i>
         {# <br />{{ 'LABEL_PRIORITY'|trans({}, translationDomain) }} <span class="label label-{{ ticket.priority == 0 ? 'default' : (ticket.priority == 20 ? 'primary' : (ticket.priority == 21 ? 'warning' : 'danger')) }}">{{ ticket.priorityString|trans({}, translationDomain) }}</span> #}
     </p>
@@ -38,15 +38,14 @@
         {% if message.message|length > 0 %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ message.userObject }}
+                    {{ message.user.userIdentifier | default('ANONYMOUS'|trans({}, translationDomain)) }}
                     {# <br />{{ 'LABEL_PRIORITY'|trans({}, translationDomain) }} <span class="label label-{{ message.priority == 0 ? 'default' : (message.priority == 20 ? 'primary' : (message.priority == 21 ? 'warning' : 'danger')) }}">{{ message.priorityString|trans({}, translationDomain) }}</span> #}
                     {# <br />{{ 'LABEL_STATUS'|trans({}, translationDomain) }} <span class="label label-{{ message.status ? 'success' : 'danger' }}">{{ message.statusString|trans({}, translationDomain) }}</span> #}
 
                     <span class="pull-right">
-                {% if message.userObject != ticket.userCreatedObject %}<span
-                        class="label label-danger">{{ 'LABEL_ADMIN'|trans({}, translationDomain) }}</span> {% endif %}
+                        {% if message.user and "ROLE_ADMIN" in message.user.roles %}<span class="label label-danger">{{ 'LABEL_ADMIN'|trans({}, translationDomain) }}</span> {% endif %}
                         <small><i>{{ message.createdAt|date('LABEL_DATE_TIME_FORMAT'|trans({}, translationDomain)) }}</i></small>
-            </span>
+                    </span>
                 </div>
                 <div class="panel-body">
                     {{ message.message|nl2br }}

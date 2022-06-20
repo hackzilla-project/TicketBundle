@@ -16,15 +16,19 @@ namespace Hackzilla\Bundle\TicketBundle\Manager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 
-interface UserManagerInterface
+interface PermissionManagerInterface
 {
-    public function getCurrentUser(): ?UserInterface;
+    /**
+     * used in TicketManager::getTicketListQuery().
+     *
+     * @param object $query
+     */
+    public function addUserPermissionsCondition($query, UserInterface $user);
 
-    public function getUserById($userId): ?UserInterface;
-
-    public function hasRole(?UserInterface $user, string $role): bool;
-
-    public function hasPermission(?UserInterface $user, TicketInterface $ticket): bool;
-
-    public function findUserByUsername(string $username): ?UserInterface;
+    /**
+     * used by UserManager::hasPermission().
+     *
+     * @param ?UserInterface $user
+     */
+    public function hasPermission(?UserInterface $user, TicketInterface $ticket): void;
 }

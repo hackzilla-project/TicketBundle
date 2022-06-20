@@ -15,9 +15,9 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle;
-use Hackzilla\Bundle\TicketBundle\Model\TicketMessageWithAttachment;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -160,13 +160,18 @@ final class TestKernel extends Kernel
         $c->loadFromExtension('framework', $frameworkConfig);
 
         // SecurityBundle config
-        $mainFirewallConfig = [];
+        $mainFirewallConfig = [
+            'pattern' => '^/',
+            'form_login' => [
+                'provider' => 'in_memory',
+            ],
+        ];
 
         // "logout_on_user_change" configuration was marked as mandatory since version 3.4 and deprecated as of 4.1.
         if (version_compare(self::VERSION, '3.4', '>=') && version_compare(self::VERSION, '4.1', '<')) {
             $mainFirewallConfig['logout_on_user_change'] = true;
         }
-        $c->loadFromExtension('security', [
+        $securityConfig = [
             'providers' => [
                 'in_memory' => [
                     'memory' => null,
@@ -175,7 +180,13 @@ final class TestKernel extends Kernel
             'firewalls' => [
                 'main' => $mainFirewallConfig,
             ],
-        ]);
+        ];
+
+        if (version_compare(self::VERSION, '5.3', '>=') && version_compare(self::VERSION, '7.0', '<')) {
+            $securityConfig['enable_authenticator_manager'] = true;
+        }
+
+        $c->loadFromExtension('security', $securityConfig);
 
         // DoctrineBundle config
         $c->loadFromExtension('doctrine', [
@@ -189,6 +200,14 @@ final class TestKernel extends Kernel
             'orm' => [
                 'default_entity_manager' => 'default',
                 'auto_mapping' => true,
+                'mappings' => [
+                    'HackzillaTicketBundle' => [
+                        'dir' => 'Tests/Fixtures/Entity',
+                        'prefix' => 'Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity',
+                        'alias' => 'HackzillaTicketBundle',
+                        'type' => 'attribute',
+                    ],
+                ],
             ],
         ]);
 

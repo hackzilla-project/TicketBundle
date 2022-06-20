@@ -17,11 +17,14 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Hackzilla\Bundle\TicketBundle\TicketRole;
+use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class TicketManager implements TicketManagerInterface
 {
+    use PermissionManagerTrait;
+    use UserManagerTrait;
+
     private $translator;
 
     private $translationDomain = 'HackzillaTicketBundle';
@@ -38,27 +41,44 @@ final class TicketManager implements TicketManagerInterface
 
     /**
      * TicketManager constructor.
-     *
-     * @param string $ticketClass
-     * @param string $ticketMessageClass
      */
-    public function __construct($ticketClass, $ticketMessageClass)
+    public function __construct(string $ticketClass, string $ticketMessageClass)
     {
         $this->ticketClass = $ticketClass;
         $this->ticketMessageClass = $ticketMessageClass;
     }
 
-    public function setObjectManager(ObjectManager $objectManager): void
+    public function setLogger(LoggerInterface $logger): self
+    {
+        if (!class_exists($this->ticketClass)) {
+            $logger->error(sprintf('Ticket entity %s doesn\'t exist', $this->ticketClass));
+        }
+        if (!class_exists($this->ticketMessageClass)) {
+            $logger->error(sprintf('Message entity %s doesn\'t exist', $this->ticketMessageClass));
+        }
+
+        return $this;
+    }
+
+    public function setObjectManager(ObjectManager $objectManager): self
     {
         $this->objectManager = $objectManager;
-        $this->ticketRepository = $objectManager->getRepository($this->ticketClass);
-        $this->messageRepository = $objectManager->getRepository($this->ticketMessageClass);
+
+        if ($this->ticketClass) {
+            $this->ticketRepository = $objectManager->getRepository($this->ticketClass);
+        }
+
+        if ($this->ticketMessageClass) {
+            $this->messageRepository = $objectManager->getRepository($this->ticketMessageClass);
+        }
+
+        return $this;
     }
 
     /**
      * @return $this
      */
-    public function setTranslator(TranslatorInterface $translator)
+    public function setTranslator(TranslatorInterface $translator): self
     {
         $this->translator = $translator;
 
@@ -131,7 +151,7 @@ final class TicketManager implements TicketManagerInterface
     /**
      * Find all tickets in the database.
      *
-     * @return array|TicketInterface[]
+     * @return TicketInterface[]
      */
     public function findTickets()
     {
@@ -143,9 +163,9 @@ final class TicketManager implements TicketManagerInterface
      *
      * @param int $ticketId
      *
-     * @return TicketInterface
+     * @return ?TicketInterface
      */
-    public function getTicketById($ticketId)
+    public function getTicketById($ticketId): ?TicketInterface
     {
         return $this->ticketRepository->find($ticketId);
     }
@@ -157,7 +177,7 @@ final class TicketManager implements TicketManagerInterface
      *
      * @return TicketMessageInterface
      */
-    public function getMessageById($ticketMessageId)
+    public function getMessageById($ticketMessageId): ?TicketMessageInterface
     {
         return $this->messageRepository->find($ticketMessageId);
     }
@@ -175,17 +195,19 @@ final class TicketManager implements TicketManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null): QueryBuilder
+    public function getTicketListQuery($ticketStatus, $ticketPriority = null): QueryBuilder
     {
         $query = $this->ticketRepository->createQueryBuilder('t')
             ->innerjoin('t.userCreated', 'u')
-            ->orderBy('t.lastMessage', 'DESC');
+            ->orderBy('t.lastMessage', 'DESC')
+        ;
 
         switch ($ticketStatus) {
             case TicketMessageInterface::STATUS_CLOSED:
                 $query
                     ->andWhere('t.status = :status')
-                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED);
+                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED)
+                ;
 
                 break;
 
@@ -193,31 +215,22 @@ final class TicketManager implements TicketManagerInterface
             default:
                 $query
                     ->andWhere('t.status != :status')
-                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED);
+                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED)
+                ;
         }
 
         if ($ticketPriority) {
             $query
                 ->andWhere('t.priority = :priority')
-                ->setParameter('priority', $ticketPriority);
+                ->setParameter('priority', $ticketPriority)
+            ;
         }
 
-        $user = $userManager->getCurrentUser();
-
-        if (\is_object($user)) {
-            if (!$userManager->hasRole($user, TicketRole::ADMIN)) {
-                $query
-                    ->andWhere('t.userCreatedObject = :user')
-                    ->setParameter('user', $user);
-            }
-        } else {
-            // anonymous user
-            $query
-                ->andWhere('t.userCreated = :userId')
-                ->setParameter('userId', 0);
-        }
-
-        return $query;
+        // add permissions check and return updated query
+        return $this->getPermissionManager()->addUserPermissionsCondition(
+            $query,
+            $this->getUserManager()->getCurrentUser(),
+        );
     }
 
     /**
@@ -235,7 +248,8 @@ final class TicketManager implements TicketManagerInterface
             ->where('t.status = :status')
             ->andWhere('t.lastMessage < :closeBeforeDate')
             ->setParameter('status', TicketMessageInterface::STATUS_RESOLVED)
-            ->setParameter('closeBeforeDate', $closeBeforeDate);
+            ->setParameter('closeBeforeDate', $closeBeforeDate)
+        ;
 
         return $query->getQuery()->getResult();
     }

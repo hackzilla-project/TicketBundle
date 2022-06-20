@@ -56,8 +56,6 @@ interface TicketMessageInterface
 
     /**
      * Get id.
-     *
-     * @return int
      */
     public function getId();
 
@@ -112,23 +110,18 @@ interface TicketMessageInterface
     /**
      * Set user.
      *
-     * @param int|UserInterface $user
+     * @param ?UserInterface $user
      *
      * @return $this
      */
-    public function setUser($user);
+    public function setUser(?UserInterface $user);
 
     /**
      * Get user.
      *
-     * @return int
+     * @return ?UserInterface
      */
     public function getUser();
-
-    /**
-     * Get user object.
-     */
-    public function getUserObject(): ?UserInterface;
 
     /**
      * Set message.

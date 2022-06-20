@@ -11,10 +11,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Hackzilla\Bundle\TicketBundle;
+namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
-class HackzillaTicketBundle extends Bundle
+trait TicketManagerTrait
 {
+    private ?TicketManagerInterface $ticketManager;
+
+    protected function getTicketManager(): TicketManagerInterface
+    {
+        return $this->ticketManager;
+    }
 }

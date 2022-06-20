@@ -26,7 +26,7 @@ final class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('hackzilla_ticket');
 
@@ -36,6 +36,7 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('user_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('ticket_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('message_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('permission_class')->end()
                 ->arrayNode('features')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -54,7 +55,8 @@ final class Configuration implements ConfigurationInterface
                         ->scalarNode('macros')->defaultValue('@HackzillaTicket/Macros/macros.html.twig')->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
 
         return $treeBuilder;
     }

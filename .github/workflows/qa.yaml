@@ -6,6 +6,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+
+      - name: Force php 8.1
+        run: composer config platform.php 8.0.99
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Install symfony/maker-bundle
+        run: composer require symfony/maker-bundle --no-progress
+
+      - name: Install doctrine/orm
+        run: composer require doctrine/orm --no-progress
+
       - name: PHPStan
         uses: "docker://oskarstark/phpstan-ga"
         env:

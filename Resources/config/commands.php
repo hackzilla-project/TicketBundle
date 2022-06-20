@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 use Hackzilla\Bundle\TicketBundle\Command\AutoClosingCommand;
 use Hackzilla\Bundle\TicketBundle\Command\TicketManagerCommand;
+use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -26,9 +28,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'command' => 'ticket:autoclosing',
             ])
             ->args([
-                new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
-                new ReferenceConfigurator('hackzilla_ticket.user_manager'),
-                new ReferenceConfigurator('doctrine.orm.entity_manager'),
+                new ReferenceConfigurator(TicketManagerInterface::class),
+                new ReferenceConfigurator(UserManagerInterface::class),
                 new ReferenceConfigurator('translator'),
                 new ReferenceConfigurator('parameter_bag'),
             ])
@@ -38,7 +39,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'command' => 'ticket:create',
             ])
             ->args([
-                new ReferenceConfigurator('hackzilla_ticket.ticket_manager'),
-                new ReferenceConfigurator('hackzilla_ticket.user_manager'),
-            ]);
+                new ReferenceConfigurator(TicketManagerInterface::class),
+                new ReferenceConfigurator(UserManagerInterface::class),
+            ])
+    ;
 };

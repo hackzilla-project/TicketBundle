@@ -22,7 +22,6 @@ These optional features that can be turned on or off.
 ### Features
 
 * [Attachments](Resources/doc/setup/feature/attachments.md)
-* [Custom entities](Resources/doc/setup/feature/custom-entities.md)
 * [Events](Resources/doc/setup/feature/events.md)
 
 ## Optional integrations
@@ -32,31 +31,6 @@ These optional features that can be turned on or off.
 ## 3rd party extensions
 
 ### [Email notifications](https://github.com/flodaq/TicketNotificationBundle)
-
-## Configure your entities
-
-```yaml
-# config.yml
-
-hackzilla_ticket:
-    user_class: App\Entity\User
-    ticket_class: App\Entity\Ticket
-    message_class: App\Entity\TicketMessageWithAttachment
-```
-
-### Custom templates (optional)
-
-```yaml
-# config/packages/hackzilla_ticket.yaml
-
-hackzilla_ticket:
-    templates:
-        index: 'ticket/index.html.twig'
-        new: 'ticket/new.html.twig'
-        prototype: 'ticket/prototype.html.twig'
-        show: 'ticket/show.html.twig'
-        show_attachment: 'ticket/show_attachment.html.twig'
-```
 
 ## Translations
 

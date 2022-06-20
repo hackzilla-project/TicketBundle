@@ -34,7 +34,7 @@ jobs:
                 tools: "composer-normalize"
 
             - name: "Run composer-normalize"
-              uses: composer-normalize --dry-run
+              run: composer-normalize --dry-run
 
     yaml-files:
         name: YAML files

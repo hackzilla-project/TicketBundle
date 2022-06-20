@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
@@ -41,11 +40,6 @@ final class AutoClosingCommand extends Command
     private $userManager;
 
     /**
-     * @var Repository
-     */
-    private $ticketRepository;
-
-    /**
      * @var string
      */
     private $locale = 'en';
@@ -56,11 +50,11 @@ final class AutoClosingCommand extends Command
     private $translationDomain = 'HackzillaTicketBundle';
 
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
 
-    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager, EntityManagerInterface $entityManager, LocaleAwareInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager, LocaleAwareInterface $translator, ParameterBagInterface $parameterBag)
     {
         parent::__construct();
 
@@ -77,9 +71,6 @@ final class AutoClosingCommand extends Command
         if ($parameterBag->has('locale')) {
             $this->locale = $parameterBag->get('locale');
         }
-
-        $ticketClass = $parameterBag->get('hackzilla_ticket.model.ticket.class');
-        $this->ticketRepository = $entityManager->getRepository($ticketClass);
     }
 
     /**
@@ -100,17 +91,18 @@ final class AutoClosingCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 'How many days since the ticket was resolved?',
                 '10'
-            );
+            )
+        ;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
 
-        $resolvedTickets = $this->ticketRepository->getResolvedTicketOlderThan($input->getOption('age'));
+        $resolvedTickets = $this->ticketManager->getResolvedTicketOlderThan($input->getOption('age'));
 
         foreach ($resolvedTickets as $ticket) {
             $message = $this->ticketManager->createMessage()
@@ -120,7 +112,8 @@ final class AutoClosingCommand extends Command
                 ->setStatus(TicketMessageInterface::STATUS_CLOSED)
                 ->setPriority($ticket->getPriority())
                 ->setUser($this->userManager->findUserByUsername($username))
-                ->setTicket($ticket);
+                ->setTicket($ticket)
+            ;
 
             $ticket->setStatus(TicketMessageInterface::STATUS_CLOSED);
             $this->ticketManager->updateTicket($ticket, $message);

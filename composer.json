@@ -1,6 +1,8 @@
 {
     "name": "hackzilla/ticket-bundle",
     "description": "This Bundle provides multilingual ticketing functionality for Symfony applications.",
+    "license": "MIT",
+    "type": "symfony-bundle",
     "keywords": [
         "ticket",
         "ticketing",
@@ -14,8 +16,6 @@
         "german",
         "spanish"
     ],
-    "type": "symfony-bundle",
-    "license": "MIT",
     "authors": [
         {
             "name": "Daniel Platt",
@@ -27,7 +27,6 @@
     "require": {
         "php": "^8.0",
         "doctrine/doctrine-bundle": "^2.0",
-        "doctrine/orm": "^2.7.0",
         "doctrine/persistence": "^1.3 || ^2.1",
         "knplabs/knp-paginator-bundle": "^4.4 || ^5.1",
         "symfony/asset": "^4.4 || ^5.1 || ^6.0",
@@ -56,18 +55,18 @@
         "symfony/test-pack": "^1.0"
     },
     "suggest": {
-        "friendsofsymfony/user-bundle": "In order to ease user management",
+        "doctrine/orm": "Provide support for Doctrine ORM",
+        "doctrine/phpcr-odm": "Provide support for Doctrine Content Repository Object Document Mapper",
+        "symfony/maker-bundle": "Used to build the entities",
         "vich/uploader-bundle": "Allow attaching files to ticket messages"
-    },
-    "conflict": {
-        "symfony/framework-bundle": ">=6",
-        "symfony/http-kernel": ">=6"
     },
     "autoload": {
         "psr-4": {
             "Hackzilla\\Bundle\\TicketBundle\\": ""
         },
-        "exclude-from-classmap": ["Tests/"]
+        "exclude-from-classmap": [
+            "Tests/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -75,10 +74,10 @@
         }
     },
     "config": {
-        "sort-packages": true,
         "allow-plugins": {
             "composer/package-versions-deprecated": true
-        }
+        },
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
