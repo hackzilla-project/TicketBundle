@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -14,6 +16,7 @@ namespace Hackzilla\Bundle\TicketBundle\Form\Type;
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -22,10 +25,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
-class TicketMessageType extends AbstractType
+final class TicketMessageType extends AbstractType
 {
     protected $userManager;
 
@@ -33,7 +33,7 @@ class TicketMessageType extends AbstractType
 
     protected $messageClass;
 
-    public function __construct(UserManagerInterface $userManager, TicketFeatures $features, $messageClass)
+    public function __construct(UserManagerInterface $userManager, TicketFeatures $features, string $messageClass)
     {
         $this->userManager = $userManager;
         $this->features = $features;
@@ -57,10 +57,10 @@ class TicketMessageType extends AbstractType
                 [
                     'label' => 'LABEL_PRIORITY',
                 ]
-            );
+            )
+        ;
 
-        // NEXT_MAJOR: Remove the argument 2 for `TicketFeatures::hasFeature()`
-        if ($this->features->hasFeature('attachment', 'return_strict_bool')) {
+        if ($this->features->hasFeature('attachment')) {
             $builder
                 ->add(
                     'attachmentFile',
@@ -69,11 +69,12 @@ class TicketMessageType extends AbstractType
                         'label' => 'LABEL_ATTACHMENT',
                         'required' => false,
                     ]
-                );
+                )
+            ;
         }
 
         // if existing ticket add status
-        if (isset($options['new_ticket']) && !$options['new_ticket']) {
+        if (isset($options['ticket']) && $options['ticket']) {
             $user = $this->userManager->getCurrentUser();
 
             if ($this->userManager->hasRole($user, TicketRole::ADMIN)) {
@@ -85,7 +86,7 @@ class TicketMessageType extends AbstractType
                     ]
                 );
             } else {
-                $statusTransformer = new StatusTransformer();
+                $statusTransformer = new StatusTransformer($options['ticket']);
 
                 $builder
                     ->add(
@@ -95,10 +96,11 @@ class TicketMessageType extends AbstractType
                             [
                                 'label' => 'LABEL_MARK_SOLVED',
                                 'required' => false,
-                                'value' => 'STATUS_CLOSED',
+                                'value' => TicketMessageInterface::STATUS_CLOSED,
                             ]
                         )->addModelTransformer($statusTransformer)
-                    );
+                    )
+                ;
             }
         }
     }
@@ -109,11 +111,13 @@ class TicketMessageType extends AbstractType
             [
                 'data_class' => $this->messageClass,
                 'new_ticket' => false,
+                'ticket' => null,
+                'translation_domain' => 'HackzillaTicketBundle',
             ]
         );
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'message';
     }

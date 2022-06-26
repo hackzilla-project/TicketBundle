@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -11,12 +13,16 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Manager;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ObjectManager;
+use Hackzilla\Bundle\TicketBundle\Manager\PermissionManager;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -24,84 +30,52 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 final class TicketManagerTest extends WebTestCase
 {
-    /**
-     * @var UserManagerInterface
-     */
-    private $userManager;
-
-    protected function setUp(): void
+    public function testGetTicketListQuery(): void
     {
-        $this->userManager = $this->createMock(UserManagerInterface::class);
-        $this->userManager
+        $ticketClass = Ticket::class;
+        $ticketMessageClass = TicketMessage::class;
+
+        $qb = $this->createMock(QueryBuilder::class);
+        $qb
+            ->method('orderBy')
+            ->willReturn($qb)
+        ;
+        $qb
+            ->method('innerJoin')
+            ->willReturn($qb)
+        ;
+        $qb
+            ->method('andWhere')
+            ->willReturn($qb)
+        ;
+        $entityRepository = $this->createMock(EntityRepository::class);
+        $entityRepository
+            ->method('createQueryBuilder')
+            ->willReturn($qb)
+        ;
+
+        $om = $this->createMock(EntityManagerInterface::class);
+        $om
+            ->method('getRepository')
+            ->willReturn($entityRepository)
+        ;
+
+        $userManager = $this->createMock(UserManagerInterface::class);
+        $userManager
             ->method('getCurrentUser')
-            ->willReturn('ANONYMOUS');
-    }
+            ->willReturn(new User())
+        ;
 
-    protected function tearDown(): void
-    {
-        $this->userManager = null;
-    }
+        $permissionManager = (new PermissionManager())
+            ->setUserManager($userManager)
+        ;
 
-    public function testGetTicketListQuery()
-    {
-        $ticketClass = 'App\Ticket';
-        $ticketMessageClass = 'App\TicketMessage';
+        $ticketManager = (new TicketManager($ticketClass, $ticketMessageClass))
+            ->setObjectManager($om)
+            ->setUserManager($userManager)
+            ->setPermissionManager($permissionManager)
+        ;
 
-        $qb = $this->createMock(QueryBuilder::class);
-        $qb
-            ->method('orderBy')
-            ->willReturn($qb);
-        $qb
-            ->method('andWhere')
-            ->willReturn($qb);
-        $entityRepository = $this->createMock(EntityRepository::class);
-        $entityRepository
-            ->method('createQueryBuilder')
-            ->willReturn($qb);
-
-        $om = $this->createMock(ObjectManager::class);
-        $om
-            ->method('getRepository')
-            ->willReturn($entityRepository);
-
-        $ticketManager = new TicketManager($ticketClass, $ticketMessageClass);
-        $ticketManager->setObjectManager($om);
-
-        $this->assertInstanceOf(QueryBuilder::class, $ticketManager->getTicketListQuery($this->userManager, TicketMessageInterface::STATUS_OPEN));
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @group legacy
-     *
-     * @expectedDeprecation Method `Hackzilla\Bundle\TicketBundle\Manager\TicketManager::getTicketList()` is deprecated since hackzilla/ticket-bundle 3.3 and will be removed in version 4.0. Use `Hackzilla\Bundle\TicketBundle\Manager\TicketManager::getTicketListQuery()` instead.
-     */
-    public function testGetTicketList()
-    {
-        $ticketClass = 'App\Ticket';
-        $ticketMessageClass = 'App\TicketMessage';
-
-        $qb = $this->createMock(QueryBuilder::class);
-        $qb
-            ->method('orderBy')
-            ->willReturn($qb);
-        $qb
-            ->method('andWhere')
-            ->willReturn($qb);
-        $entityRepository = $this->createMock(EntityRepository::class);
-        $entityRepository
-            ->method('createQueryBuilder')
-            ->willReturn($qb);
-
-        $om = $this->createMock(ObjectManager::class);
-        $om
-            ->method('getRepository')
-            ->willReturn($entityRepository);
-
-        $ticketManager = new TicketManager($ticketClass, $ticketMessageClass);
-        $ticketManager->setObjectManager($om);
-
-        $this->assertInstanceOf(QueryBuilder::class, $ticketManager->getTicketList($this->userManager, TicketMessageInterface::STATUS_OPEN));
+        $this->assertInstanceOf(QueryBuilder::class, $ticketManager->getTicketListQuery(TicketMessageInterface::STATUS_OPEN));
     }
 }

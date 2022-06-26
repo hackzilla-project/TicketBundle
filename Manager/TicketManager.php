@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -11,27 +13,21 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use Doctrine\Common\Persistence\ObjectManager as LegacyObjectManager;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectManager;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Hackzilla\Bundle\TicketBundle\TicketRole;
-use Symfony\Component\Translation\TranslatorInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
-class TicketManager implements TicketManagerInterface
+final class TicketManager implements TicketManagerInterface
 {
+    use PermissionManagerTrait;
+    use UserManagerTrait;
+
     private $translator;
 
-    /**
-     * NEXT_MAJOR: Remove this property and replace its usages with "HackzillaTicketBundle".
-     *
-     * @var string
-     */
-    private $translationDomain = 'messages';
+    private $translationDomain = 'HackzillaTicketBundle';
 
     private $objectManager;
 
@@ -45,35 +41,36 @@ class TicketManager implements TicketManagerInterface
 
     /**
      * TicketManager constructor.
-     *
-     * @param string $ticketClass
-     * @param string $ticketMessageClass
      */
-    public function __construct($ticketClass, $ticketMessageClass)
+    public function __construct(string $ticketClass, string $ticketMessageClass)
     {
         $this->ticketClass = $ticketClass;
         $this->ticketMessageClass = $ticketMessageClass;
     }
 
-    public function setObjectManager(ObjectManager $objectManager): void
+    public function setLogger(LoggerInterface $logger): self
+    {
+        if (!class_exists($this->ticketClass)) {
+            $logger->error(sprintf('Ticket entity %s doesn\'t exist', $this->ticketClass));
+        }
+        if (!class_exists($this->ticketMessageClass)) {
+            $logger->error(sprintf('Message entity %s doesn\'t exist', $this->ticketMessageClass));
+        }
+
+        return $this;
+    }
+
+    public function setObjectManager(ObjectManager $objectManager): self
     {
         $this->objectManager = $objectManager;
-        $this->ticketRepository = $objectManager->getRepository($this->ticketClass);
-        $this->messageRepository = $objectManager->getRepository($this->ticketMessageClass);
-    }
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since hackzilla/ticket-bundle 3.x, use `setObjectManager()` instead.
-     *
-     * @return $this
-     */
-    public function setEntityManager(LegacyObjectManager $om)
-    {
-        $this->objectManager = $om;
-        $this->ticketRepository = $om->getRepository($this->ticketClass);
-        $this->messageRepository = $om->getRepository($this->ticketMessageClass);
+        if ($this->ticketClass) {
+            $this->ticketRepository = $objectManager->getRepository($this->ticketClass);
+        }
+
+        if ($this->ticketMessageClass) {
+            $this->messageRepository = $objectManager->getRepository($this->ticketMessageClass);
+        }
 
         return $this;
     }
@@ -81,23 +78,9 @@ class TicketManager implements TicketManagerInterface
     /**
      * @return $this
      */
-    public function setTranslator(TranslatorInterface $translator)
+    public function setTranslator(TranslatorInterface $translator): self
     {
         $this->translator = $translator;
-
-        return $this;
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @param string $translationDomain
-     *
-     * @return $this
-     */
-    public function setTranslationDomain($translationDomain)
-    {
-        $this->translationDomain = $translationDomain;
 
         return $this;
     }
@@ -124,7 +107,7 @@ class TicketManager implements TicketManagerInterface
      *
      * @return TicketMessageInterface
      */
-    public function createMessage(TicketInterface $ticket = null)
+    public function createMessage(?TicketInterface $ticket = null)
     {
         /* @var TicketMessageInterface $ticket */
         $message = new $this->ticketMessageClass();
@@ -134,7 +117,7 @@ class TicketManager implements TicketManagerInterface
             $message->setStatus($ticket->getStatus());
             $message->setTicket($ticket);
         } else {
-            $message->setStatus(TicketMessage::STATUS_OPEN);
+            $message->setStatus(TicketMessageInterface::STATUS_OPEN);
         }
 
         return $message;
@@ -143,7 +126,7 @@ class TicketManager implements TicketManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null)
+    public function updateTicket(TicketInterface $ticket, ?TicketMessageInterface $message = null): void
     {
         if (null === $ticket->getId()) {
             $this->objectManager->persist($ticket);
@@ -151,11 +134,9 @@ class TicketManager implements TicketManagerInterface
         if (null !== $message) {
             $message->setTicket($ticket);
             $this->objectManager->persist($message);
+            $ticket->setPriority($message->getPriority());
         }
         $this->objectManager->flush();
-
-        // NEXT_MAJOR: Remove the `return` statement.
-        return $ticket;
     }
 
     /**
@@ -170,7 +151,7 @@ class TicketManager implements TicketManagerInterface
     /**
      * Find all tickets in the database.
      *
-     * @return array|TicketInterface[]
+     * @return TicketInterface[]
      */
     public function findTickets()
     {
@@ -182,9 +163,9 @@ class TicketManager implements TicketManagerInterface
      *
      * @param int $ticketId
      *
-     * @return TicketInterface
+     * @return ?TicketInterface
      */
-    public function getTicketById($ticketId)
+    public function getTicketById($ticketId): ?TicketInterface
     {
         return $this->ticketRepository->find($ticketId);
     }
@@ -196,7 +177,7 @@ class TicketManager implements TicketManagerInterface
      *
      * @return TicketMessageInterface
      */
-    public function getMessageById($ticketMessageId)
+    public function getMessageById($ticketMessageId): ?TicketMessageInterface
     {
         return $this->messageRepository->find($ticketMessageId);
     }
@@ -212,72 +193,44 @@ class TicketManager implements TicketManagerInterface
     }
 
     /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since hackzilla/ticket-bundle 3.3, use `getTicketListQuery()` instead.
-     *
-     * @param int $ticketStatus
-     * @param int $ticketPriority
-     *
-     * @return mixed
-     */
-    public function getTicketList(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
-    {
-        @trigger_error(sprintf(
-            'Method `%s()` is deprecated since hackzilla/ticket-bundle 3.3 and will be removed in version 4.0.'
-            .' Use `%s::getTicketListQuery()` instead.',
-            __METHOD__,
-            __CLASS__
-        ), E_USER_DEPRECATED);
-
-        return $this->getTicketListQuery($userManager, $ticketStatus, $ticketPriority);
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
+    public function getTicketListQuery($ticketStatus, $ticketPriority = null): QueryBuilder
     {
         $query = $this->ticketRepository->createQueryBuilder('t')
-            ->orderBy('t.lastMessage', 'DESC');
+            ->innerjoin('t.userCreated', 'u')
+            ->orderBy('t.lastMessage', 'DESC')
+        ;
 
         switch ($ticketStatus) {
-            case TicketMessage::STATUS_CLOSED:
+            case TicketMessageInterface::STATUS_CLOSED:
                 $query
                     ->andWhere('t.status = :status')
-                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED);
+                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED)
+                ;
 
                 break;
 
-            case TicketMessage::STATUS_OPEN:
+            case TicketMessageInterface::STATUS_OPEN:
             default:
                 $query
                     ->andWhere('t.status != :status')
-                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED);
+                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED)
+                ;
         }
 
         if ($ticketPriority) {
             $query
                 ->andWhere('t.priority = :priority')
-                ->setParameter('priority', $ticketPriority);
+                ->setParameter('priority', $ticketPriority)
+            ;
         }
 
-        $user = $userManager->getCurrentUser();
-
-        if (\is_object($user)) {
-            if (!$userManager->hasRole($user, TicketRole::ADMIN)) {
-                $query
-                    ->andWhere('t.userCreated = :userId')
-                    ->setParameter('userId', $user->getId());
-            }
-        } else {
-            // anonymous user
-            $query
-                ->andWhere('t.userCreated = :userId')
-                ->setParameter('userId', 0);
-        }
-
-        return $query;
+        // add permissions check and return updated query
+        return $this->getPermissionManager()->addUserPermissionsCondition(
+            $query,
+            $this->getUserManager()->getCurrentUser(),
+        );
     }
 
     /**
@@ -295,7 +248,8 @@ class TicketManager implements TicketManagerInterface
             ->where('t.status = :status')
             ->andWhere('t.lastMessage < :closeBeforeDate')
             ->setParameter('status', TicketMessageInterface::STATUS_RESOLVED)
-            ->setParameter('closeBeforeDate', $closeBeforeDate);
+            ->setParameter('closeBeforeDate', $closeBeforeDate)
+        ;
 
         return $query->getQuery()->getResult();
     }

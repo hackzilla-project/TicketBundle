@@ -8,15 +8,15 @@ Add UploaderBundle to your requirements:
 composer require vich/uploader-bundle
 ```
 
+Your `TicketMessage` entity will also need to implement `Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface`
+
 Specify the uploader config, so the bundle knows where to store the files.
 
 ```yaml
 hackzilla_ticket:
     user_class: App\Entity\User
-    ticket_class: Hackzilla\Bundle\TicketBundle\Entity\TicketWithAttachment
-    message_class: Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment
-    features:
-        attachment: true
+    ticket_class: App\Entity\Ticket
+    message_class: App\Entity\TicketMessage
 
 vich_uploader:
     db_driver: orm
@@ -24,10 +24,10 @@ vich_uploader:
     mappings:
         ticket_message_attachment:
             uri_prefix: /attachment
-            upload_destination: '%kernel.root_dir%/../var/uploads/attachment/'
+            upload_destination: '%kernel.project_dir%/var/uploads/attachment/'
 ```
 
-See [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/index.md) documentation for more details.
+See [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle/) documentation for more details.
 
 If you are not using [Symfony Flex](https://symfony.com/doc/current/setup/flex.html), you must enable the bundles manually in the kernel:
 
@@ -60,9 +60,3 @@ public function registerBundles()
     );
 }
 ```
-
-## Custom Entity
-
-If you want to implement your own entities then you will want to extend
-
-``` \Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface ```

@@ -3,7 +3,7 @@ name: Test
 on:
     push:
         branches:
-            - 3.x
+            - 4.x
             - master
     pull_request:
 
@@ -21,33 +21,27 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '7.2'
-                    - '7.3'
-                    - '7.4'
                     - '8.0'
+                    - '8.1'
                 dependencies: [highest]
                 allowed-to-fail: [false]
                 variant: [normal]
                 include:
-                    - php-version: '7.2'
-                      dependencies: lowest
-                      allowed-to-fail: false
-                      variant: 'vich/uploader-bundle'
-                    - php-version: '7.3'
-                      dependencies: highest
-                      allowed-to-fail: false
-                      variant: normal
-                    - php-version: '7.4'
-                      dependencies: highest
-                      allowed-to-fail: false
-                      variant: 'symfony/symfony:"4.4.*"'
-                    - php-version: '7.4'
-                      dependencies: highest
-                      allowed-to-fail: false
-                      variant: 'vich/uploader-bundle'
                     - php-version: '8.0'
                       dependencies: highest
+                      allowed-to-fail: false
+                      variant: 'symfony/symfony:"5.4.*"'
+                    - php-version: '8.1'
+                      dependencies: highest
                       allowed-to-fail: true
+                      variant: 'symfony/symfony:"6.0.*"'
+                    - php-version: '8.1'
+                      dependencies: highest
+                      allowed-to-fail: false
+                      variant: 'vich/uploader-bundle'
+                    - php-version: '8.1'
+                      dependencies: highest
+                      allowed-to-fail: false
                       variant: normal
 
         steps:
@@ -64,13 +58,19 @@ jobs:
             - name: Add PHPUnit matcher
               run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-            - name: Configuration required for PHP 8.0
-              if: matrix.php-version == '8.0'
-              run: composer config platform.php 7.4.99
+            - name: Configuration required for PHP 8.1
+              if: matrix.php-version == '8.1'
+              run: composer config platform.php 8.0.99
 
             - name: Install variant
               if: matrix.variant != 'normal'
               run: composer require ${{ matrix.variant }} --no-update
+
+            - name: Install maker
+              run: composer require symfony/maker-bundle --no-update
+
+            - name: Install doctrine/orm
+              run: composer require doctrine/orm --no-update
 
             - name: "Install Composer dependencies (${{ matrix.dependencies }})"
               uses: "ramsey/composer-install@v1"

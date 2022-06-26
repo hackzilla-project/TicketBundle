@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -11,56 +13,29 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use Doctrine\Common\Persistence\ObjectManager as LegacyObjectManager;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * @method QueryBuilder getTicketListQuery(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null)
- * @method void         setObjectManager(ObjectManager $objectManager)
- */
 interface TicketManagerInterface
 {
-    /**
-     * @deprecated since hackzilla/ticket-bundle 3.x, use `setObjectManager()` instead.
-     */
-    public function setEntityManager(LegacyObjectManager $om);
-
-    public function setTranslator(TranslatorInterface $translator);
-
     public function createTicket();
 
-    public function createMessage(TicketInterface $ticket = null);
+    public function createMessage(?TicketInterface $ticket = null);
 
-    /**
-     * NEXT_MAJOR: Declare `void` as return type.
-     */
-    public function updateTicket(TicketInterface $ticket, TicketMessageInterface $message = null);
+    public function updateTicket(TicketInterface $ticket, ?TicketMessageInterface $message = null): void;
 
     public function deleteTicket(TicketInterface $ticket);
 
-    public function getTicketById($ticketId);
+    public function getTicketById($ticketId): ?TicketInterface;
 
-    public function getMessageById($ticketMessageId);
+    public function getMessageById($ticketMessageId): ?TicketMessageInterface;
 
     public function findTickets();
 
     public function findTicketsBy(array $criteria);
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since hackzilla/ticket-bundle 3.3, use `getTicketListQuery()` instead.
-     *
-     * @param int $ticketStatus
-     * @param int $ticketPriority
-     *
-     * @return QueryBuilder
-     */
-    public function getTicketList(UserManagerInterface $userManager, $ticketStatus, $ticketPriority = null);
+    public function getTicketListQuery($ticketStatus, $ticketPriority = null): QueryBuilder;
 
     /**
      * @param int $days

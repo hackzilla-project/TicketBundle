@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -11,8 +13,6 @@
 
 namespace Hackzilla\Bundle\TicketBundle\DependencyInjection;
 
-use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -20,28 +20,23 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  * This is the class that validates and merges configuration from your config files.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
- *
- * @final since hackzilla/ticket-bundle 3.x.
  */
-class Configuration implements ConfigurationInterface
+final class Configuration implements ConfigurationInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('hackzilla_ticket');
 
         $treeBuilder
             ->getRootNode()
             ->children()
-                ->enumNode('translation_domain')
-                    ->values(['HackzillaTicketBundle', 'messages'])
-                    ->defaultValue('messages')
-                ->end()
                 ->scalarNode('user_class')->isRequired()->cannotBeEmpty()->end()
-                ->scalarNode('ticket_class')->cannotBeEmpty()->defaultValue(Ticket::class)->end()
-                ->scalarNode('message_class')->cannotBeEmpty()->defaultValue(TicketMessage::class)->end()
+                ->scalarNode('ticket_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('message_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('permission_class')->end()
                 ->arrayNode('features')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -60,7 +55,8 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('macros')->defaultValue('@HackzillaTicket/Macros/macros.html.twig')->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
 
         return $treeBuilder;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -13,7 +15,10 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle;
-use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -22,15 +27,74 @@ use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 use Vich\UploaderBundle\VichUploaderBundle;
 
+if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 5) {
+    trait ConfigureRoutes
+    {
+        protected function configureRoutes(RoutingConfigurator $routes): void
+        {
+            $routes->import(__DIR__.'/routes.yaml', 'yaml');
+        }
+    }
+
+    trait KernelDirectories
+    {
+        public function getCacheDir(): string
+        {
+            return $this->getBaseDir().'cache';
+        }
+
+        /**
+         * {@inheritdoc}
+         */
+        public function getLogDir(): string
+        {
+            return $this->getBaseDir().'log';
+        }
+    }
+} else {
+    trait ConfigureRoutes
+    {
+        /**
+         * {@inheritdoc}
+         */
+        protected function configureRoutes(RouteCollectionBuilder $routes)
+        {
+            $routes->import(__DIR__.'/routes.yaml', '/', 'yaml');
+        }
+    }
+
+    trait KernelDirectories
+    {
+        public function getCacheDir()
+        {
+            return $this->getBaseDir().'cache';
+        }
+
+        /**
+         * {@inheritdoc}
+         */
+        public function getLogDir()
+        {
+            return $this->getBaseDir().'log';
+        }
+    }
+}
+
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
+ * @author Daniel Platt <github@ofdan.co.uk>
  */
 final class TestKernel extends Kernel
 {
-    use MicroKernelTrait;
+    use ConfigureRoutes, KernelDirectories, MicroKernelTrait {
+        ConfigureRoutes::configureRoutes insteadof MicroKernelTrait;
+        KernelDirectories::getCacheDir insteadof MicroKernelTrait;
+        KernelDirectories::getLogDir insteadof MicroKernelTrait;
+    }
 
     private $useVichUploaderBundle = false;
 
@@ -38,13 +102,13 @@ final class TestKernel extends Kernel
     {
         $this->useVichUploaderBundle = class_exists(VichUploaderBundle::class);
 
-        parent::__construct('test'.(int) $this->useVichUploaderBundle, true);
+        parent::__construct('test', true);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function registerBundles()
+    public function registerBundles(): array
     {
         $bundles = [
             new FrameworkBundle(),
@@ -66,39 +130,14 @@ final class TestKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    public function getCacheDir()
-    {
-        return $this->getBaseDir().'cache';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getLogDir()
-    {
-        return $this->getBaseDir().'log';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configureRoutes(RouteCollectionBuilder $routes)
-    {
-        $routes->import(__DIR__.'/routes.yaml', '/', 'yaml');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
     {
         // FrameworkBundle config
-        $c->loadFromExtension('framework', [
+        $frameworkConfig = [
             'secret' => 'MySecretKey',
             'default_locale' => 'en',
             'session' => [
                 'handler_id' => 'session.handler.native_file',
-                'storage_id' => 'session.storage.mock_file',
                 'name' => 'MOCKSESSID',
             ],
             'translator' => [
@@ -111,15 +150,28 @@ final class TestKernel extends Kernel
                 'enabled' => true,
             ],
             'test' => true,
-        ]);
+        ];
+
+        if (version_compare(self::VERSION, '5.1', '>=') && version_compare(self::VERSION, '6.0', '<')) {
+            $frameworkConfig['session'] = ['storage_factory_id' => 'session.storage.factory.native'];
+            $frameworkConfig['router'] = ['utf8' => true];
+        }
+
+        $c->loadFromExtension('framework', $frameworkConfig);
 
         // SecurityBundle config
-        $mainFirewallConfig = ['anonymous' => null];
+        $mainFirewallConfig = [
+            'pattern' => '^/',
+            'form_login' => [
+                'provider' => 'in_memory',
+            ],
+        ];
+
         // "logout_on_user_change" configuration was marked as mandatory since version 3.4 and deprecated as of 4.1.
         if (version_compare(self::VERSION, '3.4', '>=') && version_compare(self::VERSION, '4.1', '<')) {
             $mainFirewallConfig['logout_on_user_change'] = true;
         }
-        $c->loadFromExtension('security', [
+        $securityConfig = [
             'providers' => [
                 'in_memory' => [
                     'memory' => null,
@@ -128,7 +180,13 @@ final class TestKernel extends Kernel
             'firewalls' => [
                 'main' => $mainFirewallConfig,
             ],
-        ]);
+        ];
+
+        if (version_compare(self::VERSION, '5.3', '>=') && version_compare(self::VERSION, '7.0', '<')) {
+            $securityConfig['enable_authenticator_manager'] = true;
+        }
+
+        $c->loadFromExtension('security', $securityConfig);
 
         // DoctrineBundle config
         $c->loadFromExtension('doctrine', [
@@ -144,10 +202,10 @@ final class TestKernel extends Kernel
                 'auto_mapping' => true,
                 'mappings' => [
                     'HackzillaTicketBundle' => [
-                        'dir' => __DIR__.'/Entity',
-                        'prefix' => 'Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity',
+                        'dir' => 'Tests/Fixtures/Entity',
+                        'prefix' => 'Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity',
                         'alias' => 'HackzillaTicketBundle',
-                        'type' => 'annotation',
+                        'type' => 'attribute',
                     ],
                 ],
             ],
@@ -166,10 +224,17 @@ final class TestKernel extends Kernel
         $c->loadFromExtension('twig', $twigConfig);
 
         // HackzillaBundle config
-        $c->loadFromExtension('hackzilla_ticket', [
+        $bundleConfig = [
             'user_class' => User::class,
-            'translation_domain' => 'HackzillaTicketBundle',
-        ]);
+            'ticket_class' => Ticket::class,
+            'message_class' => TicketMessage::class,
+        ];
+
+        if ($this->useVichUploaderBundle) {
+            $bundleConfig['message_class'] = TicketMessageWithAttachment::class;
+        }
+
+        $c->loadFromExtension('hackzilla_ticket', $bundleConfig);
 
         if ($this->useVichUploaderBundle) {
             // VichUploaderBundle config

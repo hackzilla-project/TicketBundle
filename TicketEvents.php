@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -28,7 +30,7 @@ final class TicketEvents
      *
      * @var string
      */
-    const TICKET_CREATE = 'hackzilla.ticket.create';
-    const TICKET_UPDATE = 'hackzilla.ticket.update';
-    const TICKET_DELETE = 'hackzilla.ticket.delete';
+    public const TICKET_CREATE = 'hackzilla.ticket.create';
+    public const TICKET_UPDATE = 'hackzilla.ticket.update';
+    public const TICKET_DELETE = 'hackzilla.ticket.delete';
 }

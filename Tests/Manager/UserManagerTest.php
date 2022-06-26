@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -9,37 +11,32 @@
  * file that was distributed with this source code.
  */
 
-namespace Hackzilla\Bundle\TicketBundle\Tests\Manager;
+namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
-use Hackzilla\Bundle\TicketBundle\Tests\Functional\Entity\User;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
-use Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
-final class UserManagerTest extends WebTestCase
+class UserManagerTest extends WebTestCase
 {
     private $object;
 
     private $tokenStorage;
 
-    private $authorizationChecker;
-
     protected function setUp(): void
     {
+        self::bootKernel();
         $this->tokenStorage = new TokenStorage();
-        $authenticationProviderManager = new AuthenticationProviderManager([new AnonymousAuthenticationProvider('secret')]);
-        $accessDecisionManager = new AccessDecisionManager();
-        $this->authorizationChecker = new AuthorizationChecker($this->tokenStorage, $authenticationProviderManager, $accessDecisionManager);
 
         $this->object = new UserManager(
             $this->tokenStorage,
             $this->getMockUserRepository(),
-            $this->authorizationChecker
+            $this->getAuthorizationChecker(),
         );
     }
 
@@ -48,18 +45,20 @@ final class UserManagerTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(UserManager::class, $this->object);
     }
 
-    private function getMockUserRepository()
+    private function getMockUserRepository(): EntityRepository
     {
-        $userRepository = $this->createMock(EntityRepository::class);
-        $userRepository
-            ->method('getClassName')
-            ->willReturn(User::class);
+        $em = static::getContainer()->get(EntityManagerInterface::class);
 
-        return $userRepository;
+        return new EntityRepository($em, new ClassMetadata(User::class));
+    }
+
+    private function getAuthorizationChecker()
+    {
+        return $this->createMock(AuthorizationChecker::class);
     }
 }

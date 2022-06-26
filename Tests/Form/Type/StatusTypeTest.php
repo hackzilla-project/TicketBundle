@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -14,7 +16,7 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 use Hackzilla\Bundle\TicketBundle\Form\Type\StatusType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-final class StatusTypeTest extends TypeTestCase
+class StatusTypeTest extends TypeTestCase
 {
     private $object;
 
@@ -28,7 +30,7 @@ final class StatusTypeTest extends TypeTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(StatusType::class, $this->object);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -15,10 +17,7 @@ use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
-class TicketFeatureExtension extends AbstractExtension
+final class TicketFeatureExtension extends AbstractExtension
 {
     private $ticketFeatures;
 
@@ -27,19 +26,14 @@ class TicketFeatureExtension extends AbstractExtension
         $this->ticketFeatures = $ticketFeatures;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('hasTicketFeature', [$this, 'hasFeature']),
         ];
     }
 
-    /**
-     * @param string $feature
-     *
-     * @return bool|null
-     */
-    public function hasFeature($feature)
+    public function hasFeature(string $feature): ?bool
     {
         return $this->ticketFeatures->hasFeature($feature);
     }

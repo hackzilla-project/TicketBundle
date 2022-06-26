@@ -12,8 +12,11 @@ declare(strict_types=1);
  */
 
 use Doctrine\ORM\EntityRepository;
+use Hackzilla\Bundle\TicketBundle\Manager\PermissionManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManager;
+use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManager;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -31,24 +34,50 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 '%hackzilla_ticket.model.user.class%',
             ])
 
-        ->set('hackzilla_ticket.user_manager', UserManager::class)
+        ->set(UserManager::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('security.token_storage'),
                 new ReferenceConfigurator('hackzilla_ticket.user_repository'),
                 new ReferenceConfigurator('security.authorization_checker'),
             ])
+        ->call('setPermissionManager', [
+            new ReferenceConfigurator(PermissionManagerInterface::class),
+        ])
 
-        ->set('hackzilla_ticket.ticket_manager', TicketManager::class)
+        ->alias(UserManagerInterface::class, UserManager::class)
+            ->public()
+
+        ->set(PermissionManagerInterface::class)
+            ->class('%hackzilla_ticket.manager.permission.class%')
+            ->public()
+            ->call('setUserManager', [
+                new ReferenceConfigurator(UserManagerInterface::class),
+            ])
+
+        ->set(TicketManager::class)
             ->public()
             ->args([
                 '%hackzilla_ticket.model.ticket.class%',
                 '%hackzilla_ticket.model.message.class%',
+            ])
+            ->call('setPermissionManager', [
+                new ReferenceConfigurator(PermissionManagerInterface::class),
+            ])
+            ->call('setUserManager', [
+                new ReferenceConfigurator(UserManagerInterface::class),
             ])
             ->call('setObjectManager', [
                 new ReferenceConfigurator('doctrine.orm.entity_manager'),
             ])
             ->call('setTranslator', [
                 new ReferenceConfigurator('translator'),
-            ]);
+            ])
+            ->call('setLogger', [
+                new ReferenceConfigurator('logger'),
+            ])
+
+        ->alias(TicketManagerInterface::class, TicketManager::class)
+            ->public()
+    ;
 };

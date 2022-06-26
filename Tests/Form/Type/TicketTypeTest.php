@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -11,18 +13,16 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
-use Hackzilla\Bundle\TicketBundle\Entity\Ticket;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
-use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-final class TicketTypeTest extends TypeTestCase
+class TicketTypeTest extends TypeTestCase
 {
     private $user;
 
@@ -37,6 +37,8 @@ final class TicketTypeTest extends TypeTestCase
     {
         $formData = [];
 
+        $data = new Ticket();
+
         $form = $this->factory->create(TicketType::class);
 
         // submit the data to the form directly
@@ -45,19 +47,12 @@ final class TicketTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
 
         $formEntity = $form->getData();
+        $formEntity->setCreatedAt($data->getCreatedAt());
 
-        $this->assertInstanceOf(TicketInterface::class, $formEntity);
-        $this->assertNull($formEntity->getId());
-        $this->assertNull($formEntity->getUserCreated());
-        $this->assertNull($formEntity->getUserCreatedObject());
-        $this->assertNull($formEntity->getLastUser());
-        $this->assertNull($formEntity->getLastUserObject());
-        $this->assertNull($formEntity->getPriority());
         $this->assertNull($formEntity->getStatus());
-        $this->assertNull($formEntity->getLastMessage());
-        $this->assertInstanceOf(ArrayCollection::class, $formEntity->getMessages());
-        $this->assertEmpty($formEntity->getMessages());
-        $this->assertInstanceOf(\DateTime::class, $formEntity->getCreatedAt());
+        $this->assertNull($formEntity->getPriority());
+        $this->assertSame($data->getCreatedAt(), $formEntity->getCreatedAt());
+        $this->assertSame($data->getMessages()->count(), $formEntity->getMessages()->count());
 
         $view = $form->createView();
         $children = $view->children;

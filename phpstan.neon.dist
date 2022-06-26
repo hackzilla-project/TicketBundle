@@ -1,10 +1,10 @@
 parameters:
-    level: 1
+    level: 4
     paths:
         - .
-    excludes_analyse:
+    excludePaths:
         - vendor/
         - Tests/
     ignoreErrors:
         - '#.* (class|type) Vich\\UploaderBundle\\.*#'
-        - '#^Parameter \$om of method Hackzilla\\Bundle\\TicketBundle\\Manager\\TicketManager(Interface)?::setEntityManager\(\) has invalid typehint type Doctrine\\Common\\Persistence\\ObjectManager\.$#'
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\).#'

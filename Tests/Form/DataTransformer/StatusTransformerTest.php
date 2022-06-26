@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -11,17 +13,22 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\DataTransformer;
 
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\DataTransformer\StatusTransformer;
+use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-final class StatusTransformerTest extends WebTestCase
+class StatusTransformerTest extends WebTestCase
 {
     private $object;
 
     protected function setUp(): void
     {
-        $this->object = new StatusTransformer();
+        $mock = $this->getMockBuilder(TicketInterface::class)
+            ->setMockClassName('Ticket')
+            ->getMock()
+        ;
+        $this->object = new StatusTransformer($mock);
     }
 
     protected function tearDown(): void
@@ -29,22 +36,22 @@ final class StatusTransformerTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(StatusTransformer::class, $this->object);
     }
 
-    public function testTransform()
+    public function testTransform(): void
     {
-        $this->assertSame($this->object->transform(TicketMessage::STATUS_CLOSED), 1);
+        $this->assertTrue($this->object->transform(TicketMessageInterface::STATUS_CLOSED));
 
         $this->assertNull($this->object->transform('TEST'));
     }
 
-    public function testReverseTransform()
+    public function testReverseTransform(): void
     {
-        $this->assertSame($this->object->reverseTransform(1), TicketMessage::STATUS_CLOSED);
+        $this->assertSame(TicketMessageInterface::STATUS_CLOSED, $this->object->reverseTransform(1));
 
-        $this->assertNull($this->object->reverseTransform('TEST'));
+        $this->assertNull($this->object->reverseTransform(''));
     }
 }

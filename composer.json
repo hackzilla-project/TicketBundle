@@ -1,7 +1,8 @@
 {
     "name": "hackzilla/ticket-bundle",
-    "type": "symfony-bundle",
     "description": "This Bundle provides multilingual ticketing functionality for Symfony applications.",
+    "license": "MIT",
+    "type": "symfony-bundle",
     "keywords": [
         "ticket",
         "ticketing",
@@ -15,7 +16,6 @@
         "german",
         "spanish"
     ],
-    "license": "MIT",
     "authors": [
         {
             "name": "Daniel Platt",
@@ -25,48 +25,40 @@
         }
     ],
     "require": {
-        "php": "^7.2 || ^8.0",
-        "doctrine/collections": "^1.6",
+        "php": "^8.0",
         "doctrine/doctrine-bundle": "^2.0",
-        "doctrine/orm": "^2.4.8",
         "doctrine/persistence": "^1.3 || ^2.1",
-        "knplabs/knp-paginator-bundle": "^4.0 || ^5.0",
-        "symfony/config": "^4.4 || ^5.2",
-        "symfony/console": "^4.4",
-        "symfony/dependency-injection": "^4.4 || ^5.2",
-        "symfony/event-dispatcher": "^4.4",
-        "symfony/form": "^4.4 || ^5.2",
-        "symfony/framework-bundle": "^4.4",
-        "symfony/http-foundation": "^4.4 || ^5.1",
-        "symfony/http-kernel": "^4.4",
-        "symfony/options-resolver": "^4.4 || ^5.1",
-        "symfony/routing": "^4.4 || ^5.2",
-        "symfony/security-bundle": "^4.4",
-        "symfony/translation": "^4.4",
-        "symfony/twig-bundle": "^4.4",
-        "symfony/validator": "^4.4 || ^5.2",
-        "symfony/yaml": "^4.4 || ^5.1",
-        "twig/twig": "^2.12.1"
+        "knplabs/knp-paginator-bundle": "^4.4 || ^5.1",
+        "symfony/asset": "^4.4 || ^5.1 || ^6.0",
+        "symfony/config": "^4.4 || ^5.1 || ^6.0",
+        "symfony/console": "^4.4 || ^5.1 || ^6.0",
+        "symfony/dependency-injection": "^4.1 || ^5.0 || ^6.0",
+        "symfony/event-dispatcher": "^4.4 || ^5.1 || ^6.0",
+        "symfony/form": "^4.4 || ^5.1 || ^6.0",
+        "symfony/framework-bundle": "^4.4 || ^5.1 || ^6.0",
+        "symfony/http-foundation": "^4.4 || ^5.1 || ^6.0",
+        "symfony/http-kernel": "^4.4 || ^5.1 || ^6.0",
+        "symfony/options-resolver": "^4.4 || ^5.1 || ^6.0",
+        "symfony/security-bundle": "^4.4 || ^5.1 || ^6.0",
+        "symfony/translation": "^4.4 || ^5.1 || ^6.0",
+        "symfony/twig-bundle": "^4.4 || ^5.1 || ^6.0",
+        "symfony/validator": "^4.4 || ^5.1 || ^6.0",
+        "symfony/yaml": "^4.4 || ^5.1 || ^6.0",
+        "twig/twig": "^2.9 || ^3.0"
     },
     "require-dev": {
         "ext-pdo_sqlite": "*",
-        "friendsofphp/php-cs-fixer": "^2.0",
-        "phpstan/phpstan": "^0.12.32",
-        "symfony/browser-kit": "^4.4 || ^5.2",
-        "symfony/http-client": "^4.4 || ^5.2",
-        "symfony/phpunit-bridge": "^5.1.1",
-        "symfony/security": "^4.4"
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpstan/phpstan": "^1.3",
+        "phpunit/phpunit": "^9.5",
+        "symfony/phpunit-bridge": "^4.4 || ^5.1 || ^6.0",
+        "symfony/test-pack": "^1.0"
     },
     "suggest": {
+        "doctrine/orm": "Provide support for Doctrine ORM",
+        "doctrine/phpcr-odm": "Provide support for Doctrine Content Repository Object Document Mapper",
+        "symfony/maker-bundle": "Used to build the entities",
         "vich/uploader-bundle": "Allow attaching files to ticket messages"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.x-dev"
-        }
     },
     "autoload": {
         "psr-4": {
@@ -79,6 +71,17 @@
     "autoload-dev": {
         "psr-4": {
             "Hackzilla\\Bundle\\TicketBundle\\Tests\\": "Tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.x-dev"
         }
     }
 }

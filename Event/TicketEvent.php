@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -12,12 +14,9 @@
 namespace Hackzilla\Bundle\TicketBundle\Event;
 
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
-class TicketEvent extends Event
+final class TicketEvent extends Event
 {
     protected $ticket;
 
@@ -26,7 +25,7 @@ class TicketEvent extends Event
         $this->ticket = $ticket;
     }
 
-    public function getTicket()
+    public function getTicket(): TicketInterface
     {
         return $this->ticket;
     }

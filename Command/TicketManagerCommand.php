@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -11,22 +13,17 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
-use FOS\UserBundle\Model\UserManagerInterface;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
-class TicketManagerCommand extends Command
+final class TicketManagerCommand extends Command
 {
-    use UserManagerAwareTrait;
-
     protected static $defaultName = 'ticket:create';
 
     /**
@@ -39,12 +36,8 @@ class TicketManagerCommand extends Command
      */
     private $userManager;
 
-    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager = null)
+    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager)
     {
-        if (null === $userManager) {
-            throw new \TypeError(sprintf('Argument 2 passed to "%s()" must be an instance of "%s". Is "friendsofsymfony/user-bundle" installed and enabled?', __METHOD__, UserManagerInterface::class));
-        }
-
         parent::__construct();
 
         $this->ticketManager = $ticketManager;
@@ -57,7 +50,6 @@ class TicketManagerCommand extends Command
     protected function configure()
     {
         $this
-            ->setName(static::$defaultName) // BC for symfony/console < 3.4.0
             ->setDescription('Create a new Ticket')
             ->addArgument(
                 'subject',
@@ -75,29 +67,32 @@ class TicketManagerCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 'What priority would it be?',
                 '21'
-            );
+            )
+        ;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $ticketManager = $this->getContainer()->get('hackzilla_ticket.ticket_manager');
-
-        $ticket = $ticketManager->createTicket()
-            ->setSubject($input->getArgument('subject'));
+        $ticket = $this->ticketManager->createTicket()
+            ->setSubject($input->getArgument('subject'))
+        ;
 
         $message = $this->ticketManager->createMessage()
             ->setMessage($input->getArgument('message'))
-            ->setStatus(TicketMessage::STATUS_OPEN)
+            ->setStatus(TicketMessageInterface::STATUS_OPEN)
             ->setPriority($input->getOption('priority'))
-            ->setUser($this->findUser('system'));
+            ->setUser($this->userManager->findUserByUsername('system'))
+        ;
 
         $this->ticketManager->updateTicket($ticket, $message);
 
         $output->writeln(
             "Ticket with subject '".$ticket->getSubject()."' has been created with ticketnumber #".$ticket->getId().''
         );
+
+        return Command::SUCCESS;
     }
 }

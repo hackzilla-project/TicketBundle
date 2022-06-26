@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -14,7 +16,7 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 use Hackzilla\Bundle\TicketBundle\Form\Type\PriorityType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-final class PriorityTypeTest extends TypeTestCase
+class PriorityTypeTest extends TypeTestCase
 {
     private $object;
 
@@ -28,7 +30,7 @@ final class PriorityTypeTest extends TypeTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(PriorityType::class, $this->object);
     }

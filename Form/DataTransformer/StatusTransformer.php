@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -11,25 +13,30 @@
 
 namespace Hackzilla\Bundle\TicketBundle\Form\DataTransformer;
 
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
+use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
-class StatusTransformer implements DataTransformerInterface
+final class StatusTransformer implements DataTransformerInterface
 {
+    private TicketInterface $ticket;
+
+    public function __construct(TicketInterface $ticket)
+    {
+        $this->ticket = $ticket;
+    }
+
     /**
      * Transforms checkbox value into Ticket Message Status Closed.
      *
      * @param int $number
      *
-     * @return int|null
+     * @return true|null
      */
     public function transform($number)
     {
-        if (TicketMessage::STATUS_CLOSED == $number) {
-            return 1;
+        if (TicketMessageInterface::STATUS_CLOSED === $number) {
+            return true;
         }
 
         return null;
@@ -38,16 +45,16 @@ class StatusTransformer implements DataTransformerInterface
     /**
      * Transforms Ticket Message Status Closed into checkbox value checked.
      *
-     * @param int $number
+     * @param bool $number
      *
      * @return int|null
      */
     public function reverseTransform($number)
     {
-        if (1 == $number) {
-            return TicketMessage::STATUS_CLOSED;
+        if ($number) {
+            return TicketMessageInterface::STATUS_CLOSED;
         }
 
-        return null;
+        return $this->ticket->getStatus();
     }
 }

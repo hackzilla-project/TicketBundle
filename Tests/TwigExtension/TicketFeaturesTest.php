@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -15,7 +17,7 @@ use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Hackzilla\Bundle\TicketBundle\TwigExtension\TicketFeatureExtension;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-final class TicketFeaturesTest extends WebTestCase
+class TicketFeaturesTest extends WebTestCase
 {
     private $object;
 
@@ -29,7 +31,7 @@ final class TicketFeaturesTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(TicketFeatureExtension::class, $this->object);
     }

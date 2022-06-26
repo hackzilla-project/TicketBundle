@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -12,20 +14,20 @@
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-final class TicketMessageTypeTest extends TypeTestCase
+class TicketMessageTypeTest extends TypeTestCase
 {
     private $user;
 
     protected function setUp(): void
     {
-        $this->user = $this->createMock(UserManagerInterface::class);
+        $this->user = $this->getMockBuilder(UserManagerInterface::class)->getMock();
 
         parent::setUp();
     }
@@ -33,9 +35,12 @@ final class TicketMessageTypeTest extends TypeTestCase
     public function testSubmitValidData()
     {
         $formData = [
-            'priority' => TicketMessage::PRIORITY_HIGH,
+            'priority' => TicketMessageInterface::PRIORITY_HIGH,
             'message' => null,
         ];
+
+        $data = new TicketMessage();
+        $data->setPriority(TicketMessageInterface::PRIORITY_HIGH);
 
         $form = $this->factory->create(
             TicketMessageType::class,
@@ -43,7 +48,6 @@ final class TicketMessageTypeTest extends TypeTestCase
             [
                 'new_ticket' => true,
             ],
-            TicketMessage::class
         );
 
         // submit the data to the form directly
@@ -52,16 +56,8 @@ final class TicketMessageTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
 
         $formEntity = $form->getData();
-
-        $this->assertInstanceOf(TicketMessageInterface::class, $formEntity);
-        $this->assertNull($formEntity->getId());
-        $this->assertNull($formEntity->getTicket());
-        $this->assertNull($formEntity->getUser());
-        $this->assertNull($formEntity->getUserObject());
-        $this->assertNull($formEntity->getMessage());
-        $this->assertNull($formEntity->getStatus());
-        $this->assertSame(TicketMessage::PRIORITY_HIGH, $formEntity->getPriority());
-        $this->assertInstanceOf(\DateTime::class, $formEntity->getCreatedAt());
+        $formEntity->setCreatedAt($data->getCreatedAt());
+        $this->assertEquals($data, $formEntity);
 
         $view = $form->createView();
         $children = $view->children;

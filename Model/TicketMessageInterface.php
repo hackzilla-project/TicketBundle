@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -13,21 +15,21 @@ namespace Hackzilla\Bundle\TicketBundle\Model;
 
 interface TicketMessageInterface
 {
-    const STATUS_INVALID = 0;
+    public const STATUS_INVALID = 0;
 
-    const STATUS_OPEN = 10;
+    public const STATUS_OPEN = 10;
 
-    const STATUS_IN_PROGRESS = 11;
+    public const STATUS_IN_PROGRESS = 11;
 
-    const STATUS_INFORMATION_REQUESTED = 12;
+    public const STATUS_INFORMATION_REQUESTED = 12;
 
-    const STATUS_ON_HOLD = 13;
+    public const STATUS_ON_HOLD = 13;
 
-    const STATUS_RESOLVED = 14;
+    public const STATUS_RESOLVED = 14;
 
-    const STATUS_CLOSED = 15;
+    public const STATUS_CLOSED = 15;
 
-    const STATUSES = [
+    public const STATUSES = [
         self::STATUS_INVALID => 'STATUS_INVALID',
         self::STATUS_OPEN => 'STATUS_OPEN',
         self::STATUS_IN_PROGRESS => 'STATUS_IN_PROGRESS',
@@ -37,15 +39,15 @@ interface TicketMessageInterface
         self::STATUS_CLOSED => 'STATUS_CLOSED',
     ];
 
-    const PRIORITY_INVALID = 0;
+    public const PRIORITY_INVALID = 0;
 
-    const PRIORITY_LOW = 20;
+    public const PRIORITY_LOW = 20;
 
-    const PRIORITY_MEDIUM = 21;
+    public const PRIORITY_MEDIUM = 21;
 
-    const PRIORITY_HIGH = 22;
+    public const PRIORITY_HIGH = 22;
 
-    const PRIORITIES = [
+    public const PRIORITIES = [
         self::PRIORITY_INVALID => 'PRIORITY_INVALID',
         self::PRIORITY_LOW => 'PRIORITY_LOW',
         self::PRIORITY_MEDIUM => 'PRIORITY_MEDIUM',
@@ -54,113 +56,84 @@ interface TicketMessageInterface
 
     /**
      * Get id.
-     *
-     * @return int
      */
     public function getId();
 
     /**
      * Set status.
      *
-     * @param int $status
-     *
      * @return $this
      */
-    public function setStatus($status);
+    public function setStatus(int $status);
 
     /**
      * Set status string.
      *
-     * @param string $status
-     *
      * @return $this
      */
-    public function setStatusString($status);
+    public function setStatusString(string $status);
 
     /**
      * Get status.
-     *
-     * @return int
      */
-    public function getStatus();
+    public function getStatus(): ?int;
 
     /**
      * Get status string.
-     *
-     * @return string
      */
-    public function getStatusString();
+    public function getStatusString(): ?string;
 
     /**
      * Set priority.
      *
-     * @param int $priority
-     *
      * @return $this
      */
-    public function setPriority($priority);
+    public function setPriority(int $priority);
 
     /**
      * Set priority string.
      *
-     * @param string $priority
-     *
      * @return $this
      */
-    public function setPriorityString($priority);
+    public function setPriorityString(string $priority);
 
     /**
      * Get priority.
-     *
-     * @return int
      */
-    public function getPriority();
+    public function getPriority(): ?int;
 
     /**
      * Get priority string.
-     *
-     * @return string
      */
-    public function getPriorityString();
+    public function getPriorityString(): ?string;
 
     /**
      * Set user.
      *
-     * @param int|UserInterface $user
+     * @param ?UserInterface $user
      *
      * @return $this
      */
-    public function setUser($user);
+    public function setUser(?UserInterface $user);
 
     /**
      * Get user.
      *
-     * @return int
+     * @return ?UserInterface
      */
     public function getUser();
 
     /**
-     * Get user object.
-     *
-     * @return UserInterface
-     */
-    public function getUserObject();
-
-    /**
      * Set message.
-     *
-     * @param string $message
      *
      * @return $this
      */
-    public function setMessage($message);
+    public function setMessage(string $message);
 
     /**
      * Get message.
-     *
-     * @return string
      */
-    public function getMessage();
+    public function getMessage(): ?string;
 
     /**
      * Set createdAt.
@@ -179,16 +152,12 @@ interface TicketMessageInterface
     /**
      * Set ticket.
      *
-     * @param TicketInterface $ticket
-     *
      * @return $this
      */
-    public function setTicket(TicketInterface $ticket = null);
+    public function setTicket(?TicketInterface $ticket = null);
 
     /**
      * Get ticket.
-     *
-     * @return TicketInterface
      */
-    public function getTicket();
+    public function getTicket(): ?TicketInterface;
 }

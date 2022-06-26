@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -14,25 +16,16 @@ namespace Hackzilla\Bundle\TicketBundle\TwigExtension;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
-class TicketGlobalExtension extends AbstractExtension implements GlobalsInterface
+final class TicketGlobalExtension extends AbstractExtension implements GlobalsInterface
 {
     protected $templates = [];
 
-    /**
-     * @param array $templates
-     */
-    public function __construct($templates)
+    public function __construct(array $templates)
     {
         $this->templates = $templates;
     }
 
-    /**
-     * @return array
-     */
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return [
             'hackzilla_ticket' => [

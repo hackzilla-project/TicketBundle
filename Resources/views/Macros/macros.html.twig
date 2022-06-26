@@ -1,4 +1,4 @@
-{% macro status_btn(status, text, small = false, translationDomain = 'messages') %}
+{% macro status_btn(status, text, small = false, translationDomain = 'HackzillaTicketBundle') %}
     {% apply spaceless %}
         {% if status == 10 %}
             <button class="btn btn-warning {{ small ? 'btn-xs' : '' }} disabled active"><span
@@ -22,34 +22,34 @@
     {% endapply %}
 {% endmacro %}
 
-{% macro status_alert(status, text, translationDomain = 'messages') %}
+{% macro status_alert(status, text, translationDomain = 'HackzillaTicketBundle') %}
     {% apply spaceless %}
         {% if status == 10 %}
-            <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain|default('messages')) }}
+            <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain) }}
             </div>
         {% elseif status == 11 %}
             <div class="alert alert-info" role="alert"><span
-                        class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain|default('messages')) }}
+                        class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain) }}
             </div>
         {% elseif status == 12 %}
             <div class="alert alert-info" role="alert"><span
-                        class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain|default('messages')) }}
+                        class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain) }}
             </div>
         {% elseif status == 13 %}
             <div class="alert alert-info" role="alert"><span
-                        class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain|default('messages')) }}
+                        class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain) }}
             </div>
         {% elseif status == 14 %}
-            <div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain|default('messages')) }}
+            <div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain) }}
             </div>
         {% elseif status == 15 %}
-            <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-folder-close"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain|default('messages')) }}
+            <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-folder-close"></span>&nbsp;&nbsp;{{ 'MESSAGE_STATUS_CHANGED'|trans({'%status%': text|upper }, translationDomain) }}
             </div>
         {% endif %}
     {% endapply %}
 {% endmacro %}
 
-{% macro priority_btn(priority, text, small = false, translationDomain = 'messages') %}
+{% macro priority_btn(priority, text, small = false, translationDomain = 'HackzillaTicketBundle') %}
     {% apply spaceless %}
         {% if priority <= 20 %}
             <button class="btn btn-info {{ small ? 'btn-xs' : '' }} disabled active">{{ text|upper }}</button>
@@ -63,18 +63,18 @@
     {% endapply %}
 {% endmacro %}
 
-{% macro priority_alert(priority, text, translationDomain = 'messages') %}
+{% macro priority_alert(priority, text, translationDomain = 'HackzillaTicketBundle') %}
     {% apply spaceless %}
         {% if priority <= 20 %}
             <div class="alert alert-info"
-                 role="alert">{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }, translationDomain|default('messages')) }}</div>
+                 role="alert">{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }, translationDomain) }}</div>
         {% elseif priority == 21 %}
             <div class="alert alert-warning" role="alert"><span
-                        class="glyphicon glyphicon-asterisk"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }, translationDomain|default('messages')) }}
+                        class="glyphicon glyphicon-asterisk"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }, translationDomain) }}
             </div>
         {% else %}
             <div class="alert alert-danger" role="alert"><span
-                        class="glyphicon glyphicon-star"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }, translationDomain|default('messages')) }}
+                        class="glyphicon glyphicon-star"></span>&nbsp;&nbsp;{{ 'MESSAGE_PRIORITY_CHANGED'|trans({'%priority%': text|upper }, translationDomain) }}
             </div>
         {% endif %}
     {% endapply %}

@@ -22,5 +22,5 @@ Your entities  needs to implement:
 | Entity | Interface |
 |--------|-------|
 | User | ```Hackzilla\Bundle\TicketBundle\Model\UserInterface``` |
-| Ticket | ```Hackzilla\Bundle\TicketBundle\Model\MessageInterface``` |
+| Ticket | ```Hackzilla\Bundle\TicketBundle\Model\TicketInterface``` |
 | Message | ```Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface``` |

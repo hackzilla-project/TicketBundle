@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -17,14 +19,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
-class TicketType extends AbstractType
+final class TicketType extends AbstractType
 {
     protected $ticketClass;
 
-    public function __construct($ticketClass)
+    public function __construct(string $ticketClass)
     {
         $this->ticketClass = $ticketClass;
     }
@@ -37,7 +36,7 @@ class TicketType extends AbstractType
                 TextType::class,
                 [
                     'label' => 'LABEL_SUBJECT',
-                ]
+                ],
             )
             ->add(
                 'messages',
@@ -50,7 +49,8 @@ class TicketType extends AbstractType
                     'label' => false,
                     'allow_add' => true,
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -58,11 +58,12 @@ class TicketType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => $this->ticketClass,
+                'translation_domain' => 'HackzillaTicketBundle',
             ]
         );
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'ticket';
     }

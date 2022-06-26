@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -11,7 +13,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle\EventListener;
 
-use Hackzilla\Bundle\TicketBundle\Model\TicketFeature\MessageAttachmentInterface;
+use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Vich\UploaderBundle\Event as VichEvent;
 
@@ -19,10 +21,8 @@ use Vich\UploaderBundle\Event as VichEvent;
  * Class FileSubscriber.
  *
  * Source: https://gist.github.com/hubgit/0cdf96c296f20017fe91#file-filesubscriber-php
- *
- * @final since hackzilla/ticket-bundle 3.x.
  */
-class FileSubscriber implements EventSubscriberInterface
+final class FileSubscriber implements EventSubscriberInterface
 {
     /**
      * @return array
@@ -34,7 +34,7 @@ class FileSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function postUpload(VichEvent\Event $event)
+    public function postUpload(VichEvent\Event $event): void
     {
         /** @var MessageAttachmentInterface $object */
         $object = $event->getObject();

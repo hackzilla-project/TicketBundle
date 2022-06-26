@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -11,10 +13,7 @@
 
 namespace Hackzilla\Bundle\TicketBundle;
 
-/**
- * @final since hackzilla/ticket-bundle 3.x.
- */
-class TicketRole
+final class TicketRole
 {
-    const ADMIN = 'ROLE_TICKET_ADMIN';
+    public const ADMIN = 'ROLE_TICKET_ADMIN';
 }

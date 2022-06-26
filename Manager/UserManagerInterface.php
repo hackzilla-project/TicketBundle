@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -14,22 +16,15 @@ namespace Hackzilla\Bundle\TicketBundle\Manager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 
-/**
- * @method ?UserInterface findUserByUsername(string $username)
- */
 interface UserManagerInterface
 {
-    public function getCurrentUser();
+    public function getCurrentUser(): ?UserInterface;
 
-    public function getUserById($userId);
+    public function getUserById($userId): ?UserInterface;
 
-    public function hasRole(UserInterface $user, $role);
+    public function hasRole(?UserInterface $user, string $role): bool;
 
-    /**
-     * @param \Hackzilla\Bundle\TicketBundle\Model\UserInterface|string $user
-     */
-    public function hasPermission($user, TicketInterface $ticket);
+    public function hasPermission(?UserInterface $user, TicketInterface $ticket): bool;
 
-    // NEXT_MAJOR: Uncomment this method.
-    // public function findUserByUsername(string $username): ?UserInterface;
+    public function findUserByUsername(string $username): ?UserInterface;
 }

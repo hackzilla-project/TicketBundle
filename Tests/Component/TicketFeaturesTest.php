@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -12,8 +14,8 @@
 namespace Hackzilla\Bundle\TicketBundle\Tests\Extension;
 
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessage;
-use Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class TicketFeaturesTest extends WebTestCase
@@ -46,8 +48,7 @@ final class TicketFeaturesTest extends WebTestCase
         $obj = new TicketFeatures($features, $class);
 
         $this->assertInstanceOf(TicketFeatures::class, $obj);
-        // NEXT_MAJOR: Remove the argument 2 for `TicketFeatures::hasFeature()`
-        $this->assertSame($obj->hasFeature('attachment', 'return_strict_bool'), $compare);
+        $this->assertSame($obj->hasFeature('attachment'), $compare);
     }
 
     public function featureAttachmentProvider()

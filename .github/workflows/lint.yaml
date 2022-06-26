@@ -13,7 +13,7 @@ jobs:
               uses: actions/checkout@v2
 
             - name: "Run PHP-CS-Fixer"
-              uses: docker://oskarstark/php-cs-fixer-ga:2.16.1
+              uses: docker://oskarstark/php-cs-fixer-ga
               with:
                   args: --ansi --verbose --diff --dry-run
 
@@ -26,10 +26,15 @@ jobs:
             - name: "Checkout"
               uses: actions/checkout@v2
 
-            - name: "Run composer-normalize"
-              uses: docker://localheinz/composer-normalize-action:0.5.2
+            - name: "Set up PHP"
+              uses: shivammathur/setup-php@v2
               with:
-                  args: --dry-run
+                coverage: "none"
+                php-version: "8.0"
+                tools: "composer-normalize"
+
+            - name: "Run composer-normalize"
+              run: composer-normalize --dry-run
 
     yaml-files:
         name: YAML files

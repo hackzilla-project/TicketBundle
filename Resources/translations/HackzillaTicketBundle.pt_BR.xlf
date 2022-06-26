@@ -206,6 +206,10 @@
                 <source>LABEL_ATTACHMENT</source>
                 <target>Anexo</target>
             </trans-unit>
+            <trans-unit id="anonymous">
+                <source>ANONYMOUS</source>
+                <target>Usuário anônimo</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

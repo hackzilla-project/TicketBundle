@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of HackzillaTicketBundle package.
  *
@@ -14,7 +16,7 @@ namespace Hackzilla\Bundle\TicketBundle\Tests\DependencyInjection;
 use Hackzilla\Bundle\TicketBundle\DependencyInjection\HackzillaTicketExtension;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-final class HackzillaTicketExtensionTest extends WebTestCase
+class HackzillaTicketExtensionTest extends WebTestCase
 {
     private $object;
 
@@ -28,7 +30,7 @@ final class HackzillaTicketExtensionTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(HackzillaTicketExtension::class, $this->object);
     }
