@@ -41,6 +41,10 @@ final class TicketManagerTest extends WebTestCase
             ->willReturn($qb)
         ;
         $qb
+            ->method('innerJoin')
+            ->willReturn($qb)
+        ;
+        $qb
             ->method('andWhere')
             ->willReturn($qb)
         ;
