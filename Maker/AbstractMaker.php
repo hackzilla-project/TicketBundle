@@ -227,8 +227,6 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
             $useAnnotations = $this->doctrineHelper->isClassAnnotated($className) ||!$useAttributes;
         }
 
-        dump($useAttributes, $useAnnotations);
-
         if (!$useAnnotations && !$useAttributes) {
             throw new \Exception('No support for either Annotations or Attributes');
         }
