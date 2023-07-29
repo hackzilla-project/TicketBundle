@@ -221,7 +221,17 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
     private function createClassManipulator(string $path, ConsoleStyle $io, bool $overwrite, string $className, bool $originalClass = true): ClassSourceManipulator
     {
         $useAttributes = $this->doctrineHelper->doesClassUsesAttributes($className) && $this->doctrineHelper->isDoctrineSupportingAttributes();
-        $useAnnotations = $this->doctrineHelper->isClassAnnotated($className) || !$useAttributes;
+        $useAnnotations = false ;
+
+        if (method_exists($this->doctrineHelper, 'isClassAnnotated')) {
+            $useAnnotations = $this->doctrineHelper->isClassAnnotated($className) ||!$useAttributes;
+        }
+
+        dump($useAttributes, $useAnnotations);
+
+        if (!$useAnnotations && !$useAttributes) {
+            throw new \Exception('No support for either Annotations or Attributes');
+        }
 
         $manipulator = new ClassSourceManipulator($this->fileManager->getFileContents($path), $overwrite, $useAnnotations, true, $useAttributes);
 
@@ -274,15 +284,15 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
             $className = reset($otherClassMetadatas)->getName();
         }
 
+        if (!method_exists($this->doctrineHelper, 'isClassAnnotated')) {
+           return false;
+        }
+
         return $this->doctrineHelper->isClassAnnotated($className);
     }
 
     private function doesEntityUseAttributeMapping(string $className): bool
     {
-        if (\PHP_VERSION < 80000) {
-            return false;
-        }
-
         if (!class_exists($className)) {
             $otherClassMetadatas = $this->doctrineHelper->getMetadata(Str::getNamespace($className).'\\', true);
 
