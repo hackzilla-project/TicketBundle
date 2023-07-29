@@ -231,7 +231,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
             throw new \Exception('No support for either Annotations or Attributes');
         }
 
-        $manipulator = new ClassSourceManipulator($this->fileManager->getFileContents($path), $overwrite, $useAnnotations, true, $useAttributes);
+        $manipulator = new ClassSourceManipulator($this->fileManager->getFileContents($path), $overwrite, $useAnnotations, $useAttributes);
 
         if ($originalClass) {
             foreach ($this->traits() as $trait) {
