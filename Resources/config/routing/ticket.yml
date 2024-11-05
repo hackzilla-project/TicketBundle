@@ -1,30 +1,30 @@
 # NEXT_MAJOR: remove this file and add upgrade note.
 hackzilla_ticket:
     path: /
-    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::indexAction'
+    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::index'
 
 hackzilla_ticket_show:
     path: /{ticketId}/show
-    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::showAction'
+    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::show'
 
 hackzilla_ticket_new:
     path: /new
-    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::newAction'
+    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::new'
 
 hackzilla_ticket_create:
     path: /create
-    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::createAction'
+    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::create'
     methods: post
 
 hackzilla_ticket_delete:
     path: /{ticketId}/delete
-    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::deleteAction'
+    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::delete'
     methods: post|delete
 
 hackzilla_ticket_reply:
     path: /{ticketId}/reply
-    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::replyAction'
+    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketController::reply'
 
 hackzilla_ticket_attachment:
     path: /attachment/{ticketMessageId}/download
-    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketAttachmentController::downloadAction'
+    controller: 'Hackzilla\Bundle\TicketBundle\Controller\TicketAttachmentController::download'
