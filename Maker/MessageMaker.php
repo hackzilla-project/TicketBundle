@@ -51,7 +51,7 @@ final class MessageMaker extends AbstractMaker
     {
         $this->hasAttachment = $input->getOption('attachment');
 
-        return parent::generate($input, $io, $generator);
+        parent::generate($input, $io, $generator);
     }
 
     protected function fields(): array
