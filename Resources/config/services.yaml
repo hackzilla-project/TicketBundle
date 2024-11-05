@@ -1,0 +1,5 @@
+services:
+  Hackzilla\Bundle\TicketBundle\TwigExtension\TicketGlobalExtension:
+    arguments:
+      $templates: '%hackzilla_ticket.templates%'
+    tags: ['twig.extension']
