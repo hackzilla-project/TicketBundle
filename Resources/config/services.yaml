@@ -3,3 +3,8 @@ services:
     arguments:
       $templates: '%hackzilla_ticket.templates%'
     tags: ['twig.extension']
+
+  Hackzilla\Bundle\TicketBundle\TwigExtension\TicketFeatureExtension:
+    arguments:
+      $ticketFeatures: '@hackzilla_ticket.features'  # Injection de service existant (à adapter si différent)
+    tags: ['twig.extension']
