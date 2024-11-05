@@ -29,24 +29,8 @@ use Vich\UploaderBundle\Handler\DownloadHandler;
  */
 final class TicketAttachmentController extends AbstractController
 {
-    private DownloadHandler $downloadHandler;
-
-    private TicketManager $ticketManager;
-
-    private TranslatorInterface $translator;
-
-    private UserManagerInterface $userManager;
-
-    public function __construct(
-        DownloadHandler $downloadHandler,
-        TicketManager $ticketManager,
-        TranslatorInterface $translator,
-        UserManagerInterface $userManager
-    ) {
-        $this->downloadHandler = $downloadHandler;
-        $this->ticketManager = $ticketManager;
-        $this->translator = $translator;
-        $this->userManager = $userManager;
+    public function __construct(private readonly DownloadHandler $downloadHandler, private readonly TicketManager $ticketManager, private readonly TranslatorInterface $translator, private readonly UserManagerInterface $userManager)
+    {
     }
 
     /**

@@ -18,11 +18,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class TicketEvent extends Event
 {
-    protected $ticket;
-
-    public function __construct(TicketInterface $ticket)
+    public function __construct(protected TicketInterface $ticket)
     {
-        $this->ticket = $ticket;
     }
 
     public function getTicket(): TicketInterface

@@ -24,33 +24,20 @@ final class UserManager implements UserManagerInterface
     use PermissionManagerTrait;
 
     /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authorizationChecker;
-
-    /**
      * @var ObjectRepository
      */
     private $userRepository;
 
     public function __construct(
-        TokenStorageInterface $tokenStorage,
+        private TokenStorageInterface $tokenStorage,
         ObjectRepository $userRepository,
-        AuthorizationCheckerInterface $authorizationChecker,
+        private AuthorizationCheckerInterface $authorizationChecker,
     ) {
-        $this->tokenStorage = $tokenStorage;
-
         if (!is_subclass_of($userRepository->getClassName(), UserInterface::class)) {
             throw new \InvalidArgumentException(sprintf('Argument 2 passed to "%s()" MUST be an object repository for a class implementing "%s".', __METHOD__, UserInterface::class));
         }
 
         $this->userRepository = $userRepository;
-        $this->authorizationChecker = $authorizationChecker;
     }
 
     public function getCurrentUser(): ?UserInterface
@@ -95,7 +82,7 @@ final class UserManager implements UserManagerInterface
     {
         try {
             $this->getPermissionManager()->hasPermission($user, $ticket);
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             return false;
         }
 

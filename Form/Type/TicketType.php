@@ -21,11 +21,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class TicketType extends AbstractType
 {
-    protected $ticketClass;
-
-    public function __construct(string $ticketClass)
+    public function __construct(protected string $ticketClass)
     {
-        $this->ticketClass = $ticketClass;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

@@ -26,22 +26,9 @@ final class TicketManagerCommand extends Command
 {
     protected static $defaultName = 'ticket:create';
 
-    /**
-     * @var TicketManagerInterface
-     */
-    private $ticketManager;
-
-    /**
-     * @var UserManagerInterface
-     */
-    private $userManager;
-
-    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager)
+    public function __construct(private readonly TicketManagerInterface $ticketManager, private readonly UserManagerInterface $userManager)
     {
         parent::__construct();
-
-        $this->ticketManager = $ticketManager;
-        $this->userManager = $userManager;
     }
 
     /**

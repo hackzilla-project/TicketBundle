@@ -19,11 +19,8 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 final class StatusTransformer implements DataTransformerInterface
 {
-    private TicketInterface $ticket;
-
-    public function __construct(TicketInterface $ticket)
+    public function __construct(private readonly TicketInterface $ticket)
     {
-        $this->ticket = $ticket;
     }
 
     /**

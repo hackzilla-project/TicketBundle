@@ -37,17 +37,12 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
  */
 abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractMaker
 {
-    private $fileManager;
-    private $doctrineHelper;
     private $userClass;
     private $ticketClass;
     private $messageClass;
 
-    public function __construct(FileManager $fileManager, DoctrineHelper $doctrineHelper, ParameterBagInterface $bag)
+    public function __construct(private readonly FileManager $fileManager, private readonly DoctrineHelper $doctrineHelper, ParameterBagInterface $bag)
     {
-        $this->fileManager = $fileManager;
-        $this->doctrineHelper = $doctrineHelper;
-
         $this->userClass = $bag->get('hackzilla_ticket.model.user.class');
         $this->ticketClass = $bag->get('hackzilla_ticket.model.ticket.class');
         $this->messageClass = $bag->get('hackzilla_ticket.model.message.class');
@@ -264,9 +259,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
 
         $reflClass = new \ReflectionClass($class);
 
-        return array_map(static function (\ReflectionProperty $prop) {
-            return $prop->getName();
-        }, $reflClass->getProperties());
+        return array_map(static fn(\ReflectionProperty $prop) => $prop->getName(), $reflClass->getProperties());
     }
 
     private function doesEntityUseAnnotationMapping(string $className): bool

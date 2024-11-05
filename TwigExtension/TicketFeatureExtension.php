@@ -19,17 +19,14 @@ use Twig\TwigFunction;
 
 final class TicketFeatureExtension extends AbstractExtension
 {
-    private $ticketFeatures;
-
-    public function __construct(TicketFeatures $ticketFeatures)
+    public function __construct(private readonly TicketFeatures $ticketFeatures)
     {
-        $this->ticketFeatures = $ticketFeatures;
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('hasTicketFeature', [$this, 'hasFeature']),
+            new TwigFunction('hasTicketFeature', $this->hasFeature(...)),
         ];
     }
 

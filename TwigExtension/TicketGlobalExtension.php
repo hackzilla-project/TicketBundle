@@ -18,11 +18,8 @@ use Twig\Extension\GlobalsInterface;
 
 final class TicketGlobalExtension extends AbstractExtension implements GlobalsInterface
 {
-    protected $templates = [];
-
-    public function __construct(array $templates)
+    public function __construct(protected array $templates)
     {
-        $this->templates = $templates;
     }
 
     public function getGlobals(): array

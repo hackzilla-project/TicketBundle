@@ -37,31 +37,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class TicketController extends AbstractController
 {
-    private EventDispatcherInterface $dispatcher;
-
-    private PaginatorInterface $pagination;
-
-    private TicketManager $ticketManager;
-
-    private TranslatorInterface $translator;
-
-    private UserManagerInterface $userManager;
-
     private array $templates = [];
 
     public function __construct(
-        EventDispatcherInterface $dispatcher,
-        PaginatorInterface $pagination,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly PaginatorInterface $pagination,
         ParameterBagInterface $bag,
-        TicketManager $ticketManager,
-        TranslatorInterface $translator,
-        UserManagerInterface $userManager
+        private readonly TicketManager $ticketManager,
+        private readonly TranslatorInterface $translator,
+        private readonly UserManagerInterface $userManager
     ) {
-        $this->dispatcher = $dispatcher;
-        $this->pagination = $pagination;
-        $this->ticketManager = $ticketManager;
-        $this->translator = $translator;
-        $this->userManager = $userManager;
         $this->templates = $bag->get('hackzilla_ticket.templates');
     }
 
@@ -285,7 +270,7 @@ final class TicketController extends AbstractController
      *
      * @param mixed $id The entity id
      */
-    private function createDeleteForm($id): FormInterface
+    private function createDeleteForm(mixed $id): FormInterface
     {
         return $this->createFormBuilder(['id' => $id])
             ->add('id', HiddenType::class)

@@ -30,16 +30,6 @@ final class AutoClosingCommand extends Command
     protected static $defaultName = 'ticket:autoclosing';
 
     /**
-     * @var TicketManagerInterface
-     */
-    private $ticketManager;
-
-    /**
-     * @var UserManagerInterface
-     */
-    private $userManager;
-
-    /**
      * @var string
      */
     private $locale = 'en';
@@ -54,15 +44,12 @@ final class AutoClosingCommand extends Command
      */
     private $translator;
 
-    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager, LocaleAwareInterface $translator, ParameterBagInterface $parameterBag)
+    public function __construct(private readonly TicketManagerInterface $ticketManager, private readonly UserManagerInterface $userManager, LocaleAwareInterface $translator, ParameterBagInterface $parameterBag)
     {
         parent::__construct();
 
-        $this->ticketManager = $ticketManager;
-        $this->userManager = $userManager;
-
         if (!is_a($translator, TranslatorInterface::class)) {
-            throw new \InvalidArgumentException(\get_class($translator).' Must implement TranslatorInterface and LocaleAwareInterface');
+            throw new \InvalidArgumentException($translator::class.' Must implement TranslatorInterface and LocaleAwareInterface');
         }
 
         $this->translator = $translator;

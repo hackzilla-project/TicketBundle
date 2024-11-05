@@ -35,17 +35,11 @@ final class TicketManager implements TicketManagerInterface
 
     private $messageRepository;
 
-    private $ticketClass;
-
-    private $ticketMessageClass;
-
     /**
      * TicketManager constructor.
      */
-    public function __construct(string $ticketClass, string $ticketMessageClass)
+    public function __construct(private string $ticketClass, private string $ticketMessageClass)
     {
-        $this->ticketClass = $ticketClass;
-        $this->ticketMessageClass = $ticketMessageClass;
     }
 
     public function setLogger(LoggerInterface $logger): self
@@ -202,22 +196,14 @@ final class TicketManager implements TicketManagerInterface
             ->orderBy('t.lastMessage', 'DESC')
         ;
 
-        switch ($ticketStatus) {
-            case TicketMessageInterface::STATUS_CLOSED:
-                $query
-                    ->andWhere('t.status = :status')
-                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED)
-                ;
-
-                break;
-
-            case TicketMessageInterface::STATUS_OPEN:
-            default:
-                $query
-                    ->andWhere('t.status != :status')
-                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED)
-                ;
-        }
+        match ($ticketStatus) {
+            TicketMessageInterface::STATUS_CLOSED => $query
+                ->andWhere('t.status = :status')
+                ->setParameter('status', TicketMessageInterface::STATUS_CLOSED),
+            default => $query
+                ->andWhere('t.status != :status')
+                ->setParameter('status', TicketMessageInterface::STATUS_CLOSED),
+        };
 
         if ($ticketPriority) {
             $query

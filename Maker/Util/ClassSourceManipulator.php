@@ -48,10 +48,6 @@ final class ClassSourceManipulator
     private const CONTEXT_OUTSIDE_CLASS = 'outside_class';
     private const CONTEXT_CLASS = 'class';
     private const CONTEXT_CLASS_METHOD = 'class_method';
-
-    private $overwrite;
-    private $useAnnotations;
-    private $useAttributesForDoctrineMapping;
     private $parser;
     private $lexer;
     private $printer;
@@ -65,11 +61,8 @@ final class ClassSourceManipulator
 
     private $pendingComments = [];
 
-    public function __construct(string $sourceCode, bool $overwrite = false, bool $useAnnotations = true, bool $useAttributesForDoctrineMapping = false)
+    public function __construct(string $sourceCode, private readonly bool $overwrite = false, private readonly bool $useAnnotations = true, private readonly bool $useAttributesForDoctrineMapping = false)
     {
-        $this->overwrite = $overwrite;
-        $this->useAnnotations = $useAnnotations;
-        $this->useAttributesForDoctrineMapping = $useAttributesForDoctrineMapping;
         $this->lexer = new Lexer\Emulative([
             'usedAttributes' => [
                 'comments',
@@ -101,7 +94,7 @@ final class ClassSourceManipulator
             // look for "$this->propertyName = "
 
             $constructorString = $this->printer->prettyPrint([$this->getConstructorNode()]);
-            if (false !== strpos($constructorString, sprintf('$this->%s = ', 'createdAt'))) {
+            if (str_contains($constructorString, sprintf('$this->%s = ', 'createdAt'))) {
                 $addCreatedAt = false;
             }
         }
@@ -179,9 +172,7 @@ final class ClassSourceManipulator
         $importedClassName = $this->addUseStatementIfNecessary($trait);
 
         /** @var Node\Stmt\TraitUse[] $traitNodes */
-        $traitNodes = $this->findAllNodes(static function ($node) {
-            return $node instanceof Node\Stmt\TraitUse;
-        });
+        $traitNodes = $this->findAllNodes(static fn($node) => $node instanceof Node\Stmt\TraitUse);
 
         foreach ($traitNodes as $node) {
             if ($node->traits[0]->toString() === $importedClassName) {
@@ -429,14 +420,10 @@ final class ClassSourceManipulator
         $formattedOptions = array_map(function ($option, $value) {
             if (\is_array($value)) {
                 if (!isset($value[0])) {
-                    return sprintf('%s={%s}', $option, implode(', ', array_map(function ($val, $key) {
-                        return sprintf('"%s" = %s', $key, $this->quoteAnnotationValue($val));
-                    }, $value, array_keys($value))));
+                    return sprintf('%s={%s}', $option, implode(', ', array_map(fn($val, $key) => sprintf('"%s" = %s', $key, $this->quoteAnnotationValue($val)), $value, array_keys($value))));
                 }
 
-                return sprintf('%s={%s}', $option, implode(', ', array_map(function ($val) {
-                    return $this->quoteAnnotationValue($val);
-                }, $value)));
+                return sprintf('%s={%s}', $option, implode(', ', array_map(fn($val) => $this->quoteAnnotationValue($val), $value)));
             }
 
             return sprintf('%s=%s', $option, $this->quoteAnnotationValue($value));
@@ -565,7 +552,7 @@ final class ClassSourceManipulator
             // look for "$this->propertyName = "
 
             $constructorString = $this->printer->prettyPrint([$this->getConstructorNode()]);
-            if (false !== strpos($constructorString, sprintf('$this->%s = ', $relation->getPropertyName()))) {
+            if (str_contains($constructorString, sprintf('$this->%s = ', $relation->getPropertyName()))) {
                 $addArrayCollection = false;
             }
         }
@@ -596,7 +583,7 @@ final class ClassSourceManipulator
                         new Node\Expr\StaticCall(new Node\Name('parent'), new Node\Identifier('__construct'))
                     );
                 }
-            } catch (\ReflectionException $e) {
+            } catch (\ReflectionException) {
             }
 
             $this->addNodeAfterProperties($constructorNode);
@@ -631,14 +618,14 @@ final class ClassSourceManipulator
 
         // replace the 3 "fake" items that may be in the code (allowing for different indentation)
         $newCode = preg_replace('/(\ |\t)*private\ \$__EXTRA__LINE;/', '', $newCode);
-        $newCode = preg_replace('/use __EXTRA__LINE;/', '', $newCode);
-        $newCode = preg_replace('/(\ |\t)*\$__EXTRA__LINE;/', '', $newCode);
+        $newCode = preg_replace('/use __EXTRA__LINE;/', '', (string) $newCode);
+        $newCode = preg_replace('/(\ |\t)*\$__EXTRA__LINE;/', '', (string) $newCode);
 
         // process comment lines
         foreach ($this->pendingComments as $i => $comment) {
             // sanity check
             $placeholder = sprintf('$__COMMENT__VAR_%d;', $i);
-            if (false === strpos($newCode, $placeholder)) {
+            if (!str_contains((string) $newCode, $placeholder)) {
                 // this can happen if a comment is createSingleLineCommentNode()
                 // is called, but then that generated code is ultimately not added
                 continue;
@@ -667,9 +654,7 @@ final class ClassSourceManipulator
 
     private function getClassNode(): Node\Stmt\Class_
     {
-        $node = $this->findFirstNode(static function ($node) {
-            return $node instanceof Node\Stmt\Class_;
-        });
+        $node = $this->findFirstNode(static fn($node) => $node instanceof Node\Stmt\Class_);
 
         if (!$node) {
             throw new \Exception('Could not find class node');
@@ -681,9 +666,7 @@ final class ClassSourceManipulator
 
     private function getNamespaceNode(): Node\Stmt\Namespace_
     {
-        $node = $this->findFirstNode(static function ($node) {
-            return $node instanceof Node\Stmt\Namespace_;
-        });
+        $node = $this->findFirstNode(static fn($node) => $node instanceof Node\Stmt\Namespace_);
 
         if (!$node) {
             throw new \Exception('Could not find namespace node');
@@ -731,21 +714,15 @@ final class ClassSourceManipulator
 
     private function createBlankLineNode(string $context)
     {
-        switch ($context) {
-            case self::CONTEXT_OUTSIDE_CLASS:
-                return (new Builder\Use_('__EXTRA__LINE', Node\Stmt\Use_::TYPE_NORMAL))
-                    ->getNode()
-                ;
-            case self::CONTEXT_CLASS:
-                return (new Builder\Property('__EXTRA__LINE'))
-                    ->makePrivate()
-                    ->getNode()
-                ;
-            case self::CONTEXT_CLASS_METHOD:
-                return new Node\Expr\Variable('__EXTRA__LINE');
-            default:
-                throw new \Exception('Unknown context: '.$context);
-        }
+        return match ($context) {
+            self::CONTEXT_OUTSIDE_CLASS => (new Builder\Use_('__EXTRA__LINE', Node\Stmt\Use_::TYPE_NORMAL))
+                ->getNode(),
+            self::CONTEXT_CLASS => (new Builder\Property('__EXTRA__LINE'))
+                ->makePrivate()
+                ->getNode(),
+            self::CONTEXT_CLASS_METHOD => new Node\Expr\Variable('__EXTRA__LINE'),
+            default => throw new \Exception('Unknown context: '.$context),
+        };
     }
 
     private function createSingleLineCommentNode(string $comment, string $context): Node\Stmt
@@ -828,56 +805,22 @@ final class ClassSourceManipulator
 
     private function getEntityTypeHint($doctrineType): ?string
     {
-        switch ($doctrineType) {
-            case 'string':
-            case 'text':
-            case 'guid':
-            case 'bigint':
-            case 'decimal':
-                return 'string';
-
-            case 'array':
-            case 'simple_array':
-            case 'json':
-            case 'json_array':
-                return 'array';
-
-            case 'boolean':
-                return 'bool';
-
-            case 'integer':
-            case 'smallint':
-                return 'int';
-
-            case 'float':
-                return 'float';
-
-            case 'datetime':
-            case 'datetimetz':
-            case 'date':
-            case 'time':
-                return '\\'.\DateTimeInterface::class;
-
-            case 'datetime_immutable':
-            case 'datetimetz_immutable':
-            case 'date_immutable':
-            case 'time_immutable':
-                return '\\'.\DateTimeImmutable::class;
-
-            case 'dateinterval':
-                return '\\'.\DateInterval::class;
-
-            case 'object':
-            case 'binary':
-            case 'blob':
-            default:
-                return null;
-        }
+        return match ($doctrineType) {
+            'string', 'text', 'guid', 'bigint', 'decimal' => 'string',
+            'array', 'simple_array', 'json', 'json_array' => 'array',
+            'boolean' => 'bool',
+            'integer', 'smallint' => 'int',
+            'float' => 'float',
+            'datetime', 'datetimetz', 'date', 'time' => '\\'.\DateTimeInterface::class,
+            'datetime_immutable', 'datetimetz_immutable', 'date_immutable', 'time_immutable' => '\\'.\DateTimeImmutable::class,
+            'dateinterval' => '\\'.\DateInterval::class,
+            default => null,
+        };
     }
 
     private function isInSameNamespace($class): bool
     {
-        $namespace = substr($class, 0, strrpos($class, '\\'));
+        $namespace = substr((string) $class, 0, strrpos((string) $class, '\\'));
 
         return $this->getNamespaceNode()->name->toCodeString() === $namespace;
     }
@@ -897,22 +840,16 @@ final class ClassSourceManipulator
         $classNode = $this->getClassNode();
 
         // try to add after last property
-        $targetNode = $this->findLastNode(static function ($node) {
-            return $node instanceof Node\Stmt\Property;
-        }, [$classNode]);
+        $targetNode = $this->findLastNode(static fn($node) => $node instanceof Node\Stmt\Property, [$classNode]);
 
         // otherwise, try to add after the last constant
         if (!$targetNode) {
-            $targetNode = $this->findLastNode(static function ($node) {
-                return $node instanceof Node\Stmt\ClassConst;
-            }, [$classNode]);
+            $targetNode = $this->findLastNode(static fn($node) => $node instanceof Node\Stmt\ClassConst, [$classNode]);
         }
 
         // otherwise, try to add after the last trait
         if (!$targetNode) {
-            $targetNode = $this->findLastNode(static function ($node) {
-                return $node instanceof Node\Stmt\TraitUse;
-            }, [$classNode]);
+            $targetNode = $this->findLastNode(static fn($node) => $node instanceof Node\Stmt\TraitUse, [$classNode]);
         }
 
         // add the new property after this node
@@ -985,11 +922,10 @@ final class ClassSourceManipulator
      * builds a PHPParser Expr Node based on the value given in $value
      * throws an Exception when the given $value is not resolvable by this method.
      *
-     * @param mixed $value
      *
      * @throws \Exception
      */
-    private function buildNodeExprByValue($value): Node\Expr
+    private function buildNodeExprByValue(mixed $value): Node\Expr
     {
         switch (\gettype($value)) {
             case 'string':
@@ -1006,12 +942,10 @@ final class ClassSourceManipulator
                 break;
             case 'array':
                 $context = $this;
-                $arrayItems = array_map(static function ($key, $value) use ($context) {
-                    return new Node\Expr\ArrayItem(
-                        $context->buildNodeExprByValue($value),
-                        !\is_int($key) ? $context->buildNodeExprByValue($key) : null
-                    );
-                }, array_keys($value), array_values($value));
+                $arrayItems = array_map(static fn($key, $value) => new Node\Expr\ArrayItem(
+                    $context->buildNodeExprByValue($value),
+                    !\is_int($key) ? $context->buildNodeExprByValue($key) : null
+                ), array_keys($value), array_values($value));
                 $nodeValue = new Node\Expr\Array_($arrayItems, ['kind' => Node\Expr\Array_::KIND_SHORT]);
                 break;
             default:
@@ -1044,9 +978,7 @@ final class ClassSourceManipulator
         $options = $this->sortOptionsByClassConstructorParameters($options, $attributeClass);
 
         $context = $this;
-        $nodeArguments = array_map(static function ($option, $value) use ($context) {
-            return new Node\Arg($context->buildNodeExprByValue($value), false, false, [], new Node\Identifier($option));
-        }, array_keys($options), array_values($options));
+        $nodeArguments = array_map(static fn($option, $value) => new Node\Arg($context->buildNodeExprByValue($value), false, false, [], new Node\Identifier($option)), array_keys($options), array_values($options));
 
         return new Node\Attribute(
             new Node\Name($attributeClass),
@@ -1062,13 +994,11 @@ final class ClassSourceManipulator
      */
     private function sortOptionsByClassConstructorParameters(array $options, string $classString): array
     {
-        if ('ORM\\' === substr($classString, 0, 4)) {
+        if (str_starts_with($classString, 'ORM\\')) {
             $classString = sprintf('Doctrine\\ORM\\Mapping\\%s', substr($classString, 4));
         }
 
-        $constructorParameterNames = array_map(static function (\ReflectionParameter $reflectionParameter) {
-            return $reflectionParameter->getName();
-        }, (new \ReflectionClass($classString))->getConstructor()->getParameters());
+        $constructorParameterNames = array_map(static fn(\ReflectionParameter $reflectionParameter) => $reflectionParameter->getName(), (new \ReflectionClass($classString))->getConstructor()->getParameters());
 
         $sorted = [];
         foreach ($constructorParameterNames as $name) {
