@@ -115,7 +115,7 @@ final class TicketController extends AbstractController
         $ticketManager = $this->ticketManager;
 
         $ticket = $ticketManager->createTicket();
-        $form = $this->createForm(TicketType::class, $ticket);
+        $form = $this->formFactory->create(TicketType::class, $ticket);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -313,7 +313,7 @@ final class TicketController extends AbstractController
 
     private function createMessageForm(TicketMessageInterface $message): FormInterface
     {
-        return $this->createForm(
+        return $this->formFactory->create(
             TicketMessageType::class,
             $message,
             [
