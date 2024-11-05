@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class StatusType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $choices = TicketMessageInterface::STATUSES;
         unset($choices[TicketMessageInterface::STATUS_INVALID]);

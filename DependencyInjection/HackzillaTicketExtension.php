@@ -13,10 +13,11 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use Exception;
 use Hackzilla\Bundle\TicketBundle\Manager\PermissionManager;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -29,12 +30,12 @@ final class HackzillaTicketExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\PhpFileLoader($container, new FileLocator(self::bundleDirectory().'/Resources/config'));
+        $loader = new PhpFileLoader($container, new FileLocator(self::bundleDirectory().'/Resources/config'));
         $loader->load('manager.php');
         $loader->load('maker.php');
         $loader->load('form_types.php');
@@ -51,7 +52,7 @@ final class HackzillaTicketExtension extends Extension
         $permissionClass = $config['permission_class'] ?? PermissionManager::class;
 
         if (!class_exists($permissionClass)) {
-            throw new \Exception(sprintf('Permission manager does not exist: %s', $permissionClass));
+            throw new Exception(sprintf('Permission manager does not exist: %s', $permissionClass));
         }
 
         $container->setParameter('hackzilla_ticket.manager.permission.class', $permissionClass);

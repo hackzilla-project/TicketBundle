@@ -27,8 +27,6 @@ interface PermissionManagerInterface
 
     /**
      * used by UserManager::hasPermission().
-     *
-     * @param ?UserInterface $user
      */
     public function hasPermission(?UserInterface $user, TicketInterface $ticket): void;
 }

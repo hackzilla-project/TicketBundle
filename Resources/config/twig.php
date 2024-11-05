@@ -22,13 +22,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
 
         ->set('hackzilla_ticket.component.twig_extension.ticket_features', TicketFeatureExtension::class)
-            ->tag('twig.extension')
             ->args([
                 new ReferenceConfigurator('hackzilla_ticket.features'),
             ])
 
         ->set('hackzilla_ticket.component.twig_extension.ticket_global', TicketGlobalExtension::class)
-            ->tag('twig.extension')
             ->args([
                 '%hackzilla_ticket.templates%',
             ])

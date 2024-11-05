@@ -10,7 +10,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
+use Vich\UploaderBundle\Handler\DownloadHandler;
 use Hackzilla\Bundle\TicketBundle\Controller\TicketAttachmentController;
 use Hackzilla\Bundle\TicketBundle\Controller\TicketController;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
@@ -22,7 +22,7 @@ return static function (ContainerConfigurator $container): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
 
-    if (class_exists(\Vich\UploaderBundle\Handler\DownloadHandler::class)) {
+    if (class_exists(DownloadHandler::class)) {
         $container->services()
             ->set(TicketAttachmentController::class)
                 ->args([

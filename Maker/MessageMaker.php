@@ -40,14 +40,14 @@ final class MessageMaker extends AbstractMaker
         return MakeEntity::getCommandDescription();
     }
 
-    public function configureCommand(Command $command, InputConfiguration $inputConfig)
+    public function configureCommand(Command $command, InputConfiguration $inputConfig): void
     {
         $command->addOption('attachment', null, InputOption::VALUE_NONE, 'Overwrite any existing getter/setter methods');
 
         parent::configureCommand($command, $inputConfig);
     }
 
-    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
+    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
         $this->hasAttachment = $input->getOption('attachment');
 

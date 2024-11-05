@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Extension;
 
+use Iterator;
+use stdClass;
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
@@ -22,28 +24,23 @@ final class TicketFeaturesTest extends WebTestCase
 {
     /**
      * @dataProvider constructProvider
-     *
-     * @param string $class
      */
-    public function testConstruct(array $features, $class)
+    public function testConstruct(array $features, string $class): void
     {
         $this->assertInstanceOf(TicketFeatures::class, new TicketFeatures($features, $class));
     }
 
-    public function constructProvider()
+    public function constructProvider(): Iterator
     {
-        return [
-            [[], \stdClass::class],
-        ];
+        yield [[], stdClass::class];
     }
 
     /**
      * @dataProvider featureAttachmentProvider
      *
-     * @param string    $class
      * @param bool|null $compare
      */
-    public function testFeatureAttachment(array $features, $class, $compare)
+    public function testFeatureAttachment(array $features, string $class, bool $compare): void
     {
         $obj = new TicketFeatures($features, $class);
 
@@ -51,12 +48,10 @@ final class TicketFeaturesTest extends WebTestCase
         $this->assertSame($obj->hasFeature('attachment'), $compare);
     }
 
-    public function featureAttachmentProvider()
+    public function featureAttachmentProvider(): Iterator
     {
-        return [
-            [[], TicketMessage::class, false],
-            [['attachment' => true], TicketMessage::class, false],
-            [['attachment' => true], TicketMessageWithAttachment::class, true],
-        ];
+        yield [[], TicketMessage::class, false];
+        yield [['attachment' => true], TicketMessage::class, false];
+        yield [['attachment' => true], TicketMessageWithAttachment::class, true];
     }
 }

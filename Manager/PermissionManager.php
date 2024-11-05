@@ -49,13 +49,11 @@ class PermissionManager implements PermissionManagerInterface
 
     /**
      * used by UserManager::hasPermission().
-     *
-     * @param ?UserInterface $user
      */
     public function hasPermission(?UserInterface $user, TicketInterface $ticket): void
     {
         if (!\is_object($user) || (!$this->getUserManager()->hasRole($user, TicketRole::ADMIN) &&
-                (null === $ticket->getUserCreated() || $ticket->getUserCreated()->getId() != $user->getId()))
+                (!$ticket->getUserCreated() instanceof UserInterface || $ticket->getUserCreated()->getId() != $user->getId()))
         ) {
             throw new AccessDeniedHttpException();
         }

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 
 interface TicketInterface
@@ -73,7 +74,6 @@ interface TicketInterface
     /**
      * Set userCreated.
      *
-     * @param ?UserInterface $userCreated
      *
      * @return $this
      */
@@ -81,15 +81,12 @@ interface TicketInterface
 
     /**
      * Get userCreated.
-     *
-     * @return ?UserInterface
      */
     public function getUserCreated(): ?UserInterface;
 
     /**
      * Set lastUser.
      *
-     * @param ?UserInterface $lastUser
      *
      * @return $this
      */
@@ -105,24 +102,24 @@ interface TicketInterface
      *
      * @return $this
      */
-    public function setLastMessage(\DateTimeInterface $lastMessage);
+    public function setLastMessage(DateTimeInterface $lastMessage);
 
     /**
      * Get lastMessage.
      */
-    public function getLastMessage(): ?\DateTimeInterface;
+    public function getLastMessage(): ?DateTimeInterface;
 
     /**
      * Set createdAt.
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt);
+    public function setCreatedAt(DateTimeInterface $createdAt);
 
     /**
      * Get createdAt.
      */
-    public function getCreatedAt(): ?\DateTimeInterface;
+    public function getCreatedAt(): ?DateTimeInterface;
 
     /**
      * Set subject.

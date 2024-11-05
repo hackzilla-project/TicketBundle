@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
+use UnitEnum;
+use InvalidArgumentException;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
@@ -29,27 +31,21 @@ final class AutoClosingCommand extends Command
 {
     protected static $defaultName = 'ticket:autoclosing';
 
-    /**
-     * @var string
-     */
-    private $locale = 'en';
+    private bool|string|int|float|UnitEnum|array|null $locale = 'en';
 
-    /**
-     * @var string
-     */
-    private $translationDomain = 'HackzillaTicketBundle';
+    private string $translationDomain = 'HackzillaTicketBundle';
 
     /**
      * @var TranslatorInterface
      */
-    private $translator;
+    private readonly LocaleAwareInterface $translator;
 
     public function __construct(private readonly TicketManagerInterface $ticketManager, private readonly UserManagerInterface $userManager, LocaleAwareInterface $translator, ParameterBagInterface $parameterBag)
     {
         parent::__construct();
 
-        if (!is_a($translator, TranslatorInterface::class)) {
-            throw new \InvalidArgumentException($translator::class.' Must implement TranslatorInterface and LocaleAwareInterface');
+        if (!$translator instanceof TranslatorInterface) {
+            throw new InvalidArgumentException($translator::class.' Must implement TranslatorInterface and LocaleAwareInterface');
         }
 
         $this->translator = $translator;
@@ -63,7 +59,7 @@ final class AutoClosingCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Automatically close resolved tickets still opened')

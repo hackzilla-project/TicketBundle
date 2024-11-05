@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Controller;
 
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
@@ -52,12 +55,9 @@ final class TicketController extends AbstractController
 
     /**
      * Lists all Ticket entities.
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request)
+    public function index(Request $request): Response
     {
-        $userManager = $this->userManager;
         $ticketManager = $this->ticketManager;
 
         $ticketState = $request->get('state', $this->translator->trans('STATUS_OPEN', [], 'HackzillaTicketBundle'));
@@ -87,10 +87,8 @@ final class TicketController extends AbstractController
 
     /**
      * Creates a new Ticket entity.
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request)
+    public function create(Request $request): RedirectResponse|Response
     {
         $ticketManager = $this->ticketManager;
 
@@ -108,7 +106,7 @@ final class TicketController extends AbstractController
             $ticketManager->updateTicket($ticket, $message);
             $this->dispatchTicketEvent(TicketEvents::TICKET_CREATE, $ticket);
 
-            return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
+            return $this->redirectToRoute('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]);
         }
 
         return $this->render(
@@ -124,7 +122,7 @@ final class TicketController extends AbstractController
     /**
      * Displays a form to create a new Ticket entity.
      */
-    public function newAction()
+    public function new(): Response
     {
         $ticketManager = $this->ticketManager;
         $entity = $ticketManager->createTicket();
@@ -145,16 +143,14 @@ final class TicketController extends AbstractController
      * Finds and displays a TicketInterface entity.
      *
      * @param int $ticketId
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction($ticketId)
+    public function show($ticketId): RedirectResponse|Response
     {
         $ticketManager = $this->ticketManager;
         $ticket = $ticketManager->getTicketById($ticketId);
 
-        if (!$ticket) {
-            return $this->redirect($this->generateUrl('hackzilla_ticket'));
+        if (!$ticket instanceof TicketInterface) {
+            return $this->redirectToRoute('hackzilla_ticket');
         }
 
         $currentUser = $this->userManager->getCurrentUser();
@@ -182,15 +178,13 @@ final class TicketController extends AbstractController
      * Finds and displays a TicketInterface entity.
      *
      * @param int $ticketId
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function replyAction(Request $request, $ticketId)
+    public function reply(Request $request, $ticketId): RedirectResponse|Response
     {
         $ticketManager = $this->ticketManager;
         $ticket = $ticketManager->getTicketById($ticketId);
 
-        if (!$ticket) {
+        if (!$ticket instanceof TicketInterface) {
             throw $this->createNotFoundException($this->translator->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
         }
 
@@ -210,7 +204,7 @@ final class TicketController extends AbstractController
             $ticketManager->updateTicket($ticket, $message);
             $this->dispatchTicketEvent(TicketEvents::TICKET_UPDATE, $ticket);
 
-            return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
+            return $this->redirectToRoute('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]);
         }
 
         $data = ['ticket' => $ticket, 'form' => $form->createView(), 'translationDomain' => 'HackzillaTicketBundle'];
@@ -226,16 +220,14 @@ final class TicketController extends AbstractController
      * Deletes a Ticket entity.
      *
      * @param int $ticketId
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request, $ticketId)
+    public function delete(Request $request, $ticketId): RedirectResponse
     {
         $userManager = $this->userManager;
         $user = $userManager->getCurrentUser();
 
         if (!\is_object($user) || !$userManager->hasRole($user, TicketRole::ADMIN)) {
-            throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
+            throw new HttpException(403);
         }
 
         $form = $this->createDeleteForm($ticketId);
@@ -247,7 +239,7 @@ final class TicketController extends AbstractController
                 $ticketManager = $this->ticketManager;
                 $ticket = $ticketManager->getTicketById($ticketId);
 
-                if (!$ticket) {
+                if (!$ticket instanceof TicketInterface) {
                     throw $this->createNotFoundException($this->translator->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
                 }
 
@@ -256,7 +248,7 @@ final class TicketController extends AbstractController
             }
         }
 
-        return $this->redirect($this->generateUrl('hackzilla_ticket'));
+        return $this->redirectToRoute('hackzilla_ticket');
     }
 
     private function dispatchTicketEvent(string $ticketEvent, TicketInterface $ticket): void
@@ -280,14 +272,12 @@ final class TicketController extends AbstractController
 
     private function createMessageForm(TicketMessageInterface $message): FormInterface
     {
-        $form = $this->createForm(
+        return $this->createForm(
             TicketMessageType::class,
             $message,
             [
                 'ticket' => $message->getTicket(),
             ]
         );
-
-        return $form;
     }
 }

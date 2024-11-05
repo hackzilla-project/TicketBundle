@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 
 interface MessageAttachmentInterface extends TicketMessageInterface
 {
     /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $file
+     * @param File|UploadedFile $file
      *
      * @return $this
      */

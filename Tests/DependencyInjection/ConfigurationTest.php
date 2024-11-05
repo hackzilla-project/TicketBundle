@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class ConfigurationTest extends WebTestCase
 {
-    private $object;
+    private ?Configuration $object = null;
 
     protected function setUp(): void
     {
@@ -30,7 +30,7 @@ final class ConfigurationTest extends WebTestCase
         $this->object = null;
     }
 
-    public function testObjectCreated()
+    public function testObjectCreated(): void
     {
         $this->assertInstanceOf(Configuration::class, $this->object);
     }

@@ -36,7 +36,7 @@ final class TicketAttachmentController extends AbstractController
     /**
      * Download attachment on message.
      */
-    public function downloadAction(int $ticketMessageId): Response
+    public function download(int $ticketMessageId): Response
     {
         $ticketMessage = $this->ticketManager->getMessageById($ticketMessageId);
 

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
@@ -23,16 +24,16 @@ use Symfony\Component\Form\Test\TypeTestCase;
 
 class TicketMessageTypeTest extends TypeTestCase
 {
-    private $user;
+    private MockObject $user;
 
     protected function setUp(): void
     {
-        $this->user = $this->getMockBuilder(UserManagerInterface::class)->getMock();
+        $this->user = $this->createMock(UserManagerInterface::class);
 
         parent::setUp();
     }
 
-    public function testSubmitValidData()
+    public function testSubmitValidData(): void
     {
         $formData = [
             'priority' => TicketMessageInterface::PRIORITY_HIGH,

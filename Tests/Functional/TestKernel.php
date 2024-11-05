@@ -31,7 +31,7 @@ use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 use Vich\UploaderBundle\VichUploaderBundle;
 
-if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 5) {
+if (Kernel::MAJOR_VERSION >= 5) {
     trait ConfigureRoutes
     {
         protected function configureRoutes(RoutingConfigurator $routes): void
@@ -69,7 +69,7 @@ if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 5) {
 
     trait KernelDirectories
     {
-        public function getCacheDir()
+        public function getCacheDir(): string
         {
             return $this->getBaseDir().'cache';
         }
@@ -77,7 +77,7 @@ if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 5) {
         /**
          * {@inheritdoc}
          */
-        public function getLogDir()
+        public function getLogDir(): string
         {
             return $this->getBaseDir().'log';
         }
@@ -96,7 +96,7 @@ final class TestKernel extends Kernel
         KernelDirectories::getLogDir insteadof MicroKernelTrait;
     }
 
-    private $useVichUploaderBundle = false;
+    private bool $useVichUploaderBundle;
 
     public function __construct()
     {
@@ -152,11 +152,6 @@ final class TestKernel extends Kernel
             'test' => true,
         ];
 
-        if (version_compare(self::VERSION, '5.1', '>=') && version_compare(self::VERSION, '6.0', '<')) {
-            $frameworkConfig['session'] = ['storage_factory_id' => 'session.storage.factory.native'];
-            $frameworkConfig['router'] = ['utf8' => true];
-        }
-
         $c->loadFromExtension('framework', $frameworkConfig);
 
         // SecurityBundle config
@@ -166,11 +161,6 @@ final class TestKernel extends Kernel
                 'provider' => 'in_memory',
             ],
         ];
-
-        // "logout_on_user_change" configuration was marked as mandatory since version 3.4 and deprecated as of 4.1.
-        if (version_compare(self::VERSION, '3.4', '>=') && version_compare(self::VERSION, '4.1', '<')) {
-            $mainFirewallConfig['logout_on_user_change'] = true;
-        }
         $securityConfig = [
             'providers' => [
                 'in_memory' => [
@@ -181,10 +171,6 @@ final class TestKernel extends Kernel
                 'main' => $mainFirewallConfig,
             ],
         ];
-
-        if (version_compare(self::VERSION, '5.3', '>=') && version_compare(self::VERSION, '7.0', '<')) {
-            $securityConfig['enable_authenticator_manager'] = true;
-        }
 
         $c->loadFromExtension('security', $securityConfig);
 
@@ -218,9 +204,7 @@ final class TestKernel extends Kernel
             'autoescape' => 'name',
         ];
         // "default_path" configuration is available since version 3.4.
-        if (version_compare(self::VERSION, '3.4', '>=')) {
-            $twigConfig['default_path'] = __DIR__.'/Resources/views';
-        }
+        $twigConfig['default_path'] = __DIR__.'/Resources/views';
         $c->loadFromExtension('twig', $twigConfig);
 
         // HackzillaBundle config
@@ -244,7 +228,7 @@ final class TestKernel extends Kernel
         }
     }
 
-    private function getBaseDir()
+    private function getBaseDir(): string
     {
         return sys_get_temp_dir().'/hackzilla-ticket-bundle/var/'.(int) $this->useVichUploaderBundle.'/';
     }

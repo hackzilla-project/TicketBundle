@@ -18,7 +18,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
 
 class PriorityTypeTest extends TypeTestCase
 {
-    private $object;
+    private ?PriorityType $object = null;
 
     protected function setUp(): void
     {

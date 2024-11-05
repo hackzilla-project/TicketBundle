@@ -34,7 +34,7 @@ final class TicketManagerCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Create a new Ticket')

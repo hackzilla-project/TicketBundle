@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use InvalidArgumentException;
+use LogicException;
+use Exception;
 use Doctrine\Persistence\ObjectRepository;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
@@ -23,10 +27,7 @@ final class UserManager implements UserManagerInterface
 {
     use PermissionManagerTrait;
 
-    /**
-     * @var ObjectRepository
-     */
-    private $userRepository;
+    private ObjectRepository $userRepository;
 
     public function __construct(
         private TokenStorageInterface $tokenStorage,
@@ -34,7 +35,7 @@ final class UserManager implements UserManagerInterface
         private AuthorizationCheckerInterface $authorizationChecker,
     ) {
         if (!is_subclass_of($userRepository->getClassName(), UserInterface::class)) {
-            throw new \InvalidArgumentException(sprintf('Argument 2 passed to "%s()" MUST be an object repository for a class implementing "%s".', __METHOD__, UserInterface::class));
+            throw new InvalidArgumentException(sprintf('Argument 2 passed to "%s()" MUST be an object repository for a class implementing "%s".', __METHOD__, UserInterface::class));
         }
 
         $this->userRepository = $userRepository;
@@ -42,14 +43,14 @@ final class UserManager implements UserManagerInterface
 
     public function getCurrentUser(): ?UserInterface
     {
-        if (null === $this->tokenStorage->getToken()) {
+        if (!$this->tokenStorage->getToken() instanceof TokenInterface) {
             return null;
         }
 
         $user = $this->tokenStorage->getToken()->getUser();
 
-        if (null !== $user && !$user instanceof UserInterface) {
-            throw new \LogicException(sprintf('The object representing the authenticated user MUST implement "%s".', UserInterface::class));
+        if ($user instanceof \Symfony\Component\Security\Core\User\UserInterface && !$user instanceof UserInterface) {
+            throw new LogicException(sprintf('The object representing the authenticated user MUST implement "%s".', UserInterface::class));
         }
 
         return $user;
@@ -75,14 +76,11 @@ final class UserManager implements UserManagerInterface
         return $this->authorizationChecker->isGranted($role);
     }
 
-    /**
-     * @param ?UserInterface $user
-     */
     public function hasPermission(?UserInterface $user, TicketInterface $ticket): bool
     {
         try {
             $this->getPermissionManager()->hasPermission($user, $ticket);
-        } catch (\Exception) {
+        } catch (Exception) {
             return false;
         }
 

@@ -10,7 +10,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
+use Hackzilla\Bundle\TicketBundle\Maker\TicketMaker;
+use Hackzilla\Bundle\TicketBundle\Maker\MessageMaker;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -19,7 +20,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $containerConfigurator->services()
 
-        ->set('hackzilla_ticket.maker.ticket', \Hackzilla\Bundle\TicketBundle\Maker\TicketMaker::class)
+        ->set('hackzilla_ticket.maker.ticket', TicketMaker::class)
             ->args([
                 new ReferenceConfigurator('maker.file_manager'),
                 new ReferenceConfigurator('maker.doctrine_helper'),
@@ -27,7 +28,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ])
             ->tag('maker.command')
 
-        ->set('hackzilla_ticket.maker.message', \Hackzilla\Bundle\TicketBundle\Maker\MessageMaker::class)
+        ->set('hackzilla_ticket.maker.message', MessageMaker::class)
             ->args([
                 new ReferenceConfigurator('maker.file_manager'),
                 new ReferenceConfigurator('maker.doctrine_helper'),

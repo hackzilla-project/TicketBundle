@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity;
 
+use Doctrine\DBAL\Types\Types;
+use DateTimeInterface;
+use Doctrine\Common\Collections\Collection;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
@@ -29,36 +33,39 @@ class Ticket implements TicketInterface
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    #[ORM\Column(type: 'datetime', nullable: false)]
-    private $lastMessage;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: false)]
+    private DateTimeInterface $lastMessage;
 
-    #[ORM\Column(type: 'text', nullable: false)]
-    private $subject;
+    #[ORM\Column(type: Types::TEXT, nullable: false)]
+    private string $subject;
 
-    #[ORM\Column(type: 'integer', nullable: false)]
-    private $status;
+    #[ORM\Column(type: Types::INTEGER, nullable: false)]
+    private int $status;
 
-    #[ORM\Column(type: 'integer', nullable: false)]
-    private $priority;
+    #[ORM\Column(type: Types::INTEGER, nullable: false)]
+    private int $priority;
 
-    #[ORM\Column(type: 'datetime', nullable: false)]
-    private $createdAt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: false)]
+    private DateTimeInterface $createdAt;
 
+    /**
+     * @var Collection<int, TicketMessage>
+     */
     #[ORM\OneToMany(mappedBy: 'ticket', targetEntity: TicketMessage::class)]
-    private $messages;
+    private Collection $messages;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private $userCreated;
+    private ?User $userCreated = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private $lastUser;
+    private ?User $lastUser = null;
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = new DateTime();
         $this->messages = new ArrayCollection();
     }
 

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -24,17 +25,15 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class UserManagerTest extends WebTestCase
 {
-    private $object;
-
-    private $tokenStorage;
+    private ?UserManager $object = null;
 
     protected function setUp(): void
     {
         self::bootKernel();
-        $this->tokenStorage = new TokenStorage();
+        $tokenStorage = new TokenStorage();
 
         $this->object = new UserManager(
-            $this->tokenStorage,
+            $tokenStorage,
             $this->getMockUserRepository(),
             $this->getAuthorizationChecker(),
         );
@@ -57,7 +56,7 @@ class UserManagerTest extends WebTestCase
         return new EntityRepository($em, new ClassMetadata(User::class));
     }
 
-    private function getAuthorizationChecker()
+    private function getAuthorizationChecker(): MockObject
     {
         return $this->createMock(AuthorizationChecker::class);
     }

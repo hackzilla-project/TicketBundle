@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
+use DateTime;
+
 /**
  * Ticket Message Trait.
  */
@@ -59,7 +61,7 @@ trait TicketMessageTrait
      */
     public function getStatusString(): ?string
     {
-        if (!empty(TicketMessageInterface::STATUSES[$this->status])) {
+        if (isset(TicketMessageInterface::STATUSES[$this->status]) && (TicketMessageInterface::STATUSES[$this->status] !== '' && TicketMessageInterface::STATUSES[$this->status] !== '0')) {
             return TicketMessageInterface::STATUSES[$this->status];
         }
 
@@ -107,7 +109,7 @@ trait TicketMessageTrait
      */
     public function getPriorityString(): ?string
     {
-        if (!empty(TicketMessageInterface::PRIORITIES[$this->priority])) {
+        if (isset(TicketMessageInterface::PRIORITIES[$this->priority]) && (TicketMessageInterface::PRIORITIES[$this->priority] !== '' && TicketMessageInterface::PRIORITIES[$this->priority] !== '0')) {
             return TicketMessageInterface::PRIORITIES[$this->priority];
         }
 
@@ -161,7 +163,7 @@ trait TicketMessageTrait
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -171,7 +173,7 @@ trait TicketMessageTrait
     /**
      * Get createdAt.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -189,7 +191,7 @@ trait TicketMessageTrait
         $user = $this->getUser();
 
         // if null, then new ticket
-        if (null === $ticket->getUserCreated()) {
+        if (!$ticket->getUserCreated() instanceof UserInterface) {
             $ticket->setUserCreated($user);
         }
 

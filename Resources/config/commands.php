@@ -24,9 +24,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
 
         ->set('hackzilla_ticket.command.autoclosing', AutoClosingCommand::class)
-            ->tag('console.command', [
-                'command' => 'ticket:autoclosing',
-            ])
             ->args([
                 new ReferenceConfigurator(TicketManagerInterface::class),
                 new ReferenceConfigurator(UserManagerInterface::class),
@@ -35,9 +32,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ])
 
         ->set('hackzilla_ticket.command.create', TicketManagerCommand::class)
-            ->tag('console.command', [
-                'command' => 'ticket:create',
-            ])
             ->args([
                 new ReferenceConfigurator(TicketManagerInterface::class),
                 new ReferenceConfigurator(UserManagerInterface::class),

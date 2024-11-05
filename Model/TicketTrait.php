@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -120,7 +121,6 @@ trait TicketTrait
     /**
      * Set userCreated.
      *
-     * @param ?UserInterface $userCreated
      *
      * @return $this
      */
@@ -133,8 +133,6 @@ trait TicketTrait
 
     /**
      * Get userCreated.
-     *
-     * @return ?UserInterface
      */
     public function getUserCreated(): ?UserInterface
     {
@@ -144,7 +142,6 @@ trait TicketTrait
     /**
      * Set lastUser.
      *
-     * @param ?UserInterface $lastUser
      *
      * @return $this
      */
@@ -157,8 +154,6 @@ trait TicketTrait
 
     /**
      * Get lastUser.
-     *
-     * @return ?UserInterface
      */
     public function getLastUser(): ?UserInterface
     {
@@ -170,7 +165,7 @@ trait TicketTrait
      *
      * @return $this
      */
-    public function setLastMessage(\DateTimeInterface $lastMessage)
+    public function setLastMessage(DateTimeInterface $lastMessage)
     {
         $this->lastMessage = $lastMessage;
 
@@ -180,7 +175,7 @@ trait TicketTrait
     /**
      * Get lastMessage.
      */
-    public function getLastMessage(): ?\DateTimeInterface
+    public function getLastMessage(): ?DateTimeInterface
     {
         return $this->lastMessage;
     }
@@ -190,7 +185,7 @@ trait TicketTrait
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt)
+    public function setCreatedAt(DateTimeInterface $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -200,7 +195,7 @@ trait TicketTrait
     /**
      * Get createdAt.
      */
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }

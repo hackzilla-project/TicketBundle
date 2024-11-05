@@ -13,10 +13,11 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 6) {
+if (Kernel::MAJOR_VERSION >= 6) {
     trait CreateKernel
     {
         protected static function createKernel(array $options = []): KernelInterface
@@ -30,7 +31,7 @@ if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION >= 6) {
         /**
          * @return KernelInterface
          */
-        protected static function createKernel(array $options = [])
+        protected static function createKernel(array $options = []): TestKernel
         {
             return new TestKernel();
         }

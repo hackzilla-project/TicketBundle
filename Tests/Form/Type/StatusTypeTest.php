@@ -18,7 +18,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
 
 class StatusTypeTest extends TypeTestCase
 {
-    private $object;
+    private ?StatusType $object = null;
 
     protected function setUp(): void
     {

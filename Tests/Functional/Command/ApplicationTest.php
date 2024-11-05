@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional\Command;
 
+use Iterator;
 use Hackzilla\Bundle\TicketBundle\Command\AutoClosingCommand;
 use Hackzilla\Bundle\TicketBundle\Command\TicketManagerCommand;
 use Hackzilla\Bundle\TicketBundle\Tests\Functional\WebTestCase;
@@ -25,22 +26,17 @@ final class ApplicationTest extends WebTestCase
 {
     /**
      * @dataProvider getCommands
-     *
-     * @param string $expectedClass
-     * @param string $commandName
      */
-    public function testCommandRegistration($expectedClass, $commandName)
+    public function testCommandRegistration(string $expectedClass, string $commandName): void
     {
         $application = new Application(static::$kernel);
 
         $this->assertInstanceOf($expectedClass, $application->find($commandName));
     }
 
-    public function getCommands()
+    public function getCommands(): Iterator
     {
-        return [
-            [AutoClosingCommand::class, 'ticket:autoclosing'],
-            [TicketManagerCommand::class, 'ticket:create'],
-        ];
+        yield [AutoClosingCommand::class, 'ticket:autoclosing'];
+        yield [TicketManagerCommand::class, 'ticket:create'];
     }
 }

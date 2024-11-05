@@ -38,10 +38,7 @@ final class TicketGlobalExtension extends AbstractExtension implements GlobalsIn
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'ticketGlobal';
     }

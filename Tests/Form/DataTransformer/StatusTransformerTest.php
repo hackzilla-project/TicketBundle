@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class StatusTransformerTest extends WebTestCase
 {
-    private $object;
+    private ?StatusTransformer $object = null;
 
     protected function setUp(): void
     {

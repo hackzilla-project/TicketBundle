@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
+use DateTime;
+use DateInterval;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
@@ -25,11 +27,11 @@ final class TicketManager implements TicketManagerInterface
     use PermissionManagerTrait;
     use UserManagerTrait;
 
-    private $translator;
+    private ?TranslatorInterface $translator = null;
 
-    private $translationDomain = 'HackzillaTicketBundle';
+    private string $translationDomain = 'HackzillaTicketBundle';
 
-    private $objectManager;
+    private ?ObjectManager $objectManager = null;
 
     private $ticketRepository;
 
@@ -58,11 +60,11 @@ final class TicketManager implements TicketManagerInterface
     {
         $this->objectManager = $objectManager;
 
-        if ($this->ticketClass) {
+        if ($this->ticketClass !== '' && $this->ticketClass !== '0') {
             $this->ticketRepository = $objectManager->getRepository($this->ticketClass);
         }
 
-        if ($this->ticketMessageClass) {
+        if ($this->ticketMessageClass !== '' && $this->ticketMessageClass !== '0') {
             $this->messageRepository = $objectManager->getRepository($this->ticketMessageClass);
         }
 
@@ -106,7 +108,7 @@ final class TicketManager implements TicketManagerInterface
         /* @var TicketMessageInterface $ticket */
         $message = new $this->ticketMessageClass();
 
-        if ($ticket) {
+        if ($ticket instanceof TicketInterface) {
             $message->setPriority($ticket->getPriority());
             $message->setStatus($ticket->getStatus());
             $message->setTicket($ticket);
@@ -125,7 +127,7 @@ final class TicketManager implements TicketManagerInterface
         if (null === $ticket->getId()) {
             $this->objectManager->persist($ticket);
         }
-        if (null !== $message) {
+        if ($message instanceof TicketMessageInterface) {
             $message->setTicket($ticket);
             $this->objectManager->persist($message);
             $ticket->setPriority($message->getPriority());
@@ -136,7 +138,7 @@ final class TicketManager implements TicketManagerInterface
     /**
      * Delete a ticket from the database.
      */
-    public function deleteTicket(TicketInterface $ticket)
+    public function deleteTicket(TicketInterface $ticket): void
     {
         $this->objectManager->remove($ticket);
         $this->objectManager->flush();
@@ -156,8 +158,6 @@ final class TicketManager implements TicketManagerInterface
      * Find ticket in the database.
      *
      * @param int $ticketId
-     *
-     * @return ?TicketInterface
      */
     public function getTicketById($ticketId): ?TicketInterface
     {
@@ -226,8 +226,8 @@ final class TicketManager implements TicketManagerInterface
      */
     public function getResolvedTicketOlderThan($days)
     {
-        $closeBeforeDate = new \DateTime();
-        $closeBeforeDate->sub(new \DateInterval('P'.$days.'D'));
+        $closeBeforeDate = new DateTime();
+        $closeBeforeDate->sub(new DateInterval('P'.$days.'D'));
 
         $query = $this->ticketRepository->createQueryBuilder('t')
 //            ->select($this->ticketClass.' t')
@@ -247,7 +247,7 @@ final class TicketManager implements TicketManagerInterface
      *
      * @return int
      */
-    public function getTicketStatus($statusStr)
+    public function getTicketStatus($statusStr): int|string|false
     {
         static $statuses = false;
 
@@ -269,7 +269,7 @@ final class TicketManager implements TicketManagerInterface
      *
      * @return int
      */
-    public function getTicketPriority($priorityStr)
+    public function getTicketPriority($priorityStr): int|string|false
     {
         static $priorities = false;
 
