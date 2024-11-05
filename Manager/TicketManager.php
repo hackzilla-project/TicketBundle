@@ -233,7 +233,7 @@ final class TicketManager implements TicketManagerInterface
      * @return mixed
      * @throws DateMalformedIntervalStringException
      */
-    public function getResolvedTicketOlderThan(int $days)
+    public function getResolvedTicketOlderThan(int $days): mixed
     {
         $closeBeforeDate = new DateTime();
         $closeBeforeDate->sub(new DateInterval('P'.$days.'D'));
@@ -254,9 +254,9 @@ final class TicketManager implements TicketManagerInterface
      *
      * @param string $statusStr
      *
-     * @return int|string|false
+     * @return int|string|bool
      */
-    public function getTicketStatus(string $statusStr): int|string|false
+    public function getTicketStatus(string $statusStr): int|string|bool
     {
         static $statuses = false;
 
@@ -276,9 +276,9 @@ final class TicketManager implements TicketManagerInterface
      *
      * @param string $priorityStr
      *
-     * @return int|string|false
+     * @return int|string|bool
      */
-    public function getTicketPriority(string $priorityStr): int|string|false
+    public function getTicketPriority(string $priorityStr): int|string|bool
     {
         static $priorities = false;
 

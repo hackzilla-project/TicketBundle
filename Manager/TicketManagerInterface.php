@@ -49,16 +49,16 @@ interface TicketManagerInterface
      *
      * @param string $statusStr
      *
-     * @return int
+     * @return int|string|bool
      */
-    public function getTicketStatus(string $statusStr): int;
+    public function getTicketStatus(string $statusStr): int|string|bool;
 
     /**
      * Lookup priority code.
      *
      * @param string $priorityStr
      *
-     * @return int
+     * @return int|string|bool
      */
-    public function getTicketPriority(string $priorityStr): int;
+    public function getTicketPriority(string $priorityStr): int|string|bool;
 }

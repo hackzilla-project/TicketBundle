@@ -25,9 +25,9 @@ interface MessageAttachmentInterface extends TicketMessageInterface
     public function setAttachmentFile(?File $file = null): self;
 
     /**
-     * @return File
+     * @return File|null
      */
-    public function getAttachmentFile(): File;
+    public function getAttachmentFile(): ?File;
 
     /**
      * @return $this
@@ -35,9 +35,9 @@ interface MessageAttachmentInterface extends TicketMessageInterface
     public function setAttachmentName(string $name): self;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAttachmentName(): string;
+    public function getAttachmentName(): ?string;
 
     /**
      * @param int $size Size in bytes
@@ -47,9 +47,9 @@ interface MessageAttachmentInterface extends TicketMessageInterface
     public function setAttachmentSize(int $size): self;
 
     /**
-     * @return string
+     * @return int|null
      */
-    public function getAttachmentSize(): string;
+    public function getAttachmentSize(): ?int;
 
     /**
      * @param string $mimeType Attachment mime type
@@ -59,7 +59,7 @@ interface MessageAttachmentInterface extends TicketMessageInterface
     public function setAttachmentMimeType(string $mimeType): self;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAttachmentMimeType(): string;
+    public function getAttachmentMimeType(): ?string;
 }
