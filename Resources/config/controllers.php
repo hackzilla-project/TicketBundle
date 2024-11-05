@@ -10,6 +10,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+use Twig\Environment;
 use Vich\UploaderBundle\Handler\DownloadHandler;
 use Hackzilla\Bundle\TicketBundle\Controller\TicketAttachmentController;
 use Hackzilla\Bundle\TicketBundle\Controller\TicketController;
@@ -46,6 +48,7 @@ return static function (ContainerConfigurator $container): void {
                 new ReferenceConfigurator(TicketManagerInterface::class),
                 new ReferenceConfigurator('translator'),
                 new ReferenceConfigurator(UserManagerInterface::class),
+                new ReferenceConfigurator(Environment::class),
             ])
             ->call('setContainer', [new ReferenceConfigurator('service_container')])
             ->tag('controller.service_arguments')

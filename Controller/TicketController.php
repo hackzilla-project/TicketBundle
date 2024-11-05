@@ -34,6 +34,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use function is_object;
 
 /**
@@ -49,13 +53,21 @@ final class TicketController extends AbstractController
         ParameterBagInterface $bag,
         private readonly TicketManager $ticketManager,
         private readonly TranslatorInterface $translator,
-        private readonly UserManagerInterface $userManager
+        private readonly UserManagerInterface $userManager,
+        private readonly Environment $twig
     ) {
         $this->templates = $bag->get('hackzilla_ticket.templates');
     }
 
     /**
      * Lists all Ticket entities.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function index(Request $request): Response
     {
@@ -75,7 +87,7 @@ final class TicketController extends AbstractController
             10/* limit per page */
         );
 
-        return $this->render(
+        return new Response($this->twig->render(
             $this->templates['index'],
             [
                 'pagination' => $pagination,
@@ -83,11 +95,18 @@ final class TicketController extends AbstractController
                 'ticketPriority' => $ticketPriority,
                 'translationDomain' => 'HackzillaTicketBundle',
             ]
-        );
+        ));
     }
 
     /**
      * Creates a new Ticket entity.
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function create(Request $request): RedirectResponse|Response
     {
@@ -110,18 +129,23 @@ final class TicketController extends AbstractController
             return $this->redirectToRoute('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]);
         }
 
-        return $this->render(
+        return new Response($this->twig->render(
             $this->templates['new'],
             [
                 'entity' => $ticket,
                 'form' => $form->createView(),
                 'translationDomain' => 'HackzillaTicketBundle',
             ]
-        );
+        ));
     }
 
     /**
      * Displays a form to create a new Ticket entity.
+     *
+     * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function new(): Response
     {
@@ -130,14 +154,14 @@ final class TicketController extends AbstractController
 
         $form = $this->createForm(TicketType::class, $entity);
 
-        return $this->render(
+        return new Response($this->twig->render(
             $this->templates['new'],
             [
                 'entity' => $entity,
                 'form' => $form->createView(),
                 'translationDomain' => 'HackzillaTicketBundle',
             ]
-        );
+        ));
     }
 
     /**
@@ -146,6 +170,9 @@ final class TicketController extends AbstractController
      * @param int $ticketId
      *
      * @return RedirectResponse|Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function show(int $ticketId): RedirectResponse|Response
     {
@@ -174,7 +201,7 @@ final class TicketController extends AbstractController
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
-        return $this->render($this->templates['show'], $data);
+        return new Response($this->twig->render($this->templates['show'], $data));
     }
 
     /**
@@ -184,6 +211,9 @@ final class TicketController extends AbstractController
      * @param int $ticketId
      *
      * @return RedirectResponse|Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function reply(Request $request, int $ticketId): RedirectResponse|Response
     {
@@ -219,7 +249,7 @@ final class TicketController extends AbstractController
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
-        return $this->render($this->templates['show'], $data);
+        return new Response($this->twig->render($this->templates['show'], $data));
     }
 
     /**
