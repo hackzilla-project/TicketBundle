@@ -26,13 +26,13 @@ final class StatusTransformer implements DataTransformerInterface
     /**
      * Transforms checkbox value into Ticket Message Status Closed.
      *
-     * @param int $number
+     * @param $value
      *
-     * @return true|null
+     * @return bool|null
      */
-    public function transform($number): mixed
+    public function transform($value): ?bool
     {
-        if (TicketMessageInterface::STATUS_CLOSED === $number) {
+        if (TicketMessageInterface::STATUS_CLOSED === $value) {
             return true;
         }
 
@@ -42,13 +42,13 @@ final class StatusTransformer implements DataTransformerInterface
     /**
      * Transforms Ticket Message Status Closed into checkbox value checked.
      *
-     * @param bool $number
+     * @param $value
      *
      * @return int|null
      */
-    public function reverseTransform($number): mixed
+    public function reverseTransform($value): ?int
     {
-        if ($number) {
+        if ($value) {
             return TicketMessageInterface::STATUS_CLOSED;
         }
 

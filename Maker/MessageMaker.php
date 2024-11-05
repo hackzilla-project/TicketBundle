@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Maker;
 
+use Exception;
 use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentInterface;
 use Hackzilla\Bundle\TicketBundle\Model\MessageAttachmentTrait;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
@@ -28,7 +29,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 final class MessageMaker extends AbstractMaker
 {
-    private $hasAttachment = false;
+    private bool $hasAttachment = false;
 
     public static function getCommandName(): string
     {
@@ -54,6 +55,9 @@ final class MessageMaker extends AbstractMaker
         parent::generate($input, $io, $generator);
     }
 
+    /**
+     * @throws Exception
+     */
     protected function fields(): array
     {
         $userRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getMessageClass(), $this->getUserClass());

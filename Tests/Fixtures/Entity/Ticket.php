@@ -26,7 +26,7 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketTrait;
  * @author Javier Spagnoletti <phansys@gmail.com>
  * @author Daniel Platt <github@ofdan.co.uk>
  */
-#[ORM\Entity()]
+#[ORM\Entity]
 class Ticket implements TicketInterface
 {
     use TicketTrait;
@@ -54,7 +54,7 @@ class Ticket implements TicketInterface
     /**
      * @var Collection<int, TicketMessage>
      */
-    #[ORM\OneToMany(mappedBy: 'ticket', targetEntity: TicketMessage::class)]
+    #[ORM\OneToMany(targetEntity: TicketMessage::class, mappedBy: 'ticket')]
     private Collection $messages;
 
     #[ORM\ManyToOne(targetEntity: User::class)]

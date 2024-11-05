@@ -28,14 +28,14 @@ interface TicketInterface
      *
      * @return $this
      */
-    public function setStatus(int $status);
+    public function setStatus(int $status): self;
 
     /**
      * Set ticket status by string.
      *
      * @return $this
      */
-    public function setStatusString(string $status);
+    public function setStatusString(string $status): self;
 
     /**
      * Get ticket status.
@@ -52,14 +52,14 @@ interface TicketInterface
      *
      * @return $this
      */
-    public function setPriority(int $priority);
+    public function setPriority(int $priority): self;
 
     /**
      * Set ticket priority string.
      *
      * @return $this
      */
-    public function setPriorityString(string $priority);
+    public function setPriorityString(string $priority): self;
 
     /**
      * Get priority.
@@ -77,7 +77,7 @@ interface TicketInterface
      *
      * @return $this
      */
-    public function setUserCreated(?UserInterface $userCreated);
+    public function setUserCreated(?UserInterface $userCreated): self;
 
     /**
      * Get userCreated.
@@ -90,7 +90,7 @@ interface TicketInterface
      *
      * @return $this
      */
-    public function setLastUser(?UserInterface $lastUser);
+    public function setLastUser(?UserInterface $lastUser): self;
 
     /**
      * Get lastUser .
@@ -102,7 +102,7 @@ interface TicketInterface
      *
      * @return $this
      */
-    public function setLastMessage(DateTimeInterface $lastMessage);
+    public function setLastMessage(DateTimeInterface $lastMessage): self;
 
     /**
      * Get lastMessage.
@@ -114,7 +114,7 @@ interface TicketInterface
      *
      * @return $this
      */
-    public function setCreatedAt(DateTimeInterface $createdAt);
+    public function setCreatedAt(DateTimeInterface $createdAt): self;
 
     /**
      * Get createdAt.
@@ -126,7 +126,7 @@ interface TicketInterface
      *
      * @return $this
      */
-    public function setSubject(string $subject);
+    public function setSubject(string $subject): self;
 
     /**
      * Get ticket subject.
@@ -138,7 +138,7 @@ interface TicketInterface
      *
      * @return $this
      */
-    public function addMessage(TicketMessageInterface $message);
+    public function addMessage(TicketMessageInterface $message): self;
 
     /**
      * Remove message.

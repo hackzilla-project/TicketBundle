@@ -38,7 +38,11 @@ final class TicketFeaturesTest extends WebTestCase
     /**
      * @dataProvider featureAttachmentProvider
      *
-     * @param bool|null $compare
+     * @param array $features
+     * @param string $class
+     * @param bool $compare
+     *
+     * @return void
      */
     public function testFeatureAttachment(array $features, string $class, bool $compare): void
     {

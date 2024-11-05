@@ -31,56 +31,27 @@ use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 use Vich\UploaderBundle\VichUploaderBundle;
 
-if (Kernel::MAJOR_VERSION >= 5) {
-    trait ConfigureRoutes
+trait ConfigureRoutes
+{
+    protected function configureRoutes(RoutingConfigurator $routes): void
     {
-        protected function configureRoutes(RoutingConfigurator $routes): void
-        {
-            $routes->import(__DIR__.'/routes.yaml', 'yaml');
-        }
+        $routes->import(__DIR__.'/routes.yaml', 'yaml');
+    }
+}
+
+trait KernelDirectories
+{
+    public function getCacheDir(): string
+    {
+        return $this->getBaseDir().'cache';
     }
 
-    trait KernelDirectories
+    /**
+     * {@inheritdoc}
+     */
+    public function getLogDir(): string
     {
-        public function getCacheDir(): string
-        {
-            return $this->getBaseDir().'cache';
-        }
-
-        /**
-         * {@inheritdoc}
-         */
-        public function getLogDir(): string
-        {
-            return $this->getBaseDir().'log';
-        }
-    }
-} else {
-    trait ConfigureRoutes
-    {
-        /**
-         * {@inheritdoc}
-         */
-        protected function configureRoutes(RouteCollectionBuilder $routes)
-        {
-            $routes->import(__DIR__.'/routes.yaml', '/', 'yaml');
-        }
-    }
-
-    trait KernelDirectories
-    {
-        public function getCacheDir(): string
-        {
-            return $this->getBaseDir().'cache';
-        }
-
-        /**
-         * {@inheritdoc}
-         */
-        public function getLogDir(): string
-        {
-            return $this->getBaseDir().'log';
-        }
+        return $this->getBaseDir().'log';
     }
 }
 
@@ -128,9 +99,12 @@ final class TestKernel extends Kernel
     }
 
     /**
-     * {@inheritdoc}
+     * @param ContainerBuilder $container
+     * @param LoaderInterface $loader
+     *
+     * @return void
      */
-    protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         // FrameworkBundle config
         $frameworkConfig = [
@@ -152,7 +126,7 @@ final class TestKernel extends Kernel
             'test' => true,
         ];
 
-        $c->loadFromExtension('framework', $frameworkConfig);
+        $container->loadFromExtension('framework', $frameworkConfig);
 
         // SecurityBundle config
         $mainFirewallConfig = [
@@ -172,10 +146,10 @@ final class TestKernel extends Kernel
             ],
         ];
 
-        $c->loadFromExtension('security', $securityConfig);
+        $container->loadFromExtension('security', $securityConfig);
 
         // DoctrineBundle config
-        $c->loadFromExtension('doctrine', [
+        $container->loadFromExtension('doctrine', [
             'dbal' => [
                 'connections' => [
                     'default' => [
@@ -205,7 +179,7 @@ final class TestKernel extends Kernel
         ];
         // "default_path" configuration is available since version 3.4.
         $twigConfig['default_path'] = __DIR__.'/Resources/views';
-        $c->loadFromExtension('twig', $twigConfig);
+        $container->loadFromExtension('twig', $twigConfig);
 
         // HackzillaBundle config
         $bundleConfig = [
@@ -218,11 +192,11 @@ final class TestKernel extends Kernel
             $bundleConfig['message_class'] = TicketMessageWithAttachment::class;
         }
 
-        $c->loadFromExtension('hackzilla_ticket', $bundleConfig);
+        $container->loadFromExtension('hackzilla_ticket', $bundleConfig);
 
         if ($this->useVichUploaderBundle) {
             // VichUploaderBundle config
-            $c->loadFromExtension('vich_uploader', [
+            $container->loadFromExtension('vich_uploader', [
                 'db_driver' => 'orm',
             ]);
         }

@@ -36,7 +36,7 @@ final class TicketFeatureExtension extends AbstractExtension
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName(): string
     {

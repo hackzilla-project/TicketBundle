@@ -30,9 +30,9 @@ final class UserManager implements UserManagerInterface
     private ObjectRepository $userRepository;
 
     public function __construct(
-        private TokenStorageInterface $tokenStorage,
+        private readonly TokenStorageInterface $tokenStorage,
         ObjectRepository $userRepository,
-        private AuthorizationCheckerInterface $authorizationChecker,
+        private readonly AuthorizationCheckerInterface $authorizationChecker,
     ) {
         if (!is_subclass_of($userRepository->getClassName(), UserInterface::class)) {
             throw new InvalidArgumentException(sprintf('Argument 2 passed to "%s()" MUST be an object repository for a class implementing "%s".', __METHOD__, UserInterface::class));

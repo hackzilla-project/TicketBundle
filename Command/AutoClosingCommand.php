@@ -38,7 +38,7 @@ final class AutoClosingCommand extends Command
     /**
      * @var TranslatorInterface
      */
-    private readonly LocaleAwareInterface $translator;
+    private readonly TranslatorInterface $translator;
 
     public function __construct(private readonly TicketManagerInterface $ticketManager, private readonly UserManagerInterface $userManager, LocaleAwareInterface $translator, ParameterBagInterface $parameterBag)
     {

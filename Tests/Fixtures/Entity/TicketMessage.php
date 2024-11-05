@@ -24,7 +24,7 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketMessageTrait;
  * @author Javier Spagnoletti <phansys@gmail.com>
  * @author Daniel Platt <github@ofdan.co.uk>
  */
-#[ORM\Entity()]
+#[ORM\Entity]
 class TicketMessage implements TicketMessageInterface
 {
     use TicketMessageTrait;

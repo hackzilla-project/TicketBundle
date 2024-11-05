@@ -42,7 +42,7 @@ interface TicketManagerInterface
      *
      * @return mixed
      */
-    public function getResolvedTicketOlderThan($days);
+    public function getResolvedTicketOlderThan(int $days): mixed;
 
     /**
      * Lookup status code.
@@ -51,7 +51,7 @@ interface TicketManagerInterface
      *
      * @return int
      */
-    public function getTicketStatus($statusStr);
+    public function getTicketStatus(string $statusStr): int;
 
     /**
      * Lookup priority code.
@@ -60,5 +60,5 @@ interface TicketManagerInterface
      *
      * @return int
      */
-    public function getTicketPriority($priorityStr);
+    public function getTicketPriority(string $priorityStr): int;
 }

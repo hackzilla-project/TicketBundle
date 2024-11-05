@@ -29,6 +29,7 @@ final class HackzillaTicketExtension extends Extension
 {
     /**
      * {@inheritdoc}
+     * @throws Exception
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -67,7 +68,7 @@ final class HackzillaTicketExtension extends Extension
         }
     }
 
-    public static function bundleDirectory()
+    public static function bundleDirectory(): bool|string
     {
         return realpath(__DIR__.'/..');
     }

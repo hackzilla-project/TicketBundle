@@ -27,7 +27,7 @@ final class FileSubscriber implements EventSubscriberInterface
     /**
      * @return array
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             VichEvent\Events::POST_UPLOAD => 'postUpload',
@@ -38,7 +38,7 @@ final class FileSubscriber implements EventSubscriberInterface
     {
         /** @var MessageAttachmentInterface $object */
         $object = $event->getObject();
-        // Ignore any entity lifecycle events not relating to this bundles entities.
+        // Ignore any entity lifecycle events not relating to these bundles entities.
         if (!($object instanceof MessageAttachmentInterface)) {
             return;
         }

@@ -17,6 +17,7 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Hackzilla\Bundle\TicketBundle\TicketRole;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use function is_object;
 
 class PermissionManager implements PermissionManagerInterface
 {
@@ -26,10 +27,13 @@ class PermissionManager implements PermissionManagerInterface
      * used in TicketManager::getTicketListQuery().
      *
      * @param object $query
+     * @param UserInterface|null $user
+     *
+     * @return object
      */
-    public function addUserPermissionsCondition($query, ?UserInterface $user)
+    public function addUserPermissionsCondition(object $query, ?UserInterface $user): object
     {
-        if (\is_object($user)) {
+        if (is_object($user)) {
             if (!$this->getUserManager()->hasRole($user, TicketRole::ADMIN)) {
                 $query
                     ->andWhere('t.userCreated = :user')
@@ -52,8 +56,8 @@ class PermissionManager implements PermissionManagerInterface
      */
     public function hasPermission(?UserInterface $user, TicketInterface $ticket): void
     {
-        if (!\is_object($user) || (!$this->getUserManager()->hasRole($user, TicketRole::ADMIN) &&
-                (!$ticket->getUserCreated() instanceof UserInterface || $ticket->getUserCreated()->getId() != $user->getId()))
+        if ( ! is_object($user) || ( !$this->getUserManager()->hasRole($user, TicketRole::ADMIN) &&
+                                     (!$ticket->getUserCreated() instanceof UserInterface || $ticket->getUserCreated()->getId() != $user->getId()))
         ) {
             throw new AccessDeniedHttpException();
         }

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Maker;
 
+use Exception;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketTrait;
 use Symfony\Bundle\MakerBundle\Doctrine\EntityRelation;
@@ -30,6 +31,9 @@ final class TicketMaker extends AbstractMaker
         return MakeEntity::getCommandDescription();
     }
 
+    /**
+     * @throws Exception
+     */
     protected function fields(): array
     {
         $lastUserRelation = new EntityRelation(EntityRelation::MANY_TO_ONE, $this->getTicketClass(), $this->getUserClass());

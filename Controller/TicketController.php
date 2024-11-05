@@ -34,6 +34,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function is_object;
 
 /**
  * Ticket controller.
@@ -143,8 +144,10 @@ final class TicketController extends AbstractController
      * Finds and displays a TicketInterface entity.
      *
      * @param int $ticketId
+     *
+     * @return RedirectResponse|Response
      */
-    public function show($ticketId): RedirectResponse|Response
+    public function show(int $ticketId): RedirectResponse|Response
     {
         $ticketManager = $this->ticketManager;
         $ticket = $ticketManager->getTicketById($ticketId);
@@ -177,9 +180,12 @@ final class TicketController extends AbstractController
     /**
      * Finds and displays a TicketInterface entity.
      *
+     * @param Request $request
      * @param int $ticketId
+     *
+     * @return RedirectResponse|Response
      */
-    public function reply(Request $request, $ticketId): RedirectResponse|Response
+    public function reply(Request $request, int $ticketId): RedirectResponse|Response
     {
         $ticketManager = $this->ticketManager;
         $ticket = $ticketManager->getTicketById($ticketId);
@@ -219,14 +225,17 @@ final class TicketController extends AbstractController
     /**
      * Deletes a Ticket entity.
      *
+     * @param Request $request
      * @param int $ticketId
+     *
+     * @return RedirectResponse
      */
-    public function delete(Request $request, $ticketId): RedirectResponse
+    public function delete(Request $request, int $ticketId): RedirectResponse
     {
         $userManager = $this->userManager;
         $user = $userManager->getCurrentUser();
 
-        if (!\is_object($user) || !$userManager->hasRole($user, TicketRole::ADMIN)) {
+        if ( ! is_object($user) || !$userManager->hasRole($user, TicketRole::ADMIN)) {
             throw new HttpException(403);
         }
 

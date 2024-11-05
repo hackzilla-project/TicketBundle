@@ -34,6 +34,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use function is_array;
 
 /**
  * A lot of this class is a duplication of the Symfony Maker component.
@@ -97,6 +98,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
 
     /**
      * Called after normal code generation: allows you to do anything.
+     * @throws Exception
      */
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
@@ -130,7 +132,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
             $fileManagerOperations = [];
             $fileManagerOperations[$entityPath] = $manipulator;
 
-            if (\is_array($newField)) {
+            if (is_array($newField)) {
                 $annotationOptions = $newField;
                 unset($annotationOptions['fieldName']);
                 $manipulator->addEntityField($newField['fieldName'], $annotationOptions);
@@ -217,6 +219,9 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
 
     abstract protected function interfaces(): array;
 
+    /**
+     * @throws Exception
+     */
     private function createClassManipulator(string $path, ConsoleStyle $io, bool $overwrite, string $className, bool $originalClass = true): ClassSourceManipulator
     {
         $useAttributes = $this->doctrineHelper->doesClassUsesAttributes($className) && $this->doctrineHelper->isDoctrineSupportingAttributes();

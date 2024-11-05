@@ -25,12 +25,12 @@ trait MessageAttachmentTrait
      *
      * @var File|null
      */
-    protected $attachmentFile;
+    protected ?File $attachmentFile;
 
     /**
      * {@inheritdoc}
      */
-    public function setAttachmentFile(?File $file = null)
+    public function setAttachmentFile(?File $file = null): self
     {
         $this->attachmentFile = $file;
 
@@ -40,7 +40,7 @@ trait MessageAttachmentTrait
     /**
      * {@inheritdoc}
      */
-    public function getAttachmentFile()
+    public function getAttachmentFile(): ?File
     {
         return $this->attachmentFile;
     }
@@ -48,7 +48,7 @@ trait MessageAttachmentTrait
     /**
      * {@inheritdoc}
      */
-    public function setAttachmentName($name)
+    public function setAttachmentName($name): self
     {
         $this->attachmentName = $name;
 
@@ -58,7 +58,7 @@ trait MessageAttachmentTrait
     /**
      * {@inheritdoc}
      */
-    public function getAttachmentName()
+    public function getAttachmentName(): ?string
     {
         return $this->attachmentName;
     }
@@ -66,7 +66,7 @@ trait MessageAttachmentTrait
     /**
      * {@inheritdoc}
      */
-    public function setAttachmentSize($size)
+    public function setAttachmentSize($size): self
     {
         $this->attachmentSize = $size;
 
@@ -76,7 +76,7 @@ trait MessageAttachmentTrait
     /**
      * {@inheritdoc}
      */
-    public function getAttachmentSize()
+    public function getAttachmentSize(): ?int
     {
         return $this->attachmentSize;
     }
@@ -84,7 +84,7 @@ trait MessageAttachmentTrait
     /**
      * {@inheritdoc}
      */
-    public function setAttachmentMimeType($mimeType)
+    public function setAttachmentMimeType($mimeType): self
     {
         $this->attachmentMimeType = $mimeType;
 
@@ -94,7 +94,7 @@ trait MessageAttachmentTrait
     /**
      * {@inheritdoc}
      */
-    public function getAttachmentMimeType()
+    public function getAttachmentMimeType(): ?string
     {
         return $this->attachmentMimeType;
     }

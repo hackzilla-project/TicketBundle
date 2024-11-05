@@ -21,7 +21,7 @@ use Hackzilla\Bundle\TicketBundle\Model\UserInterface as TicketBundleUserInterfa
  * @author Javier Spagnoletti <phansys@gmail.com>
  * @author Daniel Platt <github@ofdan.co.uk>
  */
-#[ORM\Entity()]
+#[ORM\Entity]
 #[ORM\Table(name: '`user`')]
 class User implements TicketBundleUserInterface
 {
@@ -34,7 +34,7 @@ class User implements TicketBundleUserInterface
     private ?string $email = null;
 
     #[ORM\Column(type: Types::JSON)]
-    private $roles = [];
+    private array $roles = [];
 
     #[ORM\Column(type: Types::STRING)]
     private ?string $password = null;

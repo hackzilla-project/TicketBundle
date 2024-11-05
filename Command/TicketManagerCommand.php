@@ -77,7 +77,7 @@ final class TicketManagerCommand extends Command
         $this->ticketManager->updateTicket($ticket, $message);
 
         $output->writeln(
-            "Ticket with subject '".$ticket->getSubject()."' has been created with ticketnumber #".$ticket->getId().''
+            "Ticket with subject '".$ticket->getSubject()."' has been created with ticketnumber #".$ticket->getId()
         );
 
         return Command::SUCCESS;

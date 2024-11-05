@@ -63,7 +63,7 @@ class TicketTypeTest extends TypeTestCase
         }
     }
 
-    protected function getExtensions()
+    protected function getExtensions(): array
     {
         $ticketType = new TicketType(Ticket::class);
         $ticketMessageType = new TicketMessageType($this->user, new TicketFeatures([], ''), TicketMessage::class);

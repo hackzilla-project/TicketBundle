@@ -14,8 +14,9 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
 use DateTimeInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
+use function array_key_exists;
 
 /**
  * Ticket Trait.
@@ -25,9 +26,11 @@ trait TicketTrait
     /**
      * Set status.
      *
-     * @return $this
+     * @param int $status
+     *
+     * @return Ticket|TicketTrait
      */
-    public function setStatus(int $status)
+    public function setStatus(int $status): self
     {
         $this->status = $status;
 
@@ -37,9 +40,11 @@ trait TicketTrait
     /**
      * Set status string.
      *
-     * @return $this
+     * @param string $status
+     *
+     * @return Ticket|TicketTrait
      */
-    public function setStatusString(string $status)
+    public function setStatusString(string $status): self
     {
         $status = array_search(strtolower($status), TicketMessageInterface::STATUSES, true);
 
@@ -63,7 +68,7 @@ trait TicketTrait
      */
     public function getStatusString(): ?string
     {
-        if (\array_key_exists($this->status, TicketMessageInterface::STATUSES)) {
+        if (array_key_exists($this->status, TicketMessageInterface::STATUSES)) {
             return TicketMessageInterface::STATUSES[$this->status];
         }
 
@@ -73,9 +78,11 @@ trait TicketTrait
     /**
      * Set priority.
      *
-     * @return $this
+     * @param int $priority
+     *
+     * @return Ticket|TicketTrait
      */
-    public function setPriority(int $priority)
+    public function setPriority(int $priority): self
     {
         $this->priority = $priority;
 
@@ -85,9 +92,11 @@ trait TicketTrait
     /**
      * Set priority string.
      *
-     * @return $this
+     * @param string $priority
+     *
+     * @return Ticket|TicketTrait
      */
-    public function setPriorityString(string $priority)
+    public function setPriorityString(string $priority): self
     {
         $priority = array_search(strtolower($priority), TicketMessageInterface::PRIORITIES, true);
 
@@ -111,7 +120,7 @@ trait TicketTrait
      */
     public function getPriorityString(): ?string
     {
-        if (\array_key_exists($this->priority, TicketMessageInterface::PRIORITIES)) {
+        if (array_key_exists($this->priority, TicketMessageInterface::PRIORITIES)) {
             return TicketMessageInterface::PRIORITIES[$this->priority];
         }
 
@@ -122,9 +131,11 @@ trait TicketTrait
      * Set userCreated.
      *
      *
-     * @return $this
+     * @param UserInterface|null $userCreated
+     *
+     * @return Ticket|TicketTrait
      */
-    public function setUserCreated(?UserInterface $userCreated)
+    public function setUserCreated(?UserInterface $userCreated): self
     {
         $this->userCreated = $userCreated;
 
@@ -143,9 +154,11 @@ trait TicketTrait
      * Set lastUser.
      *
      *
-     * @return $this
+     * @param UserInterface|null $lastUser
+     *
+     * @return Ticket|TicketTrait
      */
-    public function setLastUser(?UserInterface $lastUser)
+    public function setLastUser(?UserInterface $lastUser): self
     {
         $this->lastUser = $lastUser;
 
@@ -163,9 +176,11 @@ trait TicketTrait
     /**
      * Set lastMessage.
      *
-     * @return $this
+     * @param DateTimeInterface $lastMessage
+     *
+     * @return Ticket|TicketTrait
      */
-    public function setLastMessage(DateTimeInterface $lastMessage)
+    public function setLastMessage(DateTimeInterface $lastMessage): self
     {
         $this->lastMessage = $lastMessage;
 
@@ -183,9 +198,11 @@ trait TicketTrait
     /**
      * Set createdAt.
      *
-     * @return $this
+     * @param DateTimeInterface $createdAt
+     *
+     * @return Ticket|TicketTrait
      */
-    public function setCreatedAt(DateTimeInterface $createdAt)
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -203,9 +220,11 @@ trait TicketTrait
     /**
      * Set subject.
      *
-     * @return $this
+     * @param string $subject
+     *
+     * @return Ticket|TicketTrait
      */
-    public function setSubject(string $subject)
+    public function setSubject(string $subject): self
     {
         $this->subject = $subject;
 
@@ -223,9 +242,11 @@ trait TicketTrait
     /**
      * Add message.
      *
-     * @return $this
+     * @param TicketMessageInterface $message
+     *
+     * @return Ticket|TicketTrait
      */
-    public function addMessage(TicketMessageInterface $message)
+    public function addMessage(TicketMessageInterface $message): self
     {
         $this->messages[] = $message;
 
@@ -235,9 +256,11 @@ trait TicketTrait
     /**
      * Remove message.
      *
-     * @return $this
+     * @param TicketMessageInterface $message
+     *
+     * @return Ticket|TicketTrait
      */
-    public function removeMessage(TicketMessageInterface $message)
+    public function removeMessage(TicketMessageInterface $message): self
     {
         $this->messages->removeElement($message);
 
@@ -249,10 +272,6 @@ trait TicketTrait
      */
     public function getMessages(): Collection
     {
-        if (null === $this->messages) {
-            $this->messages = new ArrayCollection();
-        }
-
         return $this->messages;
     }
 }

@@ -29,7 +29,7 @@ final class ApplicationTest extends WebTestCase
      */
     public function testCommandRegistration(string $expectedClass, string $commandName): void
     {
-        $application = new Application(static::$kernel);
+        $application = new Application(ApplicationTest::$kernel);
 
         $this->assertInstanceOf($expectedClass, $application->find($commandName));
     }

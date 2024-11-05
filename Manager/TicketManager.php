@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
+use DateMalformedIntervalStringException;
 use DateTime;
 use DateInterval;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectRepository;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Psr\Log\LoggerInterface;
@@ -33,14 +35,14 @@ final class TicketManager implements TicketManagerInterface
 
     private ?ObjectManager $objectManager = null;
 
-    private $ticketRepository;
+    private ObjectRepository $ticketRepository;
 
-    private $messageRepository;
+    private ObjectRepository $messageRepository;
 
     /**
      * TicketManager constructor.
      */
-    public function __construct(private string $ticketClass, private string $ticketMessageClass)
+    public function __construct(private readonly string $ticketClass, private readonly string $ticketMessageClass)
     {
     }
 
@@ -86,7 +88,7 @@ final class TicketManager implements TicketManagerInterface
      *
      * @return TicketInterface
      */
-    public function createTicket()
+    public function createTicket(): TicketInterface
     {
         /* @var TicketInterface $ticket */
         $ticket = new $this->ticketClass();
@@ -99,11 +101,11 @@ final class TicketManager implements TicketManagerInterface
     /**
      * Create a new instance of TicketMessage Entity.
      *
-     * @param TicketInterface $ticket
+     * @param TicketInterface|null $ticket
      *
      * @return TicketMessageInterface
      */
-    public function createMessage(?TicketInterface $ticket = null)
+    public function createMessage(?TicketInterface $ticket = null): TicketMessageInterface
     {
         /* @var TicketMessageInterface $ticket */
         $message = new $this->ticketMessageClass();
@@ -120,7 +122,10 @@ final class TicketManager implements TicketManagerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param TicketInterface $ticket
+     * @param TicketMessageInterface|null $message
+     *
+     * @return void
      */
     public function updateTicket(TicketInterface $ticket, ?TicketMessageInterface $message = null): void
     {
@@ -149,7 +154,7 @@ final class TicketManager implements TicketManagerInterface
      *
      * @return TicketInterface[]
      */
-    public function findTickets()
+    public function findTickets(): array
     {
         return $this->ticketRepository->findAll();
     }
@@ -169,7 +174,7 @@ final class TicketManager implements TicketManagerInterface
      *
      * @param int $ticketMessageId
      *
-     * @return TicketMessageInterface
+     * @return TicketMessageInterface|null
      */
     public function getMessageById($ticketMessageId): ?TicketMessageInterface
     {
@@ -181,13 +186,16 @@ final class TicketManager implements TicketManagerInterface
      *
      * @return array|TicketInterface[]
      */
-    public function findTicketsBy(array $criteria)
+    public function findTicketsBy(array $criteria): array
     {
         return $this->ticketRepository->findBy($criteria);
     }
 
     /**
-     * {@inheritdoc}
+     * @param $ticketStatus
+     * @param $ticketPriority
+     *
+     * @return QueryBuilder
      */
     public function getTicketListQuery($ticketStatus, $ticketPriority = null): QueryBuilder
     {
@@ -223,8 +231,9 @@ final class TicketManager implements TicketManagerInterface
      * @param int $days
      *
      * @return mixed
+     * @throws DateMalformedIntervalStringException
      */
-    public function getResolvedTicketOlderThan($days)
+    public function getResolvedTicketOlderThan(int $days)
     {
         $closeBeforeDate = new DateTime();
         $closeBeforeDate->sub(new DateInterval('P'.$days.'D'));
@@ -245,9 +254,9 @@ final class TicketManager implements TicketManagerInterface
      *
      * @param string $statusStr
      *
-     * @return int
+     * @return int|string|false
      */
-    public function getTicketStatus($statusStr): int|string|false
+    public function getTicketStatus(string $statusStr): int|string|false
     {
         static $statuses = false;
 
@@ -267,9 +276,9 @@ final class TicketManager implements TicketManagerInterface
      *
      * @param string $priorityStr
      *
-     * @return int
+     * @return int|string|false
      */
-    public function getTicketPriority($priorityStr): int|string|false
+    public function getTicketPriority(string $priorityStr): int|string|false
     {
         static $priorities = false;
 

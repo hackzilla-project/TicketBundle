@@ -13,54 +13,53 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 
 interface MessageAttachmentInterface extends TicketMessageInterface
 {
     /**
-     * @param File|UploadedFile $file
+     * @param File|null $file
      *
      * @return $this
      */
-    public function setAttachmentFile(?File $file = null);
+    public function setAttachmentFile(?File $file = null): self;
 
     /**
      * @return File
      */
-    public function getAttachmentFile();
+    public function getAttachmentFile(): File;
 
     /**
      * @return $this
      */
-    public function setAttachmentName(string $name);
+    public function setAttachmentName(string $name): self;
 
     /**
      * @return string
      */
-    public function getAttachmentName();
+    public function getAttachmentName(): string;
 
     /**
      * @param int $size Size in bytes
      *
      * @return $this
      */
-    public function setAttachmentSize(int $size);
+    public function setAttachmentSize(int $size): self;
 
     /**
      * @return string
      */
-    public function getAttachmentSize();
+    public function getAttachmentSize(): string;
 
     /**
      * @param string $mimeType Attachment mime type
      *
      * @return $this
      */
-    public function setAttachmentMimeType(string $mimeType);
+    public function setAttachmentMimeType(string $mimeType): self;
 
     /**
      * @return string
      */
-    public function getAttachmentMimeType();
+    public function getAttachmentMimeType(): string;
 }
