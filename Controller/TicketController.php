@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Controller;
 
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -54,7 +55,8 @@ final class TicketController extends AbstractController
         private readonly TicketManager $ticketManager,
         private readonly TranslatorInterface $translator,
         private readonly UserManagerInterface $userManager,
-        private readonly Environment $twig
+        private readonly Environment $twig,
+        private readonly FormFactoryInterface $formFactory
     ) {
         $this->templates = $bag->get('hackzilla_ticket.templates');
     }
@@ -152,7 +154,7 @@ final class TicketController extends AbstractController
         $ticketManager = $this->ticketManager;
         $entity = $ticketManager->createTicket();
 
-        $form = $this->createForm(TicketType::class, $entity);
+        $form = $this->formFactory->create(TicketType::class, $entity);
 
         return new Response($this->twig->render(
             $this->templates['new'],

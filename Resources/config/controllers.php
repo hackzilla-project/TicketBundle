@@ -11,6 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Form\FormFactoryInterface;
 use Twig\Environment;
 use Vich\UploaderBundle\Handler\DownloadHandler;
 use Hackzilla\Bundle\TicketBundle\Controller\TicketAttachmentController;
@@ -49,6 +50,7 @@ return static function (ContainerConfigurator $container): void {
                 new ReferenceConfigurator('translator'),
                 new ReferenceConfigurator(UserManagerInterface::class),
                 new ReferenceConfigurator(Environment::class),
+                new ReferenceConfigurator(FormFactoryInterface::class),
             ])
             ->call('setContainer', [new ReferenceConfigurator('service_container')])
             ->tag('controller.service_arguments')
