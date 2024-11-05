@@ -115,10 +115,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
             throw new RuntimeCommandException('To use Doctrine entity attributes you\'ll need PHP 8, doctrine/orm 2.9, doctrine/doctrine-bundle 2.4 and symfony/framework-bundle 5.2.');
         }
 
-        if (
-            !$this->doesEntityUseAnnotationMapping($entityClassDetails->getFullName())
-            && !$this->doesEntityUseAttributeMapping($entityClassDetails->getFullName())
-        ) {
+        if (!$this->doesEntityUseAttributeMapping($entityClassDetails->getFullName())) {
             throw new RuntimeCommandException(sprintf('Only annotation or attribute mapping is supported by this command, but the <info>%s</info> class uses a different format.', $entityClassDetails->getFullName()));
         }
 
@@ -225,17 +222,12 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
     private function createClassManipulator(string $path, ConsoleStyle $io, bool $overwrite, string $className, bool $originalClass = true): ClassSourceManipulator
     {
         $useAttributes = $this->doctrineHelper->doesClassUsesAttributes($className) && $this->doctrineHelper->isDoctrineSupportingAttributes();
-        $useAnnotations = false ;
 
-        if (method_exists($this->doctrineHelper, 'isClassAnnotated')) {
-            $useAnnotations = $this->doctrineHelper->isClassAnnotated($className) ||!$useAttributes;
-        }
-
-        if (!$useAnnotations && !$useAttributes) {
+        if (!$useAttributes) {
             throw new Exception('No support for either Annotations or Attributes');
         }
 
-        $manipulator = new ClassSourceManipulator($this->fileManager->getFileContents($path), $overwrite, $useAnnotations, $useAttributes);
+        $manipulator = new ClassSourceManipulator($this->fileManager->getFileContents($path), $overwrite, false, true);
 
         if ($originalClass) {
             foreach ($this->traits() as $trait) {
@@ -269,26 +261,6 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
         $reflClass = new ReflectionClass($class);
 
         return array_map(static fn(ReflectionProperty $prop): string => $prop->getName(), $reflClass->getProperties());
-    }
-
-    private function doesEntityUseAnnotationMapping(string $className): bool
-    {
-        if (!class_exists($className)) {
-            $otherClassMetadatas = $this->doctrineHelper->getMetadata(Str::getNamespace($className).'\\', true);
-
-            // if we have no metadata, we should assume this is the first class being mapped
-            if (empty($otherClassMetadatas)) {
-                return false;
-            }
-
-            $className = reset($otherClassMetadatas)->getName();
-        }
-
-        if (!method_exists($this->doctrineHelper, 'isClassAnnotated')) {
-           return false;
-        }
-
-        return $this->doctrineHelper->isClassAnnotated($className);
     }
 
     private function doesEntityUseAttributeMapping(string $className): bool

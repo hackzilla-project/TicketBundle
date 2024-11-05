@@ -16,9 +16,9 @@ namespace Hackzilla\Bundle\TicketBundle\Manager;
 use DateMalformedIntervalStringException;
 use DateTime;
 use DateInterval;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectRepository;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Psr\Log\LoggerInterface;
@@ -33,11 +33,11 @@ final class TicketManager implements TicketManagerInterface
 
     private string $translationDomain = 'HackzillaTicketBundle';
 
-    private ?ObjectManager $objectManager = null;
+    private ?EntityManagerInterface $objectManager = null;
 
-    private ObjectRepository $ticketRepository;
+    private EntityRepository $ticketRepository;
 
-    private ObjectRepository $messageRepository;
+    private EntityRepository $messageRepository;
 
     /**
      * TicketManager constructor.
@@ -58,7 +58,7 @@ final class TicketManager implements TicketManagerInterface
         return $this;
     }
 
-    public function setObjectManager(ObjectManager $objectManager): self
+    public function setObjectManager(EntityManagerInterface $objectManager): self
     {
         $this->objectManager = $objectManager;
 
@@ -274,11 +274,11 @@ final class TicketManager implements TicketManagerInterface
     /**
      * Lookup priority code.
      *
-     * @param string $priorityStr
+     * @param string|null $priorityStr
      *
      * @return int|string|bool
      */
-    public function getTicketPriority(string $priorityStr): int|string|bool
+    public function getTicketPriority(?string $priorityStr): int|string|bool
     {
         static $priorities = false;
 
@@ -290,6 +290,6 @@ final class TicketManager implements TicketManagerInterface
             }
         }
 
-        return array_search($priorityStr, $priorities, true);
+        return array_search($priorityStr ?? '', $priorities, true);
     }
 }

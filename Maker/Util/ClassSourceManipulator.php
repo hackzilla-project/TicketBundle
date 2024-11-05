@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Maker\Util;
 
 use PhpParser\Lexer\Emulative;
+use PhpParser\Node;
 use PhpParser\Parser\Php7;
 use PhpParser\Node\Stmt\Expression;
 use PhpParser\Node\Expr\Assign;
@@ -32,6 +33,7 @@ use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\Stmt\Class_;
 use Exception;
 use PhpParser\Node\Stmt;
+use PHPStan\Php\PhpVersion;
 use ReflectionClass;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Identifier;
@@ -51,7 +53,7 @@ use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Scalar\DNumber;
 use PhpParser\Node\Expr\ConstFetch;
-use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\ArrayItem;
 use PhpParser\Node\Attribute;
 use PhpParser\Node\Arg;
 use ReflectionParameter;
@@ -59,7 +61,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhpParser\Builder;
 use PhpParser\BuilderHelpers;
 use PhpParser\Comment\Doc;
-use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\Doctrine\BaseCollectionRelation;
@@ -105,6 +106,9 @@ final class ClassSourceManipulator
 
     public function __construct(string $sourceCode, private readonly bool $overwrite = false, private readonly bool $useAnnotations = true, private readonly bool $useAttributesForDoctrineMapping = false)
     {
+        $this->lexer = new Emulative(null);
+
+        /*
         $this->lexer = new Emulative([
             'usedAttributes' => [
                 'comments',
@@ -112,6 +116,8 @@ final class ClassSourceManipulator
                 'startTokenPos', 'endTokenPos',
             ],
         ]);
+        */
+
         $this->parser = new Php7($this->lexer);
         $this->printer = new PrettyPrinter();
 
@@ -215,7 +221,7 @@ final class ClassSourceManipulator
     {
         $this->addUseStatementIfNecessary($interfaceName);
 
-        foreach ($this->getClassNode()->implements as $node) {
+         foreach ($this->getClassNode()->implements as $node) {
             if (implode('\\', $node->getAttribute('resolvedName')->parts) === $interfaceName) {
                 return;
             }
@@ -758,7 +764,7 @@ final class ClassSourceManipulator
     /**
      * @throws Exception
      */
-    private function getClassNode(): Class_
+    private function getClassNode(): Node
     {
         $node = $this->findFirstNode(static fn($node): bool => $node instanceof Class_);
 
@@ -766,14 +772,13 @@ final class ClassSourceManipulator
             throw new Exception('Could not find class node');
         }
 
-        /* @phpstan-ignore-next-line */
         return $node;
     }
 
     /**
      * @throws Exception
      */
-    private function getNamespaceNode(): Namespace_
+    private function getNamespaceNode(): Node
     {
         $node = $this->findFirstNode(static fn($node): bool => $node instanceof Namespace_);
 
@@ -781,7 +786,6 @@ final class ClassSourceManipulator
             throw new Exception('Could not find namespace node');
         }
 
-        /* @phpstan-ignore-next-line */
         return $node;
     }
 

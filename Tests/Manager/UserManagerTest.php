@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\User;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -56,7 +55,7 @@ class UserManagerTest extends WebTestCase
         return new EntityRepository($em, new ClassMetadata(User::class));
     }
 
-    private function getAuthorizationChecker(): MockObject
+    private function getAuthorizationChecker(): AuthorizationChecker
     {
         return $this->createMock(AuthorizationChecker::class);
     }
