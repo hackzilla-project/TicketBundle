@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vich_uploader class="Hackzilla\Bundle\TicketBundle\Entity\TicketMessageWithAttachment">
+    <field mapping="ticket_message_attachment" name="attachmentFile" filename_property="attachmentName"/>
+</vich_uploader>

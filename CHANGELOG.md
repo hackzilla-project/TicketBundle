@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.8.1](https://github.com/hackzilla/TicketBundle/compare/3.8.0...3.8.1) - 2022-01-04
+
+* allow PHP8
+* minor #151 Vich TicketMessageWithAttachment.xml renamed to Entity.TicketMessageWithAttachment.xml
+
 ## [3.8.0](https://github.com/hackzilla/TicketBundle/compare/3.7.0...3.8.0) - 2021-02-25
 
  * minor #203 Added XML routing (phansys)
