@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle;
 
-use Exception;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -22,7 +21,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class HackzillaTicketBundle extends Bundle
 {
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function build(ContainerBuilder $container): void
     {

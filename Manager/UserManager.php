@@ -13,14 +13,11 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use InvalidArgumentException;
-use LogicException;
-use Exception;
 use Doctrine\Persistence\ObjectRepository;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class UserManager implements UserManagerInterface
@@ -35,7 +32,7 @@ final class UserManager implements UserManagerInterface
         private readonly AuthorizationCheckerInterface $authorizationChecker,
     ) {
         if (!is_subclass_of($userRepository->getClassName(), UserInterface::class)) {
-            throw new InvalidArgumentException(sprintf('Argument 2 passed to "%s()" MUST be an object repository for a class implementing "%s".', __METHOD__, UserInterface::class));
+            throw new \InvalidArgumentException(\sprintf('Argument 2 passed to "%s()" MUST be an object repository for a class implementing "%s".', __METHOD__, UserInterface::class));
         }
 
         $this->userRepository = $userRepository;
@@ -50,7 +47,7 @@ final class UserManager implements UserManagerInterface
         $user = $this->tokenStorage->getToken()->getUser();
 
         if ($user instanceof \Symfony\Component\Security\Core\User\UserInterface && !$user instanceof UserInterface) {
-            throw new LogicException(sprintf('The object representing the authenticated user MUST implement "%s".', UserInterface::class));
+            throw new \LogicException(\sprintf('The object representing the authenticated user MUST implement "%s".', UserInterface::class));
         }
 
         return $user;
@@ -80,7 +77,7 @@ final class UserManager implements UserManagerInterface
     {
         try {
             $this->getPermissionManager()->hasPermission($user, $ticket);
-        } catch (Exception) {
+        } catch (\Exception) {
             return false;
         }
 

@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of HackzillaTicketBundle package.
+ *
+ * (c) Daniel Platt <github@ofdan.co.uk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use Rector\Config\RectorConfig;
 use Rector\Doctrine\Set\DoctrineSetList;
 use Rector\PHPUnit\Set\PHPUnitSetList;
@@ -11,7 +20,7 @@ use Rector\Symfony\Set\SymfonySetList;
 
 return RectorConfig::configure()
     ->withPaths([__DIR__])
-    ->withSkip([__DIR__ . '/vendor'])
+    ->withSkip([__DIR__.'/vendor'])
     // uncomment to reach your current PHP version
 //    ->withTypeCoverageLevel(0)
     ->withPhpSets(php83: true)
@@ -24,4 +33,5 @@ return RectorConfig::configure()
         SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
         SetList::TYPE_DECLARATION,
         PHPUnitSetList::PHPUNIT_CODE_QUALITY,
-    ]);
+    ])
+;

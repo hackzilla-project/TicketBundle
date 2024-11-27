@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
-use DateMalformedIntervalStringException;
-use DateTime;
-use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -49,10 +46,10 @@ final class TicketManager implements TicketManagerInterface
     public function setLogger(LoggerInterface $logger): self
     {
         if (!class_exists($this->ticketClass)) {
-            $logger->error(sprintf('Ticket entity %s doesn\'t exist', $this->ticketClass));
+            $logger->error(\sprintf('Ticket entity %s doesn\'t exist', $this->ticketClass));
         }
         if (!class_exists($this->ticketMessageClass)) {
-            $logger->error(sprintf('Message entity %s doesn\'t exist', $this->ticketMessageClass));
+            $logger->error(\sprintf('Message entity %s doesn\'t exist', $this->ticketMessageClass));
         }
 
         return $this;
@@ -62,11 +59,11 @@ final class TicketManager implements TicketManagerInterface
     {
         $this->objectManager = $objectManager;
 
-        if ($this->ticketClass !== '' && $this->ticketClass !== '0') {
+        if ('' !== $this->ticketClass && '0' !== $this->ticketClass) {
             $this->ticketRepository = $objectManager->getRepository($this->ticketClass);
         }
 
-        if ($this->ticketMessageClass !== '' && $this->ticketMessageClass !== '0') {
+        if ('' !== $this->ticketMessageClass && '0' !== $this->ticketMessageClass) {
             $this->messageRepository = $objectManager->getRepository($this->ticketMessageClass);
         }
 
@@ -85,8 +82,6 @@ final class TicketManager implements TicketManagerInterface
 
     /**
      * Create a new instance of Ticket entity.
-     *
-     * @return TicketInterface
      */
     public function createTicket(): TicketInterface
     {
@@ -100,10 +95,6 @@ final class TicketManager implements TicketManagerInterface
 
     /**
      * Create a new instance of TicketMessage Entity.
-     *
-     * @param TicketInterface|null $ticket
-     *
-     * @return TicketMessageInterface
      */
     public function createMessage(?TicketInterface $ticket = null): TicketMessageInterface
     {
@@ -121,12 +112,6 @@ final class TicketManager implements TicketManagerInterface
         return $message;
     }
 
-    /**
-     * @param TicketInterface $ticket
-     * @param TicketMessageInterface|null $message
-     *
-     * @return void
-     */
     public function updateTicket(TicketInterface $ticket, ?TicketMessageInterface $message = null): void
     {
         if (null === $ticket->getId()) {
@@ -173,8 +158,6 @@ final class TicketManager implements TicketManagerInterface
      * Find message in the database.
      *
      * @param int $ticketMessageId
-     *
-     * @return TicketMessageInterface|null
      */
     public function getMessageById($ticketMessageId): ?TicketMessageInterface
     {
@@ -191,12 +174,6 @@ final class TicketManager implements TicketManagerInterface
         return $this->ticketRepository->findBy($criteria);
     }
 
-    /**
-     * @param $ticketStatus
-     * @param $ticketPriority
-     *
-     * @return QueryBuilder
-     */
     public function getTicketListQuery($ticketStatus, $ticketPriority = null): QueryBuilder
     {
         $query = $this->ticketRepository->createQueryBuilder('t')
@@ -228,15 +205,12 @@ final class TicketManager implements TicketManagerInterface
     }
 
     /**
-     * @param int $days
-     *
-     * @return mixed
-     * @throws DateMalformedIntervalStringException
+     * @throws \DateMalformedIntervalStringException
      */
     public function getResolvedTicketOlderThan(int $days): mixed
     {
-        $closeBeforeDate = new DateTime();
-        $closeBeforeDate->sub(new DateInterval('P'.$days.'D'));
+        $closeBeforeDate = new \DateTime();
+        $closeBeforeDate->sub(new \DateInterval('P'.$days.'D'));
 
         $query = $this->ticketRepository->createQueryBuilder('t')
 //            ->select($this->ticketClass.' t')
@@ -251,10 +225,6 @@ final class TicketManager implements TicketManagerInterface
 
     /**
      * Lookup status code.
-     *
-     * @param string $statusStr
-     *
-     * @return int|string|bool
      */
     public function getTicketStatus(string $statusStr): int|string|bool
     {
@@ -273,10 +243,6 @@ final class TicketManager implements TicketManagerInterface
 
     /**
      * Lookup priority code.
-     *
-     * @param string|null $priorityStr
-     *
-     * @return int|string|bool
      */
     public function getTicketPriority(?string $priorityStr): int|string|bool
     {

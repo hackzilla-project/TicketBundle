@@ -11,15 +11,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Form\FormFactoryInterface;
-use Twig\Environment;
-use Vich\UploaderBundle\Handler\DownloadHandler;
 use Hackzilla\Bundle\TicketBundle\Controller\TicketAttachmentController;
 use Hackzilla\Bundle\TicketBundle\Controller\TicketController;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
+use Symfony\Component\Form\FormFactoryInterface;
+use Twig\Environment;
+use Vich\UploaderBundle\Handler\DownloadHandler;
 
 return static function (ContainerConfigurator $container): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4

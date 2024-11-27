@@ -18,15 +18,10 @@ use Symfony\Component\HttpFoundation\File\File;
 interface MessageAttachmentInterface extends TicketMessageInterface
 {
     /**
-     * @param File|null $file
-     *
      * @return $this
      */
     public function setAttachmentFile(?File $file = null): self;
 
-    /**
-     * @return File|null
-     */
     public function getAttachmentFile(): ?File;
 
     /**
@@ -34,9 +29,6 @@ interface MessageAttachmentInterface extends TicketMessageInterface
      */
     public function setAttachmentName(string $name): self;
 
-    /**
-     * @return string|null
-     */
     public function getAttachmentName(): ?string;
 
     /**
@@ -46,9 +38,6 @@ interface MessageAttachmentInterface extends TicketMessageInterface
      */
     public function setAttachmentSize(int $size): self;
 
-    /**
-     * @return int|null
-     */
     public function getAttachmentSize(): ?int;
 
     /**
@@ -58,8 +47,5 @@ interface MessageAttachmentInterface extends TicketMessageInterface
      */
     public function setAttachmentMimeType(string $mimeType): self;
 
-    /**
-     * @return string|null
-     */
     public function getAttachmentMimeType(): ?string;
 }

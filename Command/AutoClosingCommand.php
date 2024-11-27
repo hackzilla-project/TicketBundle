@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Command;
 
-use UnitEnum;
-use InvalidArgumentException;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
@@ -31,13 +29,10 @@ final class AutoClosingCommand extends Command
 {
     protected static $defaultName = 'ticket:autoclosing';
 
-    private bool|string|int|float|UnitEnum|array|null $locale = 'en';
+    private bool|string|int|float|\UnitEnum|array|null $locale = 'en';
 
     private string $translationDomain = 'HackzillaTicketBundle';
 
-    /**
-     * @var TranslatorInterface
-     */
     private readonly TranslatorInterface $translator;
 
     public function __construct(private readonly TicketManagerInterface $ticketManager, private readonly UserManagerInterface $userManager, LocaleAwareInterface $translator, ParameterBagInterface $parameterBag)
@@ -45,7 +40,7 @@ final class AutoClosingCommand extends Command
         parent::__construct();
 
         if (!$translator instanceof TranslatorInterface) {
-            throw new InvalidArgumentException($translator::class.' Must implement TranslatorInterface and LocaleAwareInterface');
+            throw new \InvalidArgumentException($translator::class.' Must implement TranslatorInterface and LocaleAwareInterface');
         }
 
         $this->translator = $translator;

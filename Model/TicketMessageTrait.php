@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
-use DateTime;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
 
@@ -24,8 +23,6 @@ trait TicketMessageTrait
 {
     /**
      * Set status.
-     *
-     * @param int $status
      *
      * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
@@ -38,8 +35,6 @@ trait TicketMessageTrait
 
     /**
      * Set status string.
-     *
-     * @param string $status
      *
      * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
@@ -67,7 +62,7 @@ trait TicketMessageTrait
      */
     public function getStatusString(): ?string
     {
-        if (isset(TicketMessageInterface::STATUSES[$this->status]) && (TicketMessageInterface::STATUSES[$this->status] !== '' && TicketMessageInterface::STATUSES[$this->status] !== '0')) {
+        if (isset(TicketMessageInterface::STATUSES[$this->status]) && ('' !== TicketMessageInterface::STATUSES[$this->status] && '0' !== TicketMessageInterface::STATUSES[$this->status])) {
             return TicketMessageInterface::STATUSES[$this->status];
         }
 
@@ -76,8 +71,6 @@ trait TicketMessageTrait
 
     /**
      * Set priority.
-     *
-     * @param int $priority
      *
      * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
@@ -90,8 +83,6 @@ trait TicketMessageTrait
 
     /**
      * Set priority string.
-     *
-     * @param string $priority
      *
      * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
@@ -119,7 +110,7 @@ trait TicketMessageTrait
      */
     public function getPriorityString(): ?string
     {
-        if (isset(TicketMessageInterface::PRIORITIES[$this->priority]) && (TicketMessageInterface::PRIORITIES[$this->priority] !== '' && TicketMessageInterface::PRIORITIES[$this->priority] !== '0')) {
+        if (isset(TicketMessageInterface::PRIORITIES[$this->priority]) && ('' !== TicketMessageInterface::PRIORITIES[$this->priority] && '0' !== TicketMessageInterface::PRIORITIES[$this->priority])) {
             return TicketMessageInterface::PRIORITIES[$this->priority];
         }
 
@@ -128,8 +119,6 @@ trait TicketMessageTrait
 
     /**
      * Set user.
-     *
-     * @param ?UserInterface $user
      *
      * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
@@ -151,8 +140,6 @@ trait TicketMessageTrait
     /**
      * Set message.
      *
-     * @param string $message
-     *
      * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
     public function setMessage(string $message): self
@@ -173,11 +160,9 @@ trait TicketMessageTrait
     /**
      * Set createdAt.
      *
-     * @param DateTime $createdAt
-     *
      * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
-    public function setCreatedAt(DateTime $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -186,18 +171,14 @@ trait TicketMessageTrait
 
     /**
      * Get createdAt.
-     *
-     * @return DateTime
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
     /**
      * Set ticket.
-     *
-     * @param TicketInterface|null $ticket
      *
      * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */

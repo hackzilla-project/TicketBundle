@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Functional;
 
-use Iterator;
 use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
@@ -36,7 +35,7 @@ class FunctionalTest extends WebTestCase
         $this->assertSame($value, static::$kernel->getContainer()->getParameter($parameter));
     }
 
-    public function getParameters(): Iterator
+    public function getParameters(): \Iterator
     {
         $messageCLass = class_exists(VichUploaderBundle::class) ? TicketMessageWithAttachment::class : TicketMessage::class;
         yield ['hackzilla_ticket.model.user.class', User::class];

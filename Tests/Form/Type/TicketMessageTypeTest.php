@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Form\Type;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 

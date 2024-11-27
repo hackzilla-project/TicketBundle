@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Extension;
 
-use Iterator;
-use stdClass;
 use Hackzilla\Bundle\TicketBundle\Component\TicketFeatures;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
@@ -30,19 +28,13 @@ final class TicketFeaturesTest extends WebTestCase
         $this->assertInstanceOf(TicketFeatures::class, new TicketFeatures($features, $class));
     }
 
-    public function constructProvider(): Iterator
+    public function constructProvider(): \Iterator
     {
-        yield [[], stdClass::class];
+        yield [[], \stdClass::class];
     }
 
     /**
      * @dataProvider featureAttachmentProvider
-     *
-     * @param array $features
-     * @param string $class
-     * @param bool $compare
-     *
-     * @return void
      */
     public function testFeatureAttachment(array $features, string $class, bool $compare): void
     {
@@ -52,7 +44,7 @@ final class TicketFeaturesTest extends WebTestCase
         $this->assertSame($obj->hasFeature('attachment'), $compare);
     }
 
-    public function featureAttachmentProvider(): Iterator
+    public function featureAttachmentProvider(): \Iterator
     {
         yield [[], TicketMessage::class, false];
         yield [['attachment' => true], TicketMessage::class, false];

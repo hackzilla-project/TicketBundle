@@ -24,9 +24,6 @@ use Vich\UploaderBundle\Event as VichEvent;
  */
 final class FileSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [

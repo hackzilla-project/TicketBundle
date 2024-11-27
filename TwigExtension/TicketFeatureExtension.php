@@ -35,9 +35,6 @@ final class TicketFeatureExtension extends AbstractExtension
         return $this->ticketFeatures->hasFeature($feature);
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'ticketFeature';

@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
-use DateTime;
-
 interface TicketMessageInterface
 {
     public const STATUS_INVALID = 0;
@@ -112,15 +110,12 @@ interface TicketMessageInterface
     /**
      * Set user.
      *
-     *
      * @return $this
      */
     public function setUser(?UserInterface $user): self;
 
     /**
      * Get user.
-     *
-     * @return ?UserInterface
      */
     public function getUser(): ?UserInterface;
 
@@ -141,14 +136,12 @@ interface TicketMessageInterface
      *
      * @return $this
      */
-    public function setCreatedAt(DateTime $createdAt): self;
+    public function setCreatedAt(\DateTime $createdAt): self;
 
     /**
      * Get createdAt.
-     *
-     * @return DateTime
      */
-    public function getCreatedAt(): DateTime;
+    public function getCreatedAt(): \DateTime;
 
     /**
      * Set ticket.

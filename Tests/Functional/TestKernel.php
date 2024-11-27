@@ -28,7 +28,6 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use Symfony\Component\Routing\RouteCollectionBuilder;
 use Vich\UploaderBundle\VichUploaderBundle;
 
 trait ConfigureRoutes
@@ -98,12 +97,6 @@ final class TestKernel extends Kernel
         return $bundles;
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param LoaderInterface $loader
-     *
-     * @return void
-     */
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         // FrameworkBundle config

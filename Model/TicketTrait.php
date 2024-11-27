@@ -13,10 +13,8 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
-use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
-use function array_key_exists;
 
 /**
  * Ticket Trait.
@@ -25,8 +23,6 @@ trait TicketTrait
 {
     /**
      * Set status.
-     *
-     * @param int $status
      *
      * @return Ticket|TicketTrait
      */
@@ -39,8 +35,6 @@ trait TicketTrait
 
     /**
      * Set status string.
-     *
-     * @param string $status
      *
      * @return Ticket|TicketTrait
      */
@@ -68,7 +62,7 @@ trait TicketTrait
      */
     public function getStatusString(): ?string
     {
-        if (array_key_exists($this->status, TicketMessageInterface::STATUSES)) {
+        if (\array_key_exists($this->status, TicketMessageInterface::STATUSES)) {
             return TicketMessageInterface::STATUSES[$this->status];
         }
 
@@ -77,8 +71,6 @@ trait TicketTrait
 
     /**
      * Set priority.
-     *
-     * @param int $priority
      *
      * @return Ticket|TicketTrait
      */
@@ -91,8 +83,6 @@ trait TicketTrait
 
     /**
      * Set priority string.
-     *
-     * @param string $priority
      *
      * @return Ticket|TicketTrait
      */
@@ -120,7 +110,7 @@ trait TicketTrait
      */
     public function getPriorityString(): ?string
     {
-        if (array_key_exists($this->priority, TicketMessageInterface::PRIORITIES)) {
+        if (\array_key_exists($this->priority, TicketMessageInterface::PRIORITIES)) {
             return TicketMessageInterface::PRIORITIES[$this->priority];
         }
 
@@ -129,9 +119,6 @@ trait TicketTrait
 
     /**
      * Set userCreated.
-     *
-     *
-     * @param UserInterface|null $userCreated
      *
      * @return Ticket|TicketTrait
      */
@@ -153,9 +140,6 @@ trait TicketTrait
     /**
      * Set lastUser.
      *
-     *
-     * @param UserInterface|null $lastUser
-     *
      * @return Ticket|TicketTrait
      */
     public function setLastUser(?UserInterface $lastUser): self
@@ -176,11 +160,9 @@ trait TicketTrait
     /**
      * Set lastMessage.
      *
-     * @param DateTimeInterface $lastMessage
-     *
      * @return Ticket|TicketTrait
      */
-    public function setLastMessage(DateTimeInterface $lastMessage): self
+    public function setLastMessage(\DateTimeInterface $lastMessage): self
     {
         $this->lastMessage = $lastMessage;
 
@@ -190,7 +172,7 @@ trait TicketTrait
     /**
      * Get lastMessage.
      */
-    public function getLastMessage(): ?DateTimeInterface
+    public function getLastMessage(): ?\DateTimeInterface
     {
         return $this->lastMessage;
     }
@@ -198,11 +180,9 @@ trait TicketTrait
     /**
      * Set createdAt.
      *
-     * @param DateTimeInterface $createdAt
-     *
      * @return Ticket|TicketTrait
      */
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -212,15 +192,13 @@ trait TicketTrait
     /**
      * Get createdAt.
      */
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
     /**
      * Set subject.
-     *
-     * @param string $subject
      *
      * @return Ticket|TicketTrait
      */
@@ -242,8 +220,6 @@ trait TicketTrait
     /**
      * Add message.
      *
-     * @param TicketMessageInterface $message
-     *
      * @return Ticket|TicketTrait
      */
     public function addMessage(TicketMessageInterface $message): self
@@ -255,8 +231,6 @@ trait TicketTrait
 
     /**
      * Remove message.
-     *
-     * @param TicketMessageInterface $message
      *
      * @return Ticket|TicketTrait
      */

@@ -22,8 +22,6 @@ trait MessageAttachmentTrait
      * NOTE: This field is not persisted to database!
      *
      * @Vich\UploadableField(mapping="ticket_message_attachment", fileNameProperty="attachmentName", originalName="attachmentFile", size="attachmentSize")
-     *
-     * @var File|null
      */
     protected ?File $attachmentFile;
 

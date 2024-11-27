@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity;
 
 use Doctrine\DBAL\Types\Types;
-use DateTimeInterface;
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageTrait;
@@ -44,7 +42,7 @@ class TicketMessage implements TicketMessageInterface
     private int $priority;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: false)]
-    private DateTimeInterface $createdAt;
+    private \DateTimeInterface $createdAt;
 
     #[ORM\ManyToOne(targetEntity: Ticket::class, inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
@@ -55,7 +53,7 @@ class TicketMessage implements TicketMessageInterface
 
     public function __construct()
     {
-        $this->createdAt = new DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int

@@ -13,10 +13,6 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Controller;
 
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Hackzilla\Bundle\TicketBundle\Event\TicketEvent;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketMessageType;
 use Hackzilla\Bundle\TicketBundle\Form\Type\TicketType;
@@ -30,16 +26,19 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use function is_object;
 
 /**
  * Ticket controller.
@@ -64,9 +63,6 @@ final class TicketController extends AbstractController
     /**
      * Lists all Ticket entities.
      *
-     * @param Request $request
-     *
-     * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -85,7 +81,7 @@ final class TicketController extends AbstractController
 
         $pagination = $this->pagination->paginate(
             $query->getQuery(),
-            (int) ($request->query->get('page', 1))/* page number */,
+            (int) $request->query->get('page', 1)/* page number */,
             10/* limit per page */
         );
 
@@ -103,9 +99,6 @@ final class TicketController extends AbstractController
     /**
      * Creates a new Ticket entity.
      *
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -144,7 +137,6 @@ final class TicketController extends AbstractController
     /**
      * Displays a form to create a new Ticket entity.
      *
-     * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -169,9 +161,6 @@ final class TicketController extends AbstractController
     /**
      * Finds and displays a TicketInterface entity.
      *
-     * @param int $ticketId
-     *
-     * @return RedirectResponse|Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -209,10 +198,6 @@ final class TicketController extends AbstractController
     /**
      * Finds and displays a TicketInterface entity.
      *
-     * @param Request $request
-     * @param int $ticketId
-     *
-     * @return RedirectResponse|Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -256,18 +241,13 @@ final class TicketController extends AbstractController
 
     /**
      * Deletes a Ticket entity.
-     *
-     * @param Request $request
-     * @param int $ticketId
-     *
-     * @return RedirectResponse
      */
     public function delete(Request $request, int $ticketId): RedirectResponse
     {
         $userManager = $this->userManager;
         $user = $userManager->getCurrentUser();
 
-        if ( ! is_object($user) || !$userManager->hasRole($user, TicketRole::ADMIN)) {
+        if (!\is_object($user) || !$userManager->hasRole($user, TicketRole::ADMIN)) {
             throw new HttpException(403);
         }
 

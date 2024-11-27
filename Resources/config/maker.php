@@ -10,8 +10,9 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-use Hackzilla\Bundle\TicketBundle\Maker\TicketMaker;
+
 use Hackzilla\Bundle\TicketBundle\Maker\MessageMaker;
+use Hackzilla\Bundle\TicketBundle\Maker\TicketMaker;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 

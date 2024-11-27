@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity;
 
-use Doctrine\DBAL\Types\Types;
-use DateTimeInterface;
-use Doctrine\Common\Collections\Collection;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketTrait;
@@ -37,7 +35,7 @@ class Ticket implements TicketInterface
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: false)]
-    private DateTimeInterface $lastMessage;
+    private \DateTimeInterface $lastMessage;
 
     #[ORM\Column(type: Types::TEXT, nullable: false)]
     private string $subject;
@@ -49,7 +47,7 @@ class Ticket implements TicketInterface
     private int $priority;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: false)]
-    private DateTimeInterface $createdAt;
+    private \DateTimeInterface $createdAt;
 
     /**
      * @var Collection<int, TicketMessage>
@@ -65,7 +63,7 @@ class Ticket implements TicketInterface
 
     public function __construct()
     {
-        $this->createdAt = new DateTime();
+        $this->createdAt = new \DateTime();
         $this->messages = new ArrayCollection();
     }
 
