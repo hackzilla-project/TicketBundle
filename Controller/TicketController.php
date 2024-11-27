@@ -55,7 +55,7 @@ final class TicketController extends AbstractController
         private readonly TranslatorInterface $translator,
         private readonly UserManagerInterface $userManager,
         private readonly Environment $twig,
-        private readonly FormFactoryInterface $formFactory
+        private readonly FormFactoryInterface $formFactory,
     ) {
         $this->templates = $bag->get('hackzilla_ticket.templates');
     }
