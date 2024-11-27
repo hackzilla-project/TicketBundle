@@ -221,13 +221,16 @@ final class ClassSourceManipulator
     {
         $this->addUseStatementIfNecessary($interfaceName);
 
-         foreach ($this->getClassNode()->implements as $node) {
-            if (implode('\\', $node->getAttribute('resolvedName')->parts) === $interfaceName) {
-                return;
+        if (!empty($this->getClassNode()->implements)) {
+            foreach ($this->getClassNode()->implements as $node) {
+                if (implode('\\', $node->getAttribute('resolvedName')->parts) === $interfaceName) {
+                    return;
+                }
             }
+
+            $this->getClassNode()->implements[] = new Name(Str::getShortClassName($interfaceName));
         }
 
-        $this->getClassNode()->implements[] = new Name(Str::getShortClassName($interfaceName));
         $this->updateSourceCodeFromNewStmts();
     }
 
@@ -259,13 +262,15 @@ final class ClassSourceManipulator
 
         // avoid all the use traits in class for unshift all the new UseTrait
         // in the right order.
-        foreach ($classNode->stmts as $key => $node) {
-            if ($node instanceof TraitUse) {
-                unset($classNode->stmts[$key]);
+        if (!empty($classNode->stmts)) {
+            foreach ($classNode->stmts as $key => $node) {
+                if ($node instanceof TraitUse) {
+                    unset($classNode->stmts[$key]);
+                }
             }
-        }
 
-        array_unshift($classNode->stmts, ...$traitNodes);
+            array_unshift($classNode->stmts, ...$traitNodes);
+        }
 
         $this->updateSourceCodeFromNewStmts();
     }
@@ -442,63 +447,65 @@ final class ClassSourceManipulator
         $targetIndex = null;
         $addLineBreak = false;
         $lastUseStmtIndex = null;
-        foreach ($namespaceNode->stmts as $index => $stmt) {
-            if ($stmt instanceof Use_) {
-                // I believe this is an array to account for use statements with {}
-                foreach ($stmt->uses as $use) {
-                    $alias = $use->alias ? $use->alias->name : $use->name->getLast();
+        if (!empty($namespaceNode->stmts)) {
+            foreach ($namespaceNode->stmts as $index => $stmt) {
+                if ($stmt instanceof Use_) {
+                    // I believe this is an array to account for use statements with {}
+                    foreach ($stmt->uses as $use) {
+                        $alias = $use->alias ? $use->alias->name : $use->name->getLast();
 
-                    // the use statement already exists? Don't add it again
-                    if ($class === (string) $use->name) {
-                        return $alias;
+                        // the use statement already exists? Don't add it again
+                        if ($class === (string)$use->name) {
+                            return $alias;
+                        }
+
+                        if ($alias === $shortClassName) {
+                            // we have a conflicting alias!
+                            // to be safe, use the fully-qualified class name
+                            // everywhere and do not add another use statement
+                            return '\\'.$class;
+                        }
                     }
 
-                    if ($alias === $shortClassName) {
-                        // we have a conflicting alias!
-                        // to be safe, use the fully-qualified class name
-                        // everywhere and do not add another use statement
-                        return '\\'.$class;
+                    // if $class is alphabetically before this use statement, place it before
+                    // only set $targetIndex the first time you find it
+                    if (null === $targetIndex && Str::areClassesAlphabetical($class, (string)$stmt->uses[0]->name)) {
+                        $targetIndex = $index;
                     }
-                }
 
-                // if $class is alphabetically before this use statement, place it before
-                // only set $targetIndex the first time you find it
-                if (null === $targetIndex && Str::areClassesAlphabetical($class, (string) $stmt->uses[0]->name)) {
-                    $targetIndex = $index;
-                }
+                    $lastUseStmtIndex = $index;
+                } elseif ($stmt instanceof Class_) {
+                    if (null !== $targetIndex) {
+                        // we already found where to place the use statement
 
-                $lastUseStmtIndex = $index;
-            } elseif ($stmt instanceof Class_) {
-                if (null !== $targetIndex) {
-                    // we already found where to place the use statement
+                        break;
+                    }
+
+                    // we hit the class! If there were any use statements,
+                    // then put this at the bottom of the use statement list
+                    if (null !== $lastUseStmtIndex) {
+                        $targetIndex = $lastUseStmtIndex + 1;
+                    } else {
+                        $targetIndex  = $index;
+                        $addLineBreak = true;
+                    }
 
                     break;
                 }
-
-                // we hit the class! If there were any use statements,
-                // then put this at the bottom of the use statement list
-                if (null !== $lastUseStmtIndex) {
-                    $targetIndex = $lastUseStmtIndex + 1;
-                } else {
-                    $targetIndex = $index;
-                    $addLineBreak = true;
-                }
-
-                break;
             }
-        }
 
-        if (null === $targetIndex) {
-            throw new Exception('Could not find a class!');
-        }
+            if (null === $targetIndex) {
+                throw new Exception('Could not find a class!');
+            }
 
-        $newUseNode = (new Builder\Use_($class, Use_::TYPE_NORMAL))->getNode();
-        array_splice(
-            $namespaceNode->stmts,
-            $targetIndex,
-            0,
-            $addLineBreak ? [$newUseNode, $this->createBlankLineNode(self::CONTEXT_OUTSIDE_CLASS)] : [$newUseNode]
-        );
+            $newUseNode = (new Builder\Use_($class, Use_::TYPE_NORMAL))->getNode();
+            array_splice(
+                $namespaceNode->stmts,
+                $targetIndex,
+                0,
+                $addLineBreak ? [$newUseNode, $this->createBlankLineNode(self::CONTEXT_OUTSIDE_CLASS)] : [$newUseNode]
+            );
+        }
 
         $this->updateSourceCodeFromNewStmts();
 
@@ -708,9 +715,11 @@ final class ClassSourceManipulator
      */
     private function getConstructorNode(): ?ClassMethod
     {
-        foreach ($this->getClassNode()->stmts as $classNode) {
-            if ($classNode instanceof ClassMethod && '__construct' == $classNode->name) {
-                return $classNode;
+        if (!empty($this->getClassNode()->stmts)) {
+            foreach ($this->getClassNode()->stmts as $classNode) {
+                if ($classNode instanceof ClassMethod && '__construct' == $classNode->name) {
+                    return $classNode;
+                }
             }
         }
 
@@ -751,7 +760,9 @@ final class ClassSourceManipulator
     {
         $this->sourceCode = $sourceCode;
         $this->oldStmts = $this->parser->parse($sourceCode);
-        $this->oldTokens = $this->lexer->getTokens();
+        if (method_exists($this->lexer, 'getTokens')) {
+            $this->oldTokens = $this->lexer->getTokens();
+        }
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new CloningVisitor());
@@ -908,17 +919,19 @@ final class ClassSourceManipulator
 
         $newStatements[] = $methodNode;
 
-        if (null === $existingIndex) {
-            // add them to the end!
+        if (!empty($classNode->stmts)) {
+            if (null === $existingIndex) {
+                // add them to the end!
 
-            $classNode->stmts = array_merge($classNode->stmts, $newStatements);
-        } else {
-            array_splice(
-                $classNode->stmts,
-                $existingIndex,
-                1,
-                $newStatements
-            );
+                $classNode->stmts = array_merge($classNode->stmts, $newStatements);
+            } else {
+                array_splice(
+                    $classNode->stmts,
+                    $existingIndex,
+                    1,
+                    $newStatements
+                );
+            }
         }
 
         $this->updateSourceCodeFromNewStmts();
@@ -946,7 +959,11 @@ final class ClassSourceManipulator
     {
         $namespace = substr($class, 0, strrpos($class, '\\'));
 
-        return $this->getNamespaceNode()->name->toCodeString() === $namespace;
+        if (!empty($this->getNamespaceNode()->name)) {
+            return $this->getNamespaceNode()->name->toCodeString() === $namespace;
+        }
+
+        return false;
     }
 
     /**
@@ -954,7 +971,11 @@ final class ClassSourceManipulator
      */
     private function getThisFullClassName(): string
     {
-        return (string) $this->getClassNode()->namespacedName;
+        if (!empty($this->getClassNode()->namespacedName)) {
+            return (string)$this->getClassNode()->namespacedName;
+        }
+
+        return '';
     }
 
     /**
@@ -982,14 +1003,16 @@ final class ClassSourceManipulator
 
         // add the new property after this node
         if ($targetNode instanceof Node) {
-            $index = array_search($targetNode, $classNode->stmts, true);
+            if (!empty($classNode->stmts)) {
+                $index = array_search($targetNode, $classNode->stmts, true);
 
-            array_splice(
-                $classNode->stmts,
-                $index + 1,
-                0,
-                [$this->createBlankLineNode(self::CONTEXT_CLASS), $newNode]
-            );
+                array_splice(
+                    $classNode->stmts,
+                    $index + 1,
+                    0,
+                    [$this->createBlankLineNode(self::CONTEXT_CLASS), $newNode]
+                );
+            }
 
             $this->updateSourceCodeFromNewStmts();
 
@@ -1000,8 +1023,9 @@ final class ClassSourceManipulator
         // add an empty line, unless the class is totally empty
         if (!empty($classNode->stmts)) {
             array_unshift($classNode->stmts, $this->createBlankLineNode(self::CONTEXT_CLASS));
+            array_unshift($classNode->stmts, $newNode);
         }
-        array_unshift($classNode->stmts, $newNode);
+
         $this->updateSourceCodeFromNewStmts();
     }
 
@@ -1018,9 +1042,11 @@ final class ClassSourceManipulator
      */
     private function getMethodIndex(string $methodName): bool|int|string
     {
-        foreach ($this->getClassNode()->stmts as $i => $node) {
-            if ($node instanceof ClassMethod && strtolower($node->name->toString()) === strtolower($methodName)) {
-                return $i;
+        if (!empty($this->getClassNode()->stmts)) {
+            foreach ($this->getClassNode()->stmts as $i => $node) {
+                if ($node instanceof ClassMethod && strtolower($node->name->toString()) === strtolower($methodName)) {
+                    return $i;
+                }
             }
         }
 
@@ -1032,9 +1058,11 @@ final class ClassSourceManipulator
      */
     private function propertyExists(string $propertyName): bool
     {
-        foreach ($this->getClassNode()->stmts as $node) {
-            if ($node instanceof Node\Stmt\Property && $node->props[0]->name->toString() === $propertyName) {
-                return true;
+        if (!empty($this->getClassNode()->stmts)) {
+            foreach ($this->getClassNode()->stmts as $node) {
+                if ($node instanceof Node\Stmt\Property && $node->props[0]->name->toString() === $propertyName) {
+                    return true;
+                }
             }
         }
 
