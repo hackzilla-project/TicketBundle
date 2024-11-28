@@ -14,6 +14,10 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Maker;
 
+use UnitEnum;
+use Exception;
+use ReflectionClass;
+use ReflectionProperty;
 use Hackzilla\Bundle\TicketBundle\Maker\Util\ClassSourceManipulator;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
@@ -30,6 +34,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use function is_array;
 
 /**
  * A lot of this class is a duplication of the Symfony Maker component.
@@ -37,17 +42,12 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
  */
 abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractMaker
 {
-    private $fileManager;
-    private $doctrineHelper;
-    private $userClass;
-    private $ticketClass;
-    private $messageClass;
+    private readonly bool|string|int|float|UnitEnum|array|null $userClass;
+    private readonly bool|string|int|float|UnitEnum|array|null $ticketClass;
+    private readonly bool|string|int|float|UnitEnum|array|null $messageClass;
 
-    public function __construct(FileManager $fileManager, DoctrineHelper $doctrineHelper, ParameterBagInterface $bag)
+    public function __construct(private readonly FileManager $fileManager, private readonly DoctrineHelper $doctrineHelper, ParameterBagInterface $bag)
     {
-        $this->fileManager = $fileManager;
-        $this->doctrineHelper = $doctrineHelper;
-
         $this->userClass = $bag->get('hackzilla_ticket.model.user.class');
         $this->ticketClass = $bag->get('hackzilla_ticket.model.ticket.class');
         $this->messageClass = $bag->get('hackzilla_ticket.model.message.class');
@@ -74,7 +74,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
      * By default, all arguments will be asked interactively. If you want
      * to avoid that, use the $inputConfig->setArgumentAsNonInteractive() method.
      */
-    public function configureCommand(Command $command, InputConfiguration $inputConfig)
+    public function configureCommand(Command $command, InputConfiguration $inputConfig): void
     {
         $command
             ->addOption('api-resource', 'a', InputOption::VALUE_NONE, 'Mark this class as an API Platform resource (expose a CRUD API for it)')
@@ -98,8 +98,9 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
 
     /**
      * Called after normal code generation: allows you to do anything.
+     * @throws Exception
      */
-    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
+    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
         $entityClass = $this->entityClass();
 
@@ -114,10 +115,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
             throw new RuntimeCommandException('To use Doctrine entity attributes you\'ll need PHP 8, doctrine/orm 2.9, doctrine/doctrine-bundle 2.4 and symfony/framework-bundle 5.2.');
         }
 
-        if (
-            !$this->doesEntityUseAnnotationMapping($entityClassDetails->getFullName())
-            && !$this->doesEntityUseAttributeMapping($entityClassDetails->getFullName())
-        ) {
+        if (!$this->doesEntityUseAttributeMapping($entityClassDetails->getFullName())) {
             throw new RuntimeCommandException(sprintf('Only annotation or attribute mapping is supported by this command, but the <info>%s</info> class uses a different format.', $entityClassDetails->getFullName()));
         }
 
@@ -131,7 +129,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
             $fileManagerOperations = [];
             $fileManagerOperations[$entityPath] = $manipulator;
 
-            if (\is_array($newField)) {
+            if (is_array($newField)) {
                 $annotationOptions = $newField;
                 unset($annotationOptions['fieldName']);
                 $manipulator->addEntityField($newField['fieldName'], $annotationOptions);
@@ -165,7 +163,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
                             // The *other* class will receive the ManyToOne
                             $otherManipulator->addManyToOneRelation($newField->getOwningRelation());
                             if (!$newField->getMapInverseRelation()) {
-                                throw new \Exception('Somehow a OneToMany relationship is being created, but the inverse side will not be mapped?');
+                                throw new Exception('Somehow a OneToMany relationship is being created, but the inverse side will not be mapped?');
                             }
                             $manipulator->addOneToManyRelation($newField->getInverseRelation());
                         }
@@ -186,7 +184,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
 
                         break;
                     default:
-                        throw new \Exception('Invalid relation type');
+                        throw new Exception('Invalid relation type');
                 }
 
                 // save the inverse side if it's being mapped
@@ -195,7 +193,7 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
                 }
                 $currentFields[] = $newFieldName;
             } else {
-                throw new \Exception('Invalid value');
+                throw new Exception('Invalid value');
             }
 
             foreach ($fileManagerOperations as $path => $manipulatorOrMessage) {
@@ -218,20 +216,18 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
 
     abstract protected function interfaces(): array;
 
+    /**
+     * @throws Exception
+     */
     private function createClassManipulator(string $path, ConsoleStyle $io, bool $overwrite, string $className, bool $originalClass = true): ClassSourceManipulator
     {
         $useAttributes = $this->doctrineHelper->doesClassUsesAttributes($className) && $this->doctrineHelper->isDoctrineSupportingAttributes();
-        $useAnnotations = false ;
 
-        if (method_exists($this->doctrineHelper, 'isClassAnnotated')) {
-            $useAnnotations = $this->doctrineHelper->isClassAnnotated($className) ||!$useAttributes;
+        if (!$useAttributes) {
+            throw new Exception('No support for either Annotations or Attributes');
         }
 
-        if (!$useAnnotations && !$useAttributes) {
-            throw new \Exception('No support for either Annotations or Attributes');
-        }
-
-        $manipulator = new ClassSourceManipulator($this->fileManager->getFileContents($path), $overwrite, $useAnnotations, $useAttributes);
+        $manipulator = new ClassSourceManipulator($this->fileManager->getFileContents($path), $overwrite, false, true);
 
         if ($originalClass) {
             foreach ($this->traits() as $trait) {
@@ -262,31 +258,9 @@ abstract class AbstractMaker extends \Symfony\Bundle\MakerBundle\Maker\AbstractM
             return [];
         }
 
-        $reflClass = new \ReflectionClass($class);
+        $reflClass = new ReflectionClass($class);
 
-        return array_map(static function (\ReflectionProperty $prop) {
-            return $prop->getName();
-        }, $reflClass->getProperties());
-    }
-
-    private function doesEntityUseAnnotationMapping(string $className): bool
-    {
-        if (!class_exists($className)) {
-            $otherClassMetadatas = $this->doctrineHelper->getMetadata(Str::getNamespace($className).'\\', true);
-
-            // if we have no metadata, we should assume this is the first class being mapped
-            if (empty($otherClassMetadatas)) {
-                return false;
-            }
-
-            $className = reset($otherClassMetadatas)->getName();
-        }
-
-        if (!method_exists($this->doctrineHelper, 'isClassAnnotated')) {
-           return false;
-        }
-
-        return $this->doctrineHelper->isClassAnnotated($className);
+        return array_map(static fn(ReflectionProperty $prop): string => $prop->getName(), $reflClass->getProperties());
     }
 
     private function doesEntityUseAttributeMapping(string $className): bool

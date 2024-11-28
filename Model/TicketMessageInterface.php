@@ -64,14 +64,14 @@ interface TicketMessageInterface
      *
      * @return $this
      */
-    public function setStatus(int $status);
+    public function setStatus(int $status): self;
 
     /**
      * Set status string.
      *
      * @return $this
      */
-    public function setStatusString(string $status);
+    public function setStatusString(string $status): self;
 
     /**
      * Get status.
@@ -88,14 +88,14 @@ interface TicketMessageInterface
      *
      * @return $this
      */
-    public function setPriority(int $priority);
+    public function setPriority(int $priority): self;
 
     /**
      * Set priority string.
      *
      * @return $this
      */
-    public function setPriorityString(string $priority);
+    public function setPriorityString(string $priority): self;
 
     /**
      * Get priority.
@@ -110,25 +110,21 @@ interface TicketMessageInterface
     /**
      * Set user.
      *
-     * @param ?UserInterface $user
-     *
      * @return $this
      */
-    public function setUser(?UserInterface $user);
+    public function setUser(?UserInterface $user): self;
 
     /**
      * Get user.
-     *
-     * @return ?UserInterface
      */
-    public function getUser();
+    public function getUser(): ?UserInterface;
 
     /**
      * Set message.
      *
      * @return $this
      */
-    public function setMessage(string $message);
+    public function setMessage(string $message): self;
 
     /**
      * Get message.
@@ -140,21 +136,19 @@ interface TicketMessageInterface
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTime $createdAt);
+    public function setCreatedAt(\DateTime $createdAt): self;
 
     /**
      * Get createdAt.
-     *
-     * @return \DateTime
      */
-    public function getCreatedAt();
+    public function getCreatedAt(): \DateTime;
 
     /**
      * Set ticket.
      *
      * @return $this
      */
-    public function setTicket(?TicketInterface $ticket = null);
+    public function setTicket(?TicketInterface $ticket = null): self;
 
     /**
      * Get ticket.

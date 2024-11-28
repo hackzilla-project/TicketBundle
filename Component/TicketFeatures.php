@@ -21,7 +21,7 @@ final class TicketFeatures
      * @param array<string, bool> $features
      * @param string              $messageClass TicketMessage class
      */
-    private $features = [];
+    private array $features;
 
     /**
      * @param string $messageClass TicketMessage class

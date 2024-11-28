@@ -24,10 +24,8 @@ class PermissionManager implements PermissionManagerInterface
 
     /**
      * used in TicketManager::getTicketListQuery().
-     *
-     * @param object $query
      */
-    public function addUserPermissionsCondition($query, ?UserInterface $user)
+    public function addUserPermissionsCondition(object $query, ?UserInterface $user): object
     {
         if (\is_object($user)) {
             if (!$this->getUserManager()->hasRole($user, TicketRole::ADMIN)) {
@@ -49,13 +47,11 @@ class PermissionManager implements PermissionManagerInterface
 
     /**
      * used by UserManager::hasPermission().
-     *
-     * @param ?UserInterface $user
      */
     public function hasPermission(?UserInterface $user, TicketInterface $ticket): void
     {
-        if (!\is_object($user) || (!$this->getUserManager()->hasRole($user, TicketRole::ADMIN) &&
-                (null === $ticket->getUserCreated() || $ticket->getUserCreated()->getId() != $user->getId()))
+        if (!\is_object($user) || (!$this->getUserManager()->hasRole($user, TicketRole::ADMIN)
+                                     && (!$ticket->getUserCreated() instanceof UserInterface || $ticket->getUserCreated()->getId() != $user->getId()))
         ) {
             throw new AccessDeniedHttpException();
         }

@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class HackzillaTicketExtensionTest extends WebTestCase
 {
-    private $object;
+    private ?HackzillaTicketExtension $object = null;
 
     protected function setUp(): void
     {

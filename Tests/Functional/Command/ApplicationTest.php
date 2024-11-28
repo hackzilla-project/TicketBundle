@@ -25,22 +25,17 @@ final class ApplicationTest extends WebTestCase
 {
     /**
      * @dataProvider getCommands
-     *
-     * @param string $expectedClass
-     * @param string $commandName
      */
-    public function testCommandRegistration($expectedClass, $commandName)
+    public function testCommandRegistration(string $expectedClass, string $commandName): void
     {
-        $application = new Application(static::$kernel);
+        $application = new Application(self::$kernel);
 
         $this->assertInstanceOf($expectedClass, $application->find($commandName));
     }
 
-    public function getCommands()
+    public function getCommands(): \Iterator
     {
-        return [
-            [AutoClosingCommand::class, 'ticket:autoclosing'],
-            [TicketManagerCommand::class, 'ticket:create'],
-        ];
+        yield [AutoClosingCommand::class, 'ticket:autoclosing'];
+        yield [TicketManagerCommand::class, 'ticket:create'];
     }
 }

@@ -13,8 +13,9 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Manager;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ObjectManager;
 use Hackzilla\Bundle\TicketBundle\Model\TicketInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Psr\Log\LoggerInterface;
@@ -25,50 +26,44 @@ final class TicketManager implements TicketManagerInterface
     use PermissionManagerTrait;
     use UserManagerTrait;
 
-    private $translator;
+    private ?TranslatorInterface $translator = null;
 
-    private $translationDomain = 'HackzillaTicketBundle';
+    private string $translationDomain = 'HackzillaTicketBundle';
 
-    private $objectManager;
+    private ?EntityManagerInterface $objectManager = null;
 
-    private $ticketRepository;
+    private EntityRepository $ticketRepository;
 
-    private $messageRepository;
-
-    private $ticketClass;
-
-    private $ticketMessageClass;
+    private EntityRepository $messageRepository;
 
     /**
      * TicketManager constructor.
      */
-    public function __construct(string $ticketClass, string $ticketMessageClass)
+    public function __construct(private readonly string $ticketClass, private readonly string $ticketMessageClass)
     {
-        $this->ticketClass = $ticketClass;
-        $this->ticketMessageClass = $ticketMessageClass;
     }
 
     public function setLogger(LoggerInterface $logger): self
     {
         if (!class_exists($this->ticketClass)) {
-            $logger->error(sprintf('Ticket entity %s doesn\'t exist', $this->ticketClass));
+            $logger->error(\sprintf('Ticket entity %s doesn\'t exist', $this->ticketClass));
         }
         if (!class_exists($this->ticketMessageClass)) {
-            $logger->error(sprintf('Message entity %s doesn\'t exist', $this->ticketMessageClass));
+            $logger->error(\sprintf('Message entity %s doesn\'t exist', $this->ticketMessageClass));
         }
 
         return $this;
     }
 
-    public function setObjectManager(ObjectManager $objectManager): self
+    public function setObjectManager(EntityManagerInterface $objectManager): self
     {
         $this->objectManager = $objectManager;
 
-        if ($this->ticketClass) {
+        if ('' !== $this->ticketClass && '0' !== $this->ticketClass) {
             $this->ticketRepository = $objectManager->getRepository($this->ticketClass);
         }
 
-        if ($this->ticketMessageClass) {
+        if ('' !== $this->ticketMessageClass && '0' !== $this->ticketMessageClass) {
             $this->messageRepository = $objectManager->getRepository($this->ticketMessageClass);
         }
 
@@ -87,10 +82,8 @@ final class TicketManager implements TicketManagerInterface
 
     /**
      * Create a new instance of Ticket entity.
-     *
-     * @return TicketInterface
      */
-    public function createTicket()
+    public function createTicket(): TicketInterface
     {
         /* @var TicketInterface $ticket */
         $ticket = new $this->ticketClass();
@@ -102,17 +95,13 @@ final class TicketManager implements TicketManagerInterface
 
     /**
      * Create a new instance of TicketMessage Entity.
-     *
-     * @param TicketInterface $ticket
-     *
-     * @return TicketMessageInterface
      */
-    public function createMessage(?TicketInterface $ticket = null)
+    public function createMessage(?TicketInterface $ticket = null): TicketMessageInterface
     {
         /* @var TicketMessageInterface $ticket */
         $message = new $this->ticketMessageClass();
 
-        if ($ticket) {
+        if ($ticket instanceof TicketInterface) {
             $message->setPriority($ticket->getPriority());
             $message->setStatus($ticket->getStatus());
             $message->setTicket($ticket);
@@ -123,15 +112,12 @@ final class TicketManager implements TicketManagerInterface
         return $message;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateTicket(TicketInterface $ticket, ?TicketMessageInterface $message = null): void
     {
         if (null === $ticket->getId()) {
             $this->objectManager->persist($ticket);
         }
-        if (null !== $message) {
+        if ($message instanceof TicketMessageInterface) {
             $message->setTicket($ticket);
             $this->objectManager->persist($message);
             $ticket->setPriority($message->getPriority());
@@ -142,7 +128,7 @@ final class TicketManager implements TicketManagerInterface
     /**
      * Delete a ticket from the database.
      */
-    public function deleteTicket(TicketInterface $ticket)
+    public function deleteTicket(TicketInterface $ticket): void
     {
         $this->objectManager->remove($ticket);
         $this->objectManager->flush();
@@ -153,7 +139,7 @@ final class TicketManager implements TicketManagerInterface
      *
      * @return TicketInterface[]
      */
-    public function findTickets()
+    public function findTickets(): array
     {
         return $this->ticketRepository->findAll();
     }
@@ -162,8 +148,6 @@ final class TicketManager implements TicketManagerInterface
      * Find ticket in the database.
      *
      * @param int $ticketId
-     *
-     * @return ?TicketInterface
      */
     public function getTicketById($ticketId): ?TicketInterface
     {
@@ -174,8 +158,6 @@ final class TicketManager implements TicketManagerInterface
      * Find message in the database.
      *
      * @param int $ticketMessageId
-     *
-     * @return TicketMessageInterface
      */
     public function getMessageById($ticketMessageId): ?TicketMessageInterface
     {
@@ -187,14 +169,11 @@ final class TicketManager implements TicketManagerInterface
      *
      * @return array|TicketInterface[]
      */
-    public function findTicketsBy(array $criteria)
+    public function findTicketsBy(array $criteria): array
     {
         return $this->ticketRepository->findBy($criteria);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTicketListQuery($ticketStatus, $ticketPriority = null): QueryBuilder
     {
         $query = $this->ticketRepository->createQueryBuilder('t')
@@ -202,22 +181,14 @@ final class TicketManager implements TicketManagerInterface
             ->orderBy('t.lastMessage', 'DESC')
         ;
 
-        switch ($ticketStatus) {
-            case TicketMessageInterface::STATUS_CLOSED:
-                $query
-                    ->andWhere('t.status = :status')
-                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED)
-                ;
-
-                break;
-
-            case TicketMessageInterface::STATUS_OPEN:
-            default:
-                $query
-                    ->andWhere('t.status != :status')
-                    ->setParameter('status', TicketMessageInterface::STATUS_CLOSED)
-                ;
-        }
+        match ($ticketStatus) {
+            TicketMessageInterface::STATUS_CLOSED => $query
+                ->andWhere('t.status = :status')
+                ->setParameter('status', TicketMessageInterface::STATUS_CLOSED),
+            default => $query
+                ->andWhere('t.status != :status')
+                ->setParameter('status', TicketMessageInterface::STATUS_CLOSED),
+        };
 
         if ($ticketPriority) {
             $query
@@ -234,11 +205,9 @@ final class TicketManager implements TicketManagerInterface
     }
 
     /**
-     * @param int $days
-     *
-     * @return mixed
+     * @throws \DateMalformedIntervalStringException
      */
-    public function getResolvedTicketOlderThan($days)
+    public function getResolvedTicketOlderThan(int $days): mixed
     {
         $closeBeforeDate = new \DateTime();
         $closeBeforeDate->sub(new \DateInterval('P'.$days.'D'));
@@ -256,12 +225,8 @@ final class TicketManager implements TicketManagerInterface
 
     /**
      * Lookup status code.
-     *
-     * @param string $statusStr
-     *
-     * @return int
      */
-    public function getTicketStatus($statusStr)
+    public function getTicketStatus(string $statusStr): int|string|bool
     {
         static $statuses = false;
 
@@ -278,12 +243,8 @@ final class TicketManager implements TicketManagerInterface
 
     /**
      * Lookup priority code.
-     *
-     * @param string $priorityStr
-     *
-     * @return int
      */
-    public function getTicketPriority($priorityStr)
+    public function getTicketPriority(?string $priorityStr): int|string|bool
     {
         static $priorities = false;
 
@@ -295,6 +256,6 @@ final class TicketManager implements TicketManagerInterface
             }
         }
 
-        return array_search($priorityStr, $priorities, true);
+        return array_search($priorityStr ?? '', $priorities, true);
     }
 }

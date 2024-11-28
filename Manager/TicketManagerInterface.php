@@ -37,28 +37,15 @@ interface TicketManagerInterface
 
     public function getTicketListQuery($ticketStatus, $ticketPriority = null): QueryBuilder;
 
-    /**
-     * @param int $days
-     *
-     * @return mixed
-     */
-    public function getResolvedTicketOlderThan($days);
+    public function getResolvedTicketOlderThan(int $days): mixed;
 
     /**
      * Lookup status code.
-     *
-     * @param string $statusStr
-     *
-     * @return int
      */
-    public function getTicketStatus($statusStr);
+    public function getTicketStatus(string $statusStr): int|string|bool;
 
     /**
      * Lookup priority code.
-     *
-     * @param string $priorityStr
-     *
-     * @return int
      */
-    public function getTicketPriority($priorityStr);
+    public function getTicketPriority(string $priorityStr): int|string|bool;
 }

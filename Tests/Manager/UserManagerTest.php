@@ -24,17 +24,15 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class UserManagerTest extends WebTestCase
 {
-    private $object;
-
-    private $tokenStorage;
+    private ?UserManager $object = null;
 
     protected function setUp(): void
     {
         self::bootKernel();
-        $this->tokenStorage = new TokenStorage();
+        $tokenStorage = new TokenStorage();
 
         $this->object = new UserManager(
-            $this->tokenStorage,
+            $tokenStorage,
             $this->getMockUserRepository(),
             $this->getAuthorizationChecker(),
         );
@@ -57,7 +55,7 @@ class UserManagerTest extends WebTestCase
         return new EntityRepository($em, new ClassMetadata(User::class));
     }
 
-    private function getAuthorizationChecker()
+    private function getAuthorizationChecker(): AuthorizationChecker
     {
         return $this->createMock(AuthorizationChecker::class);
     }

@@ -13,11 +13,12 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 
 /* @phpstan-ignore-next-line */
-if (\Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION < 5) {
+if (Kernel::MAJOR_VERSION < 5) {
     interface UserInterface extends BaseUserInterface
     {
         public function __toString(): string;

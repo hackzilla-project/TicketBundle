@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageInterface;
 use Hackzilla\Bundle\TicketBundle\Model\TicketMessageTrait;
@@ -21,34 +22,34 @@ use Hackzilla\Bundle\TicketBundle\Model\TicketMessageTrait;
  * @author Javier Spagnoletti <phansys@gmail.com>
  * @author Daniel Platt <github@ofdan.co.uk>
  */
-#[ORM\Entity()]
+#[ORM\Entity]
 class TicketMessage implements TicketMessageInterface
 {
     use TicketMessageTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
-    private $message;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $message = null;
 
-    #[ORM\Column(type: 'integer', nullable: false)]
-    private $status;
+    #[ORM\Column(type: Types::INTEGER, nullable: false)]
+    private int $status;
 
-    #[ORM\Column(type: 'integer', nullable: false)]
-    private $priority;
+    #[ORM\Column(type: Types::INTEGER, nullable: false)]
+    private int $priority;
 
-    #[ORM\Column(type: 'datetime', nullable: false)]
-    private $createdAt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: false)]
+    private \DateTimeInterface $createdAt;
 
     #[ORM\ManyToOne(targetEntity: Ticket::class, inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
-    private $ticket;
+    private ?Ticket $ticket = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private $user;
+    private ?User $user = null;
 
     public function __construct()
     {

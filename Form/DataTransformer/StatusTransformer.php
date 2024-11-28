@@ -19,23 +19,16 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 final class StatusTransformer implements DataTransformerInterface
 {
-    private TicketInterface $ticket;
-
-    public function __construct(TicketInterface $ticket)
+    public function __construct(private readonly TicketInterface $ticket)
     {
-        $this->ticket = $ticket;
     }
 
     /**
      * Transforms checkbox value into Ticket Message Status Closed.
-     *
-     * @param int $number
-     *
-     * @return true|null
      */
-    public function transform($number)
+    public function transform($value): ?bool
     {
-        if (TicketMessageInterface::STATUS_CLOSED === $number) {
+        if (TicketMessageInterface::STATUS_CLOSED === $value) {
             return true;
         }
 
@@ -44,14 +37,10 @@ final class StatusTransformer implements DataTransformerInterface
 
     /**
      * Transforms Ticket Message Status Closed into checkbox value checked.
-     *
-     * @param bool $number
-     *
-     * @return int|null
      */
-    public function reverseTransform($number)
+    public function reverseTransform($value): ?int
     {
-        if ($number) {
+        if ($value) {
             return TicketMessageInterface::STATUS_CLOSED;
         }
 

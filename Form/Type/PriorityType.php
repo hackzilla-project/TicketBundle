@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class PriorityType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $choices = TicketMessageInterface::PRIORITIES;
         unset($choices[TicketMessageInterface::PRIORITY_INVALID]);

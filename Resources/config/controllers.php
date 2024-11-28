@@ -17,12 +17,15 @@ use Hackzilla\Bundle\TicketBundle\Manager\TicketManagerInterface;
 use Hackzilla\Bundle\TicketBundle\Manager\UserManagerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
+use Symfony\Component\Form\FormFactoryInterface;
+use Twig\Environment;
+use Vich\UploaderBundle\Handler\DownloadHandler;
 
 return static function (ContainerConfigurator $container): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
 
-    if (class_exists('\\Vich\\UploaderBundle\\Handler\\DownloadHandler')) {
+    if (class_exists(DownloadHandler::class)) {
         $container->services()
             ->set(TicketAttachmentController::class)
                 ->args([
@@ -46,6 +49,8 @@ return static function (ContainerConfigurator $container): void {
                 new ReferenceConfigurator(TicketManagerInterface::class),
                 new ReferenceConfigurator('translator'),
                 new ReferenceConfigurator(UserManagerInterface::class),
+                new ReferenceConfigurator(Environment::class),
+                new ReferenceConfigurator(FormFactoryInterface::class),
             ])
             ->call('setContainer', [new ReferenceConfigurator('service_container')])
             ->tag('controller.service_arguments')

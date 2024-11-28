@@ -29,30 +29,27 @@ class FunctionalTest extends WebTestCase
     /**
      * @dataProvider getParameters
      */
-    public function testConfiguredParameter($parameter, $value): void
+    public function testConfiguredParameter(string $parameter, string|array $value): void
     {
         $this->assertTrue(static::$kernel->getContainer()->hasParameter($parameter));
         $this->assertSame($value, static::$kernel->getContainer()->getParameter($parameter));
     }
 
-    public function getParameters(): array
+    public function getParameters(): \Iterator
     {
-        $messageCLass = !class_exists(VichUploaderBundle::class) ? TicketMessage::class : TicketMessageWithAttachment::class;
-
-        return [
-            ['hackzilla_ticket.model.user.class', User::class],
-            ['hackzilla_ticket.model.ticket.class', Ticket::class],
-            ['hackzilla_ticket.model.message.class', $messageCLass],
-            ['hackzilla_ticket.features', ['attachment' => true]],
-            ['hackzilla_ticket.templates', [
-                'index' => '@HackzillaTicket/Ticket/index.html.twig',
-                'new' => '@HackzillaTicket/Ticket/new.html.twig',
-                'prototype' => '@HackzillaTicket/Ticket/prototype.html.twig',
-                'show' => '@HackzillaTicket/Ticket/show.html.twig',
-                'show_attachment' => '@HackzillaTicket/Ticket/show_attachment.html.twig',
-                'macros' => '@HackzillaTicket/Macros/macros.html.twig',
-            ]],
-        ];
+        $messageCLass = class_exists(VichUploaderBundle::class) ? TicketMessageWithAttachment::class : TicketMessage::class;
+        yield ['hackzilla_ticket.model.user.class', User::class];
+        yield ['hackzilla_ticket.model.ticket.class', Ticket::class];
+        yield ['hackzilla_ticket.model.message.class', $messageCLass];
+        yield ['hackzilla_ticket.features', ['attachment' => true]];
+        yield ['hackzilla_ticket.templates', [
+            'index' => '@HackzillaTicket/Ticket/index.html.twig',
+            'new' => '@HackzillaTicket/Ticket/new.html.twig',
+            'prototype' => '@HackzillaTicket/Ticket/prototype.html.twig',
+            'show' => '@HackzillaTicket/Ticket/show.html.twig',
+            'show_attachment' => '@HackzillaTicket/Ticket/show_attachment.html.twig',
+            'macros' => '@HackzillaTicket/Macros/macros.html.twig',
+        ]];
     }
 
     public function testConfiguredTicketManager(): void

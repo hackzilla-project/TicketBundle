@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\Ticket;
 
 /**
  * Ticket Trait.
@@ -24,9 +24,9 @@ trait TicketTrait
     /**
      * Set status.
      *
-     * @return $this
+     * @return Ticket|TicketTrait
      */
-    public function setStatus(int $status)
+    public function setStatus(int $status): self
     {
         $this->status = $status;
 
@@ -36,9 +36,9 @@ trait TicketTrait
     /**
      * Set status string.
      *
-     * @return $this
+     * @return Ticket|TicketTrait
      */
-    public function setStatusString(string $status)
+    public function setStatusString(string $status): self
     {
         $status = array_search(strtolower($status), TicketMessageInterface::STATUSES, true);
 
@@ -72,9 +72,9 @@ trait TicketTrait
     /**
      * Set priority.
      *
-     * @return $this
+     * @return Ticket|TicketTrait
      */
-    public function setPriority(int $priority)
+    public function setPriority(int $priority): self
     {
         $this->priority = $priority;
 
@@ -84,9 +84,9 @@ trait TicketTrait
     /**
      * Set priority string.
      *
-     * @return $this
+     * @return Ticket|TicketTrait
      */
-    public function setPriorityString(string $priority)
+    public function setPriorityString(string $priority): self
     {
         $priority = array_search(strtolower($priority), TicketMessageInterface::PRIORITIES, true);
 
@@ -120,11 +120,9 @@ trait TicketTrait
     /**
      * Set userCreated.
      *
-     * @param ?UserInterface $userCreated
-     *
-     * @return $this
+     * @return Ticket|TicketTrait
      */
-    public function setUserCreated(?UserInterface $userCreated)
+    public function setUserCreated(?UserInterface $userCreated): self
     {
         $this->userCreated = $userCreated;
 
@@ -133,8 +131,6 @@ trait TicketTrait
 
     /**
      * Get userCreated.
-     *
-     * @return ?UserInterface
      */
     public function getUserCreated(): ?UserInterface
     {
@@ -144,11 +140,9 @@ trait TicketTrait
     /**
      * Set lastUser.
      *
-     * @param ?UserInterface $lastUser
-     *
-     * @return $this
+     * @return Ticket|TicketTrait
      */
-    public function setLastUser(?UserInterface $lastUser)
+    public function setLastUser(?UserInterface $lastUser): self
     {
         $this->lastUser = $lastUser;
 
@@ -157,8 +151,6 @@ trait TicketTrait
 
     /**
      * Get lastUser.
-     *
-     * @return ?UserInterface
      */
     public function getLastUser(): ?UserInterface
     {
@@ -168,9 +160,9 @@ trait TicketTrait
     /**
      * Set lastMessage.
      *
-     * @return $this
+     * @return Ticket|TicketTrait
      */
-    public function setLastMessage(\DateTimeInterface $lastMessage)
+    public function setLastMessage(\DateTimeInterface $lastMessage): self
     {
         $this->lastMessage = $lastMessage;
 
@@ -188,9 +180,9 @@ trait TicketTrait
     /**
      * Set createdAt.
      *
-     * @return $this
+     * @return Ticket|TicketTrait
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt)
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -208,9 +200,9 @@ trait TicketTrait
     /**
      * Set subject.
      *
-     * @return $this
+     * @return Ticket|TicketTrait
      */
-    public function setSubject(string $subject)
+    public function setSubject(string $subject): self
     {
         $this->subject = $subject;
 
@@ -228,9 +220,9 @@ trait TicketTrait
     /**
      * Add message.
      *
-     * @return $this
+     * @return Ticket|TicketTrait
      */
-    public function addMessage(TicketMessageInterface $message)
+    public function addMessage(TicketMessageInterface $message): self
     {
         $this->messages[] = $message;
 
@@ -240,9 +232,9 @@ trait TicketTrait
     /**
      * Remove message.
      *
-     * @return $this
+     * @return Ticket|TicketTrait
      */
-    public function removeMessage(TicketMessageInterface $message)
+    public function removeMessage(TicketMessageInterface $message): self
     {
         $this->messages->removeElement($message);
 
@@ -254,10 +246,6 @@ trait TicketTrait
      */
     public function getMessages(): Collection
     {
-        if (null === $this->messages) {
-            $this->messages = new ArrayCollection();
-        }
-
         return $this->messages;
     }
 }

@@ -26,53 +26,49 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Ticket controller.
  */
 final class TicketController extends AbstractController
 {
-    private EventDispatcherInterface $dispatcher;
-
-    private PaginatorInterface $pagination;
-
-    private TicketManager $ticketManager;
-
-    private TranslatorInterface $translator;
-
-    private UserManagerInterface $userManager;
-
     private array $templates = [];
 
     public function __construct(
-        EventDispatcherInterface $dispatcher,
-        PaginatorInterface $pagination,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly PaginatorInterface $pagination,
         ParameterBagInterface $bag,
-        TicketManager $ticketManager,
-        TranslatorInterface $translator,
-        UserManagerInterface $userManager
+        private readonly TicketManager $ticketManager,
+        private readonly TranslatorInterface $translator,
+        private readonly UserManagerInterface $userManager,
+        private readonly Environment $twig,
+        private readonly FormFactoryInterface $formFactory,
     ) {
-        $this->dispatcher = $dispatcher;
-        $this->pagination = $pagination;
-        $this->ticketManager = $ticketManager;
-        $this->translator = $translator;
-        $this->userManager = $userManager;
         $this->templates = $bag->get('hackzilla_ticket.templates');
     }
 
     /**
      * Lists all Ticket entities.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function indexAction(Request $request)
+    public function index(Request $request): Response
     {
-        $userManager = $this->userManager;
         $ticketManager = $this->ticketManager;
 
         $ticketState = $request->get('state', $this->translator->trans('STATUS_OPEN', [], 'HackzillaTicketBundle'));
@@ -85,11 +81,11 @@ final class TicketController extends AbstractController
 
         $pagination = $this->pagination->paginate(
             $query->getQuery(),
-            (int) ($request->query->get('page', 1))/* page number */,
+            (int) $request->query->get('page', 1)/* page number */,
             10/* limit per page */
         );
 
-        return $this->render(
+        return new Response($this->twig->render(
             $this->templates['index'],
             [
                 'pagination' => $pagination,
@@ -97,20 +93,22 @@ final class TicketController extends AbstractController
                 'ticketPriority' => $ticketPriority,
                 'translationDomain' => 'HackzillaTicketBundle',
             ]
-        );
+        ));
     }
 
     /**
      * Creates a new Ticket entity.
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function createAction(Request $request)
+    public function create(Request $request): RedirectResponse|Response
     {
         $ticketManager = $this->ticketManager;
 
         $ticket = $ticketManager->createTicket();
-        $form = $this->createForm(TicketType::class, $ticket);
+        $form = $this->formFactory->create(TicketType::class, $ticket);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -123,53 +121,57 @@ final class TicketController extends AbstractController
             $ticketManager->updateTicket($ticket, $message);
             $this->dispatchTicketEvent(TicketEvents::TICKET_CREATE, $ticket);
 
-            return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
+            return $this->redirectToRoute('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]);
         }
 
-        return $this->render(
+        return new Response($this->twig->render(
             $this->templates['new'],
             [
                 'entity' => $ticket,
                 'form' => $form->createView(),
                 'translationDomain' => 'HackzillaTicketBundle',
             ]
-        );
+        ));
     }
 
     /**
      * Displays a form to create a new Ticket entity.
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function newAction()
+    public function new(): Response
     {
         $ticketManager = $this->ticketManager;
         $entity = $ticketManager->createTicket();
 
-        $form = $this->createForm(TicketType::class, $entity);
+        $form = $this->formFactory->create(TicketType::class, $entity);
 
-        return $this->render(
+        return new Response($this->twig->render(
             $this->templates['new'],
             [
                 'entity' => $entity,
                 'form' => $form->createView(),
                 'translationDomain' => 'HackzillaTicketBundle',
             ]
-        );
+        ));
     }
 
     /**
      * Finds and displays a TicketInterface entity.
      *
-     * @param int $ticketId
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function showAction($ticketId)
+    public function show(int $ticketId): RedirectResponse|Response
     {
         $ticketManager = $this->ticketManager;
         $ticket = $ticketManager->getTicketById($ticketId);
 
-        if (!$ticket) {
-            return $this->redirect($this->generateUrl('hackzilla_ticket'));
+        if (!$ticket instanceof TicketInterface) {
+            return $this->redirectToRoute('hackzilla_ticket');
         }
 
         $currentUser = $this->userManager->getCurrentUser();
@@ -190,22 +192,22 @@ final class TicketController extends AbstractController
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
-        return $this->render($this->templates['show'], $data);
+        return new Response($this->twig->render($this->templates['show'], $data));
     }
 
     /**
      * Finds and displays a TicketInterface entity.
      *
-     * @param int $ticketId
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function replyAction(Request $request, $ticketId)
+    public function reply(Request $request, int $ticketId): RedirectResponse|Response
     {
         $ticketManager = $this->ticketManager;
         $ticket = $ticketManager->getTicketById($ticketId);
 
-        if (!$ticket) {
+        if (!$ticket instanceof TicketInterface) {
             throw $this->createNotFoundException($this->translator->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
         }
 
@@ -225,7 +227,7 @@ final class TicketController extends AbstractController
             $ticketManager->updateTicket($ticket, $message);
             $this->dispatchTicketEvent(TicketEvents::TICKET_UPDATE, $ticket);
 
-            return $this->redirect($this->generateUrl('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]));
+            return $this->redirectToRoute('hackzilla_ticket_show', ['ticketId' => $ticket->getId()]);
         }
 
         $data = ['ticket' => $ticket, 'form' => $form->createView(), 'translationDomain' => 'HackzillaTicketBundle'];
@@ -234,23 +236,19 @@ final class TicketController extends AbstractController
             $data['delete_form'] = $this->createDeleteForm($ticket->getId())->createView();
         }
 
-        return $this->render($this->templates['show'], $data);
+        return new Response($this->twig->render($this->templates['show'], $data));
     }
 
     /**
      * Deletes a Ticket entity.
-     *
-     * @param int $ticketId
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request, $ticketId)
+    public function delete(Request $request, int $ticketId): RedirectResponse
     {
         $userManager = $this->userManager;
         $user = $userManager->getCurrentUser();
 
         if (!\is_object($user) || !$userManager->hasRole($user, TicketRole::ADMIN)) {
-            throw new \Symfony\Component\HttpKernel\Exception\HttpException(403);
+            throw new HttpException(403);
         }
 
         $form = $this->createDeleteForm($ticketId);
@@ -262,7 +260,7 @@ final class TicketController extends AbstractController
                 $ticketManager = $this->ticketManager;
                 $ticket = $ticketManager->getTicketById($ticketId);
 
-                if (!$ticket) {
+                if (!$ticket instanceof TicketInterface) {
                     throw $this->createNotFoundException($this->translator->trans('ERROR_FIND_TICKET_ENTITY', [], 'HackzillaTicketBundle'));
                 }
 
@@ -271,7 +269,7 @@ final class TicketController extends AbstractController
             }
         }
 
-        return $this->redirect($this->generateUrl('hackzilla_ticket'));
+        return $this->redirectToRoute('hackzilla_ticket');
     }
 
     private function dispatchTicketEvent(string $ticketEvent, TicketInterface $ticket): void
@@ -285,7 +283,7 @@ final class TicketController extends AbstractController
      *
      * @param mixed $id The entity id
      */
-    private function createDeleteForm($id): FormInterface
+    private function createDeleteForm(mixed $id): FormInterface
     {
         return $this->createFormBuilder(['id' => $id])
             ->add('id', HiddenType::class)
@@ -295,14 +293,12 @@ final class TicketController extends AbstractController
 
     private function createMessageForm(TicketMessageInterface $message): FormInterface
     {
-        $form = $this->createForm(
+        return $this->formFactory->create(
             TicketMessageType::class,
             $message,
             [
                 'ticket' => $message->getTicket(),
             ]
         );
-
-        return $form;
     }
 }

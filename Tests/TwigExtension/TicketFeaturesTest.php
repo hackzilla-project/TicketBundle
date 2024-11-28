@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TicketFeaturesTest extends WebTestCase
 {
-    private $object;
+    private ?TicketFeatureExtension $object = null;
 
     protected function setUp(): void
     {

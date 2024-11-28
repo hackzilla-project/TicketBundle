@@ -26,28 +26,15 @@ final class TicketManagerCommand extends Command
 {
     protected static $defaultName = 'ticket:create';
 
-    /**
-     * @var TicketManagerInterface
-     */
-    private $ticketManager;
-
-    /**
-     * @var UserManagerInterface
-     */
-    private $userManager;
-
-    public function __construct(TicketManagerInterface $ticketManager, UserManagerInterface $userManager)
+    public function __construct(private readonly TicketManagerInterface $ticketManager, private readonly UserManagerInterface $userManager)
     {
         parent::__construct();
-
-        $this->ticketManager = $ticketManager;
-        $this->userManager = $userManager;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Create a new Ticket')
@@ -90,7 +77,7 @@ final class TicketManagerCommand extends Command
         $this->ticketManager->updateTicket($ticket, $message);
 
         $output->writeln(
-            "Ticket with subject '".$ticket->getSubject()."' has been created with ticketnumber #".$ticket->getId().''
+            "Ticket with subject '".$ticket->getSubject()."' has been created with ticketnumber #".$ticket->getId()
         );
 
         return Command::SUCCESS;

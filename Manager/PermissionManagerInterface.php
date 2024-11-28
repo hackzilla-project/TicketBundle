@@ -20,15 +20,11 @@ interface PermissionManagerInterface
 {
     /**
      * used in TicketManager::getTicketListQuery().
-     *
-     * @param object $query
      */
-    public function addUserPermissionsCondition($query, UserInterface $user);
+    public function addUserPermissionsCondition(object $query, UserInterface $user);
 
     /**
      * used by UserManager::hasPermission().
-     *
-     * @param ?UserInterface $user
      */
     public function hasPermission(?UserInterface $user, TicketInterface $ticket): void;
 }

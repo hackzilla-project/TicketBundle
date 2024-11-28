@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Hackzilla\Bundle\TicketBundle\Model;
 
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessage;
+use Hackzilla\Bundle\TicketBundle\Tests\Fixtures\Entity\TicketMessageWithAttachment;
+
 /**
  * Ticket Message Trait.
  */
@@ -21,9 +24,9 @@ trait TicketMessageTrait
     /**
      * Set status.
      *
-     * @return $this
+     * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
-    public function setStatus(int $status)
+    public function setStatus(int $status): self
     {
         $this->status = $status;
 
@@ -33,9 +36,9 @@ trait TicketMessageTrait
     /**
      * Set status string.
      *
-     * @return $this
+     * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
-    public function setStatusString(string $status)
+    public function setStatusString(string $status): self
     {
         $status = array_search(strtolower($status), TicketMessageInterface::STATUSES, true);
 
@@ -59,7 +62,7 @@ trait TicketMessageTrait
      */
     public function getStatusString(): ?string
     {
-        if (!empty(TicketMessageInterface::STATUSES[$this->status])) {
+        if (isset(TicketMessageInterface::STATUSES[$this->status]) && ('' !== TicketMessageInterface::STATUSES[$this->status] && '0' !== TicketMessageInterface::STATUSES[$this->status])) {
             return TicketMessageInterface::STATUSES[$this->status];
         }
 
@@ -69,9 +72,9 @@ trait TicketMessageTrait
     /**
      * Set priority.
      *
-     * @return $this
+     * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
-    public function setPriority(int $priority)
+    public function setPriority(int $priority): self
     {
         $this->priority = $priority;
 
@@ -81,9 +84,9 @@ trait TicketMessageTrait
     /**
      * Set priority string.
      *
-     * @return $this
+     * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
-    public function setPriorityString(string $priority)
+    public function setPriorityString(string $priority): self
     {
         $priority = array_search(strtolower($priority), TicketMessageInterface::PRIORITIES, true);
 
@@ -107,7 +110,7 @@ trait TicketMessageTrait
      */
     public function getPriorityString(): ?string
     {
-        if (!empty(TicketMessageInterface::PRIORITIES[$this->priority])) {
+        if (isset(TicketMessageInterface::PRIORITIES[$this->priority]) && ('' !== TicketMessageInterface::PRIORITIES[$this->priority] && '0' !== TicketMessageInterface::PRIORITIES[$this->priority])) {
             return TicketMessageInterface::PRIORITIES[$this->priority];
         }
 
@@ -117,11 +120,9 @@ trait TicketMessageTrait
     /**
      * Set user.
      *
-     * @param ?UserInterface $user
-     *
-     * @return $this
+     * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
-    public function setUser($user)
+    public function setUser(?UserInterface $user): self
     {
         $this->user = $user;
 
@@ -139,9 +140,9 @@ trait TicketMessageTrait
     /**
      * Set message.
      *
-     * @return $this
+     * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
-    public function setMessage(string $message)
+    public function setMessage(string $message): self
     {
         $this->message = $message;
 
@@ -159,9 +160,9 @@ trait TicketMessageTrait
     /**
      * Set createdAt.
      *
-     * @return $this
+     * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -170,10 +171,8 @@ trait TicketMessageTrait
 
     /**
      * Get createdAt.
-     *
-     * @return \DateTime
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
@@ -181,15 +180,15 @@ trait TicketMessageTrait
     /**
      * Set ticket.
      *
-     * @return $this
+     * @return TicketMessage|TicketMessageTrait|TicketMessageWithAttachment
      */
-    public function setTicket(?TicketInterface $ticket = null)
+    public function setTicket(?TicketInterface $ticket = null): self
     {
         $this->ticket = $ticket;
         $user = $this->getUser();
 
         // if null, then new ticket
-        if (null === $ticket->getUserCreated()) {
+        if (!$ticket->getUserCreated() instanceof UserInterface) {
             $ticket->setUserCreated($user);
         }
 

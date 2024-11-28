@@ -25,7 +25,7 @@ final class RoutingTest extends WebTestCase
      */
     public function testRoutes(string $name, string $path, array $methods): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
         $router = $client->getContainer()->get('router');
 
         $route = $router->getRouteCollection()->get($name);
